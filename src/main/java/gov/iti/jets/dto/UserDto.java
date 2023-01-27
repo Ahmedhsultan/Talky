@@ -9,16 +9,17 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@ToString
 public class UserDto implements BaseDto {
 
     private String phoneNumber;
     private String name;
     private String email;
-    private String image;
+    private String picture;
     private String gender;
     private String country;
     private Date dateOfBirth;
-    private boolean isOnlineStatus;
-    private boolean botMode;
+    private String isOnlineStatus;
+    private String botMode;
 
 }

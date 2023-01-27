@@ -13,9 +13,8 @@ public class Main
 {
     public static void main( String[] args )
     {
-//        User user = new User(){};
         UserService service = new UserService();
-        service.deleteById("s");
+        System.out.println(service.findById("01111315033"));
         Connection con = DBManagement.getInstance().getConnection();
 //
 //        try {

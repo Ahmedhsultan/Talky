@@ -8,17 +8,18 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@ToString
 public class User implements BaseEntity{
     private String phoneNumber;
     private String name;
     private String email;
-    private String image;
+    private String picture;
     private String password;
     private String sultPassword;
     private String gender;
     private String country;
     private Date dateOfBirth;
     private Date createdOn;
-    private boolean isOnlineStatus;
-    private boolean botMode;
+    private String isOnlineStatus;
+    private String botMode;
 }

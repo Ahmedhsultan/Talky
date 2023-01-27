@@ -14,12 +14,12 @@ public class UserMapper implements BaseMapper<User, UserDto>{
                 .phoneNumber(user.getPhoneNumber())
                 .name(user.getName())
                 .email(user.getEmail())
-                .image(user.getImage())
+                .picture(user.getPicture())
                 .gender(user.getGender())
                 .country(user.getCountry())
                 .dateOfBirth(user.getDateOfBirth())
-                .isOnlineStatus(user.isOnlineStatus())
-                .botMode(user.isBotMode())
+                .isOnlineStatus(user.getIsOnlineStatus())
+                .botMode(user.getBotMode())
                 .build();
         return dto;
 }
@@ -30,12 +30,12 @@ public class UserMapper implements BaseMapper<User, UserDto>{
                 .phoneNumber(userDto.getPhoneNumber())
                 .name(userDto.getName())
                 .email(userDto.getEmail())
-                .image(userDto.getImage())
+                .picture(userDto.getPicture())
                 .gender(userDto.getGender())
                 .country(userDto.getCountry())
                 .dateOfBirth(userDto.getDateOfBirth())
-                .isOnlineStatus(userDto.isOnlineStatus())
-                .botMode(userDto.isBotMode())
+                .isOnlineStatus(userDto.getIsOnlineStatus())
+                .botMode(userDto.getBotMode())
                 .build();
         return entity;
     }
