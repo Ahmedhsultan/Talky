@@ -1,13 +1,10 @@
 package gov.iti.jets.persistence.dao;
 
-import gov.iti.jets.dto.BaseDto;
 import gov.iti.jets.entity.User;
 import gov.iti.jets.persistence.DBManagement;
-import gov.iti.jets.service.BaseServiceImpl;
-
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,8 +14,9 @@ public class UserDao implements BaseDao<User, String> {
     @Override
     public List<User> findAll() {
         List<User> users=null;
-        try (Statement st = DBManagement.getInstance().getConnection().createStatement()) {
-            ResultSet result = st.executeQuery("select * from user;");
+        String query = "select * from user;";
+        try (PreparedStatement st = DBManagement.getInstance().getConnection().prepareStatement(query)) {
+            ResultSet result = st.executeQuery();
 
             if(result.next()) {
                 users = new ArrayList<>();
@@ -47,8 +45,8 @@ public class UserDao implements BaseDao<User, String> {
     @Override
     public User findById(String phoneNumber) {
         User user = null;
-        try (Statement st = DBManagement.getInstance().getConnection().createStatement()) {
-            ResultSet result = st.executeQuery("select * from user where phone_number = '"+phoneNumber+"';");
+        try (PreparedStatement state = DBManagement.getInstance().getConnection().prepareStatement("select * from user where phone_number = '"+phoneNumber+"';")) {
+            ResultSet result = state.executeQuery();
 
             if(result.next()) {
                  user = User.builder().phoneNumber(result.getString("phone_number"))
@@ -74,18 +72,70 @@ public class UserDao implements BaseDao<User, String> {
 
     @Override
     public void save(User entity) {
+        String query = "insert into user values(?,?,?,?,?,?,?,?,?,?,?,?);";
 
+        try (PreparedStatement statement = DBManagement.getInstance().getConnection().prepareStatement(query)) {
+            statement.setString(1, entity.getPhoneNumber());
+            statement.setString(2, entity.getName());
+            statement.setString(3, entity.getEmail());
+            statement.setString(4, entity.getPicture());
+            statement.setString(5, entity.getPassword());
+            statement.setString(6, entity.getSultPassword());
+            statement.setString(7, entity.getGender());
+            statement.setString(8, entity.getCountry());
+            statement.setDate(9, entity.getDateOfBirth());
+            statement.setString(10, entity.getBotMode());
+            statement.setString(11, entity.getIsOnlineStatus());
+            statement.setString(12, entity.getBotMode());
+            statement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
     @Override
     public void update(User entity) {
+        String query = "update  user set " +
+                "phone_number =?" +
+                ",name=?" +
+                " ,email=?" +
+                " ,picture=?" +
+                " ,password_hash=?" +
+                " ,password_sult=?" +
+                " ,gender=?" +
+                " ,country=?" +
+                " ,date_of_birth=?" +
+                " ,created_on=?" +
+                " ,is_online_status=?" +
+                " ,bot_mode=?" +
+                " where phone_number = ?";
+
+        try (PreparedStatement statement = DBManagement.getInstance().getConnection().prepareStatement(query)) {
+            statement.setString(1, entity.getPhoneNumber());
+            statement.setString(2, entity.getName());
+            statement.setString(3, entity.getEmail());
+            statement.setString(4, entity.getPicture());
+            statement.setString(5, entity.getPassword());
+            statement.setString(6, entity.getSultPassword());
+            statement.setString(7, entity.getGender());
+            statement.setString(8, entity.getCountry());
+            statement.setDate(9, entity.getDateOfBirth());
+            statement.setString(10, entity.getBotMode());
+            statement.setString(11, entity.getIsOnlineStatus());
+            statement.setString(12, entity.getBotMode());
+            statement.setString(13, entity.getPhoneNumber());
+            statement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
 
     }
 
     @Override
     public void deleteById(String phoneNumber) {
-        try (Statement st = DBManagement.getInstance().getConnection().createStatement()) {
-            st.executeUpdate("delete from user where phone_number='"+phoneNumber+"';");
+        String query = "delete from user where phone_number='"+phoneNumber+"';";
+        try (PreparedStatement statement = DBManagement.getInstance().getConnection().prepareStatement(query)) {
+            statement.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

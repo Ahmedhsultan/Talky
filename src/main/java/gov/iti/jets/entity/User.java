@@ -1,7 +1,7 @@
 package gov.iti.jets.entity;
 
 import lombok.*;
-import java.util.Date;
+import java.sql.Date;
 
 @Getter
 @Setter
