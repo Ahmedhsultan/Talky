@@ -4,6 +4,7 @@ import gov.iti.jets.entity.Invitation;
 import gov.iti.jets.entity.User;
 import gov.iti.jets.persistence.DBManagement;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,8 +16,11 @@ public class InvitationDao implements BaseDao<Invitation, Long> {
     public List<Invitation> findAll() {
         List<Invitation> invitations=null;
         String query = "select * from invitation;";
-        try (PreparedStatement st = DBManagement.getInstance().getConnection().prepareStatement(query)) {
-            ResultSet result = st.executeQuery();
+        Connection connection=DBManagement.getConnection();
+        PreparedStatement statement =null;
+        try{
+            statement =connection.prepareStatement(query);
+            ResultSet result = statement.executeQuery();
 
             while(result.next()) {
                 invitations = new ArrayList<>();
@@ -34,6 +38,14 @@ public class InvitationDao implements BaseDao<Invitation, Long> {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+        finally {
+            try {
+                statement.close();
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
         return invitations;
     }
 
@@ -42,7 +54,7 @@ public class InvitationDao implements BaseDao<Invitation, Long> {
         Invitation invitation = null;
         String query = "select * from invitation where id = "+id+";";
 
-        try (PreparedStatement st = DBManagement.getInstance().getConnection().prepareStatement(query)) {
+        try (Connection connection = DBManagement.getConnection();PreparedStatement st = connection.prepareStatement(query)) {
             ResultSet result = st.executeQuery();
 
             if(result.next()) {
@@ -62,11 +74,11 @@ public class InvitationDao implements BaseDao<Invitation, Long> {
         return invitation;
     }
 
-    @Override
+
     public void save(Invitation entity) {
         String query = "insert into invitation values(?,?,?,?,?,?);";
 
-        try (PreparedStatement statement = DBManagement.getInstance().getConnection().prepareStatement(query)) {
+        try (Connection connection = DBManagement.getConnection();PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setLong(1, entity.getId());
             statement.setString(2, entity.getSenderId());
             statement.setString(3, entity.getReceiverId());
@@ -81,7 +93,7 @@ public class InvitationDao implements BaseDao<Invitation, Long> {
 
     }
 
-    @Override
+
     public void update(Invitation entity) {
         String query = "update  invitation set " +
                 "id =?" +
@@ -92,7 +104,7 @@ public class InvitationDao implements BaseDao<Invitation, Long> {
                 " ,is_seen=?" +
                 " where id = ?";
 
-        try (PreparedStatement statement = DBManagement.getInstance().getConnection().prepareStatement(query)) {
+        try (Connection connection = DBManagement.getConnection();PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setLong(1, entity.getId());
             statement.setString(2, entity.getSenderId());
             statement.setString(3, entity.getReceiverId());
@@ -108,12 +120,25 @@ public class InvitationDao implements BaseDao<Invitation, Long> {
     }
 
     @Override
-    public void deleteById(Long id) {
+    public Boolean deleteById(Long id) {
         String query = "delete from invitation where id="+id+";";
-        try (PreparedStatement statement = DBManagement.getInstance().getConnection().prepareStatement(query)) {
+        Connection connection=DBManagement.getConnection();
+        PreparedStatement statement =null;
+        try  {
+
+             statement = connection.prepareStatement(query);
             statement.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+        finally {
+            try {
+                statement.close();
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return true;
     }
 }

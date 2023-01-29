@@ -19,15 +19,15 @@ public class Main
 {
     public static void main( String[] args ) throws SQLException {
         List<User> user = new LinkedList<>();
-        BaseDaoImpl<User,Integer> bd = new BaseDaoImpl<User, Integer>(new User()) {
+        BaseDaoImpl<User,String> bd = new BaseDaoImpl<User, String>(new User()) {
             @Override
-            public List resultSetToList(ResultSet result) throws SQLException {
+            public List<User> resultSetToList(ResultSet result) throws SQLException {
                 List<User> user = new LinkedList<>();
                 while(result.next()) {
                     user.add(User.builder().phoneNumber(result.getString("id"))
                             .name(result.getString("name"))
                             .email(result.getString("email"))
-                            .image(result.getString("picture"))
+//                            .picture(result.getString("picture"))
                             .password(result.getString("password_hash"))
                             .sultPassword(result.getString("password_sult"))
                             .gender(result.getString("gender"))
@@ -39,7 +39,8 @@ public class Main
                 return user;
             }
         };
-        user.add(bd.findById(1));
+        User u = bd.findById("01111315033");
+        System.out.println(u.getPhoneNumber());
 
 //        User user = new User(){};
 //        UserService service = new UserService();
