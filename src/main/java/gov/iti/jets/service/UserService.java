@@ -5,9 +5,9 @@ import gov.iti.jets.persistence.dao.UserDao;
 
 public class UserService extends BaseServiceImpl<User, String>{
 
-    {
-        dao = new UserDao();
-    }
+//    {
+//        dao = new UserDao();
+//    }
 
 
 

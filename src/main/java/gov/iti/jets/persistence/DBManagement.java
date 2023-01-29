@@ -21,24 +21,26 @@ public class DBManagement {
         Properties prop = new Properties();
         FileInputStream in;
         try {
-            in = new FileInputStream(new File(getClass().getResource("/app.properties").getPath()));
-            prop.load(in);
+//            in = new FileInputStream(new File(getClass().getClassLoader().getResource("app.properties").getPath()));
+//            prop.load(in);
             poolDataSource = new MysqlConnectionPoolDataSource();
 
-            poolDataSource.setURL(prop.getProperty("MYSQL_DB_URL"));
-            poolDataSource.setUser(prop.getProperty("MYSQL_DB_USERNAME"));
-            poolDataSource.setPassword(prop.getProperty("MYSQL_DB_PASSWORD"));
+            poolDataSource.setURL("jdbc:mysql://localhost:3306/talkey?characterEncoding=latin1");
+            poolDataSource.setUser("root");
+            poolDataSource.setPassword("root");
 
             poolConn = poolDataSource.getPooledConnection();
-        } catch (IOException | SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public Connection getConnection() {
-        if (dbm != null && poolDataSource != null && poolConn != null) {
+    public static Connection getConnection() {
+        DBManagement dbm = getInstance();
+
+        if (dbm != null && dbm.poolDataSource != null && dbm.poolConn != null) {
             try {
-                return poolConn.getConnection();
+                return dbm.poolConn.getConnection();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -46,7 +48,7 @@ public class DBManagement {
         return null;
     }
 
-    public static DBManagement getInstance() {
+    private static DBManagement getInstance() {
         if (dbm == null) {
             dbm = new DBManagement();
         }

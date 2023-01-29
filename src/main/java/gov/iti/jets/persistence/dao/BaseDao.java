@@ -2,14 +2,12 @@ package gov.iti.jets.persistence.dao;
 
 import gov.iti.jets.entity.BaseEntity;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public interface BaseDao<E extends BaseEntity, T>
 {
-    List<E> findAll();
-    E findById(T id);
-    void save(E entity);
-    void update (E entity);
-    void deleteById(T id);
-
+    List<E> findAll() throws SQLException;
+    E findById(T id) throws SQLException;
+    Boolean deleteById(T id);
 }
