@@ -7,37 +7,71 @@ import gov.iti.jets.persistence.dao.BaseDao;
 import java.util.List;
 
 public class BaseServiceImpl<E extends BaseEntity, T> implements BaseService<E, T>{
-
-    public BaseDao<E, T> dao;
     @Override
     public List<E> findAll() {
-        return dao().findAll();
+        return null;
     }
 
     @Override
     public E findById(T id) {
-        return dao().findById(id);
+        return null;
     }
 
     @Override
     public void save(E entity) {
-         dao().save(entity);
+
     }
 
     @Override
-    public void update(E entity)
-    {
-        dao().update(entity);
+    public void update(E entity) {
+
     }
 
     @Override
     public void deleteById(T id) {
-        dao().deleteById(id);
 
     }
 
     @Override
-    public BaseDao<E,T> dao() {
-        return dao;
+    public BaseDao<E, T> dao() {
+        return null;
     }
+//
+//    public BaseDao<E, T> dao;
+//    @Override
+//    public List<E> findAll() {
+//        return dao().findAll();
+//    }
+//
+//    @Override
+//    public E findById(T id) {
+//        return dao().findById(id);
+//    }
+//
+//    @Override
+//    public void save(E entity) {
+//         dao().save(entity);
+//    }
+//
+//    @Override
+//    public void update(E entity)
+//    {
+//        dao().update(entity);
+//    }
+//
+//    @Override
+//    public List<E> saveAll(List<E> entity) {
+//        return null;
+//    }
+//
+//    @Override
+//    public void deleteById(T id) {
+//        dao().deleteById(id);
+//
+//    }
+//
+//    @Override
+//    public BaseDao<E,T> dao() {
+//        return dao;
+//    }
 }
