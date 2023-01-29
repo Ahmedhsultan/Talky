@@ -2,7 +2,7 @@ package gov.iti.jets.service;
 
 import gov.iti.jets.entity.BaseEntity;
 import gov.iti.jets.persistence.dao.BaseDao;
-import gov.iti.jets.persistence.dao.BaseDaoImpl;
+
 
 import java.util.List;
 
@@ -28,11 +28,6 @@ public class BaseServiceImpl<E extends BaseEntity, T> implements BaseService<E, 
     public void update(E entity)
     {
         dao().update(entity);
-    }
-
-    @Override
-    public List<E> saveAll(List<E> entity) {
-        return null;
     }
 
     @Override

@@ -21,5 +21,7 @@ public class User implements BaseEntity{
     private Date dateOfBirth;
     private Date createdOn;
     private String isOnlineStatus;
-    private String botMode;
+    private boolean botMode;
+
+
 }

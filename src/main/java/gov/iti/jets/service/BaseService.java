@@ -15,8 +15,6 @@ public interface BaseService<E extends BaseEntity, T>
 
     void update (E entity);
 
-    List<E> saveAll(List<E> entity);
-
     void deleteById(T id);
 
     BaseDao<E, T> dao();

@@ -18,7 +18,7 @@ public class UserDao implements BaseDao<User, String> {
         try (PreparedStatement st = DBManagement.getInstance().getConnection().prepareStatement(query)) {
             ResultSet result = st.executeQuery();
 
-            if(result.next()) {
+            while(result.next()) {
                 users = new ArrayList<>();
                 User user = User.builder().phoneNumber(result.getString("phone_number"))
                         .name(result.getString("name"))
@@ -31,7 +31,7 @@ public class UserDao implements BaseDao<User, String> {
                         .dateOfBirth(result.getDate("date_of_birth"))
                         .createdOn(result.getDate("created_on"))
                         .isOnlineStatus(result.getString("is_online_status"))
-                        .botMode(result.getString("bot_mode"))
+                        .botMode(result.getBoolean("bot_mode"))
                         .build();
                 users.add(user);
             }
@@ -45,7 +45,8 @@ public class UserDao implements BaseDao<User, String> {
     @Override
     public User findById(String phoneNumber) {
         User user = null;
-        try (PreparedStatement state = DBManagement.getInstance().getConnection().prepareStatement("select * from user where phone_number = '"+phoneNumber+"';")) {
+        String query = "select * from user where phone_number = '"+phoneNumber+"';";
+        try (PreparedStatement state = DBManagement.getInstance().getConnection().prepareStatement(query)) {
             ResultSet result = state.executeQuery();
 
             if(result.next()) {
@@ -60,7 +61,7 @@ public class UserDao implements BaseDao<User, String> {
                         .dateOfBirth(result.getDate("date_of_birth"))
                         .createdOn(result.getDate("created_on"))
                         .isOnlineStatus(result.getString("is_online_status"))
-                        .botMode(result.getString("bot_mode"))
+                        .botMode(result.getBoolean("bot_mode"))
                         .build();
             }
 
@@ -84,10 +85,10 @@ public class UserDao implements BaseDao<User, String> {
             statement.setString(7, entity.getGender());
             statement.setString(8, entity.getCountry());
             statement.setDate(9, entity.getDateOfBirth());
-            statement.setString(10, entity.getBotMode());
+            statement.setBoolean(10, entity.isBotMode());
             statement.setString(11, entity.getIsOnlineStatus());
-            statement.setString(12, entity.getBotMode());
-            statement.executeUpdate();
+            statement.setBoolean(12, entity.isBotMode());
+            System.out.println(statement.executeUpdate());
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -120,11 +121,11 @@ public class UserDao implements BaseDao<User, String> {
             statement.setString(7, entity.getGender());
             statement.setString(8, entity.getCountry());
             statement.setDate(9, entity.getDateOfBirth());
-            statement.setString(10, entity.getBotMode());
+            statement.setBoolean(10, entity.isBotMode());
             statement.setString(11, entity.getIsOnlineStatus());
-            statement.setString(12, entity.getBotMode());
+            statement.setBoolean(12, entity.isBotMode());
             statement.setString(13, entity.getPhoneNumber());
-            statement.executeUpdate();
+            System.out.println(statement.executeUpdate());
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -135,7 +136,7 @@ public class UserDao implements BaseDao<User, String> {
     public void deleteById(String phoneNumber) {
         String query = "delete from user where phone_number='"+phoneNumber+"';";
         try (PreparedStatement statement = DBManagement.getInstance().getConnection().prepareStatement(query)) {
-            statement.executeUpdate();
+            System.out.println(statement.executeUpdate());
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

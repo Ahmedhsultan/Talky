@@ -8,6 +8,7 @@ import java.util.Collection;
 import java.util.stream.Collectors;
 
 public class UserMapper implements BaseMapper<User, UserDto>{
+
     @Override
     public UserDto toDTO(User user) {
         UserDto dto = UserDto.builder()
@@ -19,7 +20,7 @@ public class UserMapper implements BaseMapper<User, UserDto>{
                 .country(user.getCountry())
                 .dateOfBirth(user.getDateOfBirth())
                 .isOnlineStatus(user.getIsOnlineStatus())
-                .botMode(user.getBotMode())
+                .botMode(user.isBotMode())
                 .build();
         return dto;
 }
@@ -35,7 +36,7 @@ public class UserMapper implements BaseMapper<User, UserDto>{
                 .country(userDto.getCountry())
                 .dateOfBirth(userDto.getDateOfBirth())
                 .isOnlineStatus(userDto.getIsOnlineStatus())
-                .botMode(userDto.getBotMode())
+                .botMode(userDto.isBotMode())
                 .build();
         return entity;
     }
