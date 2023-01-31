@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Text?>
 
 
-<BorderPane stylesheets="@../../../loginStyle.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane stylesheets="/loginStyle.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <center>
       <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" styleClass="border-pane" stylesheets="@../../../loginStyle.css">
          <children>
@@ -21,7 +21,7 @@
                <top>
                   <ImageView fitHeight="171.0" fitWidth="215.0" BorderPane.alignment="CENTER">
                      <image>
-                        <Image url="@../../../chat.jpg" />
+                        <Image url="/chat.jpg" />
                      </image>
                   </ImageView>
                </top>
