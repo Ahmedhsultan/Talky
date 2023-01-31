@@ -7,24 +7,41 @@
   <version>1.0-SNAPSHOT</version>
   <name>ChatAppcCient</name>
   <url>http://maven.apache.org</url>
-  <dependencies>
-      <dependency>
-          <groupId>org.projectlombok</groupId>
-          <artifactId>lombok</artifactId>
-          <version>1.18.24</version>
-          <scope>provided</scope>
-      </dependency>
-    <dependency>
-        <groupId>org.openjfx</groupId>
-        <artifactId>javafx-controls</artifactId>
-        <version>19</version>
-    </dependency>
-    <dependency>
-        <groupId>org.openjfx</groupId>
-        <artifactId>javafx-fxml</artifactId>
-        <version>11.0.2</version>
-    </dependency>
-</dependencies>
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.24</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>17.0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-fxml</artifactId>
+            <version>17.0.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.jfoenix</groupId>
+            <artifactId>jfoenix</artifactId>
+            <version>9.0.9</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>2.4.4</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>2.7.4</version>
+        </dependency>
+    </dependencies>
    <build>
     <plugins>
         <plugin>
@@ -32,12 +49,11 @@
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-compiler-plugin</artifactId>
             <version>3.10.1</version>
-
             <configuration>
                 <release>17</release>
             </configuration>
-
         </plugin>
+
         <plugin>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>exec-maven-plugin</artifactId>
@@ -55,5 +71,13 @@
             </configuration>
         </plugin>
     </plugins>
+
+       <resources>
+           <resource>
+               <directory>src/main/resources/views</directory>
+               <filtering>true</filtering>
+           </resource>
+       </resources>
 </build>
+
 </project>
