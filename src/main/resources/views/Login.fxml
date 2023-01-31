@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<BorderPane stylesheets="@../../../loginStyle.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" styleClass="border-pane" stylesheets="@../../../loginStyle.css">
+         <children>
+            <BorderPane layoutX="350.0" layoutY="182.0" prefHeight="399.0" prefWidth="361.0" style="-fx-background-color: #FFFFFF;" styleClass="border-pane">
+               <top>
+                  <ImageView fitHeight="171.0" fitWidth="215.0" BorderPane.alignment="CENTER">
+                     <image>
+                        <Image url="@../../../chat.jpg" />
+                     </image>
+                  </ImageView>
+               </top>
+               <center>
+                  <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="157.0" prefWidth="294.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <TextField layoutX="16.0" layoutY="-31.0" maxHeight="-Infinity" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="0.0" prefWidth="261.0" promptText="Phone" />
+                        <JFXButton layoutX="58.0" layoutY="83.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="40.0" prefWidth="177.0" text="Get Start" />
+                        <Text layoutX="33.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Don't have Accoun?t" />
+                        <Hyperlink layoutX="147.0" layoutY="18.0" text="Register" textFill="#44445d" />
+                     </children>
+                  </Pane>
+               </center>
+            </BorderPane>
+            <Label layoutX="451.0" layoutY="24.0" styleClass="lable" stylesheets="@../../../loginStyle.css" text="Login" textFill="#fcfcfc">
+               <font>
+                  <Font name="Bodoni MT Bold" size="70.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>
