@@ -1,6 +1,8 @@
 package gov.iti.jets.entity;
 
 import lombok.*;
+
+import java.io.Serializable;
 import java.sql.Date;
 
 @Getter
@@ -9,7 +11,9 @@ import java.sql.Date;
 @NoArgsConstructor
 @Builder
 @ToString
-public class User implements BaseEntity{
+public class User implements BaseEntity, Serializable {
+
+    // column name = id
     private String phoneNumber;
     private String name;
     private String email;

@@ -5,7 +5,7 @@ import gov.iti.jets.persistence.dao.InvitationDao;
 
 public class InvitationService extends BaseServiceImpl<Invitation, Long>{
 
-//    {
-//        dao = new InvitationDao();
-//    }
+    {
+        dao = new InvitationDao();
+    }
 }

@@ -11,11 +11,9 @@ public interface BaseService<E extends BaseEntity, T>
 
     E findById(T id);
 
-    void save(E entity);
-
+    Boolean deleteById(T id);
+    void insert(E entity);
     void update (E entity);
-
-    void deleteById(T id);
 
     BaseDao<E, T> dao();
 }

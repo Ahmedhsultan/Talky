@@ -19,8 +19,8 @@ public abstract class BaseDaoImpl <E extends BaseEntity, T> implements BaseDao<E
 
     private String tableName;
 
-    public BaseDaoImpl(E Entity){
-        String[] dir  = Entity.getClass().getName().split("[.]");
+    public BaseDaoImpl(Class<E> entity){
+        String[] dir  = entity.getName().split("[.]");
         tableName  = dir[dir.length-1];
     }
 
@@ -29,7 +29,7 @@ public abstract class BaseDaoImpl <E extends BaseEntity, T> implements BaseDao<E
         //Write select all quary
         String query = "SELECT * FROM " + tableName + " ;";
 
-        try(PreparedStatement statement = DBManagement.getConnection().prepareStatement(query)) {
+        try(Connection connection =DBManagement.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
             //Excute the query
             ResultSet resultSet = statement.executeQuery();
 
@@ -44,11 +44,11 @@ public abstract class BaseDaoImpl <E extends BaseEntity, T> implements BaseDao<E
     }
 
     @Override
-    public E findById(T id) throws SQLException {
+    public E findById(T id)  {
         //Write select quary by ID
         String query = "SELECT * FROM " + tableName + " WHERE id = "+ id +" ;";
 
-        try(PreparedStatement statement = DBManagement.getConnection().prepareStatement(query)) {
+        try(Connection connection =DBManagement.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
             //Excute the query
             ResultSet resultSet = statement.executeQuery();
 
@@ -67,7 +67,7 @@ public abstract class BaseDaoImpl <E extends BaseEntity, T> implements BaseDao<E
         //Write select quary by ID
         String query = "delete FROM " + tableName + " WHERE id=" + id +";";
 
-        try (PreparedStatement statement = DBManagement.getConnection().prepareStatement(query)) {
+        try (Connection connection =DBManagement.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
             statement.executeUpdate();
             return true;
         } catch (SQLException throwables) {

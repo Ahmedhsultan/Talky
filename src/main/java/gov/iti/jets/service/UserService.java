@@ -5,10 +5,13 @@ import gov.iti.jets.persistence.dao.UserDao;
 
 public class UserService extends BaseServiceImpl<User, String>{
 
+    {
+        dao = new UserDao();
+    }
+//    public void save(User user)
 //    {
-//        dao = new UserDao();
+//        dao.s
 //    }
-
 
 
 

@@ -7,7 +7,9 @@ import java.util.List;
 
 public interface BaseDao<E extends BaseEntity, T>
 {
-    List<E> findAll() throws SQLException;
-    E findById(T id) throws SQLException;
+    List<E> findAll() ;
+    E findById(T id) ;
+    void insert(E entity);
+    void update (E entity);
     Boolean deleteById(T id);
 }
