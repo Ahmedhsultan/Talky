@@ -10,7 +10,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Builder
 @ToString
-public class ChatDto implements Serializable {
+public class ChatDto implements Serializable ,BaseDto{
     private int id;
     private String name;
     private String picture_icon;

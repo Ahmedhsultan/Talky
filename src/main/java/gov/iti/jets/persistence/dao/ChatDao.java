@@ -13,6 +13,16 @@ public class ChatDao extends BaseDaoImpl<Chat, Integer>{
     }
 
     @Override
+    public void insert(Chat entity) {
+
+    }
+
+    @Override
+    public void update(Chat entity) {
+
+    }
+
+    @Override
     public List<Chat> resultSetToList(ResultSet resultSet) throws SQLException {
         List<Chat> chats = new ArrayList<>();
         try{
@@ -30,15 +40,5 @@ public class ChatDao extends BaseDaoImpl<Chat, Integer>{
             throwables.printStackTrace();
         }
         return chats;
-    }
-
-    @Override
-    public void insert(Chat entity) {
-
-    }
-
-    @Override
-    public void update(Chat entity) {
-
     }
 }
