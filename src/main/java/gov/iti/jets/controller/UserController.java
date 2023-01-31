@@ -1,4 +1,4 @@
-package gov.iti.jets.network.impl;
+package gov.iti.jets.controller;
 
 import gov.iti.jets.entity.User;
 import gov.iti.jets.network.apis.UserRemote;
@@ -6,10 +6,10 @@ import gov.iti.jets.network.apis.UserRemote;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
-public class UserRemoteImpl extends UnicastRemoteObject implements UserRemote {
+public class UserController extends UnicastRemoteObject implements UserRemote {
 
 
-    protected UserRemoteImpl() throws RemoteException {
+    protected UserController() throws RemoteException {
     }
 
     @Override
