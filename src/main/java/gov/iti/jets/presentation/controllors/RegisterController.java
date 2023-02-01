@@ -35,6 +35,7 @@ public class RegisterController implements Initializable {
     private Stage stage;
     private Scene scene;
 
+
     @FXML
     private JFXButton SignUp;
 
@@ -78,13 +79,12 @@ public class RegisterController implements Initializable {
     String gender;
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-        circle.setFill(new ImagePattern(new Image("user.png",200,200,false,true)));
+        circle.setFill(new ImagePattern(new Image("/image/user.png",200,200,false,true)));
         country.getItems().addAll(countries);
         //country.setEditable(true);
         country.setOnAction(e->{
             System.out.println(country.getSelectionModel().getSelectedItem());
         });
-
     }
     @FXML
     public void addProfileImage(MouseEvent event) {
