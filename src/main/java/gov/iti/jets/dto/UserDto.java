@@ -11,7 +11,7 @@ import java.sql.Date;
 @NoArgsConstructor
 @Builder
 @ToString
-public class UserDto implements BaseDto, Serializable {
+public class UserDto implements BaseDto {
 
     private String phoneNumber;
     private String name;
