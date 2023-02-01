@@ -26,11 +26,11 @@ public abstract class BaseDaoImpl <E extends BaseEntity, T> implements BaseDao<E
 
     @Override
     public List<E> findAll() {
-        //Write select all quary
+        //Write select all query
         String query = "SELECT * FROM " + tableName + " ;";
 
         try(Connection connection =DBManagement.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
-            //Excute the query
+            //Execute the query
             ResultSet resultSet = statement.executeQuery();
 
             //Convert resultset to List
@@ -49,7 +49,7 @@ public abstract class BaseDaoImpl <E extends BaseEntity, T> implements BaseDao<E
         String query = "SELECT * FROM " + tableName + " WHERE id = "+ id +" ;";
 
         try(Connection connection =DBManagement.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
-            //Excute the query
+            //Execute the query
             ResultSet resultSet = statement.executeQuery();
 
             //Convert resultset to List
@@ -67,7 +67,7 @@ public abstract class BaseDaoImpl <E extends BaseEntity, T> implements BaseDao<E
 
     @Override
     public Boolean deleteById(T id) {
-        //Write select quary by ID
+        //Write select query by ID
         String query = "delete FROM " + tableName + " WHERE id=" + id +";";
 
         try (Connection connection =DBManagement.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {

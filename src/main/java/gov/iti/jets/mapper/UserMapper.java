@@ -1,5 +1,6 @@
 package gov.iti.jets.mapper;
 
+import gov.iti.jets.dto.ContactDto;
 import gov.iti.jets.dto.UserDto;
 import gov.iti.jets.dto.registration.UserRegistrationDto;
 import gov.iti.jets.entity.User;
@@ -24,7 +25,17 @@ public class UserMapper implements BaseMapper<User, UserDto>{
                 .botMode(user.isBotMode())
                 .build();
         return dto;
-}
+    }
+
+    public ContactDto toContactDTO(User user) {
+        ContactDto dto = ContactDto.builder()
+                .phoneNumber(user.getPhoneNumber())
+                .name(user.getName())
+                .picture(user.getPicture())
+                .isOnlineStatus(user.getIsOnlineStatus())
+                .build();
+        return dto;
+    }
 
     @Override
     public User toEntity(UserDto userDto) {
