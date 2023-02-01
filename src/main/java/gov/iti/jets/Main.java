@@ -1,38 +1,29 @@
 package gov.iti.jets;
 
 
-import gov.iti.jets.entity.Invitation;
-import gov.iti.jets.entity.User;
-import gov.iti.jets.persistence.DBManagement;
-import gov.iti.jets.persistence.dao.BaseDao;
-import gov.iti.jets.persistence.dao.BaseDaoImpl;
-import gov.iti.jets.persistence.dao.UserDao;
-import gov.iti.jets.service.InvitationService;
-import gov.iti.jets.service.UserService;
-import gov.iti.jets.util.Constants;
+import gov.iti.jets.controller.UserController;
+import gov.iti.jets.dto.UserDto;
+import gov.iti.jets.dto.registration.UserRegistrationDto;
 import gov.iti.jets.util.Validation;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+import java.rmi.RemoteException;
 
-public class Main
-{
-    public static void main( String[] args ) {
+public class Main {
+    public static void main(String[] args) {
 
-        Invitation inv = new Invitation();
-     inv.setId(2);
-     inv.setReceiverId("01111315099");
-        inv.setSenderId("01111315033");
-        InvitationService service = new InvitationService();
-        System.out.println(Validation.validatePassword("01gfgg998kkk"));
+//        System.out.println(Validation.validateName("aa"));
+//        try {
+//            UserController userController = new UserController();
+//            UserDto dto = new UserDto();
+//            dto.setPhoneNumber("01111315011");
+//
+//            userController.register(new UserRegistrationDto(dto,"123321111"));
+//        } catch (RemoteException e) {
+//            e.printStackTrace();
+//        }
 
-//        System.out.println(service.deleteById(2l));
-
-        System.out.println( "Hello World!" );
+        System.out.println("Hello World!");
     }
+
+
 }

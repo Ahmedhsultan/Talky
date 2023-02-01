@@ -8,7 +8,7 @@ import java.util.List;
 public interface BaseDao<E extends BaseEntity, T>
 {
     List<E> findAll() ;
-    E findById(T id) ;
+    E findById(T id);
     void insert(E entity);
     void update (E entity);
     Boolean deleteById(T id);

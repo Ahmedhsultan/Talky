@@ -1,6 +1,7 @@
 package gov.iti.jets.mapper;
 
 import gov.iti.jets.dto.UserDto;
+import gov.iti.jets.dto.registration.UserRegistrationDto;
 import gov.iti.jets.entity.User;
 
 import java.util.ArrayList;
@@ -55,5 +56,13 @@ public class UserMapper implements BaseMapper<User, UserDto>{
                 stream()
                 .map(this::toEntity)
                 .collect(Collectors.toList());
+    }
+
+    public User regDtoToEntity(UserRegistrationDto userRegistrationDto)
+    {
+        User user = toEntity(userRegistrationDto.getUserDto());
+        user.setPassword(userRegistrationDto.getPassword());
+        return user;
+
     }
 }

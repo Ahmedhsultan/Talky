@@ -15,6 +15,7 @@ public class Validation {
         if(matchFound) {
             isValid = true;
         }
+        System.out.println(isValid);
         return isValid;
     }
 
@@ -29,4 +30,30 @@ public class Validation {
         }
         return isValid;
     }
+
+    public static boolean validateName(String name)
+    {
+        boolean isValid = false;
+        Pattern pattern = Pattern.compile(Constants.NAME_PATTERN);
+        Matcher matcher = pattern.matcher(name);
+        boolean matchFound = matcher.find();
+        if(matchFound) {
+            isValid = true;
+        }
+        return isValid;
+    }
+
+    public static boolean validateEmail(String email)
+    {
+        boolean isValid = false;
+        Pattern pattern = Pattern.compile(Constants.EMAIL_PATTERN);
+        Matcher matcher = pattern.matcher(email);
+        boolean matchFound = matcher.find();
+        if(matchFound) {
+            isValid = true;
+        }
+        return isValid;
+    }
+
+
 }

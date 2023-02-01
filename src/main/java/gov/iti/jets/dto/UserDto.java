@@ -2,6 +2,7 @@ package gov.iti.jets.dto;
 
 import lombok.*;
 
+import java.io.Serializable;
 import java.sql.Date;
 
 @Getter
@@ -10,7 +11,7 @@ import java.sql.Date;
 @NoArgsConstructor
 @Builder
 @ToString
-public class UserDto implements BaseDto {
+public class UserDto implements BaseDto, Serializable {
 
     private String phoneNumber;
     private String name;

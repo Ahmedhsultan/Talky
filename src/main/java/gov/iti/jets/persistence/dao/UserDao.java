@@ -1,6 +1,8 @@
 package gov.iti.jets.persistence.dao;
 import gov.iti.jets.entity.User;
 import gov.iti.jets.persistence.DBManagement;
+import gov.iti.jets.util.Constants;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +44,7 @@ public class UserDao extends BaseDaoImpl<User, String> {
 
         try (Connection connection =DBManagement.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
             setUserStatement(statement, entity);
+            entity.setIsOnlineStatus(Constants.ONLINE_STATUS_OFFLINE);
             System.out.println(statement.executeUpdate());
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -74,6 +77,8 @@ public class UserDao extends BaseDaoImpl<User, String> {
         }
     }
 
+//
+
     private void setUserStatement(PreparedStatement statement, User entity)
     {
         try {
@@ -91,6 +96,20 @@ public class UserDao extends BaseDaoImpl<User, String> {
             statement.setBoolean(12, entity.isBotMode());
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+    public void setOnlineStatus(String phone, String status)
+    {
+        String query = "update  user set " +
+                " is_online_status=?" +
+                " where id = ?";
+
+        try (Connection connection =DBManagement.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, status);
+            statement.setString(2, phone);
+            System.out.println(statement.executeUpdate());
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
     }
 }

@@ -54,10 +54,13 @@ public abstract class BaseDaoImpl <E extends BaseEntity, T> implements BaseDao<E
 
             //Convert resultset to List
             List<E> list = resultSetToList(resultSet);
-
+            if(list==null ||list.size()==0)
+            {
+                return null;
+            }
             return list.get(0);
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
             return null;
         }
     }
