@@ -1,33 +1,60 @@
+.pane_bg {
+    -fx-background-color: linear-gradient(to bottom right, #cc208e 10%, #6713d2 100%);
+}
 
-.pane_bg{
-    -fx-background-color: linear-gradient(to bottom right ,#8989BB,#44445d);
+#password {
+        -fx-background-image: url('../image/password.png');
+
 }
-.text-field{
+
+#mail {
+    -fx-background-image: url('../image/mail.png');
+
+}
+
+#name {
+    -fx-background-image: url('../image/user2.png');
+
+}
+
+#phone {
+    -fx-background-image: url('../image/phone.png');
+
+}
+#bio {
+    -fx-background-image: url('../image/bio.png');
+
+}
+
+.text-field {
+    -fx-border-radius: 10;
+    -fx-background-radius: 15;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: left 10 center;
+    -fx-background-size: 18;
+    -fx-padding: 0 0 0 30;
+    -fx-font-size: 15;
+    fx-background-color: #6713d2;
+    -fx-background-insets: 0, 1 1 1 1;
+    -fx-text-fill: #6713d2;
+    -fx-effect: dropshadow(three-pass-box, #6713d2, 5, 0.0, 0, 1);
+}
+
+.password-field {
     -fx-border-radius: 10;
     -fx-background-radius: 15;
     -fx-font-size: 15;
     -fx-border-width: 0 0 0 0;
     -fx-border-color: #6e6969;
-    fx-background-color:  #44445d;
+    fx-background-color: #6713d2;
     -fx-background-insets: 0, 1 1 1 1;
-    -fx-padding: 10 20 10 10;
-    -fx-text-fill: #0d0d12;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 5, 0.0, 0, 1);
+    -fx-padding: 0 0 0 33;
+    -fx-text-fill: #6713d2;
+    -fx-effect: dropshadow(three-pass-box, #6713d2, 5, 0.0, 0, 1);
 }
-.password-field{
-    -fx-border-radius: 10;
-    -fx-background-radius: 15;
-    -fx-font-size: 15;
-    -fx-border-width: 0 0 0 0;
-    -fx-border-color: #6e6969;
-    fx-background-color:  #44445d;
-    -fx-background-insets: 0, 1 1 1 1;
-    -fx-padding: 10 20 10 10;
-    -fx-text-fill: #0d0d12;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 5, 0.0, 0, 1);
-}
-.button{
-    -fx-background-color: #44445d;
+
+.button {
+    -fx-background-color: #5607bd;
     -fx-border-radius: 15;
     -fx-background-radius: 15;
     -fx-border-color: white;
@@ -35,41 +62,45 @@
     -fx-font-weight: bold;
     -fx-text-fill: white;
     -fx-background-insets: 0, 0 0 0 0;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 5, 0.0, 0, 1);
+    -fx-effect: dropshadow(three-pass-box, #6713d2, 5, 0.0, 0, 1);
 }
-.button:hover
-{
+
+.button:hover {
     -fx-background-color:
-            linear-gradient(from 0% 93% to 0% 100%,#7b7ba8
-            0%,#44445d 100),
-            #525270,
-            #dbdbea,
-            radial-gradient(center 50% 50%,radius 100%, #8989bb,#44445d);
+        linear-gradient(from 0% 93% to 0% 100%, #6713d2 100, #4e4eb8 0%)
 }
-.radio-button{
+
+.radio-button {
     -fx-font-size: 15;
 }
-.combo-box{
+
+.combo-box {
+    -fx-background-image: url('../image/country.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: left 10 center;
+    -fx-background-size: 18;
+    -fx-padding: 0 0 0 33;
     -fx-border-radius: 15;
     -fx-background-radius: 15;
     -fx-font-size: 15;
     -fx-border-width: 0 0 0 0;
-    -fx-border-color: #6e6969 0.3;
-    fx-background-color:  #44445d ;
-    -fx-background-insets: 0,0;
-    -fx-text-fill: #0d0d12;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 5, 0.0, 0, 1);
+    -fx-border-color: #6713d2 0.3;
+    -fx-background-insets: 0, 0;
+    -fx-text-fill: #6713d2;
+    -fx-effect: dropshadow(three-pass-box, #6713d2, 5, 0.0, 0, 1);
 }
-.radio-button{
+
+.radio-button {
     -fx-padding: 8 15 15 15;
-    -fx-background-insets: 0,0 0 5 0,0 0 6 0,0 0 7 0;
+    -fx-background-insets: 0, 0 0 5 0, 0 0 6 0, 0 0 7 0;
     -fx-background-radius: 8;
-    -fx-effect: dropshadow(gaussian, rgba(84, 80, 80, 0.75),4,0,0,1);
+    -fx-effect: dropshadow(gaussian, #6713d2, 4, 0, 0, 1);
     -fx-font-weight: bold;
     -fx-font-size: 1.1em;
-    -fx-animated: #44445d;
-    -fx-text-fill: #0d0d12;
+    -fx-animated: #6713d2;
+    -fx-text-fill: #6713d2;
 }
+
 /* .text-field:focused {*/
 /*    -fx-background-color: -fx-focus-color, -fx-background ;*/
 /*}*/
@@ -81,20 +112,25 @@
 /*    -fx-border-style: #353A56 ;*/
 /*}*/
 .label {
-    -fx-background-radius: 6,5;
-    -fx-background-insets: 0,1;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 5, 0.0, 0, 1);
-    -fx-text-fill: #44445d;
+    -fx-background-radius: 6, 5;
+    -fx-background-insets: 0, 1;
+    -fx-effect: dropshadow(three-pass-box, #6713d2, 5, 0.0, 0, 1);
+    -fx-text-fill: #6713d2;
 }
+<<<<<<< HEAD
 #error-label {
     -fx-text-fill: #ff0000;
 }
 .date-picker{
+=======
+
+.date-picker {
+>>>>>>> e60f60bab8f7bd8fcde39536039a80ceb87f9569
     -fx-background-radius: 8;
-    -fx-border-radius:8;
-    -fx-background-insets: 0,0;
-    -fx-effect: dropshadow(gaussian, rgba(84, 80, 80, 0.75),4,0,0,1);
+    -fx-border-radius: 8;
+    -fx-background-insets: 0, 0;
+    -fx-effect: dropshadow(gaussian, #6713d2, 4, 0, 0, 1);
     -fx-font-weight: bold;
-    -fx-text-fill: #000000;
-    -fx-animated: #44445d;
+    -fx-text-fill: #6713d2;
+    -fx-animated: #6713d2;
 }

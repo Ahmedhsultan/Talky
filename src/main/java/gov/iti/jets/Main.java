@@ -3,20 +3,26 @@ package gov.iti.jets;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+import java.awt.*;
 import java.io.IOException;
+import java.util.Objects;
 
 public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/Register.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 1000, 700);
-        scene.getStylesheets().add(getClass().getResource("/registerStyle.css").toExternalForm());
 
-        stage.setTitle("Hello!");
-        stage.setScene(scene);
+        Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+        double width = screenSize.getWidth();
+        double height = screenSize.getHeight() - 60;
+        Parent root = FXMLLoader.load(getClass().getResource("/views/Register.fxml"));
+        stage.setTitle("Registration");
+        stage.setResizable(false);
+        stage.setScene(new Scene(root, width, height));
         stage.show();
     }
     public static void main(String[] args) {
