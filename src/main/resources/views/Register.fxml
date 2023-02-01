@@ -16,13 +16,13 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gov.iti.jets.presentation.controllors.RegisterController">
+<AnchorPane fx:id="anchor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" stylesheets="@../style/registerStyle.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gov.iti.jets.presentation.controllors.RegisterController">
    <children>
-      <AnchorPane prefHeight="600.0" prefWidth="244.0" styleClass="pane_bg"  AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <AnchorPane prefHeight="600.0" prefWidth="244.0" styleClass="pane_bg" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
       <AnchorPane layoutX="315.0" layoutY="221.0" prefHeight="431.0" prefWidth="597.0">
          <children>
             <PasswordField fx:id="password" layoutX="38.0" layoutY="169.0" prefHeight="25.0" prefWidth="244.0" promptText="Password" />
-            <TextField fx:id="firstName" layoutX="38.0" layoutY="44.0" onAction="#signup" prefHeight="31.0" prefWidth="244.0" promptText="First Name" >
+            <TextField fx:id="firstName" layoutX="38.0" layoutY="44.0" onAction="#signup" prefHeight="31.0" prefWidth="244.0" promptText="First Name" styleClass="text-field">
                <padding>
                   <Insets right="10.0" top="10.0" />
                </padding>
@@ -31,20 +31,23 @@
             <TextField fx:id="phone" layoutX="38.0" layoutY="104.0" prefHeight="31.0" prefWidth="244.0" promptText="Phone" />
             <TextField fx:id="email" layoutX="317.0" layoutY="104.0" prefHeight="31.0" prefWidth="244.0" promptText="Email" />
             <TextField fx:id="bio" layoutX="38.0" layoutY="229.0" prefHeight="31.0" prefWidth="244.0" promptText="Bio" />
-            <ComboBox fx:id="country" layoutX="317.0" layoutY="234.0" prefHeight="31.0" prefWidth="244.0" promptText="Country"  />
-            <DatePicker fx:id="dateOfBirth" layoutX="175.0" layoutY="298.0" prefHeight="31.0" prefWidth="273.0" promptText="Date of birth" styleClass="date-picker"  />
+            <ComboBox fx:id="country" layoutX="317.0" layoutY="234.0" prefHeight="31.0" prefWidth="244.0" promptText="Country" />
+            <DatePicker fx:id="dateOfBirth" layoutX="175.0" layoutY="298.0" prefHeight="31.0" prefWidth="273.0" promptText="Date of birth" styleClass="date-picker" />
             <JFXRadioButton fx:id="radioMale" layoutX="175.0" layoutY="339.0" text="Male">
                <selectedColor>
                   <Color red="0.2666666805744171" green="0.2666666805744171" blue="0.364705890417099" />
                </selectedColor>
                <toggleGroup>
-                  <ToggleGroup  />
+                  <ToggleGroup />
                </toggleGroup>
             </JFXRadioButton>
-            <JFXRadioButton fx:id="radioFemal" layoutX="288.0" layoutY="339.0" text="Female" >
+            <JFXRadioButton fx:id="radioFemal" layoutX="288.0" layoutY="339.0" text="Female">
                <selectedColor>
                   <Color red="0.2666666805744171" green="0.2666666805744171" blue="0.364705890417099" />
-               </selectedColor></JFXRadioButton>
+               </selectedColor>
+               <toggleGroup>
+                  <ToggleGroup fx:id="g" />
+               </toggleGroup></JFXRadioButton>
             <JFXButton fx:id="SignUp" layoutX="147.0" layoutY="401.0" onAction="#signup" prefHeight="53.0" prefWidth="330.0" text="Sign Up" textFill="WHITE">
                <font>
                   <Font size="24.0" />
