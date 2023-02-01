@@ -86,6 +86,9 @@
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 5, 0.0, 0, 1);
     -fx-text-fill: #44445d;
 }
+#error-label {
+    -fx-text-fill: #ff0000;
+}
 .date-picker{
     -fx-background-radius: 8;
     -fx-border-radius:8;

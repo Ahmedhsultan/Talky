@@ -1,5 +1,7 @@
 package gov.iti.jets.dto;
 
-public interface BaseDto {
+import java.io.Serializable;
+
+public interface BaseDto extends Serializable {
 
 }
