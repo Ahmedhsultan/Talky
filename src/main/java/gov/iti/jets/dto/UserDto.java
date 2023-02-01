@@ -23,4 +23,5 @@ public class UserDto implements BaseDto, Serializable {
     private String isOnlineStatus;
     private boolean botMode;
 
+
 }

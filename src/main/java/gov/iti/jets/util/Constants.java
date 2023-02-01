@@ -8,7 +8,7 @@ public class Constants {
 
     //Validation Patterns
     public static final String PHONE_PATTERN = "^[01][0-9]{10}$";
-    public static final String PASSWORD_PATTERN = "([a-z][A-Z][0-9]){8,20}$";
+    public static final String PASSWORD_PATTERN = "([a-zA-Z0-9]){8,20}$";
     public static final String NAME_PATTERN = "^[a-zA-Z ]{3,20}$";
     public static final String EMAIL_PATTERN ="^(.+)@(\\S+)$";
 

@@ -29,29 +29,28 @@ public class UserService {
 
     public UserDto register(UserRegistrationDto userRegistrationDto) throws RemoteException {
 
-        if(!Validation.validatePhoneNumber(userRegistrationDto.getUserDto().getPhoneNumber()))
-        {
-            throw new RemoteException("Invalid Phone Number!!");
+        try {
+
+            if(!Validation.validatePhoneNumber(userRegistrationDto.getUserDto().getPhoneNumber()))
+            {
+                throw new RemoteException("Invalid Phone Number!!");
+            }
+            if(!Validation.validatePassword(userRegistrationDto.getPassword()))
+            {
+                throw new RemoteException("Invalid Password!!");
+            }
+            User user = dao.findById(userRegistrationDto.getUserDto().getPhoneNumber());
+            if(user!=null)
+            {
+                throw new RemoteException("Phone Number Already Found !!");
+            }
+//            String hashedPass = Constants.hashPassword(userRegistrationDto.getPassword());
+            dao.insert(userMapper.regDtoToEntity(userRegistrationDto));
+//            setOnlineStatus(userRegistrationDto.getUserDto().getPhoneNumber(), Constants.ONLINE_STATUS_AVAILABLE);
+        }catch (SQLException ex){
+            ex.printStackTrace();
+            throw new RemoteException("Failed to register, please try again !!");
         }
-        if(!Validation.validatePassword(userRegistrationDto.getPassword()))
-        {
-            throw new RemoteException("Invalid Password!!");
-        }
-        User user = dao.findById(userRegistrationDto.getUserDto().getPhoneNumber());
-        if(user!=null)
-        {
-            throw new RemoteException("Phone Number Already Found !!");
-        }
-        String hashedPass = Constants.hashPassword(userRegistrationDto.getPassword());
-        if( hashedPass ==null)
-        {
-            throw new RemoteException("Phone Number Already Found !!");
-        }
-        else{
-            userRegistrationDto.setPassword(hashedPass);
-        }
-        dao.insert(userMapper.regDtoToEntity(userRegistrationDto));
-        setOnlineStatus(userRegistrationDto.getUserDto().getPhoneNumber(), Constants.ONLINE_STATUS_AVAILABLE);
         return userRegistrationDto.getUserDto();
 
     }
@@ -87,6 +86,10 @@ public class UserService {
     }
 
     public void setOnlineStatus(String phone, String status){
-        dao.setOnlineStatus(phone, status);
+        try {
+            dao.setOnlineStatus(phone, status);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

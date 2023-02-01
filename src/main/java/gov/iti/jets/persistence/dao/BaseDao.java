@@ -9,7 +9,7 @@ public interface BaseDao<E extends BaseEntity, T>
 {
     List<E> findAll() ;
     E findById(T id);
-    void insert(E entity);
-    void update (E entity);
+    void insert(E entity) throws SQLException;
+    void update (E entity) throws SQLException;
     Boolean deleteById(T id);
 }

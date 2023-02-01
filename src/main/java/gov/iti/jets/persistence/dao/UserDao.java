@@ -13,9 +13,8 @@ public class UserDao extends BaseDaoImpl<User, String> {
         super(User.class);
     }
     @Override
-    public List<User> resultSetToList(ResultSet result) {
+    public List<User> resultSetToList(ResultSet result) throws SQLException{
         List<User> users = new ArrayList<>();
-        try{
         while (result.next()) {
             User user = User.builder().phoneNumber(result.getString("id"))
                     .name(result.getString("name"))
@@ -32,27 +31,22 @@ public class UserDao extends BaseDaoImpl<User, String> {
                     .build();
             users.add(user);
         }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
         return users;
     }
 
     @Override
-    public void insert(User entity) {
+    public void insert(User entity) throws SQLException{
         String query = "insert into user values(?,?,?,?,?,?,?,?,?,?,?,?);";
 
         try (Connection connection =DBManagement.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
             setUserStatement(statement, entity);
             entity.setIsOnlineStatus(Constants.ONLINE_STATUS_OFFLINE);
             System.out.println(statement.executeUpdate());
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
         }
     }
 
     @Override
-    public void update(User entity) {
+    public void update(User entity) throws SQLException{
         String query = "update  user set " +
                 "id =?" +
                 ",name=?" +
@@ -72,33 +66,27 @@ public class UserDao extends BaseDaoImpl<User, String> {
             setUserStatement(statement,entity);
             statement.setString(13, entity.getPhoneNumber());
             System.out.println(statement.executeUpdate());
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
         }
     }
 
 //
 
-    private void setUserStatement(PreparedStatement statement, User entity)
+    private void setUserStatement(PreparedStatement statement, User entity)throws SQLException
     {
-        try {
-            statement.setString(1, entity.getPhoneNumber());
-            statement.setString(2, entity.getName());
-            statement.setString(3, entity.getEmail());
-            statement.setString(4, entity.getPicture());
-            statement.setString(5, entity.getPassword());
-            statement.setString(6, entity.getSultPassword());
-            statement.setString(7, entity.getGender());
-            statement.setString(8, entity.getCountry());
-            statement.setDate(9, entity.getDateOfBirth());
-            statement.setBoolean(10, entity.isBotMode());
-            statement.setString(11, entity.getIsOnlineStatus());
-            statement.setBoolean(12, entity.isBotMode());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        statement.setString(1, entity.getPhoneNumber());
+        statement.setString(2, entity.getName());
+        statement.setString(3, entity.getEmail());
+        statement.setString(4, entity.getPicture());
+        statement.setString(5, entity.getPassword());
+        statement.setString(6, entity.getSultPassword());
+        statement.setString(7, entity.getGender());
+        statement.setString(8, entity.getCountry());
+        statement.setDate(9, entity.getDateOfBirth());
+        statement.setBoolean(10, entity.isBotMode());
+        statement.setString(11, entity.getIsOnlineStatus());
+        statement.setBoolean(12, entity.isBotMode());
     }
-    public void setOnlineStatus(String phone, String status)
+    public void setOnlineStatus(String phone, String status)throws SQLException
     {
         String query = "update  user set " +
                 " is_online_status=?" +
@@ -108,8 +96,6 @@ public class UserDao extends BaseDaoImpl<User, String> {
             statement.setString(1, status);
             statement.setString(2, phone);
             System.out.println(statement.executeUpdate());
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
         }
     }
 }
