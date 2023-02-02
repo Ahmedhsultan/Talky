@@ -3,7 +3,6 @@ package gov.iti.jets.service;
 import gov.iti.jets.dto.ChatDto;
 import gov.iti.jets.dto.ContactDto;
 import gov.iti.jets.dto.SessionDto;
-import gov.iti.jets.dto.UserDto;
 import gov.iti.jets.entity.Chat;
 import gov.iti.jets.entity.ChatUser;
 import gov.iti.jets.entity.Friends;
@@ -16,7 +15,6 @@ import gov.iti.jets.persistence.dao.FriendsDao;
 import gov.iti.jets.persistence.dao.UserDao;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -42,11 +40,11 @@ public class GetUserSession {
     }
 
     public SessionDto getSessionDto() {
-        List<ChatUser> chatUserList = chatUserDao.getChatsByUserId(user.getPhoneNumber());
+        List<ChatUser> chatUserList = chatUserDao.getChatsByUserId(user.getId());
         List<Chat> chatList = chatUserList.stream().map(x -> chatDao.findById(x.getChat_id())).toList();
         List<ChatDto> chatDtoList = chatList.stream().map(x -> chatMapper.toDTO(x)).toList();
 
-        List<Friends> contactList = friendsDao.findAllById(user.getPhoneNumber());
+        List<Friends> contactList = friendsDao.findAllById(user.getId());
         List<String> idsList = contactList.stream().map(x -> new ArrayList<String>(){{
                     add(x.getId1());
                     add(x.getId2());
