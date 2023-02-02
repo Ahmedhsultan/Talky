@@ -65,7 +65,7 @@
             </JFXRadioButton>
             <JFXRadioButton fx:id="radioFemal" layoutX="248.0" layoutY="558.0" text="Female" toggleGroup="$toggleGroup">
                <selectedColor>
-                  <Color red="0.2666666805744171" green="0.2666666805744171" blue="0.364705890417099" />
+                  <Color red="0.27290448546409607" green="0.27290448546409607" blue="0.3684210479259491" />
                </selectedColor>
             </JFXRadioButton>
             <JFXButton fx:id="SignUp" layoutX="107.0" layoutY="620.0" onAction="#signup" prefHeight="53.0" prefWidth="330.0" text="Sign Up" textFill="WHITE">

@@ -117,15 +117,11 @@
     -fx-effect: dropshadow(three-pass-box, #6713d2, 5, 0.0, 0, 1);
     -fx-text-fill: #6713d2;
 }
-<<<<<<< HEAD
 #error-label {
     -fx-text-fill: #ff0000;
 }
-.date-picker{
-=======
 
 .date-picker {
->>>>>>> e60f60bab8f7bd8fcde39536039a80ceb87f9569
     -fx-background-radius: 8;
     -fx-border-radius: 8;
     -fx-background-insets: 0, 0;

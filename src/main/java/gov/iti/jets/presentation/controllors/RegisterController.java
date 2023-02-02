@@ -148,7 +148,7 @@ public class RegisterController implements Initializable {
         if (lastName.getText().isEmpty()) {
             setErrorMsg(lastName,invalidLName, Constants.FIELD_EMPTY);
             val = false;
-        }else if(lastName.getText().length() < 3){
+        }else if(validate.validateName(lastName.getText())){
             setErrorMsg(lastName,invalidLName,"Name must contains only characters");
             val = false;
         }else {

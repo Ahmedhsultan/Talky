@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.shape.Rectangle?>
+
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="708.0" prefWidth="1398.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+    <left>
+        <StackPane prefHeight="150.0" prefWidth="200.0" stylesheets="@../style/mainScreenStyle.css" BorderPane.alignment="CENTER">
+            <children>
+                <Rectangle arcHeight="5.0" arcWidth="70.0" fill="DODGERBLUE" height="707.0" stroke="BLACK" strokeType="INSIDE" style="-fx-arc-height: 50; -fx-fill: linear-gradient(to bottom right, #cc208e 10%, #6713d2 100%);" width="325.0" />
+                <JFXButton fx:id="chatsButton" minHeight="0.0" prefHeight="56.0" prefWidth="280.0" style="-fx-graphic-text-gap: -60;" text="My Chats" textOverrun="CLIP">
+                    <StackPane.margin>
+                        <Insets bottom="120.0" right="45.0" />
+                    </StackPane.margin>
+                    <graphic>
+                        <ImageView fitHeight="46.0" fitWidth="46.0" pickOnBounds="true" style="-fx-translate-x: -90;">
+                            <viewport>
+                                <Rectangle2D />
+                            </viewport>
+                            <image>
+                                <Image url="@../image/chatsIcon.png" />
+                            </image>
+                     <effect>
+                        <DropShadow />
+                     </effect>
+                        </ImageView>
+                    </graphic>
+                </JFXButton>
+                <JFXButton fx:id="notifactionsButton" minHeight="0.0" prefHeight="56.0" prefWidth="280.0" style="-fx-graphic-text-gap: -40;" text="My Contacts" textOverrun="CLIP">
+                    <StackPane.margin>
+                        <Insets right="50.0" top="50.0" />
+                    </StackPane.margin>
+               <graphic>
+                  <ImageView fitHeight="46.0" fitWidth="46.0" pickOnBounds="true" style="-fx-translate-x: -60;">
+                     <viewport>
+                        <Rectangle2D />
+                     </viewport>
+                     <image>
+                        <Image url="@../image/contacts.png" />
+                     </image>
+                     <effect>
+                        <DropShadow />
+                     </effect>
+                  </ImageView>
+               </graphic>
+                </JFXButton>
+                <JFXButton fx:id="contactsButton" minHeight="0.0" prefHeight="56.0" prefWidth="280.0" style="-fx-graphic-text-gap: -40;" text="My Invitations" textOverrun="CLIP">
+                    <StackPane.margin>
+                        <Insets right="50.0" top="220.0" />
+                    </StackPane.margin>
+               <graphic>
+                  <ImageView fitHeight="46.0" fitWidth="46.0" pickOnBounds="true" style="-fx-translate-x: -60;">
+                     <viewport>
+                        <Rectangle2D />
+                     </viewport>
+                     <image>
+                        <Image url="@../image/invitations.png" />
+                     </image>
+                     <effect>
+                        <DropShadow />
+                     </effect>
+                  </ImageView>
+               </graphic>
+                </JFXButton>
+                <ImageView fx:id="userImage" fitHeight="100.0" fitWidth="96.0" pickOnBounds="true" style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);;">
+                    <image>
+                        <Image url="@../image/user.png" />
+                    </image>
+                    <StackPane.margin>
+                        <Insets bottom="500.0" right="35.0" />
+                    </StackPane.margin>
+                </ImageView>
+            <JFXButton fx:id="notifactionsButton1" minHeight="0.0" prefHeight="56.0" prefWidth="280.0" style="-fx-graphic-text-gap: -40;" text="Notifications" textOverrun="CLIP">
+               <StackPane.margin>
+                  <Insets right="50.0" top="380.0" />
+               </StackPane.margin>
+               <graphic>
+                  <ImageView fitHeight="46.0" fitWidth="46.0" pickOnBounds="true" style="-fx-translate-x: -65;">
+                     <viewport>
+                        <Rectangle2D />
+                     </viewport>
+                     <image>
+                        <Image url="@../image/notifications.png" />
+                     </image>
+                     <effect>
+                        <DropShadow />
+                     </effect>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+                <JFXButton mnemonicParsing="false" prefHeight="62.0" prefWidth="84.0" style="-fx-background-color: transparent;" text=" ">
+                    <StackPane.margin>
+                        <Insets left="120.0" top="600.0" />
+                    </StackPane.margin>
+               <graphic>
+                  <ImageView fitHeight="46.0" fitWidth="46.0" pickOnBounds="true" style="-fx-translate-x: 0;">
+                     <viewport>
+                        <Rectangle2D />
+                     </viewport>
+                     <image>
+                        <Image url="@../image/logout.png" />
+                     </image>
+                     <effect>
+                        <DropShadow />
+                     </effect>
+                  </ImageView>
+               </graphic>
+                </JFXButton>
+            </children>
+        </StackPane>
+    </left>
+    <center>
+        <StackPane prefHeight="708.0" prefWidth="1000.0" BorderPane.alignment="CENTER">
+            <children>
+                <Rectangle arcHeight="50.0" arcWidth="50.0" fill="DODGERBLUE" height="707.0" stroke="BLACK" strokeType="INSIDE" style="-fx-fill: #F3F7FF;" width="1136.0">
+               <StackPane.margin>
+                  <Insets right="70.0" />
+               </StackPane.margin>
+            </Rectangle>
+                  <AnchorPane fx:id="leftSide" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="708.0" prefWidth="652.0">
+               <children>
+                  <ScrollPane fx:id="rightScrollPane" layoutX="35.0" layoutY="50.0" prefHeight="702.0" prefWidth="498.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="35.0" AnchorPane.rightAnchor="65.0" AnchorPane.topAnchor="50.0" />
+               </children>
+               <StackPane.margin>
+                  <Insets left="400.0" />
+               </StackPane.margin>
+                  </AnchorPane>
+                  <AnchorPane fx:id="rightSide" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="708.0" prefWidth="486.0">
+               <StackPane.margin>
+                  <Insets right="700.0" />
+               </StackPane.margin>
+               <children>
+                  <ScrollPane fx:id="leftScrollPane" layoutX="41.0" layoutY="50.0" prefHeight="608.0" prefWidth="374.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="41.0" AnchorPane.rightAnchor="71.0" AnchorPane.topAnchor="50.0" />
+               </children>
+                  </AnchorPane>
+            </children>
+        </StackPane>
+    </center>
+</BorderPane>
