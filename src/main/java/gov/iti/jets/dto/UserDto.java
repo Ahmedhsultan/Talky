@@ -12,8 +12,7 @@ import java.sql.Date;
 @Builder
 @ToString
 public class UserDto implements BaseDto {
-
-    private String phoneNumber;
+    private String id;
     private String name;
     private String email;
     private String picture;
@@ -22,5 +21,6 @@ public class UserDto implements BaseDto {
     private Date dateOfBirth;
     private String isOnlineStatus;
     private boolean botMode;
+    private String bio;
 
 }

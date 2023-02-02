@@ -21,6 +21,8 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.net.URL;
+import java.sql.Date;
+import java.time.ZoneId;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
@@ -98,11 +100,13 @@ public class RegisterController implements Initializable {
     @FXML
     private Label invalidDate;
     @FXML
+    private Label invalidGender;
+    @FXML
     private ToggleGroup toggleGroup;
 
     Validation validate;
     String gender;
-    UserDto user;
+    UserDto user = new UserDto();
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
 //        circle.setFill(new ImagePattern(new Image("user.png",200,200,false,true)));
@@ -124,117 +128,34 @@ public class RegisterController implements Initializable {
     }
     @FXML
     void signup(ActionEvent event) {
-        System.out.println("Sign up clicked");
         if(validation()){
+            user.setName(firstName.getText() + " " + lastName.getText());
+            user.setId(phone.getText());
+            user.setEmail(email.getText());
+            if(radioMale.isSelected()) { user.setGender("Male");}
+            else { user.setGender("Female");}
+            user.setBio(bio.getText());
+            user.setCountry(country.getSelectionModel().getSelectedItem());
+            Date.from(dateOfBirth.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant()); // we have to retype zone id
             System.out.println("success validate");
         }
     }
     private boolean validation(){
         boolean val = true;
-        //Validate First Name
-        if (firstName.getText().isEmpty()) {
-            setErrorMsg(firstName,invalidFName, Constants.FIELD_EMPTY);
-            val = false;
-        }else if(!validate.validateName(firstName.getText())){
-            setErrorMsg(firstName,invalidFName,"Name must contains only characters");
-            val = false;
-        }else {
-            firstName.setStyle(Constants.CORRECT_INPUT);
-            invalidFName.setText("");
-        }
-
-
-        //Validate Last Name
-        if (lastName.getText().isEmpty()) {
-            setErrorMsg(lastName,invalidLName, Constants.FIELD_EMPTY);
-            val = false;
-        }else if(validate.validateName(lastName.getText())){
-            setErrorMsg(lastName,invalidLName,"Name must contains only characters");
-            val = false;
-        }else {
-            lastName.setStyle(Constants.CORRECT_INPUT);
-            invalidLName.setText("");
-        }
-
-        //Validate Phone Number
-        if (phone.getText().isEmpty()) {
-            setErrorMsg(phone,invalidPhone, Constants.FIELD_EMPTY);
-            val = false;
-        }else if(!validate.validatePhoneNumber(phone.getText())){
-            setErrorMsg(phone,invalidPhone,"Invalid phone");
-            val = false;
-        }else {
-            phone.setStyle(Constants.CORRECT_INPUT);
-            invalidPhone.setText("");
-        }
-
-        //Validate Email
-        if (email.getText().isEmpty()) {
-            setErrorMsg(email,invalidEmail, Constants.FIELD_EMPTY);
-            val = false;
-        }else if(!validate.validateEmail(email.getText())){
-            setErrorMsg(email,invalidEmail,"Invalid email");
-            val = false;
-        }else {
-            email.setStyle(Constants.CORRECT_INPUT);
-            invalidEmail.setText("");
-        }
-        //Validate Password
-        if (password.getText().isEmpty()) {
-            setErrorMsg(password,invalidPassword, Constants.FIELD_EMPTY);
-            val = false;
-        }else if(!validate.validatePassword(password.getText())){
-            setErrorMsg(password,invalidPassword,"Weak Password");
-            val = false;
-        }else {
-            password.setStyle(Constants.CORRECT_INPUT);
-            invalidPassword.setText("");
-            val = false;
-            //Validate Confirm password
-            if (!password.getText().equals(confirmPassword.getText())) {
-                setErrorMsg(confirmPassword,invalidConPassword, "Password not matched");
-                val = false;
-            }else {
-                confirmPassword.setStyle(Constants.CORRECT_INPUT);
-                invalidConPassword.setText("");
-            }
-        }
-        //Validate Confirm password
-        if (confirmPassword.getText().isEmpty()) {
-            setErrorMsg(confirmPassword,invalidConPassword, Constants.FIELD_EMPTY);
-            val = false;
-        }
-        //Validate Bio
-        if (bio.getText().isEmpty()) {
-            setErrorMsg(bio,invalidBio, Constants.FIELD_EMPTY);
-            val = false;
-        }else {
-            email.setStyle(Constants.CORRECT_INPUT);
-            invalidEmail.setText("");
-        }
-        //Validate Country
-        if (country.getSelectionModel().getSelectedItem() == null) {
-            setErrorMsg(country,invalidCountry,"Choose Your Country");
-            val = false;
-        }else {
-            email.setStyle(Constants.CORRECT_INPUT);
-            invalidEmail.setText("");
-        }
-
-        //Validate Date
-        if (dateOfBirth.getValue() == null) {
-            setErrorMsg(dateOfBirth,invalidDate,"Select you date of birth");
-            val = false;
-        }else {
-            dateOfBirth.setStyle(Constants.CORRECT_INPUT);
-            invalidDate.setText("");
-        }
-
-        //Validate Gender
-        if (toggleGroup.getSelectedToggle() == null) {
-//            radioFemal.setStyle("Constants.ERROR_BORDER_RED");
-//            radioMale.setStyle(Constants.ERROR_BORDER_RED);
-        }
+        if(validate. validateName(firstName.getText(),firstName,invalidFName) &
+            validate.validateName(lastName.getText(),lastName,invalidLName)&
+            validate.validateEmail(email.getText(),email,invalidEmail)&
+            validate.validatePhoneNumber(phone, invalidPhone)&
+            validate.validatePassword(password,invalidPassword)&
+            validate.validateConPassword(confirmPassword,invalidConPassword,password.getText())&
+            validate.validateBio(bio,invalidBio)&
+            validate.validateCountry(country,invalidCountry)&
+            validate.validateDate(dateOfBirth,invalidDate)&
+            validate.validateGender(toggleGroup,invalidGender))
+        {
+            System.out.println("valid name");
+            val = true;
+        }else{val = false;}
         return val;
     }
     private void addCountryChoiceBox(){
@@ -248,10 +169,5 @@ public class RegisterController implements Initializable {
             }
         }
         country.setItems(cities);
-    }
-    private void setErrorMsg(Node tf, Label b, String msg){
-        //tf.setStyle(Constants.ERROR_BORDER_RED);
-         b.setText(msg);
-         b.setStyle(Constants.RED_FONT);
     }
 }

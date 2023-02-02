@@ -21,7 +21,7 @@
 
 <AnchorPane fx:id="anchor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1208.0" stylesheets="@../style/registerStyle.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gov.iti.jets.presentation.controllors.RegisterController">
    <children>
-      <AnchorPane layoutX="533.0" layoutY="10.0" prefHeight="700.0" prefWidth="628.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="533.0" AnchorPane.rightAnchor="-57.0" AnchorPane.topAnchor="0.0">
+      <AnchorPane layoutX="533.0" layoutY="11.0" prefHeight="700.0" prefWidth="628.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="533.0" AnchorPane.rightAnchor="-57.0" AnchorPane.topAnchor="0.0">
          <children>
             <Label layoutX="39.0" prefHeight="107.0" prefWidth="517.0" text="Create new account">
                <font>
@@ -83,6 +83,7 @@
             <Label fx:id="invalidConPassword" layoutX="302.0" layoutY="421.0" />
             <Label fx:id="invalidCountry" layoutX="302.0" layoutY="481.0" />
             <Label fx:id="invalidDate" layoutX="152.0" layoutY="550.0" />
+            <Label fx:id="invalidGender" layoutX="380.0" layoutY="571.0" />
          </children>
       </AnchorPane>
       <AnchorPane layoutX="-3.0" layoutY="-3.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="709.0" prefWidth="261.0" style="-fx-background-radius: 0  50px 50px 0;" styleClass="pane_bg">
