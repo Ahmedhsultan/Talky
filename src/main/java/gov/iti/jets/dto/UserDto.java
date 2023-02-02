@@ -2,6 +2,7 @@ package gov.iti.jets.dto;
 
 import lombok.*;
 
+import java.io.Serializable;
 import java.sql.Date;
 
 @Getter
@@ -20,6 +21,6 @@ public class UserDto implements BaseDto {
     private String country;
     private Date dateOfBirth;
     private String isOnlineStatus;
-    private String botMode;
+    private boolean botMode;
 
 }

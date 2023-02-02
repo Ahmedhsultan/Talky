@@ -1,10 +1,14 @@
 package gov.iti.jets.presentation.controllors;
+import gov.iti.jets.dto.UserDto;
+import gov.iti.jets.util.Constants;
+import gov.iti.jets.util.Validation;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -73,18 +77,35 @@ public class RegisterController implements Initializable {
     private JFXRadioButton radioMale;
     @FXML
     Circle circle;
-    String[] countries = new String[]{"Afghanistan", "Albania", "Algeria", "American Samoa", "Andorra", "Angola", "Anguilla", "Antarctica", "Antigua and Barbuda", "Argentina", "Armenia", "Aruba", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bermuda", "Bhutan", "Bolivia", "Bosnia and Herzegowina", "Botswana", "Bouvet Island", "Brazil", "British Indian Ocean Territory", "Brunei Darussalam", "Bulgaria", "Burkina Faso", "Burundi", "Cambodia", "Cameroon", "Canada", "Cape Verde", "Cayman Islands", "Central African Republic", "Chad", "Chile", "China", "Christmas Island", "Cocos (Keeling) Islands", "Colombia", "Comoros", "Congo", "Congo, the Democratic Republic of the", "Cook Islands", "Costa Rica", "Cote d'Ivoire", "Croatia (Hrvatska)", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "East Timor", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Ethiopia", "Falkland Islands (Malvinas)", "Faroe Islands", "Fiji", "Finland", "France", "France Metropolitan", "French Guiana", "French Polynesia", "French Southern Territories", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Gibraltar", "Greece", "Greenland", "Grenada", "Guadeloupe", "Guam", "Guatemala", "Guinea", "Guinea-Bissau", "Guyana", "Haiti", "Heard and Mc Donald Islands", "Holy See (Vatican City State)", "Honduras", "Hong Kong", "Hungary", "Iceland", "India", "Indonesia", "Iran (Islamic Republic of)", "Iraq", "Ireland", "Israel", "Italy", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Korea, Democratic People's Republic of", "Korea, Republic of", "Kuwait", "Kyrgyzstan", "Lao, People's Democratic Republic", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libyan Arab Jamahiriya", "Liechtenstein", "Lithuania", "Luxembourg", "Macau", "Macedonia, The Former Yugoslav Republic of", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Martinique", "Mauritania", "Mauritius", "Mayotte", "Mexico", "Micronesia, Federated States of", "Moldova, Republic of", "Monaco", "Mongolia", "Montserrat", "Morocco", "Mozambique", "Myanmar", "Namibia", "Nauru", "Nepal", "Netherlands", "Netherlands Antilles", "New Caledonia", "New Zealand", "Nicaragua", "Niger", "Nigeria", "Niue", "Norfolk Island", "Northern Mariana Islands", "Norway", "Oman", "Pakistan", "Palau", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Pitcairn", "Poland", "Portugal", "Puerto Rico", "Qatar", "Reunion", "Romania", "Russian Federation", "Rwanda", "Saint Kitts and Nevis", "Saint Lucia", "Saint Vincent and the Grenadines", "Samoa", "San Marino", "Sao Tome and Principe", "Saudi Arabia", "Senegal", "Seychelles", "Sierra Leone", "Singapore", "Slovakia (Slovak Republic)", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "South Georgia and the South Sandwich Islands", "Spain", "Sri Lanka", "St. Helena", "St. Pierre and Miquelon", "Sudan", "Suriname", "Svalbard and Jan Mayen Islands", "Swaziland", "Sweden", "Switzerland", "Syrian Arab Republic", "Taiwan, Province of China", "Tajikistan", "Tanzania, United Republic of", "Thailand", "Togo", "Tokelau", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Turks and Caicos Islands", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "United States Minor Outlying Islands", "Uruguay", "Uzbekistan", "Vanuatu", "Venezuela", "Vietnam", "Virgin Islands (British)", "Virgin Islands (U.S.)", "Wallis and Futuna Islands", "Western Sahara", "Yemen", "Yugoslavia", "Zambia", "Zimbabwe", "Palestine"};
+    @FXML
+    private Label invalidBio;
 
+    @FXML
+    private Label invalidConPassword;
 
+    @FXML
+    private Label invalidFName;
+
+    @FXML
+    private Label invalidLName;
+
+    @FXML
+    private Label invalidPassword;
+
+    @FXML
+    private Label invalidPhone;
+    @FXML
+    private Label invalidEmail;
+    @FXML
+    private Label invalidCountry;
+    Validation validate;
     String gender;
+    UserDto user;
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
+//        circle.setFill(new ImagePattern(new Image("user.png",200,200,false,true)));
+        addCountryChoiceBox();
         circle.setFill(new ImagePattern(new Image("/image/user.png",200,200,false,true)));
-        country.getItems().addAll(countries);
-        //country.setEditable(true);
-        country.setOnAction(e->{
-            System.out.println(country.getSelectionModel().getSelectedItem());
-        });
     }
     @FXML
     public void addProfileImage(MouseEvent event) {
@@ -102,28 +123,94 @@ public class RegisterController implements Initializable {
     @FXML
     void signup(ActionEvent event) {
         System.out.println("Sign up clicked");
-        if (firstName.getText().isEmpty() ) {
-            firstName.setStyle("-fx-border-color: red; -fx-border-width: 2px; ");
-        }
-        if (lastName.getText().isEmpty() ) {
-            lastName.setStyle("-fx-border-color: red; -fx-border-width: 2px; ");
-        }
-        if (phone.getText().isEmpty() ) {
-            phone.setStyle("-fx-border-color: red; -fx-border-width: 2px; ");
-        }
-        if (email.getText().isEmpty() ) {
-            email.setStyle("-fx-border-color: red; -fx-border-width: 2px; ");
-        }
-        if (password.getText().isEmpty() ) {
-            password.setStyle("-fx-border-color: red; -fx-border-width: 2px; ");
-        }
-        if (confirmPassword.getText().isEmpty() ) {
-            confirmPassword.setStyle("-fx-border-color: red; -fx-border-width: 2px; ");
-        }
-        if ( bio.getText().isEmpty() ) {
-            bio.setStyle("-fx-border-color: red; -fx-border-width: 2px; ");
+        //Validate First Name
+        if (firstName.getText().isEmpty()) {
+            setErrorMsg(firstName,invalidFName, Constants.FIELD_EMPTY);
+        }else if(firstName.getText().length() < 3){
+            setErrorMsg(firstName,invalidFName,"Name must contains only characters");
+        }else {
+            firstName.setStyle(Constants.CORRECT_INPUT);
+            invalidFName.setText("");
         }
 
+
+        //Validate Last Name
+        if (lastName.getText().isEmpty()) {
+            setErrorMsg(lastName,invalidLName, Constants.FIELD_EMPTY);
+        }else if(lastName.getText().length() < 3){
+            setErrorMsg(lastName,invalidLName,"Name must contains only characters");
+        }else {
+            lastName.setStyle(Constants.CORRECT_INPUT);
+            invalidLName.setText("");
+        }
+
+        //Validate Phone Number
+        if (phone.getText().isEmpty()) {
+            setErrorMsg(phone,invalidPhone, Constants.FIELD_EMPTY);
+        }else if(!validate.validateEmail(phone.getText())){
+            setErrorMsg(phone,invalidPhone,"Invalid phone");
+        }else {
+            phone.setStyle(Constants.CORRECT_INPUT);
+            invalidPhone.setText("");
+        }
+
+        //Validate Email
+        if (email.getText().isEmpty()) {
+            setErrorMsg(email,invalidEmail, Constants.FIELD_EMPTY);
+        }else if(!validate.validateEmail(email.getText())){
+            setErrorMsg(email,invalidEmail,"Invalid email");
+        }else {
+            email.setStyle(Constants.CORRECT_INPUT);
+            invalidEmail.setText("");
+        }
+        //Validate Password
+        if (password.getText().isEmpty()) {
+            setErrorMsg(password,invalidPassword, Constants.FIELD_EMPTY);
+        }else if(!validate.validatePassword(password.getText())){
+            setErrorMsg(password,invalidPassword,"Weak Password");
+        }else {
+            password.setStyle(Constants.CORRECT_INPUT);
+            invalidPassword.setText("");
+            //Validate Confirm password
+            if (!password.getText().equals(confirmPassword.getText())) {
+                setErrorMsg(confirmPassword,invalidConPassword, "Password not matched");
+            }else {
+                confirmPassword.setStyle(Constants.CORRECT_INPUT);
+                invalidConPassword.setText("");
+            }
+        }
+
+
+        //Validate Bio
+        if (bio.getText().isEmpty()) {
+            setErrorMsg(bio,invalidBio, Constants.FIELD_EMPTY);
+        }else {
+            email.setStyle(Constants.CORRECT_INPUT);
+            invalidEmail.setText("");
+        }
+        //Validate Country
+        if (country.getSelectionModel().getSelectedItem() == null) {
+            setErrorMsg(country,invalidCountry, Constants.FIELD_EMPTY);
+        }else {
+            email.setStyle(Constants.CORRECT_INPUT);
+            invalidEmail.setText("");
+        }
     }
-
+    private void addCountryChoiceBox(){
+        ObservableList<String> cities = FXCollections.observableArrayList();
+        String[] locales1 = Locale.getISOCountries();
+        for (String countrylist : locales1) {
+            Locale obj = new Locale("", countrylist);
+            String[] city = { obj.getDisplayCountry() };
+            for (int x = 0; x < city.length; x++) {
+                cities.add(obj.getDisplayCountry());
+            }
+        }
+        country.setItems(cities);
+    }
+    private void setErrorMsg(Node tf, Label b, String msg){
+        tf.setStyle(Constants.ERROR_BORDER_RED);
+         b.setText(msg);
+         b.setStyle(Constants.RED_FONT);
+    }
 }
