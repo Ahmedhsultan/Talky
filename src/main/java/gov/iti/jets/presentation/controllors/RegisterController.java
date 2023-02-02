@@ -10,10 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -98,6 +95,11 @@ public class RegisterController implements Initializable {
     private Label invalidEmail;
     @FXML
     private Label invalidCountry;
+    @FXML
+    private Label invalidDate;
+    @FXML
+    private ToggleGroup toggleGroup;
+
     Validation validate;
     String gender;
     UserDto user;
@@ -123,11 +125,19 @@ public class RegisterController implements Initializable {
     @FXML
     void signup(ActionEvent event) {
         System.out.println("Sign up clicked");
+        if(validation()){
+            System.out.println("success validate");
+        }
+    }
+    private boolean validation(){
+        boolean val = true;
         //Validate First Name
         if (firstName.getText().isEmpty()) {
             setErrorMsg(firstName,invalidFName, Constants.FIELD_EMPTY);
-        }else if(firstName.getText().length() < 3){
+            val = false;
+        }else if(!validate.validateName(firstName.getText())){
             setErrorMsg(firstName,invalidFName,"Name must contains only characters");
+            val = false;
         }else {
             firstName.setStyle(Constants.CORRECT_INPUT);
             invalidFName.setText("");
@@ -137,8 +147,10 @@ public class RegisterController implements Initializable {
         //Validate Last Name
         if (lastName.getText().isEmpty()) {
             setErrorMsg(lastName,invalidLName, Constants.FIELD_EMPTY);
+            val = false;
         }else if(lastName.getText().length() < 3){
             setErrorMsg(lastName,invalidLName,"Name must contains only characters");
+            val = false;
         }else {
             lastName.setStyle(Constants.CORRECT_INPUT);
             invalidLName.setText("");
@@ -147,8 +159,10 @@ public class RegisterController implements Initializable {
         //Validate Phone Number
         if (phone.getText().isEmpty()) {
             setErrorMsg(phone,invalidPhone, Constants.FIELD_EMPTY);
-        }else if(!validate.validateEmail(phone.getText())){
+            val = false;
+        }else if(!validate.validatePhoneNumber(phone.getText())){
             setErrorMsg(phone,invalidPhone,"Invalid phone");
+            val = false;
         }else {
             phone.setStyle(Constants.CORRECT_INPUT);
             invalidPhone.setText("");
@@ -157,8 +171,10 @@ public class RegisterController implements Initializable {
         //Validate Email
         if (email.getText().isEmpty()) {
             setErrorMsg(email,invalidEmail, Constants.FIELD_EMPTY);
+            val = false;
         }else if(!validate.validateEmail(email.getText())){
             setErrorMsg(email,invalidEmail,"Invalid email");
+            val = false;
         }else {
             email.setStyle(Constants.CORRECT_INPUT);
             invalidEmail.setText("");
@@ -166,35 +182,60 @@ public class RegisterController implements Initializable {
         //Validate Password
         if (password.getText().isEmpty()) {
             setErrorMsg(password,invalidPassword, Constants.FIELD_EMPTY);
+            val = false;
         }else if(!validate.validatePassword(password.getText())){
             setErrorMsg(password,invalidPassword,"Weak Password");
+            val = false;
         }else {
             password.setStyle(Constants.CORRECT_INPUT);
             invalidPassword.setText("");
+            val = false;
             //Validate Confirm password
             if (!password.getText().equals(confirmPassword.getText())) {
                 setErrorMsg(confirmPassword,invalidConPassword, "Password not matched");
+                val = false;
             }else {
                 confirmPassword.setStyle(Constants.CORRECT_INPUT);
                 invalidConPassword.setText("");
             }
         }
-
-
+        //Validate Confirm password
+        if (confirmPassword.getText().isEmpty()) {
+            setErrorMsg(confirmPassword,invalidConPassword, Constants.FIELD_EMPTY);
+            val = false;
+        }
         //Validate Bio
         if (bio.getText().isEmpty()) {
             setErrorMsg(bio,invalidBio, Constants.FIELD_EMPTY);
+            val = false;
         }else {
             email.setStyle(Constants.CORRECT_INPUT);
             invalidEmail.setText("");
         }
         //Validate Country
         if (country.getSelectionModel().getSelectedItem() == null) {
-            setErrorMsg(country,invalidCountry, Constants.FIELD_EMPTY);
+            setErrorMsg(country,invalidCountry,"Choose Your Country");
+            val = false;
         }else {
             email.setStyle(Constants.CORRECT_INPUT);
             invalidEmail.setText("");
         }
+
+        //Validate Date
+        if (dateOfBirth.getValue() == null) {
+            setErrorMsg(dateOfBirth,invalidDate,"Select you date of birth");
+            val = false;
+        }else {
+            dateOfBirth.setStyle(Constants.CORRECT_INPUT);
+            invalidDate.setText("");
+        }
+
+        //Validate Gender
+        if (toggleGroup.getSelectedToggle() == null) {
+//            radioFemal.setStyle("Constants.ERROR_BORDER_RED");
+//            radioMale.setStyle(Constants.ERROR_BORDER_RED);
+        }
+        return val;
     }
     private void addCountryChoiceBox(){
         ObservableList<String> cities = FXCollections.observableArrayList();
@@ -209,7 +250,7 @@ public class RegisterController implements Initializable {
         country.setItems(cities);
     }
     private void setErrorMsg(Node tf, Label b, String msg){
-        tf.setStyle(Constants.ERROR_BORDER_RED);
+        //tf.setStyle(Constants.ERROR_BORDER_RED);
          b.setText(msg);
          b.setStyle(Constants.RED_FONT);
     }

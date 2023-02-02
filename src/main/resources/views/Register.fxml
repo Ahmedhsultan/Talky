@@ -81,7 +81,8 @@
             <Label fx:id="invalidBio" layoutX="22.0" layoutY="481.0" />
             <Label fx:id="invalidEmail" layoutX="302.0" layoutY="356.0" />
             <Label fx:id="invalidConPassword" layoutX="302.0" layoutY="421.0" />
-            <Label fx:id="invalidCountry" layoutX="302.0" layoutY="485.0" />
+            <Label fx:id="invalidCountry" layoutX="302.0" layoutY="481.0" />
+            <Label fx:id="invalidDate" layoutX="152.0" layoutY="550.0" />
          </children>
       </AnchorPane>
       <AnchorPane layoutX="-3.0" layoutY="-3.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="709.0" prefWidth="261.0" style="-fx-background-radius: 0  50px 50px 0;" styleClass="pane_bg">
