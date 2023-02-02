@@ -2,8 +2,7 @@ package gov.iti.jets.service;
 
 import gov.iti.jets.dto.ChatDto;
 import gov.iti.jets.dto.ContactDto;
-import gov.iti.jets.dto.SessionDto;
-import gov.iti.jets.dto.UserDto;
+import gov.iti.jets.dto.UserSessionDto;
 import gov.iti.jets.entity.Chat;
 import gov.iti.jets.entity.ChatUser;
 import gov.iti.jets.entity.Friends;
@@ -16,13 +15,12 @@ import gov.iti.jets.persistence.dao.FriendsDao;
 import gov.iti.jets.persistence.dao.UserDao;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class GetUserSession {
-    private SessionDto sessionDto;
+public class UserSessionService {
+    private UserSessionDto userSessionDto;
     private ChatDao chatDao;
     private FriendsDao friendsDao;
     private ChatUserDao chatUserDao;
@@ -31,7 +29,7 @@ public class GetUserSession {
     private ChatMapper chatMapper;
     private User user;
 
-    public GetUserSession(User user) {
+    public UserSessionService(User user) {
         this.user = user;
         userDao = new UserDao();
         friendsDao = new FriendsDao();
@@ -41,7 +39,7 @@ public class GetUserSession {
         chatMapper = new ChatMapper();
     }
 
-    public SessionDto getSessionDto() {
+    public UserSessionDto getSessionDto() {
         List<ChatUser> chatUserList = chatUserDao.getChatsByUserId(user.getPhoneNumber());
         List<Chat> chatList = chatUserList.stream().map(x -> chatDao.findById(x.getChat_id())).toList();
         List<ChatDto> chatDtoList = chatList.stream().map(x -> chatMapper.toDTO(x)).toList();
@@ -57,11 +55,11 @@ public class GetUserSession {
 
         List<ContactDto> userDtoList = userSet.stream().map(x -> userMapper.toContactDTO(x)).toList();
 
-                sessionDto = SessionDto.builder()
+                userSessionDto = UserSessionDto.builder()
                         .user(userMapper.toDTO(user))
                         .chatListDto(chatDtoList)
                         .contactListDto(userDtoList)
                         .build();
-        return sessionDto;
+        return userSessionDto;
     }
 }

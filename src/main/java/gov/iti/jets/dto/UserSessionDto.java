@@ -10,7 +10,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @ToString
-public class SessionDto implements Serializable {
+public class UserSessionDto implements Serializable {
     private UserDto user;
     private List<ChatDto> chatListDto;
     private List<ContactDto> contactListDto;

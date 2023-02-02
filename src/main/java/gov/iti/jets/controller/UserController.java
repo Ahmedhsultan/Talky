@@ -1,6 +1,7 @@
 package gov.iti.jets.controller;
 
 import gov.iti.jets.dto.UserDto;
+import gov.iti.jets.dto.UserSessionDto;
 import gov.iti.jets.dto.registration.UserRegistrationDto;
 import gov.iti.jets.entity.User;
 import gov.iti.jets.network.UserRemote;
@@ -11,25 +12,25 @@ import java.rmi.server.UnicastRemoteObject;
 
 public class UserController extends UnicastRemoteObject implements UserRemote {
 
-    private UserService userService = new UserService();
+    private UserService userService;
     public UserController() throws RemoteException {
+        userService = new UserService();
     }
 //
-//    public void setOnlineStatus(String phone,String status)
-//    {
-//        userService.setOnlineStatus(phone,status);
-//    }
+    public void setOnlineStatus(String phone,String status) throws RemoteException {
+        userService.setOnlineStatus(phone,status);
+    }
 
-    public void register(UserRegistrationDto userRegistrationDto) throws RemoteException {
+    public UserSessionDto register(UserRegistrationDto userRegistrationDto) throws RemoteException {
         System.out.println("controller");
-            userService.register( userRegistrationDto);
+            return userService.register( userRegistrationDto);
     }
 
-    public void login(String phone, String password) throws RemoteException {
-        userService.login( phone,  password);
+    public UserSessionDto login(String phone, String password) throws RemoteException {
+        return userService.login( phone,  password);
     }
-    public void logout(UserRegistrationDto phone) throws RemoteException
+    public void logout(String phone) throws RemoteException
     {
-        throw new RemoteException("hiii");
+        userService.logout(phone);
     }
 }

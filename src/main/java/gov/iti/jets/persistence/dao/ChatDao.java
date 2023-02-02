@@ -14,7 +14,6 @@ public class ChatDao extends BaseDaoImpl<Chat, Integer>{
 
     @Override
     public void insert(Chat entity) {
-
     }
 
     @Override
