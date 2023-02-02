@@ -1,34 +1,51 @@
 .root{
-    -fx-background-color: linear-gradient(to bottom right ,#12dfeed8 ,#d61094f1);
+    -fx-background-color: linear-gradient(to bottom right, #cc208e 10%, #6713d2 100%);
 }
 .text-field{
+    -fx-background-image: url('../image/phone.png');
     -fx-border-radius: 10;
     -fx-background-radius: 15;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: left 10 center;
+    -fx-background-size: 18;
+    -fx-padding: 0 0 0 30;
     -fx-font-size: 15;
-    -fx-border-width: 0 0 0 0;
-    -fx-border-color: #6e6969;
-    fx-background-color:  #44445d;
+    fx-background-color: #6713d2;
     -fx-background-insets: 0, 1 1 1 1;
-    -fx-padding: 10 20 10 10;
-    -fx-text-fill: #0d0d12;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 5, 0.0, 0, 1);
+    -fx-text-fill: #6713d2;
+    -fx-effect: dropshadow(three-pass-box, #6713d2, 5, 0.0, 0, 1);
 }
-.border-pane{
+
+.pane{
+    -fx-background-radius: 10;
+    -fx-background-insets: 0,0;
+    -fx-background-fill: #dfdae6;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 5, 0.0, 0, 1)
+}
+.grid-pane{
     -fx-background-radius: 10;
     -fx-background-insets: 0,0;
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 5, 0.0, 0, 1)
 }
-.lable{
-    -fx-effect: dropshadow(three-pass-box, rgba(63, 58, 58, 0.4), 5,2.0, 0, 1);
+.label {
+    -fx-background-radius: 6, 5;
+    -fx-background-insets: 0, 1;
+    -fx-effect: dropshadow(three-pass-box, #8d8597, 5, 0.0, 0, 1);
+    -fx-text-fill: #FA0796;
 }
-.button{
-    -fx-background-color: #44445d;
+.button {
+    -fx-background-color: #5607bd;
     -fx-border-radius: 15;
     -fx-background-radius: 15;
     -fx-border-color: white;
-    -fx-font-size: 20;
+    -fx-font-size: 22;
     -fx-font-weight: bold;
     -fx-text-fill: white;
     -fx-background-insets: 0, 0 0 0 0;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 5, 0.0, 0, 1);
+    -fx-effect: dropshadow(three-pass-box, #6713d2, 5, 0.0, 0, 1);
+}
+
+.button:hover {
+    -fx-background-color:
+        linear-gradient(from 0% 93% to 0% 100%, #6713d2 100, #4e4eb8 0%)
 }

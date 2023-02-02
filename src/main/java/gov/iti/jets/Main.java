@@ -19,7 +19,7 @@ public class Main extends Application {
         Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
         double width = screenSize.getWidth();
         double height = screenSize.getHeight() - 60;
-        Parent root = FXMLLoader.load(getClass().getResource("/views/Register.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/views/Login.fxml"));
         stage.setTitle("Registration");
         stage.setResizable(false);
         stage.setScene(new Scene(root, width, height));
