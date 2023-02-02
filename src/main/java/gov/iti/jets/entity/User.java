@@ -12,9 +12,7 @@ import java.sql.Date;
 @Builder
 @ToString
 public class User implements BaseEntity, Serializable {
-
-    // column name = id
-    private String phoneNumber;
+    private String id;
     private String name;
     private String email;
     private String picture;
@@ -26,6 +24,5 @@ public class User implements BaseEntity, Serializable {
     private Date createdOn;
     private String isOnlineStatus;
     private boolean botMode;
-
-
+    private String bio;
 }
