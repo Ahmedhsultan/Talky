@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -95,6 +96,8 @@ public class RegisterController implements Initializable {
     private Label invalidPhone;
     @FXML
     private Label invalidEmail;
+    @FXML
+    private Label invalidCountry;
     Validation validate;
     String gender;
     UserDto user;
@@ -144,7 +147,7 @@ public class RegisterController implements Initializable {
         //Validate Phone Number
         if (phone.getText().isEmpty()) {
             setErrorMsg(phone,invalidPhone, Constants.FIELD_EMPTY);
-        }else if(validate.validateEmail(phone.getText())){
+        }else if(!validate.validateEmail(phone.getText())){
             setErrorMsg(phone,invalidPhone,"Invalid phone");
         }else {
             phone.setStyle(Constants.CORRECT_INPUT);
@@ -154,8 +157,40 @@ public class RegisterController implements Initializable {
         //Validate Email
         if (email.getText().isEmpty()) {
             setErrorMsg(email,invalidEmail, Constants.FIELD_EMPTY);
-        }else if(validate.validateEmail(email.getText())){
+        }else if(!validate.validateEmail(email.getText())){
             setErrorMsg(email,invalidEmail,"Invalid email");
+        }else {
+            email.setStyle(Constants.CORRECT_INPUT);
+            invalidEmail.setText("");
+        }
+        //Validate Password
+        if (password.getText().isEmpty()) {
+            setErrorMsg(password,invalidPassword, Constants.FIELD_EMPTY);
+        }else if(!validate.validatePassword(password.getText())){
+            setErrorMsg(password,invalidPassword,"Weak Password");
+        }else {
+            password.setStyle(Constants.CORRECT_INPUT);
+            invalidPassword.setText("");
+            //Validate Confirm password
+            if (!password.getText().equals(confirmPassword.getText())) {
+                setErrorMsg(confirmPassword,invalidConPassword, "Password not matched");
+            }else {
+                confirmPassword.setStyle(Constants.CORRECT_INPUT);
+                invalidConPassword.setText("");
+            }
+        }
+
+
+        //Validate Bio
+        if (bio.getText().isEmpty()) {
+            setErrorMsg(bio,invalidBio, Constants.FIELD_EMPTY);
+        }else {
+            email.setStyle(Constants.CORRECT_INPUT);
+            invalidEmail.setText("");
+        }
+        //Validate Country
+        if (country.getSelectionModel().getSelectedItem() == null) {
+            setErrorMsg(country,invalidCountry, Constants.FIELD_EMPTY);
         }else {
             email.setStyle(Constants.CORRECT_INPUT);
             invalidEmail.setText("");
@@ -173,9 +208,9 @@ public class RegisterController implements Initializable {
         }
         country.setItems(cities);
     }
-    private void setErrorMsg(TextField tf,Label b, String msg){
+    private void setErrorMsg(Node tf, Label b, String msg){
         tf.setStyle(Constants.ERROR_BORDER_RED);
          b.setText(msg);
-        b.setStyle(Constants.RED_FONT);
+         b.setStyle(Constants.RED_FONT);
     }
 }

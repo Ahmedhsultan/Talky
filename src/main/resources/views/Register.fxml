@@ -19,13 +19,13 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="anchor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1208.0" stylesheets="@../style/registerStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gov.iti.jets.presentation.controllors.RegisterController">
+<AnchorPane fx:id="anchor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1208.0" stylesheets="@../style/registerStyle.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gov.iti.jets.presentation.controllors.RegisterController">
    <children>
       <AnchorPane layoutX="533.0" layoutY="10.0" prefHeight="700.0" prefWidth="628.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="533.0" AnchorPane.rightAnchor="-57.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label layoutX="39.0" prefHeight="90.0" prefWidth="484.0" text="Create new account">
+            <Label layoutX="39.0" prefHeight="107.0" prefWidth="517.0" text="Create new account">
                <font>
-                  <Font name="Segoe UI Historic" size="47.0" />
+                  <Font name="Elephant" size="51.0" />
                </font>
             </Label>
             <Hyperlink layoutX="587.0" layoutY="630.0" text="Log In" textFill="#8989bb">
@@ -43,7 +43,7 @@
                   <DropShadow color="#000000ad" radius="8.5175" width="15.07" />
                </effect>
             </Circle>
-            <PasswordField id="password" fx:id="password" layoutX="-2.0" layoutY="388.0" prefHeight="25.0" prefWidth="244.0" promptText="Password" />
+            <PasswordField id="password" fx:id="password" layoutX="-2.0" layoutY="388.0" prefHeight="31.0" prefWidth="244.0" promptText="Password" />
             <TextField id="name" fx:id="firstName" layoutX="-2.0" layoutY="263.0" onAction="#signup" prefHeight="31.0" prefWidth="244.0" promptText="First Name" styleClass="text-field">
                <padding>
                   <Insets right="10.0" top="10.0" />
@@ -53,30 +53,35 @@
             <TextField id="phone" fx:id="phone" layoutX="-2.0" layoutY="323.0" prefHeight="31.0" prefWidth="244.0" promptText="Phone" />
             <TextField id="mail" fx:id="email" layoutX="277.0" layoutY="323.0" prefHeight="31.0" prefWidth="244.0" promptText="Email" />
             <TextField id="bio" fx:id="bio" layoutX="-2.0" layoutY="448.0" prefHeight="31.0" prefWidth="244.0" promptText="Bio" />
-            <ComboBox fx:id="country" layoutX="277.0" layoutY="453.0" prefHeight="31.0" prefWidth="244.0" promptText="Country" />
+            <ComboBox fx:id="country" layoutX="277.0" layoutY="448.0" prefHeight="31.0" prefWidth="244.0" promptText="Country" />
             <DatePicker id="dob" fx:id="dateOfBirth" layoutX="135.0" layoutY="517.0" prefHeight="31.0" prefWidth="273.0" promptText="Date of birth" styleClass="date-picker" />
             <JFXRadioButton fx:id="radioMale" layoutX="135.0" layoutY="558.0" text="Male">
                <selectedColor>
-                  <Color blue="0.364705890417099" green="0.2666666805744171" red="0.2666666805744171" />
+                  <Color red="0.2666666805744171" green="0.2666666805744171" blue="0.364705890417099" />
                </selectedColor>
                <toggleGroup>
-                  <ToggleGroup />
+                  <ToggleGroup fx:id="toggleGroup" />
                </toggleGroup>
             </JFXRadioButton>
-            <JFXRadioButton fx:id="radioFemal" layoutX="248.0" layoutY="558.0" text="Female">
+            <JFXRadioButton fx:id="radioFemal" layoutX="248.0" layoutY="558.0" text="Female" toggleGroup="$toggleGroup">
                <selectedColor>
-                  <Color blue="0.364705890417099" green="0.2666666805744171" red="0.2666666805744171" />
+                  <Color red="0.2666666805744171" green="0.2666666805744171" blue="0.364705890417099" />
                </selectedColor>
-               <toggleGroup>
-                  <ToggleGroup fx:id="g" />
-               </toggleGroup>
             </JFXRadioButton>
             <JFXButton fx:id="SignUp" layoutX="107.0" layoutY="620.0" onAction="#signup" prefHeight="53.0" prefWidth="330.0" text="Sign Up" textFill="WHITE">
                <font>
                   <Font size="24.0" />
                </font>
             </JFXButton>
-            <PasswordField id="password" fx:id="confirmPassword" layoutX="277.0" layoutY="388.0" prefHeight="25.0" prefWidth="244.0" promptText="Confirm Password" />
+            <PasswordField id="password" fx:id="confirmPassword" layoutX="277.0" layoutY="388.0" prefHeight="31.0" prefWidth="244.0" promptText="Confirm Password" />
+            <Label fx:id="invalidFName" layoutX="22.0" layoutY="295.0" />
+            <Label fx:id="invalidPhone" layoutX="22.0" layoutY="356.0" />
+            <Label fx:id="invalidLName" layoutX="302.0" layoutY="295.0" />
+            <Label fx:id="invalidPassword" layoutX="22.0" layoutY="421.0" />
+            <Label fx:id="invalidBio" layoutX="22.0" layoutY="481.0" />
+            <Label fx:id="invalidEmail" layoutX="302.0" layoutY="356.0" />
+            <Label fx:id="invalidConPassword" layoutX="302.0" layoutY="421.0" />
+            <Label fx:id="invalidCountry" layoutX="302.0" layoutY="485.0" />
          </children>
       </AnchorPane>
       <AnchorPane layoutX="-3.0" layoutY="-3.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="709.0" prefWidth="261.0" style="-fx-background-radius: 0  50px 50px 0;" styleClass="pane_bg">
