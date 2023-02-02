@@ -12,7 +12,7 @@ import java.sql.Date;
 @Builder
 @ToString
 public class User implements BaseEntity, Serializable {
-    private String id;
+    private String phoneNumber;
     private String name;
     private String email;
     private String picture;

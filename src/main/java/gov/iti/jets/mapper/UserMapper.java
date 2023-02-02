@@ -14,7 +14,7 @@ public class UserMapper implements BaseMapper<User, UserDto>{
     @Override
     public UserDto toDTO(User user) {
         UserDto dto = UserDto.builder()
-                .id(user.getId())
+                .phoneNumber(user.getPhoneNumber())
                 .name(user.getName())
                 .email(user.getEmail())
                 .picture(user.getPicture())
@@ -23,14 +23,14 @@ public class UserMapper implements BaseMapper<User, UserDto>{
                 .dateOfBirth(user.getDateOfBirth())
                 .isOnlineStatus(user.getIsOnlineStatus())
                 .botMode(user.isBotMode())
-                .bio(user.getBio())
+//                .bio(user.getBio())
                 .build();
         return dto;
     }
 
     public ContactDto toContactDTO(User user) {
         ContactDto dto = ContactDto.builder()
-                .phoneNumber(user.getId())
+                .phoneNumber(user.getPhoneNumber())
                 .name(user.getName())
                 .picture(user.getPicture())
                 .isOnlineStatus(user.getIsOnlineStatus())
@@ -42,7 +42,7 @@ public class UserMapper implements BaseMapper<User, UserDto>{
     @Override
     public User toEntity(UserDto userDto) {
         User entity = User.builder()
-                .id(userDto.getId())
+                .phoneNumber(userDto.getPhoneNumber())
                 .name(userDto.getName())
                 .email(userDto.getEmail())
                 .picture(userDto.getPicture())
@@ -51,7 +51,7 @@ public class UserMapper implements BaseMapper<User, UserDto>{
                 .dateOfBirth(userDto.getDateOfBirth())
                 .isOnlineStatus(userDto.getIsOnlineStatus())
                 .botMode(userDto.isBotMode())
-                .bio(userDto.getBio())
+//                .bio(userDto.getb())
                 .build();
         return entity;
     }

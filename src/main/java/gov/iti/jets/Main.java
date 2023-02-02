@@ -4,15 +4,8 @@ package gov.iti.jets;
 import gov.iti.jets.controller.UserController;
 import gov.iti.jets.dto.UserDto;
 import gov.iti.jets.dto.registration.UserRegistrationDto;
-import gov.iti.jets.entity.User;
-import gov.iti.jets.network.UserRemote;
-import gov.iti.jets.service.UserService;
-import gov.iti.jets.util.Constants;
-import gov.iti.jets.util.Validation;
 
 import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
 
 public class Main {
     public static void main(String[] args) {
