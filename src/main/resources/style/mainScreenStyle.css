@@ -1,0 +1,14 @@
+.button {
+    -fx-background-color: transparent;
+    -fx-font-size: 15;
+    -fx-font-family: "Rockwell";
+    -fx-font-style: oblique;
+    -fx-font-weight: 900;
+    -fx-text-fill: #382a32;
+}
+
+.button:focused {
+    -fx-border-width: 0 0 2px 5px;
+    -fx-border-color: purple;
+
+}
