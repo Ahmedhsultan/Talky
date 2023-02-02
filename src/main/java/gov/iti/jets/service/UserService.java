@@ -30,7 +30,7 @@ public class UserService {
 
         UserSessionDto userSessionDto=null;
         try {
-            if(!Validation.validatePhoneNumber(userRegistrationDto.getUserDto().getPhoneNumber()))
+            if(!Validation.validatePhoneNumber(userRegistrationDto.getUserDto().getId()))
             {
                 throw new RemoteException("Invalid Phone Number!!");
             }
@@ -39,7 +39,7 @@ public class UserService {
                 throw new RemoteException("Invalid Password!!");
             }
             User user=null;
-            User tempUser= dao.findById(userRegistrationDto.getUserDto().getPhoneNumber());
+            User tempUser= dao.findById(userRegistrationDto.getUserDto().getId());
             if (tempUser!=null)
             {
                 throw new RemoteException("Phone Number Already Found!!");

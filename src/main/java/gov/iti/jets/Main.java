@@ -11,13 +11,13 @@ public class Main {
     public static void main(String[] args) {
 
         UserDto userDto = new UserDto();
-        userDto.setPhoneNumber("01111315022");
+        userDto.setId("01111315022");
         UserRegistrationDto dto = new UserRegistrationDto();
         dto.setUserDto(userDto);
         dto.setPassword("abdoamr123");
         try {
             UserController userController = new UserController();
-            System.out.println(userController.register(dto));
+            System.out.println(userController.login(dto.getUserDto().getId(), dto.getPassword()));
         } catch (RemoteException e) {
             e.printStackTrace();
         }
