@@ -54,6 +54,7 @@ public class Constants {
 
         System.out.println(path);
 //        f.createNewFile();
+        System.out.println(f.exists());
         String tokens[] = path.split("[.]",0);
         System.out.println(tokens.length);
         ImageIO.write(bImage2, tokens[tokens.length-1], f);
