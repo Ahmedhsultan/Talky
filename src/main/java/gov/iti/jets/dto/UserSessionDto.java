@@ -1,6 +1,5 @@
 package gov.iti.jets.dto;
 
-import gov.iti.jets.entity.Notification;
 import lombok.*;
 import java.io.Serializable;
 import java.util.ArrayList;
