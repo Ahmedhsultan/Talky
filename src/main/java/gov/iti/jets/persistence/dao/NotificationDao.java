@@ -1,5 +1,6 @@
 package gov.iti.jets.persistence.dao;
 
+import gov.iti.jets.entity.ChatUser;
 import gov.iti.jets.entity.Notification;
 import gov.iti.jets.persistence.DBManagement;
 import java.sql.Connection;
@@ -11,6 +12,24 @@ import java.util.List;
 
 public class NotificationDao extends BaseDaoImpl<Notification,Integer>{
     public NotificationDao() {super(Notification.class);}
+
+    public List<Notification> getNotificationsByUserId(String userId){
+        //Write select query by ID
+        String query = "SELECT * FROM notification WHERE receiver_id = "+ userId +" ;";
+
+        try(Connection connection = DBManagement.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
+            //Execute the query
+            ResultSet resultSet = statement.executeQuery();
+
+            //Convert resultset to List
+            List<Notification> list = resultSetToList(resultSet);
+
+            return list;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     @Override
     public void insert(Notification entity) throws SQLException {
