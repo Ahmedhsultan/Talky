@@ -1,5 +1,8 @@
 package gov.iti.jets.presentation.controllors;
 import gov.iti.jets.dto.UserDto;
+import gov.iti.jets.dto.registration.UserRegistrationDto;
+import gov.iti.jets.network.UserRemote;
+import gov.iti.jets.network.service.RegisterService;
 import gov.iti.jets.util.Constants;
 import gov.iti.jets.util.Validation;
 import javafx.collections.FXCollections;
@@ -107,11 +110,18 @@ public class RegisterController implements Initializable {
     Validation validate;
     String gender;
     UserDto user = new UserDto();
+    RegisterService reg;
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
 //        circle.setFill(new ImagePattern(new Image("user.png",200,200,false,true)));
         addCountryChoiceBox();
         circle.setFill(new ImagePattern(new Image("/image/user.png",200,200,false,true)));
+        reg = new RegisterService();
+        UserDto user = new UserDto();
+        user.setId("01078965432");
+        user.setName("Amany");
+        UserRegistrationDto x = new UserRegistrationDto(user,"Amany12345");
+        reg.addUser(x);
     }
     @FXML
     public void addProfileImage(MouseEvent event) {
