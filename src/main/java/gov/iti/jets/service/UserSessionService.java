@@ -1,11 +1,9 @@
 package gov.iti.jets.service;
 
-import gov.iti.jets.dto.ChatDto;
-import gov.iti.jets.dto.ContactDto;
-import gov.iti.jets.dto.NotificationDto;
-import gov.iti.jets.dto.UserSessionDto;
+import gov.iti.jets.dto.*;
 import gov.iti.jets.entity.*;
 import gov.iti.jets.mapper.ChatMapper;
+import gov.iti.jets.mapper.InvitationMapper;
 import gov.iti.jets.mapper.NotificationMapper;
 import gov.iti.jets.mapper.UserMapper;
 import gov.iti.jets.persistence.dao.*;
@@ -27,9 +25,11 @@ public class UserSessionService {
     private FriendsDao friendsDao;
     private ChatUserDao chatUserDao;
     private NotificationDao notificationDao;
+    private InvitationDao invitationDao;
     private UserMapper userMapper;
     private ChatMapper chatMapper;
     private NotificationMapper notificationMapper;
+    private InvitationMapper invitationMapper;
     private UserSessionDto userSessionDto;
 
     public UserSessionService(User user) {
@@ -39,9 +39,11 @@ public class UserSessionService {
         friendsDao = new FriendsDao();
         chatUserDao = new ChatUserDao();
         notificationDao = new NotificationDao();
+        invitationDao = new InvitationDao();
         userMapper = new UserMapper();
         chatMapper = new ChatMapper();
         notificationMapper = new NotificationMapper();
+        invitationMapper = new InvitationMapper();
     }
 
     public UserSessionDto getSessionDto() {
@@ -72,12 +74,20 @@ public class UserSessionService {
                 .map( x -> notificationMapper.toDTO(x))
                 .collect(Collectors.toCollection(ArrayList::new));
 
+        //Get all user invitation then order by created date
+        ArrayList<InvitationDto> invitationList = invitationDao.getInvitationByReceiverId(user.getId())
+                .stream()
+                .sorted((x,y)-> x.getCreatedOn().compareTo(y.getCreatedOn()))
+                .map( x -> invitationMapper.toDTO(x))
+                .collect(Collectors.toCollection(ArrayList::new));
+
         //Create session and return to user
         userSessionDto = UserSessionDto.builder()
                 .user(userMapper.toDTO(user))
                 .chatListDto(chatDtoList)
                 .contactListDto(userDtoList)
                 .notificationListDto(notificationList)
+                .invitationListDto(invitationList)
                 .build();
 
         return userSessionDto;
