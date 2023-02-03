@@ -36,7 +36,7 @@ public class UserSessionService {
     }
 
     public UserSessionDto getSessionDto() {
-        //Get user chats from database and map it to dto
+        //Get user chats from database and map it to dto then order by modified date
         List<ChatUser> chatUserList = chatUserDao.getChatsByUserId(user.getId());
         List<Chat> chatList = chatUserList.stream().map(x -> chatDao.findById(x.getChat_id())).toList();
         List<ChatDto> chatDtoList = chatList.stream().map(x -> chatMapper.toDTO(x))
@@ -55,7 +55,7 @@ public class UserSessionService {
         //Map all contacts to dto
         List<ContactDto> userDtoList = userSet.stream().map(x -> userMapper.toContactDTO(x)).toList();
 
-        //Get all user notification
+        //Get all user notification then order by created date
         List<Notification> notificationList = notificationDao.getNotificationsByUserId(user.getId())
                 .stream()
                 .sorted((x,y)-> x.getCreated_on().compareTo(y.getCreated_on()))
