@@ -13,6 +13,11 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * This is service which responsible for sending session to user once he loged in
+ * this session contain all user contacts data, chats data, notifications and user data
+ * All these lists are sorted according to creation and modification date
+ */
 public class UserSessionService {
     private User user;
     private UserDao userDao;

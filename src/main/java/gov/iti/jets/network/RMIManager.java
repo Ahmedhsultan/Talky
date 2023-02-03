@@ -6,7 +6,7 @@ import java.rmi.registry.Registry;
 
 
 /**
- * This is a manager singleton class which handel the access and creation
+ * This is a manager singleton class which handle the access and creation
  * of Registry and get the port number from environmental variables
  * all method is private except static method getRegistry which responsible about creation the Registry
  * and return it to the user
