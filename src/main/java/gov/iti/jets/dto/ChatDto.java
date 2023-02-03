@@ -3,6 +3,7 @@ package gov.iti.jets.dto;
 import lombok.*;
 
 import java.io.Serializable;
+import java.sql.Date;
 
 @Getter
 @Setter
@@ -14,4 +15,5 @@ public class ChatDto implements Serializable ,BaseDto{
     private int id;
     private String name;
     private String picture_icon;
+    private Date modified_on;
 }

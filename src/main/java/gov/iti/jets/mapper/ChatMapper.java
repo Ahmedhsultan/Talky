@@ -16,6 +16,7 @@ public class ChatMapper implements BaseMapper<Chat, ChatDto>{
                 .id(chat.getId())
                 .name(chat.getName())
                 .picture_icon(chat.getPicture_icon())
+                .modified_on(chat.getModified_on())
                 .build();
         return dto;
     }

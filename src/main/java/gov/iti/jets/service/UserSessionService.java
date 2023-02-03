@@ -39,7 +39,9 @@ public class UserSessionService {
         //Get user chats from database and map it to dto
         List<ChatUser> chatUserList = chatUserDao.getChatsByUserId(user.getId());
         List<Chat> chatList = chatUserList.stream().map(x -> chatDao.findById(x.getChat_id())).toList();
-        List<ChatDto> chatDtoList = chatList.stream().map(x -> chatMapper.toDTO(x)).toList();
+        List<ChatDto> chatDtoList = chatList.stream().map(x -> chatMapper.toDTO(x))
+                .sorted((x,y)-> x.getModified_on().compareTo(y.getModified_on()))
+                .toList();
 
         //Get user contacts
         List<Friends> contactList = friendsDao.findAllById(user.getId());
@@ -54,7 +56,10 @@ public class UserSessionService {
         List<ContactDto> userDtoList = userSet.stream().map(x -> userMapper.toContactDTO(x)).toList();
 
         //Get all user notification
-        List<Notification> notificationList = notificationDao.getNotificationsByUserId(user.getId());
+        List<Notification> notificationList = notificationDao.getNotificationsByUserId(user.getId())
+                .stream()
+                .sorted((x,y)-> x.getCreated_on().compareTo(y.getCreated_on()))
+                .toList();
 
         //Create session and return to user
         userSessionDto = UserSessionDto.builder()
