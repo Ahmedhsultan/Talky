@@ -3,6 +3,7 @@ package gov.iti.jets.dto;
 import gov.iti.jets.entity.Notification;
 import lombok.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -13,7 +14,7 @@ import java.util.List;
 @ToString
 public class UserSessionDto implements Serializable {
     private UserDto user;
-    private List<ChatDto> chatListDto;
-    private List<ContactDto> contactListDto;
-    private List<NotificationDto> notificationListDto;
+    private ArrayList<ChatDto> chatListDto;
+    private ArrayList<ContactDto> contactListDto;
+    private ArrayList<NotificationDto> notificationListDto;
 }

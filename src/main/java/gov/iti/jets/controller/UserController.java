@@ -14,6 +14,7 @@ public class UserController extends UnicastRemoteObject implements UserRemote {
 
     private UserService userService;
     public UserController() throws RemoteException {
+        super();
         userService = new UserService();
     }
 //
