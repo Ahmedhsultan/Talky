@@ -15,7 +15,7 @@ public class User implements BaseEntity, Serializable {
     private String id;
     private String name;
     private String email;
-    private String picture;
+    private String imgPath;
     private String password;
     private String sultPassword;
     private String gender;

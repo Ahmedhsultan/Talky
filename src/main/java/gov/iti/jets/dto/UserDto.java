@@ -16,13 +16,14 @@ public class UserDto implements BaseDto, Serializable {
     private String id;
     private String name;
     private String email;
-    private String picture;
+    private String imgPath;
     private String gender;
     private String country;
     private Date dateOfBirth;
     private String isOnlineStatus;
     private boolean botMode;
     private String bio;
+    private byte[] image;
 
 
 }
