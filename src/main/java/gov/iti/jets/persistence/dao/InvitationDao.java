@@ -1,6 +1,7 @@
 package gov.iti.jets.persistence.dao;
 
 import gov.iti.jets.entity.Invitation;
+import gov.iti.jets.entity.Notification;
 import gov.iti.jets.entity.User;
 import gov.iti.jets.persistence.DBManagement;
 
@@ -30,6 +31,23 @@ public class InvitationDao extends BaseDaoImpl<Invitation, Long> {
 
     }
 
+    public List<Invitation> getInvitationByReceiverId(String receiverId){
+        //Write select query by ID
+        String query = "SELECT * FROM invitation WHERE receiver_id = "+ receiverId +" ;";
+
+        try(Connection connection = DBManagement.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
+            //Execute the query
+            ResultSet resultSet = statement.executeQuery();
+
+            //Convert resultset to List
+            List<Invitation> list = resultSetToList(resultSet);
+
+            return list;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     public void update(Invitation entity) {
         String query = "update  invitation set " +
