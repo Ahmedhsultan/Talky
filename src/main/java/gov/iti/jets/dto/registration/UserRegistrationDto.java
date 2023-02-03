@@ -12,7 +12,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Builder
 @ToString
-public class UserRegistrationDto implements Serializable {
+public class UserRegistrationDto implements BaseDto, Serializable {
     private UserDto userDto;
     private String password;
 }
