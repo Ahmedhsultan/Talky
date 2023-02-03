@@ -2,6 +2,7 @@ package gov.iti.jets.entity;
 
 import lombok.*;
 
+import java.io.Serializable;
 import java.sql.Date;
 
 @Getter
@@ -10,7 +11,7 @@ import java.sql.Date;
 @NoArgsConstructor
 @Builder
 @ToString
-public class Notification implements BaseEntity{
+public class Notification implements BaseEntity {
     private int id;
     private int sender_id;
     private int receiver_id;

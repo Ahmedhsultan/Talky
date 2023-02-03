@@ -2,9 +2,11 @@ package gov.iti.jets.service;
 
 import gov.iti.jets.dto.ChatDto;
 import gov.iti.jets.dto.ContactDto;
+import gov.iti.jets.dto.NotificationDto;
 import gov.iti.jets.dto.UserSessionDto;
 import gov.iti.jets.entity.*;
 import gov.iti.jets.mapper.ChatMapper;
+import gov.iti.jets.mapper.NotificationMapper;
 import gov.iti.jets.mapper.UserMapper;
 import gov.iti.jets.persistence.dao.*;
 
@@ -27,6 +29,7 @@ public class UserSessionService {
     private NotificationDao notificationDao;
     private UserMapper userMapper;
     private ChatMapper chatMapper;
+    private NotificationMapper notificationMapper;
     private UserSessionDto userSessionDto;
 
     public UserSessionService(User user) {
@@ -38,6 +41,7 @@ public class UserSessionService {
         notificationDao = new NotificationDao();
         userMapper = new UserMapper();
         chatMapper = new ChatMapper();
+        notificationMapper = new NotificationMapper();
     }
 
     public UserSessionDto getSessionDto() {
@@ -61,9 +65,10 @@ public class UserSessionService {
         List<ContactDto> userDtoList = userSet.stream().map(x -> userMapper.toContactDTO(x)).toList();
 
         //Get all user notification then order by created date
-        List<Notification> notificationList = notificationDao.getNotificationsByUserId(user.getId())
+        List<NotificationDto> notificationList = notificationDao.getNotificationsByUserId(user.getId())
                 .stream()
                 .sorted((x,y)-> x.getCreated_on().compareTo(y.getCreated_on()))
+                .map( x -> notificationMapper.toDTO(x))
                 .toList();
 
         //Create session and return to user

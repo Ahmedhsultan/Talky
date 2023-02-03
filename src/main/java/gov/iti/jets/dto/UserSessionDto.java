@@ -15,5 +15,5 @@ public class UserSessionDto implements Serializable {
     private UserDto user;
     private List<ChatDto> chatListDto;
     private List<ContactDto> contactListDto;
-    private List<Notification> notificationListDto;
+    private List<NotificationDto> notificationListDto;
 }
