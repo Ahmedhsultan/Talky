@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  * Abstract generic Dao class to implement CORD Queries with abstract method
- * resultsetToList wich convert from resultset to list according the concrete class implementation
+ * resultsetToList which convert from resultset to list according the concrete class implementation
  * @param <E> Entity Type
  * @param <T> ID Type
  */
@@ -45,7 +45,7 @@ public abstract class BaseDaoImpl <E extends BaseEntity, T> implements BaseDao<E
 
     @Override
     public E findById(T id)  {
-        //Write select quary by ID
+        //Write select query by ID
         String query = "SELECT * FROM " + tableName + " WHERE id = "+ id +" ;";
 
         try(Connection connection =DBManagement.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
