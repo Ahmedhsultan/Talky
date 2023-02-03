@@ -1,5 +1,6 @@
 package gov.iti.jets.service;
 
+import gov.iti.jets.Main;
 import gov.iti.jets.dto.UserDto;
 import gov.iti.jets.dto.UserSessionDto;
 import gov.iti.jets.dto.registration.UserRegistrationDto;
@@ -10,8 +11,11 @@ import gov.iti.jets.persistence.dao.UserDao;
 import gov.iti.jets.util.Constants;
 import gov.iti.jets.util.Validation;
 
+import java.io.File;
+import java.io.IOException;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
+import java.util.List;
 
 public class UserService {
 
@@ -48,12 +52,16 @@ public class UserService {
             userRegistrationDto.getUserDto().setIsOnlineStatus(Constants.ONLINE_STATUS_AVAILABLE);
             userRegistrationDto.setPassword(hashedPass);
              user = userMapper.regDtoToEntity(userRegistrationDto);
+            saveUserImage(userRegistrationDto.getUserDto());
             dao.insert(user);
             userSessionService=new UserSessionService(user);
             userSessionDto= userSessionService.getSessionDto();
         }catch (SQLException ex){
             ex.printStackTrace();
             throw new RemoteException("Failed to register, please try again !!");
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RemoteException("Failed to Save User's Image, please try again !!");
         }
         return  userSessionDto;
     }
@@ -94,4 +102,17 @@ public class UserService {
     public void logout(String phone) throws RemoteException {
         setOnlineStatus(phone,Constants.ONLINE_STATUS_OFFLINE);
     }
+
+    public void saveUserImage(UserDto dto) throws IOException {
+        String path = getClass().getClassLoader().getResource("images/users").getPath()+"/"+dto.getImgPath();
+        Constants.byteArrayToImage(dto.getImage(), path);
+    }
+    public byte[] getUserImage(UserDto dto) throws IOException {
+        String path = getClass().getClassLoader().getResource("images/users").getPath()+"/"+dto.getImgPath();
+        return Constants.imageToByteArray(path);
+    }
+
+//
+
+
 }
