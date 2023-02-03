@@ -19,7 +19,7 @@ public class UserDao extends BaseDaoImpl<User, String> {
             User user = User.builder().id(result.getString("id"))
                     .name(result.getString("name"))
                     .email(result.getString("email"))
-                    .picture(result.getString("picture"))
+                    .imgPath(result.getString("img_path"))
                     .password(result.getString("password_hash"))
                     .sultPassword(result.getString("password_sult"))
                     .gender(result.getString("gender"))
@@ -52,7 +52,7 @@ public class UserDao extends BaseDaoImpl<User, String> {
                 "id =?" +
                 ",name=?" +
                 " ,email=?" +
-                " ,picture=?" +
+                " ,img_path=?" +
                 " ,password_hash=?" +
                 " ,password_sult=?" +
                 " ,gender=?" +
@@ -78,7 +78,7 @@ public class UserDao extends BaseDaoImpl<User, String> {
         statement.setString(1, entity.getId());
         statement.setString(2, entity.getName());
         statement.setString(3, entity.getEmail());
-        statement.setString(4, entity.getPicture());
+        statement.setString(4, entity.getImgPath());
         statement.setString(5, entity.getPassword());
         statement.setString(6, entity.getSultPassword());
         statement.setString(7, entity.getGender());
