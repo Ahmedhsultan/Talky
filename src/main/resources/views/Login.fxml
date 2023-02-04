@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
@@ -14,7 +15,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<GridPane prefHeight="926.0" prefWidth="1058.0" stylesheets="@../style/loginStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<GridPane prefHeight="926.0" prefWidth="1058.0" stylesheets="@../style/loginStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gov.iti.jets.presentation.controllors.LoginController">
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="1393.0" minWidth="10.0" prefWidth="575.0" />
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="2089.0" minWidth="10.0" prefWidth="483.0" />
@@ -29,27 +30,24 @@
             <Font name="Bodoni MT Bold" size="70.0" />
          </font>
       </Label>
-      <ImageView fitHeight="866.0" fitWidth="628.0" translateY="-10.0" GridPane.rowIndex="1">
+      <ImageView fitHeight="792.0" fitWidth="582.0" translateY="-10.0" GridPane.rowIndex="1">
          <image>
             <Image url="@../image/Chatting2.gif" />
          </image>
       </ImageView>
       <BorderPane prefHeight="639.0" prefWidth="323.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
          <center>
-            <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="251.0" prefWidth="350.0" style="-fx-background-color: #dfdae6;" styleClass="pane" stylesheets="@../style/loginStyle.css" BorderPane.alignment="CENTER">
-               <children>
-                  <JFXButton layoutX="75.0" layoutY="155.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="44.0" prefWidth="177.0" text="Get Start" />
-                  <Text layoutX="58.0" layoutY="125.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Don't have Accoun?" />
-                  <Hyperlink layoutX="166.0" layoutY="109.0" text="Register" textFill="#44445d" />
-                  <TextField layoutX="37.0" layoutY="35.0" maxHeight="-Infinity" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="41.0" prefWidth="261.0" promptText="Phone" />
-               </children>
+            <Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="251.0" prefWidth="350.0" style="-fx-background-color: #dfdae6;" styleClass="pane" stylesheets="@../style/loginStyle.css" BorderPane.alignment="CENTER">
             </Pane>
          </center>
       </BorderPane>
-      <ImageView fitHeight="157.0" fitWidth="292.0" pickOnBounds="true" translateX="150.0" translateY="-10.0">
+      <ImageView fitHeight="149.0" fitWidth="292.0" pickOnBounds="true">
          <image>
             <Image url="@../image/logo6.png" />
          </image>
+         <GridPane.margin>
+            <Insets />
+         </GridPane.margin>
       </ImageView>
    </children>
 </GridPane>

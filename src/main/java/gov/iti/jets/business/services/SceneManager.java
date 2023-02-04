@@ -27,7 +27,7 @@ public class SceneManager {
         primaryStage = stage;
     }
 
-    public void switchToRegisterationScene() {
+    public void switchToRegistrationScene() {
         String sceneName = "Register";
         primaryStage.setTitle(sceneName);
         loadView(sceneName);
