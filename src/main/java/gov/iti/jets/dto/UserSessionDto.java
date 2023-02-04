@@ -3,7 +3,6 @@ package gov.iti.jets.dto;
 import lombok.*;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @Setter
@@ -16,4 +15,5 @@ public class UserSessionDto implements Serializable {
     private ArrayList<ChatDto> chatListDto;
     private ArrayList<ContactDto> contactListDto;
     private ArrayList<NotificationDto> notificationListDto;
+    private ArrayList<InvitationDto> invitationListDto;
 }
