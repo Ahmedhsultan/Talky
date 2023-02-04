@@ -26,8 +26,8 @@ public class DBManagement {
             poolDataSource = new MysqlConnectionPoolDataSource();
 
             poolDataSource.setURL("jdbc:mysql://localhost:3306/talkey?characterEncoding=latin1");
-            poolDataSource.setUser("springstudent");
-            poolDataSource.setPassword("springstudent");
+            poolDataSource.setUser("root");
+            poolDataSource.setPassword("root");
 
             poolConn = poolDataSource.getPooledConnection();
         } catch (SQLException e) {

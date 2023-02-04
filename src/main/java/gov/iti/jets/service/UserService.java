@@ -52,7 +52,7 @@ public class UserService {
             userRegistrationDto.getUserDto().setIsOnlineStatus(Constants.ONLINE_STATUS_AVAILABLE);
             userRegistrationDto.setPassword(hashedPass);
              user = userMapper.regDtoToEntity(userRegistrationDto);
-            saveUserImage(userRegistrationDto.getUserDto());
+//            saveUserImage(userRegistrationDto.getUserDto());
             dao.insert(user);
             userSessionService=new UserSessionService(user);
             userSessionDto= userSessionService.getSessionDto();
