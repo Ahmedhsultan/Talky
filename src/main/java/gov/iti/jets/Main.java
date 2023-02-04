@@ -28,6 +28,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
+<<<<<<< HEAD
 public class Main  {
 //    @Override
 //    public void start(Stage stage) throws IOException {
@@ -77,14 +78,40 @@ public class Main  {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+=======
+public class Main extends Application {
+    @Override
+    public void start(Stage stage) throws IOException {
+
+        Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+        double width = screenSize.getWidth();
+        double height = screenSize.getHeight() - 60;
+        Parent root = FXMLLoader.load(getClass().getResource("/views/Register.fxml"));
+//        Parent root = FXMLLoader.load(getClass().getResource("/views/MainScene.fxml"));
+        stage.setTitle("Registration");
+        stage.setResizable(false);
+        stage.setScene(new Scene(root, width, height));
+        stage.show();
+>>>>>>> feature_rmi
     }
-    public static byte[] imageToByteArray(String path) throws IOException
-    {
-        BufferedImage bImage = ImageIO.read(new File(path));
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        String tokens[] = path.split("[.]",0);
-        ImageIO.write(bImage, tokens[tokens.length-1], bos );
-        byte [] data = bos.toByteArray();
-        return data;
+    public static void main(String[] args) {
+        launch();
+//        RegisterService reg;
+//        reg = new RegisterService();
+//        UserDto user = new UserDto();
+//        user.setId("01090780888");
+//        user.setImgPath("01078965432.png");
+//
+//        try {
+//
+//            user.setImage(imageToByteArray("C:\\Users\\hp\\Pictures\\test.png"));
+//            System.out.println("success ");
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+//        user.setName("Dina");
+//        UserRegistrationDto x = new UserRegistrationDto(user,"Amany12345");
+//        reg.addUser(x);
+//    }
     }
 }

@@ -3,6 +3,7 @@ package gov.iti.jets.util;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 
+import java.io.File;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -148,6 +149,19 @@ public class Validation {
 
         if (tg.getSelectedToggle() == null) {
             lable.setText("Gender is required");
+            lable.setStyle(Constants.RED_FONT);
+            isValid = false;
+        }else{
+            lable.setText("");
+        }
+        return isValid;
+    }
+    public static boolean validateImage(File f, Label lable)
+    {
+        boolean isValid = true;
+
+        if (f == null) {
+            lable.setText("Please Choose Image");
             lable.setStyle(Constants.RED_FONT);
             isValid = false;
         }else{
