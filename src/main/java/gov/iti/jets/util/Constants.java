@@ -1,5 +1,10 @@
 package gov.iti.jets.util;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -31,10 +36,6 @@ public class Constants {
     //Validation Sentence
     public static final String FIELD_EMPTY = "field can't be empty";
 
-
-
-
-
     public static String hashPassword(String input) {
         try {
             // getInstance() method is called with algorithm SHA-1
@@ -62,5 +63,14 @@ public class Constants {
             e.printStackTrace();
         }
         return null;
+    }
+    public static byte[] imageToByteArray(String path) throws IOException
+    {
+        BufferedImage bImage = ImageIO.read(new File(path));
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        String tokens[] = path.split("[.]",0);
+        ImageIO.write(bImage, tokens[tokens.length-1], bos );
+        byte [] data = bos.toByteArray();
+        return data;
     }
 }

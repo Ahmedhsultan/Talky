@@ -1,4 +1,6 @@
 package gov.iti.jets.presentation.controllors;
+import com.jfoenix.controls.JFXSnackbar;
+import com.jfoenix.controls.JFXSnackbarLayout;
 import gov.iti.jets.dto.UserDto;
 import gov.iti.jets.dto.registration.UserRegistrationDto;
 import gov.iti.jets.network.UserRemote;
@@ -17,15 +19,19 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
-import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.ZoneId;
+import java.util.Date;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
@@ -38,6 +44,7 @@ public class RegisterController implements Initializable {
 
     FileChooser fileChooser = new FileChooser();
     File file;
+    private Pane pane;
     private Stage stage;
     private Scene scene;
 
@@ -84,6 +91,8 @@ public class RegisterController implements Initializable {
 
     @FXML
     private Label invalidConPassword;
+    @FXML
+    private  Label invalidImage;
 
     @FXML
     private Label invalidFName;
@@ -109,7 +118,7 @@ public class RegisterController implements Initializable {
 
     Validation validate;
     String gender;
-    UserDto user = new UserDto();
+    UserRegistrationDto userRegistrationDto;
     RegisterService reg;
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
@@ -117,11 +126,6 @@ public class RegisterController implements Initializable {
         addCountryChoiceBox();
         circle.setFill(new ImagePattern(new Image("/image/user.png",200,200,false,true)));
         reg = new RegisterService();
-        UserDto user = new UserDto();
-        user.setId("01078965432");
-        user.setName("Amany");
-        UserRegistrationDto x = new UserRegistrationDto(user,"Amany12345");
-        reg.addUser(x);
     }
     @FXML
     public void addProfileImage(MouseEvent event) {
@@ -129,25 +133,39 @@ public class RegisterController implements Initializable {
         file = fileChooser.showOpenDialog(null);
         if (file != null) {
             circle.setFill(new ImagePattern(new Image(file.toURI().toString(),200,200,false,true)));
-        }
-        if(radioMale.isSelected()){
-            gender = "Male";
-        }else if(radioFemal.isSelected()){
-            gender = "Female";
+            System.out.println(file.getPath());
         }
     }
     @FXML
-    void signup(ActionEvent event) {
+    void signup(ActionEvent event) throws IOException {
         if(validation()){
+            UserDto user = new UserDto();
             user.setName(firstName.getText() + " " + lastName.getText());
             user.setId(phone.getText());
             user.setEmail(email.getText());
+            String s = file.getPath();
+            user.setImgPath(phone.getText()+ s.substring(s.indexOf("."))); //image extension
             if(radioMale.isSelected()) { user.setGender("Male");}
             else { user.setGender("Female");}
             user.setBio(bio.getText());
             user.setCountry(country.getSelectionModel().getSelectedItem());
-            Date.from(dateOfBirth.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant()); // we have to retype zone id
+            user.setImage(Constants.imageToByteArray(file.getPath()));
+            try {
+                Date date = (Date) new SimpleDateFormat("yyyy-MM-dd").parse(dateOfBirth.getValue().toString());
+                java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+                user.setDateOfBirth(sqlDate);
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
+
             System.out.println("success validate");
+
+            userRegistrationDto = new UserRegistrationDto(user,password.getText());
+            try {
+                reg.addUser(userRegistrationDto);
+            }catch (Exception e){
+                e.getMessage();
+            }
         }
     }
     private boolean validation(){
@@ -161,11 +179,12 @@ public class RegisterController implements Initializable {
             validate.validateBio(bio,invalidBio)&
             validate.validateCountry(country,invalidCountry)&
             validate.validateDate(dateOfBirth,invalidDate)&
-            validate.validateGender(toggleGroup,invalidGender))
+            validate.validateGender(toggleGroup,invalidGender)& validate.validateImage(file,invalidImage))
         {
-            System.out.println("valid name");
             val = true;
-        }else{val = false;}
+        }else{
+            val = false;
+        }
         return val;
     }
     private void addCountryChoiceBox(){
@@ -180,4 +199,5 @@ public class RegisterController implements Initializable {
         }
         country.setItems(cities);
     }
+
 }

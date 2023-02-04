@@ -130,3 +130,7 @@
     -fx-text-fill: #6713d2;
     -fx-animated: #6713d2;
 }
+.jfx-snackbar-content{
+    -fx-background-color: #5607bd;
+    -fx-text-fill: #FFFFFF;
+}

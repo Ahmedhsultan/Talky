@@ -38,7 +38,7 @@
                   <Font size="14.0" />
                </font>
             </Text>
-            <Circle fx:id="circle" fill="WHITE" layoutX="249.0" layoutY="172.0" onMouseClicked="#addProfileImage" radius="62.0" stroke="BLACK" strokeType="INSIDE">
+            <Circle fx:id="circle" fill="WHITE" layoutX="249.0" layoutY="172.0" onMouseClicked="#addProfileImage" radius="62.0" stroke="WHITE" strokeType="INSIDE">
                <effect>
                   <DropShadow color="#000000ad" radius="8.5175" width="15.07" />
                </effect>
@@ -84,6 +84,7 @@
             <Label fx:id="invalidCountry" layoutX="302.0" layoutY="481.0" />
             <Label fx:id="invalidDate" layoutX="152.0" layoutY="550.0" />
             <Label fx:id="invalidGender" layoutX="380.0" layoutY="571.0" />
+            <Label fx:id="invalidImage" layoutX="198.0" layoutY="234.0" />
          </children>
       </AnchorPane>
       <AnchorPane layoutX="-3.0" layoutY="-3.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="709.0" prefWidth="261.0" style="-fx-background-radius: 0  50px 50px 0;" styleClass="pane_bg">
