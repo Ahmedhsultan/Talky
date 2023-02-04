@@ -19,6 +19,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
@@ -39,6 +40,7 @@ import java.util.stream.Stream;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXRadioButton;
+import javafx.util.Duration;
 
 public class RegisterController implements Initializable {
 
@@ -47,6 +49,8 @@ public class RegisterController implements Initializable {
     private Pane pane;
     private Stage stage;
     private Scene scene;
+    @FXML
+    public AnchorPane rootPane;
 
 
     @FXML
