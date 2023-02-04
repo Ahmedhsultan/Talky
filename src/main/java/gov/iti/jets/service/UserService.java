@@ -33,29 +33,27 @@ public class UserService {
     public UserSessionDto register(UserRegistrationDto userRegistrationDto) throws RemoteException {
 
         UserSessionDto userSessionDto=null;
+        if(!Validation.validatePhoneNumber(userRegistrationDto.getUserDto().getId()))
+        {
+            throw new RemoteException("Invalid Phone Number!!");
+        }
+        if(!Validation.validatePassword(userRegistrationDto.getPassword()))
+        {
+            throw new RemoteException("Invalid Password!!");
+        }
+        User user=null;
+        User tempUser= dao.findById(userRegistrationDto.getUserDto().getId());
+        if (tempUser!=null)
+        {
+            throw new RemoteException("Phone Number Already Found!!");
+        }
+        String hashedPass = Constants.hashPassword(userRegistrationDto.getPassword());
+        userRegistrationDto.getUserDto().setIsOnlineStatus(Constants.ONLINE_STATUS_AVAILABLE);
+        userRegistrationDto.setPassword(hashedPass);
+        user = userMapper.regDtoToEntity(userRegistrationDto);
         try {
-            if(!Validation.validatePhoneNumber(userRegistrationDto.getUserDto().getId()))
-            {
-                throw new RemoteException("Invalid Phone Number!!");
-            }
-            if(!Validation.validatePassword(userRegistrationDto.getPassword()))
-            {
-                throw new RemoteException("Invalid Password!!");
-            }
-            User user=null;
-            User tempUser= dao.findById(userRegistrationDto.getUserDto().getId());
-            if (tempUser!=null)
-            {
-                throw new RemoteException("Phone Number Already Found!!");
-            }
-            String hashedPass = Constants.hashPassword(userRegistrationDto.getPassword());
-            userRegistrationDto.getUserDto().setIsOnlineStatus(Constants.ONLINE_STATUS_AVAILABLE);
-            userRegistrationDto.setPassword(hashedPass);
-             user = userMapper.regDtoToEntity(userRegistrationDto);
-//            saveUserImage(userRegistrationDto.getUserDto());
+            saveUserImage(userRegistrationDto.getUserDto());
             dao.insert(user);
-            userSessionService=new UserSessionService(user);
-            userSessionDto= userSessionService.getSessionDto();
         }catch (SQLException ex){
             ex.printStackTrace();
             throw new RemoteException("Failed to register, please try again !!");
@@ -63,6 +61,8 @@ public class UserService {
             e.printStackTrace();
             throw new RemoteException("Failed to Save User's Image, please try again !!");
         }
+        userSessionService=new UserSessionService(user);
+        userSessionDto= userSessionService.getSessionDto();
         return  userSessionDto;
     }
 
