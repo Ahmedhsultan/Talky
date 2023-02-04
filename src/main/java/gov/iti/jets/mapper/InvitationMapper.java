@@ -3,6 +3,7 @@ package gov.iti.jets.mapper;
 import gov.iti.jets.dto.InvitationDto;
 import gov.iti.jets.entity.Invitation;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.stream.Collectors;
@@ -15,7 +16,7 @@ public class InvitationMapper implements BaseMapper<Invitation, InvitationDto>{
                 .id(invitation.getId())
                 .senderId(invitation.getSenderId())
                 .receiverId(invitation.getReceiverId())
-                .createdOn(invitation.getCreatedOn())
+                .createdOn(invitation.getCreatedOn().toString())
                 .status(invitation.getStatus())
                 .isSeen(invitation.isSeen())
                 .build();
@@ -28,7 +29,7 @@ public class InvitationMapper implements BaseMapper<Invitation, InvitationDto>{
                 .id(invitationDto.getId())
                 .senderId(invitationDto.getSenderId())
                 .receiverId(invitationDto.getReceiverId())
-                .createdOn(invitationDto.getCreatedOn())
+                .createdOn(Date.valueOf(invitationDto.getCreatedOn()))
                 .status(invitationDto.getStatus())
                 .isSeen(invitationDto.isSeen())
                 .build();

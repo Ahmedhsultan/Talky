@@ -1,9 +1,8 @@
 package gov.iti.jets.dto;
 
-import gov.iti.jets.entity.BaseEntity;
 import lombok.*;
 
-import java.sql.Date;
+import java.io.Serializable;
 
 @Getter
 @Setter
@@ -11,12 +10,12 @@ import java.sql.Date;
 @NoArgsConstructor
 @Builder
 @ToString
-public class InvitationDto implements  BaseDto{
+public class InvitationDto implements  BaseDto, Serializable {
 
         private long id;
         private String senderId;
         private String receiverId;
-        private Date createdOn;
+        private String  createdOn;
         private String status;
         private boolean isSeen;
     }

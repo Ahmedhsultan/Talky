@@ -1,9 +1,6 @@
 package gov.iti.jets.persistence.dao;
 
-import gov.iti.jets.entity.BaseEntity;
-import gov.iti.jets.entity.ChatUser;
-import gov.iti.jets.entity.Friends;
-import gov.iti.jets.entity.User;
+import gov.iti.jets.entity.*;
 import gov.iti.jets.persistence.DBManagement;
 
 import java.sql.Connection;
@@ -46,7 +43,14 @@ public class FriendsDao extends BaseDaoImpl<Friends,String>{
 
     @Override
     public void insert(Friends entity) {
+        String query = "INSERT INTO Friends VALUES(?,?);";
 
+        try (Connection connection = DBManagement.getConnection();PreparedStatement statement = connection.prepareStatement(query)) {
+            setStatement(statement, entity);
+            statement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
     @Override
@@ -69,5 +73,13 @@ public class FriendsDao extends BaseDaoImpl<Friends,String>{
             throwables.printStackTrace();
         }
         return friendsList;
+    }
+
+
+
+    private void setStatement(PreparedStatement statement, Friends entity)throws SQLException
+    {
+        statement.setString(1, entity.getId1());
+        statement.setString(2, entity.getId2());
     }
 }
