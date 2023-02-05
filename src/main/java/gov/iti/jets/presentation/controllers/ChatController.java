@@ -68,6 +68,7 @@ public class ChatController implements Initializable {
     public void openChats(ActionEvent actionEvent) {
         currentPane.setText("Chats");
         contactsButton.setStyle(null);
+        invitationsButton.setStyle(null);
         chatsButton.setStyle("-fx-border-width: 0 0 2px 5px; -fx-border-color: purple;");
         p.clear();
         for (double k: b) {
@@ -84,19 +85,32 @@ public class ChatController implements Initializable {
 
     public void openContacts(ActionEvent actionEvent) {
         currentPane.setText("Contacts");
+        invitationsButton.setStyle(null);
         chatsButton.setStyle( null);
         contactsButton.setStyle(  "-fx-border-width: 0 0 2px 5px; -fx-border-color: purple;");
         p.clear();
         for (double k: b) {
             Pane temp = PaneManager.getPaneManager().putContactCard();
             Circle img = (Circle) temp.getChildren().get(1);
-//            img.setFill(new ImagePattern(new Image(("/image/user2.png"),100,100,false,true)));
+            img.setFill(new ImagePattern(new Image(("/image/user2.png"),100,100,false,true)));
             temp.getChildren().set(1, img);
             p.add(temp);
         }
     }
 
     public void openInvitations(ActionEvent actionEvent) {
+        currentPane.setText("Invitations");
+        chatsButton.setStyle( null);
+        contactsButton.setStyle(null);
+        contactsButton.setStyle(  "-fx-border-width: 0 0 2px 5px; -fx-border-color: purple;");
+        p.clear();
+        for (double k: b) {
+            Pane temp = PaneManager.getPaneManager().putInvitationCard();
+            Circle img = (Circle) temp.getChildren().get(1);
+            img.setFill(new ImagePattern(new Image(("/image/user2.png"),100,100,false,true)));
+            temp.getChildren().set(1, img);
+            p.add(temp);
+        }
     }
 
     public void openNotifications(ActionEvent actionEvent) {

@@ -43,6 +43,11 @@ public class PaneManager {
         return pane;
     }
 
+    public Pane putInvitationCard() {
+        loadPane("invitationCard");
+        return pane;
+    }
+
     private void loadPane(String loadedPane, String primaryPane) {
             try {
                 Parent root = FXMLLoader.load(getClass().getResource(String.format("/views/%s.fxml", loadedPane)));
