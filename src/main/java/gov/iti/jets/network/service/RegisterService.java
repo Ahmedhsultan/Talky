@@ -1,25 +1,21 @@
 package gov.iti.jets.network.service;
 
 import com.jfoenix.controls.JFXSnackbar;
-import gov.iti.jets.dto.UserDto;
 import gov.iti.jets.dto.registration.UserRegistrationDto;
 import gov.iti.jets.network.UserRemote;
-import gov.iti.jets.presentation.controllors.RegisterController;
+import gov.iti.jets.presentation.controllers.RegisterController;
 import javafx.scene.control.Label;
 import javafx.util.Duration;
 
-import java.net.InetAddress;
 import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import java.util.logging.Logger;
 
 public class RegisterService {
     UserRemote obj;
     public RegisterService(){
         try {
 //            String host = InetAddress.getLocalHost().getHostName();
-            Registry registry = LocateRegistry.getRegistry("localhost",1099);
+            Registry registry = RMIManager.getRegistry();
             obj = (UserRemote) registry.lookup("UserRemote");
             System.out.println("Client.....");
         } catch (Exception e) {

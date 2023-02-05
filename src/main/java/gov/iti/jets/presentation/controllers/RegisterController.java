@@ -1,23 +1,18 @@
-package gov.iti.jets.presentation.controllors;
-import com.jfoenix.controls.JFXSnackbar;
-import com.jfoenix.controls.JFXSnackbarLayout;
+package gov.iti.jets.presentation.controllers;
+import gov.iti.jets.business.services.SceneManager;
 import gov.iti.jets.dto.UserDto;
 import gov.iti.jets.dto.registration.UserRegistrationDto;
-import gov.iti.jets.network.UserRemote;
 import gov.iti.jets.network.service.RegisterService;
 import gov.iti.jets.util.Constants;
 import gov.iti.jets.util.Validation;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -31,16 +26,12 @@ import java.io.IOException;
 import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.ZoneId;
 import java.util.Date;
 import java.util.Locale;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXRadioButton;
-import javafx.util.Duration;
 
 public class RegisterController implements Initializable {
 
@@ -163,10 +154,11 @@ public class RegisterController implements Initializable {
             }
 
             System.out.println("success validate");
-
+            SceneManager.getSceneManager().switchToChatScene();
             userRegistrationDto = new UserRegistrationDto(user,password.getText());
             try {
                 reg.addUser(userRegistrationDto);
+
             }catch (Exception e){
                 e.getMessage();
             }

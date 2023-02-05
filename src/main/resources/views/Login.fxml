@@ -15,7 +15,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<GridPane prefHeight="926.0" prefWidth="1058.0" stylesheets="@../style/loginStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gov.iti.jets.presentation.controllors.LoginController">
+<GridPane prefHeight="926.0" prefWidth="1058.0" stylesheets="@../style/loginStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gov.iti.jets.presentation.controllers.LoginController">
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="1393.0" minWidth="10.0" prefWidth="575.0" />
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="2089.0" minWidth="10.0" prefWidth="483.0" />
