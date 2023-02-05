@@ -40,7 +40,7 @@
             <DropShadow />
          </effect>
       </Circle>
-      <Label id="userName" layoutX="91.0" layoutY="3.0" text="Dina Mishahed">
+      <Label id="userName" fx:id="userName" layoutX="91.0" layoutY="3.0" text="Dina Mishahed">
          <font>
             <Font size="22.0" />
          </font>

@@ -12,12 +12,14 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 public class ChatController implements Initializable {
 
@@ -38,20 +40,22 @@ public class ChatController implements Initializable {
     @FXML
     private ListView leftList;
 
+    @FXML
+    private TextField searchField;
+
 
     ObservableList<Double> b = FXCollections.observableArrayList();
     ObservableList<Pane> p = FXCollections.observableArrayList();
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         for(Double i =0.0 ; i<100.0; i+=10.0){
             b.add(i);
         }
         chatsButton.fire();
-        leftList.setItems(p);
         selectChat();
 
     }
+
 
     private void selectChat( ) {
         leftList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Pane>() {
@@ -75,10 +79,19 @@ public class ChatController implements Initializable {
             Circle img = (Circle) temp.getChildren().get(1);
             img.setFill(new ImagePattern(new Image(("/image/user.png"),100,100,false,true)));
             temp.getChildren().set(1, img);
-
             p.add(temp);
 
+
         }
+
+        for (double k: b) {
+            Pane temp = PaneManager.getPaneManager().putRecentChatCard();
+            Label label = (Label) temp.getChildren().get(3);
+            label.setText("Ahmed Ayman");
+            temp.getChildren().set(3, label);
+            p.add(temp);
+        }
+        leftList.setItems(p);
 
     }
 
@@ -96,6 +109,15 @@ public class ChatController implements Initializable {
             temp.getChildren().set(1, img);
             p.add(temp);
         }
+
+        for (double k: b) {
+            Pane temp = PaneManager.getPaneManager().putContactCard();
+            Label label = (Label) temp.getChildren().get(3);
+            label.setText("Ahmed Ayman");
+            temp.getChildren().set(3, label);
+            p.add(temp);
+        }
+        leftList.setItems(p);
     }
 
     public void openInvitations(ActionEvent actionEvent) {
@@ -112,8 +134,22 @@ public class ChatController implements Initializable {
             temp.getChildren().set(1, img);
             p.add(temp);
         }
+
+        for (double k: b) {
+            Pane temp = PaneManager.getPaneManager().putInvitationCard();
+            Label label = (Label) temp.getChildren().get(2);
+            label.setText("Ahmed Ayman");
+            temp.getChildren().set(2, label);
+            p.add(temp);
+        }
+        leftList.setItems(p);
     }
 
     public void openNotifications(ActionEvent actionEvent) {
+    }
+
+    public void searchOnList(KeyEvent keyEvent) {
+        ObservableList<Pane> c = FXCollections.observableArrayList(p.stream().filter(x->((Label)(x.lookup("#userName"))).getText().toLowerCase().contains(searchField.getText().toLowerCase())).collect(Collectors.toList()));
+        leftList.setItems(c);
     }
 }

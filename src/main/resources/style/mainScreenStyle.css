@@ -62,3 +62,17 @@
     -fx-border-color: linear-gradient(to bottom right, #cc208e 10%, #6713d2 100%);
 
 }
+
+#searchField {
+    -fx-background-color: transparent;
+    -fx-border-style: solid;
+    -fx-border-width: 0 0 2px 0;
+    -fx-border-color:   #a1a0a1;
+}
+
+#searchField:focused {
+    -fx-border-color: linear-gradient(to bottom right, #cc208e 10%, #6713d2 100%);
+
+}
+
+
