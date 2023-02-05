@@ -1,7 +1,9 @@
 package gov.iti.jets.presentation.controllers;
+import gov.iti.jets.business.services.PaneManager;
 import gov.iti.jets.business.services.SceneManager;
 import gov.iti.jets.dto.UserDto;
 import gov.iti.jets.dto.registration.UserRegistrationDto;
+import gov.iti.jets.network.service.RMIManager;
 import gov.iti.jets.network.service.RegisterService;
 import gov.iti.jets.util.Constants;
 import gov.iti.jets.util.Validation;
@@ -24,6 +26,8 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.rmi.RemoteException;
+import java.rmi.registry.Registry;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -111,16 +115,23 @@ public class RegisterController implements Initializable {
     @FXML
     private ToggleGroup toggleGroup;
 
+    @FXML
+    private Hyperlink loginLink;
+
     Validation validate;
     String gender;
     UserRegistrationDto userRegistrationDto;
-    RegisterService reg;
+    Registry reg;
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
 //        circle.setFill(new ImagePattern(new Image("user.png",200,200,false,true)));
         addCountryChoiceBox();
         circle.setFill(new ImagePattern(new Image("/image/user.png",200,200,false,true)));
-        reg = new RegisterService();
+        try {
+            reg = RMIManager.getRegistry();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
     }
     @FXML
     public void addProfileImage(MouseEvent event) {
@@ -157,7 +168,7 @@ public class RegisterController implements Initializable {
             SceneManager.getSceneManager().switchToChatScene();
             userRegistrationDto = new UserRegistrationDto(user,password.getText());
             try {
-                reg.addUser(userRegistrationDto);
+                new RegisterService().addUser(userRegistrationDto, reg);
 
             }catch (Exception e){
                 e.getMessage();
@@ -196,4 +207,8 @@ public class RegisterController implements Initializable {
         country.setItems(cities);
     }
 
+    public void goToLogin(ActionEvent actionEvent) {
+        SceneManager.getSceneManager().switchToLoginScene();
+        PaneManager.getPaneManager().putLoginPhonePane();
+    }
 }

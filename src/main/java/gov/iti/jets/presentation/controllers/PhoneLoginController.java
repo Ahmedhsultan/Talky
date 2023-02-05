@@ -36,22 +36,8 @@ public class PhoneLoginController implements Initializable {
 
 
     public void goToPassword(ActionEvent actionEvent) {
-        if (!phone.getText().isEmpty()){
-//            if (Validation.validatePhoneNumber(phone.getText())) {
-//                    if() {
-                  PaneManager.getPaneManager().putLoginPasswordPane();
-//                    }
-//                    else{
 
-//                    }
-//            }
-//            else{
-//
-//            }
-        }
-        else {
-
-        }
+        PaneManager.getPaneManager().putLoginPasswordPane();
 
 
     }

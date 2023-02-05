@@ -28,7 +28,7 @@
                   <Font name="Elephant" size="51.0" />
                </font>
             </Label>
-            <Hyperlink layoutX="587.0" layoutY="630.0" text="Log In" textFill="#8989bb">
+            <Hyperlink fx:id="loginLink" onAction="#goToLogin" layoutX="587.0" layoutY="630.0" text="Log In" textFill="#8989bb">
                <font>
                   <Font size="16.0" />
                </font>

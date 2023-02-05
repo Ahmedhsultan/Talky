@@ -1,4 +1,4 @@
-package gov.iti.jets.presentation.controllors;
+package gov.iti.jets.presentation.controllers;
 
 public class LoginRegister {
 }
