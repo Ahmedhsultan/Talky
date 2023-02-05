@@ -31,7 +31,7 @@ public class ChatController implements Initializable {
     private Button invitationsButton;
 
     @FXML
-    private Button notifactionsButton;
+    private Button notificationsButton;
 
     @FXML
     private Label currentPane;
@@ -49,8 +49,6 @@ public class ChatController implements Initializable {
         }
         chatsButton.fire();
         leftList.setItems(p);
-//
-//
         selectChat();
 
     }
@@ -69,6 +67,7 @@ public class ChatController implements Initializable {
         currentPane.setText("Chats");
         contactsButton.setStyle(null);
         invitationsButton.setStyle(null);
+        notificationsButton.setStyle(null);
         chatsButton.setStyle("-fx-border-width: 0 0 2px 5px; -fx-border-color: purple;");
         p.clear();
         for (double k: b) {
@@ -87,6 +86,7 @@ public class ChatController implements Initializable {
         currentPane.setText("Contacts");
         invitationsButton.setStyle(null);
         chatsButton.setStyle( null);
+        notificationsButton.setStyle(null);
         contactsButton.setStyle(  "-fx-border-width: 0 0 2px 5px; -fx-border-color: purple;");
         p.clear();
         for (double k: b) {
@@ -102,7 +102,8 @@ public class ChatController implements Initializable {
         currentPane.setText("Invitations");
         chatsButton.setStyle( null);
         contactsButton.setStyle(null);
-        contactsButton.setStyle(  "-fx-border-width: 0 0 2px 5px; -fx-border-color: purple;");
+        notificationsButton.setStyle(null);
+        invitationsButton.setStyle(  "-fx-border-width: 0 0 2px 5px; -fx-border-color: purple;");
         p.clear();
         for (double k: b) {
             Pane temp = PaneManager.getPaneManager().putInvitationCard();
