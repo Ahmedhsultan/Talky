@@ -2,7 +2,7 @@
     -fx-background-color: linear-gradient(to bottom right, #cc208e 10%, #6713d2 100%);
 }
 .text-field{
-    -fx-background-image: url('../image/phone.png');
+   
     -fx-border-radius: 10;
     -fx-background-radius: 15;
     -fx-background-repeat: no-repeat;
@@ -17,7 +17,7 @@
 }
 
 .pane{
-    -fx-background-radius: 10;
+    -fx-background-radius: #e6e3eb;
     -fx-background-insets: 0,0;
     -fx-background-fill: #dfdae6;
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 5, 0.0, 0, 1)

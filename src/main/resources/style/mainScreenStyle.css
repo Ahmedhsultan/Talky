@@ -4,11 +4,38 @@
     -fx-font-family: "Rockwell";
     -fx-font-style: oblique;
     -fx-font-weight: 900;
-    -fx-text-fill: #382a32;
+    -fx-text-fill: black;
+    -fx-graphic-text-gap: -60;
 }
+
+
+
+#buttons {
+    -fx-graphic-text-gap: -40;
+}
+
+#logout {
+    -fx-graphic-text-gap: -40;
+}
+
 
 .button:focused {
     -fx-border-width: 0 0 2px 5px;
     -fx-border-color: purple;
-
 }
+
+
+.list-cell {
+    -fx-background-color: transparent;
+}
+
+.list-cell:hover {
+    -fx-translate-x: -10;
+    -fx-translate-y: -10;
+    -fx-effect: dropshadow(three-pass-box, #6713d2, 5, 0.0, 0, 1);
+}
+
+.list-view {
+    -fx-background-color: transparent;
+}
+
