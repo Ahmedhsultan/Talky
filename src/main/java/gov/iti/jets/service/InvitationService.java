@@ -19,7 +19,6 @@ public class InvitationService {
     private UserDao userDao;
     private Invitation invitation;
     private InvitationDto invitationDto;
-    private `int i =0;
 
     public InvitationService ()
     {
@@ -32,7 +31,7 @@ public class InvitationService {
     public void sendInvitation(String senderID, ClientInvitation clientInvitation, String receiverID) throws RemoteException {
 
         if(userDao.findById(receiverID) == null) {
-            throw new RemoteException("Not Found!!");
+            throw new RemoteException("Phone Number Not Found!!");
         }
         createInvitationEntity(senderID, receiverID);
 
@@ -40,14 +39,13 @@ public class InvitationService {
         invitationDao.insert(invitation);
 
         invitationDto = new InvitationMapper().toDTO(invitation);
-        if(!userDao.findById(receiverID).getIsOnlineStatus().equals("offline")) {
+        if(!userDao.findById(receiverID).getIsOnlineStatus().equals("Offline")) {
                 clientInvitation.receiveInvitation(invitationDto);
         }
 
     }
 
     public void createInvitationEntity(String senderID, String receiverID) {
-        invitation.setId(i++);
         invitation.setSeen(false);
         invitation.setStatus("add");
         invitation.setSenderId(senderID);

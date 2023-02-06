@@ -1,6 +1,7 @@
 package gov.iti.jets;
 
 
+import gov.iti.jets.controller.InvitationController;
 import gov.iti.jets.controller.UserController;
 import gov.iti.jets.dto.UserDto;
 import gov.iti.jets.dto.registration.UserRegistrationDto;
@@ -21,20 +22,21 @@ public class Main {
 //            throw new RuntimeException(e);
 //        }
 
-        UserDto userDto = new UserDto();
-        userDto.setId("01111315022");
-        UserRegistrationDto dto = new UserRegistrationDto();
-        dto.setUserDto(userDto);
-        dto.setPassword("abdoamr123");
+//        UserDto userDto = new UserDto();
+//        userDto.setId("01111315022");
+//        UserRegistrationDto dto = new UserRegistrationDto();
+//        dto.setUserDto(userDto);
+//        dto.setPassword("abdoamr123");
+//        try {
+//            UserController userController = new UserController();
+//            System.out.println(userController.login(dto.getUserDto().getId(), dto.getPassword()));
+//        } catch (RemoteException e) {
+//            e.printStackTrace();
+//        }
         try {
-            UserController userController = new UserController();
-            System.out.println(userController.login(dto.getUserDto().getId(), dto.getPassword()));
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-        try {
-            Registry reg = LocateRegistry.createRegistry(1099);
-            reg.rebind("server",new UserController());
+//             = LocateRegistry.createRegistry(1099);
+            Registry reg = RMIManager.getRegistry();
+            reg.rebind("server", new UserController());
 
 //
 //            UserController userController = new UserController();
