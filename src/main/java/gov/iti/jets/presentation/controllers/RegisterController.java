@@ -165,7 +165,7 @@ public class RegisterController implements Initializable {
             }
 
             System.out.println("success validate");
-            SceneManager.getSceneManager().switchToChatScene();
+
             userRegistrationDto = new UserRegistrationDto(user,password.getText());
             try {
                 new RegisterService().addUser(userRegistrationDto, reg);
@@ -173,6 +173,8 @@ public class RegisterController implements Initializable {
             }catch (Exception e){
                 e.getMessage();
             }
+
+            SceneManager.getSceneManager().switchToChatScene();
         }
     }
     private boolean validation(){
