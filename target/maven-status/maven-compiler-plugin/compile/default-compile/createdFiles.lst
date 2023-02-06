@@ -11,6 +11,7 @@ gov\iti\jets\dto\UserDto.class
 gov\iti\jets\business\services\PaneManager.class
 gov\iti\jets\network\IConnection.class
 gov\iti\jets\util\ConnectionFlag.class
+gov\iti\jets\network\service\LoginService.class
 gov\iti\jets\dto\UserSessionDto.class
 gov\iti\jets\util\ConnectionFlag$1.class
 gov\iti\jets\dto\registration\UserRegistrationDto.class
