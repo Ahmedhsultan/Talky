@@ -2,6 +2,9 @@ package gov.iti.jets.presentation.controllers;
 
 import gov.iti.jets.business.services.PaneManager;
 import gov.iti.jets.business.services.SceneManager;
+import gov.iti.jets.network.service.LoginService;
+import gov.iti.jets.network.service.RMIManager;
+import gov.iti.jets.util.Validation;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -12,6 +15,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 
 import java.net.URL;
+import java.rmi.RemoteException;
+import java.rmi.registry.Registry;
 import java.util.ResourceBundle;
 
 public class PhoneLoginController implements Initializable {
@@ -24,6 +29,7 @@ public class PhoneLoginController implements Initializable {
 
     @FXML
     private Hyperlink registerLink;
+    public static String phoneNo;
 
     @FXML
     private Pane pane;
@@ -36,10 +42,11 @@ public class PhoneLoginController implements Initializable {
 
 
     public void goToPassword(ActionEvent actionEvent) {
-
-        PaneManager.getPaneManager().putLoginPasswordPane();
-
-
+        if(Validation.validatePhoneNumber(phone,error)){
+            System.out.println(phone.getText());
+            phoneNo = phone.getText();
+            PaneManager.getPaneManager().putLoginPasswordPane();
+        }
     }
 
     public void loadRegistration(ActionEvent actionEvent) {

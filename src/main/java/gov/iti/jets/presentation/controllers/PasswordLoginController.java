@@ -2,6 +2,7 @@ package gov.iti.jets.presentation.controllers;
 
 import gov.iti.jets.business.services.PaneManager;
 import gov.iti.jets.business.services.SceneManager;
+import gov.iti.jets.network.service.LoginService;
 import gov.iti.jets.network.service.RMIManager;
 import gov.iti.jets.util.Validation;
 import javafx.event.ActionEvent;
@@ -21,7 +22,7 @@ import java.util.ResourceBundle;
 public class PasswordLoginController implements Initializable {
 
     @FXML
-    private TextField phone;
+    private TextField password;
 
     @FXML
     private Button nextBtn;
@@ -46,8 +47,17 @@ public class PasswordLoginController implements Initializable {
     }
 
     public void goToChat(ActionEvent actionEvent) {
-        SceneManager.getSceneManager().switchToChatScene();
-
+        System.out.println(PhoneLoginController.phoneNo);
+        LoginService log = new LoginService();
+        Registry reg = null;
+        try {
+            reg = RMIManager.getRegistry();
+            log.login(PhoneLoginController.phoneNo,password.getText(),reg);
+            System.out.println("Login success");
+        } catch (RemoteException e) {
+            System.out.println(e.getMessage());
+        }
+//        SceneManager.getSceneManager().switchToChatScene();
     }
 
     public void loadRegistration(ActionEvent actionEvent) {
