@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXListView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gov.iti.jets.presentation.controllers.ChatController">
+    <left>
+        <StackPane prefHeight="620.0" prefWidth="289.0" stylesheets="@../style/mainScreenStyle.css" BorderPane.alignment="CENTER">
+            <children>
+                <Rectangle arcHeight="5.0" arcWidth="70.0" fill="DODGERBLUE" height="650.0" stroke="BLACK" strokeType="INSIDE" style="-fx-arc-height: 50; -fx-fill: linear-gradient(to bottom right, #cc208e 10%, #6713d2 100%);" width="325.0" />
+                <JFXButton fx:id="chatsButton" minHeight="0.0" onAction="#openChats" prefHeight="56.0" prefWidth="280.0" text="My Chats" textOverrun="CLIP">
+                    <StackPane.margin>
+                        <Insets bottom="120.0" right="45.0" />
+                    </StackPane.margin>
+                    <graphic>
+                        <ImageView fitHeight="46.0" fitWidth="46.0" pickOnBounds="true" style="-fx-translate-x: -90;">
+                            <viewport>
+                                <Rectangle2D />
+                            </viewport>
+                            <image>
+                                <Image url="@../image/chatsIcon.png" />
+                            </image>
+                     <effect>
+                        <DropShadow />
+                     </effect>
+                        </ImageView>
+                    </graphic>
+                </JFXButton>
+                <JFXButton id="buttons" fx:id="contactsButton" minHeight="0.0" onAction="#openContacts" prefHeight="56.0" prefWidth="280.0" style="-fx-graphic-text-gap: -40;" text="My Contacts" textOverrun="CLIP">
+                    <StackPane.margin>
+                        <Insets right="50.0" top="50.0" />
+                    </StackPane.margin>
+               <graphic>
+                  <ImageView fitHeight="46.0" fitWidth="46.0" pickOnBounds="true" style="-fx-translate-x: -60;">
+                     <viewport>
+                        <Rectangle2D />
+                     </viewport>
+                     <image>
+                        <Image url="@../image/contacts.png" />
+                     </image>
+                     <effect>
+                        <DropShadow />
+                     </effect>
+                  </ImageView>
+               </graphic>
+                </JFXButton>
+                <JFXButton fx:id="invitationsButton" minHeight="0.0" onAction="#openInvitations" prefHeight="56.0" prefWidth="280.0" style="-fx-graphic-text-gap: -40;" text="My Invitations" textOverrun="CLIP">
+                    <StackPane.margin>
+                        <Insets right="50.0" top="220.0" />
+                    </StackPane.margin>
+               <graphic>
+                  <ImageView fitHeight="46.0" fitWidth="46.0" pickOnBounds="true" style="-fx-translate-x: -70;">
+                     <viewport>
+                        <Rectangle2D />
+                     </viewport>
+                     <image>
+                        <Image url="@../image/invitations.png" />
+                     </image>
+                     <effect>
+                        <DropShadow />
+                     </effect>
+                  </ImageView>
+               </graphic>
+                </JFXButton>
+                <ImageView fx:id="userImage" fitHeight="100.0" fitWidth="96.0" pickOnBounds="true" style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);;">
+                    <image>
+                        <Image url="@../image/user.png" />
+                    </image>
+                    <StackPane.margin>
+                        <Insets bottom="450.0" right="100.0" />
+                    </StackPane.margin>
+                </ImageView>
+            <JFXButton fx:id="notificationsButton" minHeight="0.0" onAction="#openNotifications" prefHeight="56.0" prefWidth="280.0" style="-fx-graphic-text-gap: -40;" text="Notifications" textOverrun="CLIP">
+               <StackPane.margin>
+                  <Insets right="50.0" top="380.0" />
+               </StackPane.margin>
+               <graphic>
+                  <ImageView fitHeight="46.0" fitWidth="46.0" pickOnBounds="true" style="-fx-translate-x: -70;">
+                     <viewport>
+                        <Rectangle2D />
+                     </viewport>
+                     <image>
+                        <Image url="@../image/notifications.png" />
+                     </image>
+                     <effect>
+                        <DropShadow />
+                     </effect>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+                <JFXButton id="logout" mnemonicParsing="false" prefHeight="56.0" prefWidth="36.0" text=" ">
+                    <StackPane.margin>
+                        <Insets left="50.0" top="550.0" />
+                    </StackPane.margin>
+               <graphic>
+                  <ImageView fitHeight="46.0" fitWidth="46.0" pickOnBounds="true" style="-fx-translate-x: -20;">
+                     <viewport>
+                        <Rectangle2D />
+                     </viewport>
+                     <image>
+                        <Image url="@../image/logout.png" />
+                     </image>
+                     <effect>
+                        <DropShadow />
+                     </effect>
+                  </ImageView>
+               </graphic>
+                </JFXButton>
+            </children>
+        </StackPane>
+    </left>
+    <center>
+        <StackPane id="scroll" prefHeight="708.0" prefWidth="1000.0" stylesheets="@../style/mainScreenStyle.css" BorderPane.alignment="CENTER">
+            <children>
+                <Rectangle arcHeight="50.0" arcWidth="50.0" fill="DODGERBLUE" height="650.0" stroke="BLACK" strokeType="INSIDE" style="-fx-fill: #F3F7FF;" width="984.0">
+               <StackPane.margin>
+                  <Insets right="110.0" />
+               </StackPane.margin>
+            </Rectangle>
+                  <AnchorPane fx:id="leftSide" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="650.0" prefWidth="464.0">
+               <children>
+                  <ScrollPane id="scroll" fx:id="rightScrollPane" layoutX="51.0" layoutY="49.0" prefHeight="539.0" prefWidth="475.0" AnchorPane.bottomAnchor="32.0" AnchorPane.leftAnchor="51.0" AnchorPane.rightAnchor="18.0" AnchorPane.topAnchor="49.0" />
+               </children>
+               <StackPane.margin>
+                  <Insets left="300.0" />
+               </StackPane.margin>
+                  </AnchorPane>
+                  <AnchorPane fx:id="rightSide" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="555.0" prefWidth="432.0">
+               <StackPane.margin>
+                  <Insets right="550.0" />
+               </StackPane.margin>
+               <children>
+                  <Pane layoutX="-13.0" layoutY="8.0" prefHeight="568.0" prefWidth="449.0" style="-fx-background-color: #f0f0f0;">
+                     <children>
+                        <JFXListView fx:id="leftList" depth="30" layoutX="37.0" layoutY="122.0" prefHeight="415.0" prefWidth="380.0" />
+                        <TextField id="searchField" fx:id="searchField" layoutX="46.0" layoutY="82.0" onKeyReleased="#searchOnList" prefHeight="33.0" prefWidth="357.0" promptText="Search..." />
+                     </children></Pane>
+                  <Label fx:id="currentPane" layoutX="20.0" layoutY="2.0" prefHeight="85.0" prefWidth="360.0" text=" Chats" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="2.0">
+                     <font>
+                        <Font name="Kristen ITC" size="54.0" />
+                     </font>
+                  </Label>
+               </children>
+                  </AnchorPane>
+            </children>
+        </StackPane>
+    </center>
+</BorderPane>
