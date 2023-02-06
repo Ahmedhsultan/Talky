@@ -33,7 +33,7 @@ public class Main extends Application {
 //        stage.setResizable(false);
 //        stage.setScene(new Scene(root, width, height));
 //        stage.show();
-        SceneManager s = new SceneManager();
+        SceneManager s =SceneManager.getSceneManager();
         s.initStage(stage);
         s.switchToLoginScene();
 

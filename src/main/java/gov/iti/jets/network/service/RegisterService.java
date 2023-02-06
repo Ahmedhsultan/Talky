@@ -26,7 +26,7 @@ public class RegisterService {
 //    }
     public void addUser(UserRegistrationDto user, Registry registry){
         try {
-            UserRemote obj = (UserRemote) registry.lookup("UserRemote");
+            UserRemote obj = (UserRemote) registry.lookup("server");
             obj.register(user);
         } catch (RemoteException e) {
 //            throw new RuntimeException(e);
