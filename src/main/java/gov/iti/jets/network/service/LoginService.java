@@ -14,7 +14,7 @@ import java.rmi.registry.Registry;
 public class LoginService {
     public void login(String phone, String password, Registry registry){
         try {
-            UserRemote obj = (UserRemote) registry.lookup("UserRemote");
+            UserRemote obj = (UserRemote) registry.lookup("server");
             obj.login(phone,password);
         } catch (RemoteException e) {
             System.out.println(e.getMessage());
