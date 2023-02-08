@@ -1,19 +1,19 @@
-E:\ITI\Talkey2\ChatAppTalkey\common\src\main\java\gov\iti\jets\common\network\UserRemote.java
-E:\ITI\Talkey2\ChatAppTalkey\common\src\main\java\gov\iti\jets\common\dto\registration\UserRegistrationDto.java
-E:\ITI\Talkey2\ChatAppTalkey\common\src\main\java\gov\iti\jets\common\util\ConnectedClientsList.java
-E:\ITI\Talkey2\ChatAppTalkey\common\src\main\java\gov\iti\jets\common\util\Constants.java
-E:\ITI\Talkey2\ChatAppTalkey\common\src\main\java\gov\iti\jets\common\util\Validation.java
-E:\ITI\Talkey2\ChatAppTalkey\common\src\main\java\gov\iti\jets\common\network\IClient.java
-E:\ITI\Talkey2\ChatAppTalkey\common\src\main\java\gov\iti\jets\common\dto\UserDto.java
-E:\ITI\Talkey2\ChatAppTalkey\common\src\main\java\gov\iti\jets\common\dto\UserSessionDto.java
-E:\ITI\Talkey2\ChatAppTalkey\common\src\main\java\gov\iti\jets\common\dto\ChatDto.java
-E:\ITI\Talkey2\ChatAppTalkey\common\src\main\java\gov\iti\jets\common\dto\NotificationDto.java
-E:\ITI\Talkey2\ChatAppTalkey\common\src\main\java\gov\iti\jets\common\network\IConnection.java
-E:\ITI\Talkey2\ChatAppTalkey\common\src\main\java\gov\iti\jets\common\dto\ContactDto.java
-E:\ITI\Talkey2\ChatAppTalkey\common\src\main\java\gov\iti\jets\common\Main.java
-E:\ITI\Talkey2\ChatAppTalkey\common\src\main\java\gov\iti\jets\common\dto\BaseDto.java
-E:\ITI\Talkey2\ChatAppTalkey\common\src\main\java\gov\iti\jets\common\dto\InvitationDto.java
-E:\ITI\Talkey2\ChatAppTalkey\common\src\main\java\gov\iti\jets\common\dto\ConnectionDto.java
-E:\ITI\Talkey2\ChatAppTalkey\common\src\main\java\gov\iti\jets\common\dto\Test.java
-E:\ITI\Talkey2\ChatAppTalkey\common\src\main\java\gov\iti\jets\common\util\ConnectionFlag.java
-E:\ITI\Talkey2\ChatAppTalkey\common\src\main\java\module-info.java
+G:\ITI\JAVA PROJECT\Developing\Code\Talky\common\src\main\java\gov\iti\jets\common\Main.java
+G:\ITI\JAVA PROJECT\Developing\Code\Talky\common\src\main\java\gov\iti\jets\common\dto\Test.java
+G:\ITI\JAVA PROJECT\Developing\Code\Talky\common\src\main\java\gov\iti\jets\common\network\IClient.java
+G:\ITI\JAVA PROJECT\Developing\Code\Talky\common\src\main\java\gov\iti\jets\common\dto\UserSessionDto.java
+G:\ITI\JAVA PROJECT\Developing\Code\Talky\common\src\main\java\gov\iti\jets\common\dto\ChatDto.java
+G:\ITI\JAVA PROJECT\Developing\Code\Talky\common\src\main\java\gov\iti\jets\common\dto\ContactDto.java
+G:\ITI\JAVA PROJECT\Developing\Code\Talky\common\src\main\java\gov\iti\jets\common\dto\InvitationDto.java
+G:\ITI\JAVA PROJECT\Developing\Code\Talky\common\src\main\java\gov\iti\jets\common\dto\UserDto.java
+G:\ITI\JAVA PROJECT\Developing\Code\Talky\common\src\main\java\gov\iti\jets\common\util\ConnectedClientsList.java
+G:\ITI\JAVA PROJECT\Developing\Code\Talky\common\src\main\java\gov\iti\jets\common\util\Validation.java
+G:\ITI\JAVA PROJECT\Developing\Code\Talky\common\src\main\java\module-info.java
+G:\ITI\JAVA PROJECT\Developing\Code\Talky\common\src\main\java\gov\iti\jets\common\dto\ConnectionDto.java
+G:\ITI\JAVA PROJECT\Developing\Code\Talky\common\src\main\java\gov\iti\jets\common\dto\registration\UserRegistrationDto.java
+G:\ITI\JAVA PROJECT\Developing\Code\Talky\common\src\main\java\gov\iti\jets\common\dto\NotificationDto.java
+G:\ITI\JAVA PROJECT\Developing\Code\Talky\common\src\main\java\gov\iti\jets\common\network\IConnection.java
+G:\ITI\JAVA PROJECT\Developing\Code\Talky\common\src\main\java\gov\iti\jets\common\dto\BaseDto.java
+G:\ITI\JAVA PROJECT\Developing\Code\Talky\common\src\main\java\gov\iti\jets\common\util\Constants.java
+G:\ITI\JAVA PROJECT\Developing\Code\Talky\common\src\main\java\gov\iti\jets\common\util\ConnectionFlag.java
+G:\ITI\JAVA PROJECT\Developing\Code\Talky\common\src\main\java\gov\iti\jets\common\network\UserRemote.java
