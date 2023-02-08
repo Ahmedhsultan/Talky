@@ -1,0 +1,16 @@
+gov\iti\jets\client\presentation\controllers\LoginController.class
+gov\iti\jets\client\presentation\controllers\LoginRegister.class
+gov\iti\jets\client\presentation\controllers\ChatController.class
+gov\iti\jets\client\network\service\RegisterService.class
+gov\iti\jets\client\callBack\CheckConnection.class
+gov\iti\jets\client\presentation\controllers\RegisterController.class
+gov\iti\jets\client\presentation\controllers\PhoneLoginController.class
+gov\iti\jets\client\Main.class
+gov\iti\jets\client\presentation\controllers\ChatController$1.class
+gov\iti\jets\client\business\services\PaneManager.class
+gov\iti\jets\client\presentation\controllers\PasswordLoginController.class
+gov\iti\jets\client\network\service\LoginService.class
+module-info.class
+gov\iti\jets\client\network\service\RMIManager.class
+gov\iti\jets\client\presentation\models\User.class
+gov\iti\jets\client\business\services\SceneManager.class
