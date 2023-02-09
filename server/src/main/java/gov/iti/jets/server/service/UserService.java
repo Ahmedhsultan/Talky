@@ -11,6 +11,7 @@ import gov.iti.jets.server.mapper.UserMapper;
 import gov.iti.jets.server.persistence.dao.UserDao;
 
 import java.io.IOException;
+import java.net.URLDecoder;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
 
@@ -104,8 +105,10 @@ public class UserService {
     }
 
     public void saveUserImage(UserDto dto) throws IOException {
-        String path = getClass().getClassLoader().getResource("images/users").getPath()+"/"+dto.getImgPath();
-        Constants.byteArrayToImage(dto.getImage(), path);
+        var dtogetinage = dto.getImgPath();
+        var getpath = getClass().getClassLoader().getResource("images/users").getPath();
+        String path = getpath+"/"+dtogetinage;
+        Constants.byteArrayToImage(dto.getImage(), URLDecoder.decode(path, "UTF-8"));
     }
     public byte[] getUserImage(UserDto dto) throws IOException {
         String path = getClass().getClassLoader().getResource("images/users").getPath()+"/"+dto.getImgPath();
