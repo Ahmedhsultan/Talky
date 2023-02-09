@@ -1,6 +1,7 @@
 package gov.iti.jets.client.network.service;
 
 
+import gov.iti.jets.client.business.services.SceneManager;
 import gov.iti.jets.common.network.UserRemote;
 
 import java.rmi.NotBoundException;
@@ -13,6 +14,7 @@ public class LoginService {
             UserRemote obj = (UserRemote) registry.lookup("server");
             System.out.println(obj);
             obj.login(phone,password);
+            SceneManager.getSceneManager().switchToChatScene();
         } catch (RemoteException e) {
             System.out.println(e.getMessage());
         } catch (NotBoundException e) {

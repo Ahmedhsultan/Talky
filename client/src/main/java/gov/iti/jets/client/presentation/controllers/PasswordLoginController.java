@@ -58,7 +58,6 @@ public class PasswordLoginController implements Initializable {
         } catch (RemoteException e) {
             System.out.println(e.getMessage());
         }
-        SceneManager.getSceneManager().switchToChatScene();
     }
 
     public void loadRegistration(ActionEvent actionEvent) {
