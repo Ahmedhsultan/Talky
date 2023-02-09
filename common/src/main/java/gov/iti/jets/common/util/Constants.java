@@ -38,6 +38,10 @@ public class Constants {
     //Validation Sentence
     public static final String FIELD_EMPTY = "field can't be empty";
 
+    //Paths
+    public static final String mainDir = System.getProperty("user.dir");
+    public static final String userImagesDir =  mainDir+"/server\\images\\users\\";
+
     public static String hashPassword(String input) {
         String sha256hex = Hashing.sha256()
                 .hashString(input, StandardCharsets.UTF_8)
