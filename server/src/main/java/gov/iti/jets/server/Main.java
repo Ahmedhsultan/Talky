@@ -34,10 +34,10 @@ public class Main {
 //             = LocateRegistry.createRegistry(1099);
             Registry reg = RMIManager.getRegistry();
             reg.rebind("server", new UserController());
-            while(true)
-            {
-
-            }
+//            while(true)
+//            {
+//
+//            }
 //
 //            UserController userController = new UserController();
 //            UserDto dto = new UserDto();

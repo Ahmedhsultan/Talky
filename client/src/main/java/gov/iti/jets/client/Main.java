@@ -2,10 +2,19 @@ package gov.iti.jets.client;
 
 
 import gov.iti.jets.client.business.services.SceneManager;
+import gov.iti.jets.client.callBack.CheckConnection;
+import gov.iti.jets.client.network.service.RMIManager;
+import gov.iti.jets.common.dto.ConnectionDto;
+import gov.iti.jets.common.dto.UserDto;
+import gov.iti.jets.common.network.IConnection;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 
 public class Main extends Application {
     @Override
@@ -29,9 +38,9 @@ public class Main extends Application {
         launch();
 //        RegisterService reg;
 //        reg = new RegisterService();
-//        UserDto user = new UserDto();
-//        user.setId("01090780888");
-//        user.setImgPath("01078965432.png");
+        UserDto user = new UserDto();
+        user.setId("01090780888");
+        user.setImgPath("01078965432.png");
 //
 //        try {
 //
@@ -44,5 +53,27 @@ public class Main extends Application {
 //        UserRegistrationDto x = new UserRegistrationDto(user,"Amany12345");
 //        reg.addUser(x);
 //    }
+
+        /**
+         * Starting online and offline service
+         */
+//        Registry registry = null;
+//        try {
+//            registry = RMIManager.getRegistry();
+//            IConnection obj = (IConnection) registry.lookup("connection");
+//            ConnectionDto connectionDto = new ConnectionDto();
+//            connectionDto.setUserDto(user);
+//            connectionDto.setIClient(new CheckConnection());
+//            obj.connect(connectionDto);
+//            while (true){
+//                Thread.sleep(40000);
+//            }
+//        } catch (RemoteException e) {
+//            throw new RuntimeException(e);
+//        } catch (NotBoundException e) {
+//            throw new RuntimeException(e);
+//        } catch (InterruptedException e) {
+//            throw new RuntimeException(e);
+//        }
     }
 }
