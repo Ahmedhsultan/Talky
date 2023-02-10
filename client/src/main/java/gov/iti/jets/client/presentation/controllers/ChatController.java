@@ -2,7 +2,10 @@ package gov.iti.jets.client.presentation.controllers;
 
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXTextField;
 import gov.iti.jets.client.business.services.PaneManager;
+import gov.iti.jets.common.util.Constants;
+import gov.iti.jets.common.util.Validation;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -236,7 +239,14 @@ public class ChatController implements Initializable {
     }
     @FXML
     void addContacts(ActionEvent event) {
-
+        leftList.cellFactoryProperty();
+        for (Pane k: p) {
+            TextField tx = (TextField) k.getChildren().get(1);
+            Label label = (Label) k.getChildren().get(2);
+            if(Validation.validatePhoneNumber(tx,label)){
+                System.out.println(tx.getText());
+            }
+        }
     }
 
 }
