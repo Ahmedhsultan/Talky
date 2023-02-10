@@ -1,7 +1,7 @@
 package gov.iti.jets.client.network.service;
 
 
-import gov.iti.jets.common.network.UserRemote;
+import gov.iti.jets.common.network.server.UserRemote;
 
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;

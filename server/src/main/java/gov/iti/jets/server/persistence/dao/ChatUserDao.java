@@ -1,7 +1,9 @@
 package gov.iti.jets.server.persistence.dao;
 
 
+import gov.iti.jets.common.util.Constants;
 import gov.iti.jets.server.entity.ChatUser;
+import gov.iti.jets.server.entity.User;
 import gov.iti.jets.server.persistence.DBManagement;
 
 import java.sql.Connection;
@@ -74,5 +76,26 @@ public class ChatUserDao extends BaseDaoImpl<ChatUser, Integer>{
             throwables.printStackTrace();
         }
         return chatUserList;
+    }
+
+    public List<String> getOnlineUsersByChat(long chatId){
+            //Write select query by ID
+            String query = "SELECT user_id FROM ChatUser WHERE chat_id = "+ chatId +" and user_id in (select id from user where is_online_status !="+ Constants.ONLINE_STATUS_OFFLINE+");";
+
+            try(Connection connection = DBManagement.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
+                //Execute the query
+                ResultSet resultSet = statement.executeQuery();
+                List<String> list=new ArrayList<>();
+                //Convert resultset to List
+               while(resultSet.next())
+               {
+                   list.add(resultSet.getString(1));
+               }
+
+                return list;
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return null;
+            }
     }
 }

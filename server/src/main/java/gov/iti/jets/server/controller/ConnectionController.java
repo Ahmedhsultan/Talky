@@ -2,7 +2,7 @@ package gov.iti.jets.server.controller;
 
 
 import gov.iti.jets.common.dto.ConnectionDto;
-import gov.iti.jets.common.network.IConnection;
+import gov.iti.jets.common.network.server.IConnection;
 import gov.iti.jets.common.util.ConnectedClientsList;
 
 import java.rmi.RemoteException;

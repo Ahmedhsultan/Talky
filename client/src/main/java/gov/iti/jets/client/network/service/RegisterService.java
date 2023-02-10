@@ -4,7 +4,7 @@ package gov.iti.jets.client.network.service;
 import com.jfoenix.controls.JFXSnackbar;
 import gov.iti.jets.client.presentation.controllers.RegisterController;
 import gov.iti.jets.common.dto.registration.UserRegistrationDto;
-import gov.iti.jets.common.network.UserRemote;
+import gov.iti.jets.common.network.server.UserRemote;
 import javafx.scene.control.Label;
 import javafx.util.Duration;
 

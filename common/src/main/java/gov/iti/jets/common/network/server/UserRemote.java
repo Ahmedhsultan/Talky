@@ -1,4 +1,4 @@
-package gov.iti.jets.common.network;
+package gov.iti.jets.common.network.server;
 
 
 import gov.iti.jets.common.dto.UserSessionDto;
