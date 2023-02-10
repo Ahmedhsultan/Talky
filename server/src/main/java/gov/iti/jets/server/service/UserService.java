@@ -22,15 +22,13 @@ public class UserService {
     private UserSessionService userSessionService;
 
     public UserService ()
-   {
-       dao = new UserDao();
-       userMapper = new UserMapper();
-   }
+    {
+        dao = new UserDao();
+        userMapper = new UserMapper();
+    }
 
 
     public UserSessionDto register(UserRegistrationDto userRegistrationDto) throws RemoteException {
-
-        System.out.println("service");
         UserSessionDto userSessionDto=null;
         if(!Validation.validatePhoneNumber(userRegistrationDto.getUserDto().getId()))
         {
@@ -112,8 +110,12 @@ public class UserService {
         String path = Constants.userImagesDir+dto.getImgPath();
         return Constants.imageToByteArray(path);
     }
-
-//
-
-
+    public void editUser (UserDto userDto) throws RemoteException{
+        User user = userMapper.toEntity(userDto);
+        try {
+            dao.update(user);
+        } catch (SQLException e) {
+            throw new RemoteException("Faild to edit user!!");
+        }
+    }
 }

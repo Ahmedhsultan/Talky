@@ -30,5 +30,4 @@ public class ChatService {
         }
         return chat;
     }
-
 }

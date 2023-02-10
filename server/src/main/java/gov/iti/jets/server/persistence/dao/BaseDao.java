@@ -3,6 +3,7 @@ package gov.iti.jets.server.persistence.dao;
 
 import gov.iti.jets.server.entity.BaseEntity;
 
+import java.rmi.RemoteException;
 import java.sql.SQLException;
 import java.util.List;
 
