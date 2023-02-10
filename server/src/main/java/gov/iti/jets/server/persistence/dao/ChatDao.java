@@ -64,7 +64,7 @@ public class ChatDao extends BaseDaoImpl<Chat, Long>{
                 Chat chat = Chat.builder()
                         .id(resultSet.getLong("id"))
                         .name(resultSet.getString("name"))
-                        .imgPath(resultSet.getString("picture_icon"))
+                        .imgPath(resultSet.getString("img_path"))
                         .modified_on(resultSet.getDate("modified_on"))
                         .created_on(resultSet.getDate("created_on"))
                         .build();
