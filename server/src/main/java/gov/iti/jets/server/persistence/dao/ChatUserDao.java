@@ -35,8 +35,22 @@ public class ChatUserDao extends BaseDaoImpl<ChatUser, Integer>{
         }
     }
 
+    public void insert(List<ChatUser> entities) throws SQLException {
+        String query = "insert into chatuser values(?,?);";
+
+        try (Connection connection = DBManagement.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
+            for(ChatUser entity: entities) {
+                statement.setLong(1, entity.getId());
+                statement.setLong(2, entity.getId());
+                statement.executeUpdate();
+            }
+        }
+
+    }
+
+
     @Override
-    public void insert(ChatUser entity) {
+    public void insert(ChatUser entity) throws SQLException {
 
     }
 
@@ -51,7 +65,7 @@ public class ChatUserDao extends BaseDaoImpl<ChatUser, Integer>{
         try{
             while (resultSet.next()) {
                 ChatUser chatUser = ChatUser.builder()
-                        .chat_id(resultSet.getInt("chat_id"))
+                        .id(resultSet.getLong("chat_id"))
                         .user_id(resultSet.getString("user_id"))
                         .build();
                 chatUserList.add(chatUser);

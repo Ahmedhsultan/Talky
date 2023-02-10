@@ -1,9 +1,7 @@
 package gov.iti.jets.common.dto;
 
 import lombok.*;
-
 import java.io.Serializable;
-import java.sql.Date;
 
 @Getter
 @Setter
@@ -11,9 +9,7 @@ import java.sql.Date;
 @NoArgsConstructor
 @Builder
 @ToString
-public class ChatDto implements Serializable ,BaseDto{
+public class ChatUserDto implements BaseDto , Serializable {
     private long id;
-    private String name;
-    private String picture_icon;
-    private Date modified_on;
+    private String userId;
 }

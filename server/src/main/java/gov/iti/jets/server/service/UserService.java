@@ -105,13 +105,11 @@ public class UserService {
     }
 
     public void saveUserImage(UserDto dto) throws IOException {
-        var dtogetinage = dto.getImgPath();
-        var getpath = getClass().getClassLoader().getResource("images/users").getPath();
-        String path = getpath+"/"+dtogetinage;
+        String path = Constants.userImagesDir+dto.getImgPath();
         Constants.byteArrayToImage(dto.getImage(), URLDecoder.decode(path, "UTF-8"));
     }
     public byte[] getUserImage(UserDto dto) throws IOException {
-        String path = getClass().getClassLoader().getResource("images/users").getPath()+"/"+dto.getImgPath();
+        String path = Constants.userImagesDir+dto.getImgPath();
         return Constants.imageToByteArray(path);
     }
 

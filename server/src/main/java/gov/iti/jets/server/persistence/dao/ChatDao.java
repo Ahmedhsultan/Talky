@@ -1,21 +1,56 @@
 package gov.iti.jets.server.persistence.dao;
 
 
+import gov.iti.jets.common.util.Constants;
 import gov.iti.jets.server.entity.Chat;
+import gov.iti.jets.server.persistence.DBManagement;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
-public class ChatDao extends BaseDaoImpl<Chat, Integer>{
+public class ChatDao extends BaseDaoImpl<Chat, Long>{
 
     public ChatDao() {
         super(Chat.class);
     }
 
+    public Chat insertChat(Chat entity) throws SQLException {
+        String query = "insert into chat values(?,?,?,?,?);";
+
+        try (Connection connection = DBManagement.getConnection(); PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+            statement.setLong(1, entity.getId());
+            statement.setString(2, entity.getName());
+            statement.setString(3, entity.getPicture_icon());
+            statement.setDate(4, entity.getCreated_on());
+            statement.setDate(5, entity.getModified_on());
+            statement.executeUpdate();
+            ResultSet resultSet =  statement.getGeneratedKeys();
+            if(resultSet.next())
+            {
+                entity.setId(resultSet.getLong(1));
+            }else{
+                throw new SQLException();
+            }
+            return entity;
+
+        }
+    }
+
     @Override
-    public void insert(Chat entity) {
+    public void insert(Chat entity) throws SQLException {
+        String query = "insert into chat values(?,?,?,?,?);";
+
+        try (Connection connection = DBManagement.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setLong(1, entity.getId());
+            statement.setString(2, entity.getName());
+            statement.setString(3, entity.getPicture_icon());
+            statement.setDate(4, entity.getCreated_on());
+            statement.setDate(5, entity.getModified_on());
+            statement.executeUpdate();
+
+        }
     }
 
     @Override
@@ -29,7 +64,7 @@ public class ChatDao extends BaseDaoImpl<Chat, Integer>{
         try{
             while (resultSet.next()) {
                 Chat chat = Chat.builder()
-                        .id(resultSet.getInt("id"))
+                        .id(resultSet.getLong("id"))
                         .name(resultSet.getString("name"))
                         .picture_icon(resultSet.getString("picture_icon"))
                         .modified_on(resultSet.getDate("modified_on"))

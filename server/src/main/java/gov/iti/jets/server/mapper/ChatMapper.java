@@ -21,8 +21,14 @@ public class ChatMapper implements BaseMapper<Chat, ChatDto>{
     }
 
     @Override
-    public Chat toEntity(ChatDto chatDto) {
-        return null;
+    public Chat toEntity(ChatDto dto) {
+        Chat entity = Chat.builder()
+                .id(dto.getId())
+                .name(dto.getName())
+                .picture_icon(dto.getPicture_icon())
+                .modified_on(dto.getModified_on())
+                .build();
+        return entity;
     }
 
     @Override

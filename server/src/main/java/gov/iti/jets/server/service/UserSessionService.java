@@ -53,19 +53,23 @@ public class UserSessionService {
     public UserSessionDto getSessionDto() {
         //Get user chats from database and map it to dto then order by modified date
         List<ChatUser> chatUserList = chatUserDao.getChatsByUserId(user.getId());
-        List<Chat> chatList = chatUserList.stream().map(x -> chatDao.findById(x.getChat_id())).toList();
+        List<Chat> chatList = chatUserList.stream().map(x -> chatDao.findById(x.getId())).toList();
         ArrayList<ChatDto> chatDtoList = chatList.stream().map(x -> chatMapper.toDTO(x))
                 .sorted((x,y)-> x.getModified_on().compareTo(y.getModified_on()))
                 .collect(Collectors.toCollection(ArrayList::new));
 
         //Get user contacts
         List<Friends> contactList = friendsDao.findAllById(user.getId());
-        List<String> idsList = contactList.stream().map(x -> new ArrayList<String>(){{
+        //Convert all contacts to set to remove duplicated user
+        Set<String> idsList = contactList.stream().map(x -> new ArrayList<String>(){{
                     add(x.getId1());
                     add(x.getId2());
                 }})
-                .flatMap(x -> x.stream()).toList();
-        //Convert all contacts to set to remove duplicated user
+                .flatMap(x -> x.stream())
+                .collect(Collectors.toSet());
+        //Remove register user from list of contact
+        idsList.remove(user.getId());
+        //Get users from id
         Set<User> userSet = idsList.stream().map(x -> userDao.findById(x)).collect(Collectors.toSet());
         //Map all contacts to dto
         ArrayList<ContactDto> userDtoList = userSet.stream().map(x -> userMapper.toContactDTO(x))
