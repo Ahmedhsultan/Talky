@@ -1,6 +1,7 @@
 package gov.iti.jets.server.service;
 
 
+import gov.iti.jets.common.dto.UserCardDto;
 import gov.iti.jets.common.dto.UserDto;
 import gov.iti.jets.common.dto.UserSessionDto;
 import gov.iti.jets.common.dto.registration.UserRegistrationDto;
@@ -109,6 +110,10 @@ public class UserService {
         Constants.byteArrayToImage(dto.getImage(), URLDecoder.decode(path, "UTF-8"));
     }
     public byte[] getUserImage(UserDto dto) throws IOException {
+        String path = Constants.userImagesDir+dto.getImgPath();
+        return Constants.imageToByteArray(path);
+    }
+    public byte[] getUserImage(UserCardDto dto) throws IOException {
         String path = Constants.userImagesDir+dto.getImgPath();
         return Constants.imageToByteArray(path);
     }
