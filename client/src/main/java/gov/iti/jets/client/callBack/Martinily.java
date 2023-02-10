@@ -4,7 +4,7 @@ package gov.iti.jets.client.callBack;
 import gov.iti.jets.common.dto.MessageDto;
 import gov.iti.jets.common.network.IClient;
 import gov.iti.jets.client.Dina.MessagesQueue;
-import gov.iti.jets.common.util.ConnectionFlag;
+import gov.iti.jets.client.Util.ConnectionFlag;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 

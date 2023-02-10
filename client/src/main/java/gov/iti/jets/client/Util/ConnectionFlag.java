@@ -1,4 +1,4 @@
-package gov.iti.jets.common.util;
+package gov.iti.jets.client.Util;
 
 
 public class ConnectionFlag {
