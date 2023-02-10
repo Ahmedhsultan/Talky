@@ -51,6 +51,13 @@ public class ChatController implements Initializable {
     @FXML
     private TextField searchField;
 
+    @FXML
+    private ImageView addContactCard;
+    @FXML
+    private ImageView deleteContactCard;
+
+    @FXML
+    private JFXButton btnAddContacts;
 
     ObservableList<Double> b = FXCollections.observableArrayList();
     ObservableList<Pane> p = FXCollections.observableArrayList();
@@ -79,8 +86,16 @@ public class ChatController implements Initializable {
         contactsButton.setStyle(null);
         invitationsButton.setStyle(null);
         notificationsButton.setStyle(null);
-        addIcon.setImage(null);
-        addIcon.setDisable(true);
+
+        addIcon.setImage(new Image("image/icons-add.png"));
+        addIcon.setDisable(false);
+        addContactCard.setImage(null);
+        addContactCard.setDisable(true);
+        deleteContactCard.setImage(null);
+        deleteContactCard.setDisable(true);
+        btnAddContacts.setVisible(false);
+
+
         chatsButton.setStyle("-fx-border-width: 0 0 2px 5px; -fx-border-color: purple;");
         p.clear();
         for (double k: b) {
@@ -109,8 +124,15 @@ public class ChatController implements Initializable {
         invitationsButton.setStyle(null);
         chatsButton.setStyle( null);
         notificationsButton.setStyle(null);
+
         addIcon.setImage(new Image("image/icons-add.png"));
         addIcon.setDisable(false);
+        addContactCard.setImage(null);
+        addContactCard.setDisable(true);
+        deleteContactCard.setImage(null);
+        deleteContactCard.setDisable(true);
+        btnAddContacts.setVisible(false);
+
         contactsButton.setStyle(  "-fx-border-width: 0 0 2px 5px; -fx-border-color: purple;");
         p.clear();
         for (double k: b) {
@@ -135,6 +157,13 @@ public class ChatController implements Initializable {
         currentPane.setText("Invitations");
         chatsButton.setStyle( null);
         addIcon.setImage(null);
+        addIcon.setDisable(true);
+        addContactCard.setImage(null);
+        addContactCard.setDisable(true);
+        deleteContactCard.setImage(null);
+        deleteContactCard.setDisable(true);
+        btnAddContacts.setVisible(false);
+
         contactsButton.setStyle(null);
         notificationsButton.setStyle(null);
         invitationsButton.setStyle(  "-fx-border-width: 0 0 2px 5px; -fx-border-color: purple;");
@@ -154,7 +183,6 @@ public class ChatController implements Initializable {
             temp.getChildren().set(2, label);
             p.add(temp);
         }
-//        p.remove(p.size());
         leftList.setItems(p);
     }
     public void openNotifications(ActionEvent actionEvent) {
@@ -168,20 +196,47 @@ public class ChatController implements Initializable {
     @FXML
     void AddNewContacts(MouseEvent event) {
         Pane temp = PaneManager.getPaneManager().putAddContactCard();
-        if(currentPane.getText().equals("Add Contacts")){
-            p.add(temp);
-        }else{
-            currentPane.setText("Add Contacts");
-            currentPane.setStyle("-fx-font-size: 40; ");
-            chatsButton.setStyle( null);
-            invitationsButton.setStyle(null);
-            notificationsButton.setStyle(null);
-            contactsButton.setStyle( "-fx-border-width: 0 0 2px 5px; -fx-border-color: purple;");
-            p.clear();
-            p.add(temp);
+        currentPane.setText("Add Contacts");
+        currentPane.setStyle("-fx-font-size: 40; ");
+        chatsButton.setStyle( null);
+        invitationsButton.setStyle(null);
+        notificationsButton.setStyle(null);
+        addIcon.setImage(null);
+        addIcon.setDisable(true);
+        addContactCard.setImage(new Image("image\\icons-add.png"));
+        addContactCard.setDisable(false);
+        deleteContactCard.setImage(new Image("image\\removeContact.png"));
+        deleteContactCard.setDisable(false);
+        btnAddContacts.setVisible(true);
+        contactsButton.setStyle( "-fx-border-width: 0 0 2px 5px; -fx-border-color: purple;");
+        p.clear();
+        p.add(temp);
+        leftList.setItems(p);
+    }
+
+
+
+
+
+
+    @FXML
+    void deleteContact(MouseEvent event) {
+        //System.out.println("Remove "+p.size());
+        if(p.size()>1){
+            p.remove(p.size()-1);
+            leftList.setItems(p);
         }
 
+    }
+    @FXML
+    void addNewContact(MouseEvent event) {
+        Pane temp = PaneManager.getPaneManager().putAddContactCard();
+        p.add(temp);
         leftList.setItems(p);
+    }
+    @FXML
+    void addContacts(ActionEvent event) {
+
     }
 
 }
