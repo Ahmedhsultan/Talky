@@ -146,12 +146,12 @@ public class ChatController implements Initializable {
         }
         leftList.setItems(p);
     }
-    public void openAddContact(ActionEvent actionEvent) {
-        currentPane.setText("A");
+    public void openAddContact(ActionEvent actionEvent) { //openAddContact
+        currentPane.setText("Add Contacts");
         chatsButton.setStyle( null);
-        contactsButton.setStyle(null);
+        invitationsButton.setStyle(null);
         notificationsButton.setStyle(null);
-        invitationsButton.setStyle(  "-fx-border-width: 0 0 2px 5px; -fx-border-color: purple;");
+        contactsButton.setStyle( "-fx-border-width: 0 0 2px 5px; -fx-border-color: purple;");
         p.clear();
         for (double k: b) {
             Pane temp = PaneManager.getPaneManager().putAddContactCard();
