@@ -30,7 +30,6 @@ public class UserService {
 
     public UserSessionDto register(UserRegistrationDto userRegistrationDto) throws RemoteException {
 
-        System.out.println("service");
         UserSessionDto userSessionDto=null;
         if(!Validation.validatePhoneNumber(userRegistrationDto.getUserDto().getId()))
         {
@@ -62,7 +61,6 @@ public class UserService {
         }
         userSessionService=new UserSessionService(user);
         userSessionDto= userSessionService.getSessionDto();
-        System.out.println(userRegistrationDto);
         return  userSessionDto;
     }
 
@@ -89,7 +87,6 @@ public class UserService {
             setOnlineStatus(phone, Constants.ONLINE_STATUS_AVAILABLE);
             userSessionService=new UserSessionService(user);
             UserSessionDto userSessionDto= userSessionService.getSessionDto();
-        System.out.println(userSessionDto);
            return userSessionDto;
     }
 

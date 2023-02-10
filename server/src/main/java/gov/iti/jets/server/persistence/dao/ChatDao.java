@@ -1,14 +1,12 @@
 package gov.iti.jets.server.persistence.dao;
 
 
-import gov.iti.jets.common.util.Constants;
 import gov.iti.jets.server.entity.Chat;
 import gov.iti.jets.server.persistence.DBManagement;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public class ChatDao extends BaseDaoImpl<Chat, Long>{
 
@@ -22,7 +20,7 @@ public class ChatDao extends BaseDaoImpl<Chat, Long>{
         try (Connection connection = DBManagement.getConnection(); PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             statement.setLong(1, entity.getId());
             statement.setString(2, entity.getName());
-            statement.setString(3, entity.getPicture_icon());
+            statement.setString(3, entity.getImgPath());
             statement.setDate(4, entity.getCreated_on());
             statement.setDate(5, entity.getModified_on());
             statement.executeUpdate();
@@ -45,7 +43,7 @@ public class ChatDao extends BaseDaoImpl<Chat, Long>{
         try (Connection connection = DBManagement.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setLong(1, entity.getId());
             statement.setString(2, entity.getName());
-            statement.setString(3, entity.getPicture_icon());
+            statement.setString(3, entity.getImgPath());
             statement.setDate(4, entity.getCreated_on());
             statement.setDate(5, entity.getModified_on());
             statement.executeUpdate();
@@ -66,7 +64,7 @@ public class ChatDao extends BaseDaoImpl<Chat, Long>{
                 Chat chat = Chat.builder()
                         .id(resultSet.getLong("id"))
                         .name(resultSet.getString("name"))
-                        .picture_icon(resultSet.getString("picture_icon"))
+                        .imgPath(resultSet.getString("picture_icon"))
                         .modified_on(resultSet.getDate("modified_on"))
                         .created_on(resultSet.getDate("created_on"))
                         .build();

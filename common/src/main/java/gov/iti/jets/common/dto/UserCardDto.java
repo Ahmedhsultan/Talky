@@ -1,4 +1,4 @@
-package gov.iti.jets.server.entity;
+package gov.iti.jets.common.dto;
 
 import lombok.*;
 
@@ -10,10 +10,9 @@ import java.sql.Date;
 @NoArgsConstructor
 @Builder
 @ToString
-public class Chat implements BaseEntity{
-    private long id;
+public class UserCardDto  implements  BaseDto{
+    private String id;
     private String name;
     private String imgPath;
-    private Date created_on;
-    private Date modified_on;
+    private byte[] image;
 }
