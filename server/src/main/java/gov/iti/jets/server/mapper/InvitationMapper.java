@@ -24,7 +24,7 @@ public class InvitationMapper implements BaseMapper<Invitation, InvitationDto>{
                 .isSeen(invitation.isSeen())
                 .build();
         return dto;
-}
+    }
 
     @Override
     public Invitation toEntity(InvitationDto invitationDto) {

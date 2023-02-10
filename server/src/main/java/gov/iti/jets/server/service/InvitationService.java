@@ -27,6 +27,7 @@ public class InvitationService {
     }
 
 
+    //List of ids + info of current user
     public void sendInvitation(String senderID, ClientInvitation clientInvitation, String receiverID) throws RemoteException {
 
         if(userDao.findById(receiverID) == null) {
