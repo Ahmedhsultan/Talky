@@ -15,4 +15,5 @@ public class ContactDto implements Serializable {
     private String picture;
     private String isOnlineStatus;
     private String bio;
+    private byte[] image;
 }

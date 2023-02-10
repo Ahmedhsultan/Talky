@@ -4,6 +4,7 @@ package gov.iti.jets.server.mapper;
 import gov.iti.jets.common.dto.ContactDto;
 import gov.iti.jets.common.dto.UserDto;
 import gov.iti.jets.common.dto.registration.UserRegistrationDto;
+import gov.iti.jets.common.util.Constants;
 import gov.iti.jets.server.entity.User;
 import gov.iti.jets.server.service.UserService;
 
@@ -38,14 +39,21 @@ public class UserMapper implements BaseMapper<User, UserDto>{
     }
 
     public ContactDto toContactDTO(User user) {
-        ContactDto dto = ContactDto.builder()
-                .phoneNumber(user.getId())
-                .name(user.getName())
-                .picture(user.getImgPath())
-                .isOnlineStatus(user.getIsOnlineStatus())
-                .bio(user.getBio())
-                .build();
-        return dto;
+        String path = Constants.userImagesDir;
+        try{
+            ContactDto dto = ContactDto.builder()
+                    .phoneNumber(user.getId())
+                    .name(user.getName())
+                    .image(Constants.imageToByteArray(path + user.getImgPath()))
+                    .picture(user.getImgPath())
+                    .isOnlineStatus(user.getIsOnlineStatus())
+                    .bio(user.getBio())
+                    .build();
+            return dto;
+        }catch (IOException ex){
+            ex.printStackTrace();
+        }
+        return null;
     }
 
     @Override
