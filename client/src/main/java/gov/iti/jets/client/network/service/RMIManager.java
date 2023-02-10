@@ -1,5 +1,10 @@
 package gov.iti.jets.client.network.service;
 
+import gov.iti.jets.common.network.server.IConnection;
+import gov.iti.jets.common.network.server.IServer;
+import gov.iti.jets.common.network.server.UserRemote;
+
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -19,10 +24,20 @@ public class RMIManager {
 
     }
 
-    public static Registry getRegistry() throws RemoteException{
+    public synchronized static Registry getRegistry() throws RemoteException{
         if(rmiManager == null)
             rmiManager = new RMIManager();
 
         return rmiManager.reg;
+    }
+
+    public synchronized static IServer lookUpIServer() throws RemoteException, NotBoundException {
+        return (IServer) RMIManager.getRegistry().lookup("iserver");
+    }
+    public synchronized static IConnection lookUpConnection() throws RemoteException, NotBoundException {
+        return (IConnection) RMIManager.getRegistry().lookup("connection");
+    }
+    public synchronized static UserRemote lookUpRegister() throws RemoteException, NotBoundException {
+        return (UserRemote) RMIManager.getRegistry().lookup("register");
     }
 }
