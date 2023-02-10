@@ -30,6 +30,7 @@ public class RegisterService {
             UserRemote obj = (UserRemote) registry.lookup("server");
             obj.register(user);
         } catch (RemoteException e) {
+            System.out.println("mnoooooooooooooooooooooooooooooooooooooo");
 //            throw new RuntimeException(e);
             System.out.println(e.getMessage());
             JFXSnackbar snackbar = new JFXSnackbar(new RegisterController().rootPane);

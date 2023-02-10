@@ -53,9 +53,11 @@ public class UserService {
             saveUserImage(userRegistrationDto.getUserDto());
             dao.insert(user);
         }catch (SQLException ex){
+            System.out.println(ex);
             ex.printStackTrace();
             throw new RemoteException("Failed to register, please try again !!");
         } catch (IOException e) {
+            System.out.println(e);
             e.printStackTrace();
             throw new RemoteException("Failed to Save User's Image, please try again !!");
         }

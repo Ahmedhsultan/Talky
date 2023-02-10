@@ -1,6 +1,8 @@
-package gov.iti.jets.server.entity;
+package gov.iti.jets.common.dto;
 
 import lombok.*;
+
+import java.io.Serializable;
 
 @Getter
 @Setter
@@ -8,7 +10,10 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 @ToString
-public class ChatUser implements BaseEntity{
+public class ChatUserDto implements BaseDto , Serializable {
+
     private long id;
     private String userId;
+
+
 }

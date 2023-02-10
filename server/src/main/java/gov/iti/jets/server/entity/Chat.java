@@ -11,7 +11,7 @@ import java.sql.Date;
 @Builder
 @ToString
 public class Chat implements BaseEntity{
-    private int id;
+    private long id;
     private String name;
     private String picture_icon;
     private Date created_on;

@@ -12,12 +12,14 @@ gov\iti\jets\server\entity\Chat.class
 gov\iti\jets\server\Main.class
 gov\iti\jets\server\entity\User$UserBuilder.class
 gov\iti\jets\server\persistence\dao\ChatDao.class
+gov\iti\jets\server\service\ChatService.class
 module-info.class
 gov\iti\jets\server\entity\User.class
 gov\iti\jets\server\service\InvitationService.class
 gov\iti\jets\server\entity\Friends$FriendsBuilder.class
 gov\iti\jets\server\entity\Chat$ChatBuilder.class
 gov\iti\jets\server\persistence\dao\BaseDaoImpl.class
+gov\iti\jets\server\mapper\ChatUserMapper.class
 gov\iti\jets\server\controller\ConnectionController.class
 gov\iti\jets\server\mapper\ChatMapper.class
 gov\iti\jets\server\entity\Notification.class
@@ -25,6 +27,7 @@ gov\iti\jets\server\persistence\dao\UserDao.class
 gov\iti\jets\server\mapper\UserMapper.class
 gov\iti\jets\server\persistence\dao\ChatUserDao.class
 gov\iti\jets\server\entity\Notification$NotificationBuilder.class
+gov\iti\jets\server\service\ChatUserService.class
 gov\iti\jets\server\service\CheckConnectedClientStatus.class
 gov\iti\jets\server\entity\BaseEntity.class
 gov\iti\jets\server\persistence\dao\BaseDao.class

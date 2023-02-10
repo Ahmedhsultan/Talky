@@ -48,6 +48,7 @@ public class Constants {
     {
         BufferedImage bImage = ImageIO.read(new File(path));
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        System.out.println(path);
         String tokens[] = path.split("[.]",0);
         ImageIO.write(bImage, tokens[tokens.length-1], bos );
         byte [] data = bos.toByteArray();
