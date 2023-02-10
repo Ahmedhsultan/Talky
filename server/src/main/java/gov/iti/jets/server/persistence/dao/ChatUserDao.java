@@ -13,17 +13,17 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChatUserDao extends BaseDaoImpl<ChatUser, Integer>{
+public class ChatUserDao extends BaseDaoImpl<ChatUser, Integer> {
 
     public ChatUserDao() {
         super(ChatUser.class);
     }
 
-    public List<ChatUser> getChatsByUserId(String userId){
+    public List<ChatUser> getChatsByUserId(String userId) {
         //Write select query by ID
-        String query = "SELECT * FROM ChatUser WHERE user_id = "+ userId +" ;";
+        String query = "SELECT * FROM ChatUser WHERE user_id = " + userId + " ;";
 
-        try(Connection connection = DBManagement.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
+        try (Connection connection = DBManagement.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
             //Execute the query
             ResultSet resultSet = statement.executeQuery();
 
@@ -41,7 +41,7 @@ public class ChatUserDao extends BaseDaoImpl<ChatUser, Integer>{
         String query = "insert into chatuser values(?,?);";
 
         try (Connection connection = DBManagement.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
-            for(ChatUser entity: entities) {
+            for (ChatUser entity : entities) {
                 statement.setLong(1, entity.getId());
                 statement.setLong(2, entity.getId());
                 statement.executeUpdate();
@@ -64,7 +64,7 @@ public class ChatUserDao extends BaseDaoImpl<ChatUser, Integer>{
     @Override
     public List<ChatUser> resultSetToList(ResultSet resultSet) throws SQLException {
         List<ChatUser> chatUserList = new ArrayList<>();
-        try{
+        try {
             while (resultSet.next()) {
                 ChatUser chatUser = ChatUser.builder()
                         .id(resultSet.getLong("chat_id"))
@@ -78,24 +78,21 @@ public class ChatUserDao extends BaseDaoImpl<ChatUser, Integer>{
         return chatUserList;
     }
 
-    public List<String> getOnlineUsersByChat(long chatId){
-            //Write select query by ID
-            String query = "SELECT user_id FROM ChatUser WHERE chat_id = "+ chatId +" and user_id in (select id from user where is_online_status !="+ Constants.ONLINE_STATUS_OFFLINE+");";
+    public List<String> getOnlineUsersByChat(long chatId) throws SQLException {
+        //Write select query by ID
+        String query = "SELECT user_id FROM ChatUser WHERE chat_id = " + chatId + " and user_id in (select id from user where is_online_status !=" + Constants.ONLINE_STATUS_OFFLINE + ");";
+        List<String> list = new ArrayList<>();
 
-            try(Connection connection = DBManagement.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
-                //Execute the query
-                ResultSet resultSet = statement.executeQuery();
-                List<String> list=new ArrayList<>();
-                //Convert resultset to List
-               while(resultSet.next())
-               {
-                   list.add(resultSet.getString(1));
-               }
-
-                return list;
-            } catch (SQLException e) {
-                e.printStackTrace();
-                return null;
+        try (Connection connection = DBManagement.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
+            //Execute the query
+            ResultSet resultSet = statement.executeQuery();
+            //Convert resultset to List
+            while (resultSet.next()) {
+                list.add(resultSet.getString(1));
             }
+
+        }
+        return list;
+
     }
 }
