@@ -8,9 +8,10 @@ module gov.iti.jets.common {
     requires java.sql;
     requires java.sql.rowset;
     exports gov.iti.jets.common;
-    exports gov.iti.jets.common.network;
     exports gov.iti.jets.common.dto;
     exports gov.iti.jets.common.dto.registration;
 
     exports gov.iti.jets.common.util;
+    exports gov.iti.jets.common.network.client;
+    exports gov.iti.jets.common.network.server;
 }
