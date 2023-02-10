@@ -18,7 +18,7 @@ public class Martinily extends UnicastRemoteObject implements IClient {
     }
 
     @Override
-    public void receiveMessage(int chatId, String senderId, String message) throws RemoteException {
+    public void receiveMessage(long chatId, String senderId, String message) throws RemoteException {
         MessageDto messageDto = new MessageDto();
         messageDto.setMessage(message);
         messageDto.setSenderId(senderId);

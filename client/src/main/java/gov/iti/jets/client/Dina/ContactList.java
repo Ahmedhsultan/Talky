@@ -4,7 +4,7 @@ import gov.iti.jets.common.dto.MessageDto;
 
 import java.util.HashMap;
 
-public class ContactList extends HashMap<Integer, MessageDto> {
+public class ContactList {
     private static ContactList contactList;
     public static ContactList getList(){
         if(contactList == null)

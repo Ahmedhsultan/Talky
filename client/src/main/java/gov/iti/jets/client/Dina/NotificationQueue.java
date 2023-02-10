@@ -4,7 +4,7 @@ import gov.iti.jets.common.dto.MessageDto;
 
 import java.util.HashMap;
 
-public class NotificationQueue extends HashMap<Integer, MessageDto> {
+public class NotificationQueue {
     private static NotificationQueue notificationQueue;
     public static NotificationQueue getList(){
         if(notificationQueue == null)
