@@ -9,7 +9,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Builder
 @ToString
-public class MessageDto implements BaseDto , Serializable {
-    private String message;
-    private String senderId;
+public class ChatUserDto implements BaseDto , Serializable {
+    private long id;
+    private String userId;
 }
