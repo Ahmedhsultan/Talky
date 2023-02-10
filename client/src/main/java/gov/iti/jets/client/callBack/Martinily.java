@@ -3,7 +3,7 @@ package gov.iti.jets.client.callBack;
 
 import gov.iti.jets.common.dto.MessageDto;
 import gov.iti.jets.common.network.IClient;
-import gov.iti.jets.common.util.ChatsMapList;
+import gov.iti.jets.client.Dina.MessagesQueue;
 import gov.iti.jets.common.util.ConnectionFlag;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -23,6 +23,6 @@ public class Martinily extends UnicastRemoteObject implements IClient {
         messageDto.setMessage(message);
         messageDto.setSenderId(senderId);
 
-        ChatsMapList.getList().put(chatId,messageDto);
+        MessagesQueue.getList().put(chatId,messageDto);
     }
 }
