@@ -43,7 +43,7 @@ public class ChatUserDao extends BaseDaoImpl<ChatUser, Integer> {
         try (Connection connection = DBManagement.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
             for (ChatUser entity : entities) {
                 statement.setLong(1, entity.getId());
-                statement.setLong(2, entity.getId());
+                statement.setString(2, entity.getUser_id());
                 statement.executeUpdate();
             }
         }
