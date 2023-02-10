@@ -7,5 +7,5 @@ import java.util.LinkedList;
 
 public interface IClient extends Remote {
     public void receive() throws RemoteException;
-    public void receiveMessage(int chatId, String senderId, String message) throws RemoteException;
+    public void receiveMessage(long chatId, String senderId, String message) throws RemoteException;
 }
