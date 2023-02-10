@@ -47,6 +47,10 @@ public class PaneManager {
         loadPane("invitationCard");
         return pane;
     }
+    public Pane putAddContactCard() {
+        loadPane("addContact");
+        return pane;
+    }
 
     private void loadPane(String loadedPane, String primaryPane) {
             try {

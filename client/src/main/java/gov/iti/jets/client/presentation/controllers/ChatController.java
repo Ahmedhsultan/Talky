@@ -146,7 +146,22 @@ public class ChatController implements Initializable {
         }
         leftList.setItems(p);
     }
-
+    public void openAddContact(ActionEvent actionEvent) {
+        currentPane.setText("A");
+        chatsButton.setStyle( null);
+        contactsButton.setStyle(null);
+        notificationsButton.setStyle(null);
+        invitationsButton.setStyle(  "-fx-border-width: 0 0 2px 5px; -fx-border-color: purple;");
+        p.clear();
+        for (double k: b) {
+            Pane temp = PaneManager.getPaneManager().putAddContactCard();
+            Circle img = (Circle) temp.getChildren().get(1);
+            img.setFill(new ImagePattern(new Image(("/image/user2.png"),100,100,false,true)));
+            temp.getChildren().set(1, img);
+            p.add(temp);
+        }
+        leftList.setItems(p);
+    }
     public void openNotifications(ActionEvent actionEvent) {
     }
 

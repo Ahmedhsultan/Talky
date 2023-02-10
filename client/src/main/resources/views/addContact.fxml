@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="75.0" prefWidth="330.0" style="-fx-background-radius: 100; -fx-border-radius: 100;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="75.0" stroke="BLACK" strokeType="INSIDE" style="-fx-arc-height: 100; -fx-arc-width: 50; -fx-fill: #f0e7e7; -fx-stroke-width: 0;" width="330.0" />
+      <TextField layoutX="15.0" layoutY="13.0" prefHeight="44.0" prefWidth="250.0" stylesheets="@../style/loginStyle.css" />
+      <ImageView fx:id="contactIcon" fitHeight="44.0" fitWidth="46.0" layoutX="270.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../image/icons8-add-phone-64.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>
