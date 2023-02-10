@@ -9,6 +9,6 @@ import lombok.*;
 @Builder
 @ToString
 public class ChatUser implements BaseEntity{
-    private int chat_id;
+    private long id;
     private String user_id;
 }

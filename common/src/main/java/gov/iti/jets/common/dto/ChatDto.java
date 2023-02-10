@@ -12,7 +12,7 @@ import java.sql.Date;
 @Builder
 @ToString
 public class ChatDto implements Serializable ,BaseDto{
-    private int id;
+    private long id;
     private String name;
     private String picture_icon;
     private Date modified_on;

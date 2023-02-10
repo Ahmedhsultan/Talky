@@ -53,7 +53,7 @@ public class UserSessionService {
     public UserSessionDto getSessionDto() {
         //Get user chats from database and map it to dto then order by modified date
         List<ChatUser> chatUserList = chatUserDao.getChatsByUserId(user.getId());
-        List<Chat> chatList = chatUserList.stream().map(x -> chatDao.findById(x.getChat_id())).toList();
+        List<Chat> chatList = chatUserList.stream().map(x -> chatDao.findById(x.getId())).toList();
         ArrayList<ChatDto> chatDtoList = chatList.stream().map(x -> chatMapper.toDTO(x))
                 .sorted((x,y)-> x.getModified_on().compareTo(y.getModified_on()))
                 .collect(Collectors.toCollection(ArrayList::new));
