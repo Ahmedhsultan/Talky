@@ -1,4 +1,5 @@
-/target/
+/common/target/
 /server/target/
 /client/target/
 /.idea/
+/.iml/
