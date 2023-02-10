@@ -67,6 +67,8 @@ public class UserSessionService {
                 }})
                 .flatMap(x -> x.stream())
                 .collect(Collectors.toSet());
+        //Remove register user from list of contact
+        idsList.remove(user.getId());
         //Get users from id
         Set<User> userSet = idsList.stream().map(x -> userDao.findById(x)).collect(Collectors.toSet());
         //Map all contacts to dto
