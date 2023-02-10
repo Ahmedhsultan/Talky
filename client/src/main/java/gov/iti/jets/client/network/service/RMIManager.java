@@ -24,7 +24,7 @@ public class RMIManager {
 
     }
 
-    public synchronized static Registry getRegistry() throws RemoteException{
+    private synchronized static Registry getRegistry() throws RemoteException{
         if(rmiManager == null)
             rmiManager = new RMIManager();
 
