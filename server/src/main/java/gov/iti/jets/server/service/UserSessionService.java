@@ -60,12 +60,14 @@ public class UserSessionService {
 
         //Get user contacts
         List<Friends> contactList = friendsDao.findAllById(user.getId());
-        List<String> idsList = contactList.stream().map(x -> new ArrayList<String>(){{
+        //Convert all contacts to set to remove duplicated user
+        Set<String> idsList = contactList.stream().map(x -> new ArrayList<String>(){{
                     add(x.getId1());
                     add(x.getId2());
                 }})
-                .flatMap(x -> x.stream()).toList();
-        //Convert all contacts to set to remove duplicated user
+                .flatMap(x -> x.stream())
+                .collect(Collectors.toSet());
+        //Get users from id
         Set<User> userSet = idsList.stream().map(x -> userDao.findById(x)).collect(Collectors.toSet());
         //Map all contacts to dto
         ArrayList<ContactDto> userDtoList = userSet.stream().map(x -> userMapper.toContactDTO(x))
