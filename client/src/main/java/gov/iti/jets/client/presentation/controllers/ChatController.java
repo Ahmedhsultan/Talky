@@ -1,12 +1,14 @@
 package gov.iti.jets.client.presentation.controllers;
 
 
+import com.jfoenix.controls.JFXButton;
 import gov.iti.jets.client.business.services.PaneManager;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -14,7 +16,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
@@ -40,6 +44,8 @@ public class ChatController implements Initializable {
     @FXML
     private Label currentPane;
     @FXML
+    private ImageView addIcon;
+    @FXML
     private ListView leftList;
 
     @FXML
@@ -55,7 +61,6 @@ public class ChatController implements Initializable {
         }
         chatsButton.fire();
         selectChat();
-
     }
 
 
@@ -74,6 +79,8 @@ public class ChatController implements Initializable {
         contactsButton.setStyle(null);
         invitationsButton.setStyle(null);
         notificationsButton.setStyle(null);
+        addIcon.setImage(null);
+        addIcon.setDisable(true);
         chatsButton.setStyle("-fx-border-width: 0 0 2px 5px; -fx-border-color: purple;");
         p.clear();
         for (double k: b) {
@@ -102,6 +109,8 @@ public class ChatController implements Initializable {
         invitationsButton.setStyle(null);
         chatsButton.setStyle( null);
         notificationsButton.setStyle(null);
+        addIcon.setImage(new Image("image/icons-add.png"));
+        addIcon.setDisable(false);
         contactsButton.setStyle(  "-fx-border-width: 0 0 2px 5px; -fx-border-color: purple;");
         p.clear();
         for (double k: b) {
@@ -125,6 +134,7 @@ public class ChatController implements Initializable {
     public void openInvitations(ActionEvent actionEvent) {
         currentPane.setText("Invitations");
         chatsButton.setStyle( null);
+        addIcon.setImage(null);
         contactsButton.setStyle(null);
         notificationsButton.setStyle(null);
         invitationsButton.setStyle(  "-fx-border-width: 0 0 2px 5px; -fx-border-color: purple;");
@@ -144,22 +154,7 @@ public class ChatController implements Initializable {
             temp.getChildren().set(2, label);
             p.add(temp);
         }
-        leftList.setItems(p);
-    }
-    public void openAddContact(ActionEvent actionEvent) { //openAddContact
-        currentPane.setText("Add Contacts");
-        chatsButton.setStyle( null);
-        invitationsButton.setStyle(null);
-        notificationsButton.setStyle(null);
-        contactsButton.setStyle( "-fx-border-width: 0 0 2px 5px; -fx-border-color: purple;");
-        p.clear();
-        for (double k: b) {
-            Pane temp = PaneManager.getPaneManager().putAddContactCard();
-            Circle img = (Circle) temp.getChildren().get(1);
-            img.setFill(new ImagePattern(new Image(("/image/user2.png"),100,100,false,true)));
-            temp.getChildren().set(1, img);
-            p.add(temp);
-        }
+//        p.remove(p.size());
         leftList.setItems(p);
     }
     public void openNotifications(ActionEvent actionEvent) {
@@ -169,4 +164,24 @@ public class ChatController implements Initializable {
         ObservableList<Pane> c = FXCollections.observableArrayList(p.stream().filter(x->((Label)(x.lookup("#userName"))).getText().toLowerCase().contains(searchField.getText().toLowerCase())).collect(Collectors.toList()));
         leftList.setItems(c);
     }
+
+    @FXML
+    void AddNewContacts(MouseEvent event) {
+        Pane temp = PaneManager.getPaneManager().putAddContactCard();
+        if(currentPane.getText().equals("Add Contacts")){
+            p.add(temp);
+        }else{
+            currentPane.setText("Add Contacts");
+            currentPane.setStyle("-fx-font-size: 40; ");
+            chatsButton.setStyle( null);
+            invitationsButton.setStyle(null);
+            notificationsButton.setStyle(null);
+            contactsButton.setStyle( "-fx-border-width: 0 0 2px 5px; -fx-border-color: purple;");
+            p.clear();
+            p.add(temp);
+        }
+
+        leftList.setItems(p);
+    }
+
 }

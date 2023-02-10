@@ -8,11 +8,11 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="75.0" prefWidth="330.0" style="-fx-background-radius: 100; -fx-border-radius: 100;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="75.0" stroke="BLACK" strokeType="INSIDE" style="-fx-arc-height: 100; -fx-arc-width: 50; -fx-fill: #f0e7e7; -fx-stroke-width: 0;" width="330.0" />
-      <TextField layoutX="15.0" layoutY="13.0" prefHeight="44.0" prefWidth="250.0" stylesheets="@../style/loginStyle.css" />
-      <ImageView fx:id="contactIcon" fitHeight="44.0" fitWidth="46.0" layoutX="270.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="70.0" stroke="BLACK" strokeType="INSIDE" style="-fx-arc-height: 100; -fx-arc-width: 50; -fx-fill: #f0e7e7; -fx-stroke-width: 0;" width="330.0" />
+      <TextField layoutX="14.0" layoutY="17.0" prefHeight="37.0" prefWidth="250.0" stylesheets="@../style/loginStyle.css" AnchorPane.bottomAnchor="21.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="66.0" AnchorPane.topAnchor="17.0" />
+      <ImageView fitHeight="37.0" fitWidth="44.0" layoutX="279.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../image/icons8-add-phone-64.png" />
+            <Image url="@../image/removeContact.png" />
          </image>
       </ImageView>
    </children>
