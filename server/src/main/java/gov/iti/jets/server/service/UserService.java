@@ -29,7 +29,7 @@ public class UserService {
 
 
     public UserSessionDto register(UserRegistrationDto userRegistrationDto) throws RemoteException {
-        UserSessionDto userSessionDto=null;
+        UserSessionDto userSessionDto = null;
         if(!Validation.validatePhoneNumber(userRegistrationDto.getUserDto().getId()))
         {
             throw new RemoteException("Invalid Phone Number!!");
@@ -38,7 +38,7 @@ public class UserService {
         {
             throw new RemoteException("Invalid Password!!");
         }
-        User user=null;
+        User user = null;
         User tempUser= dao.findById(userRegistrationDto.getUserDto().getId());
         if (tempUser!=null)
         {
@@ -110,12 +110,19 @@ public class UserService {
         String path = Constants.userImagesDir+dto.getImgPath();
         return Constants.imageToByteArray(path);
     }
-    public void editUser (UserDto userDto) throws RemoteException{
+    public UserDto editUser (UserDto userDto) throws RemoteException{
         User user = userMapper.toEntity(userDto);
         try {
             dao.update(user);
         } catch (SQLException e) {
             throw new RemoteException("Faild to edit user!!");
         }
+        return getUser(userDto.getId());
+    }
+    public UserDto getUser(String id) throws RemoteException{
+        User user = dao.findById(id);
+        UserDto userDto = userMapper.toDTO(user);
+
+        return  userDto;
     }
 }

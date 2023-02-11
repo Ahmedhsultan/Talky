@@ -4,6 +4,7 @@ package gov.iti.jets.client.callBack;
 import gov.iti.jets.client.Dina.MessagesQueue;
 import gov.iti.jets.client.Util.ConnectionFlag;
 import gov.iti.jets.common.dto.MessageDto;
+import gov.iti.jets.common.dto.UserDto;
 import gov.iti.jets.common.network.client.IClient;
 
 import java.rmi.RemoteException;
@@ -25,5 +26,30 @@ public class Martinily extends UnicastRemoteObject implements IClient {
         messageDto.setSenderId(senderId);
 
         MessagesQueue.getList().put(chatId,messageDto);
+    }
+
+    @Override
+    public void addToGroup(String userId, long chatId) throws RemoteException {
+
+    }
+
+    @Override
+    public void removefromGroup(String userId, long chatId) throws RemoteException {
+
+    }
+
+    @Override
+    public void addFriend(UserDto userDto) throws RemoteException {
+
+    }
+
+    @Override
+    public void removeFriend(UserDto userDto) throws RemoteException {
+
+    }
+
+    @Override
+    public void editUser(UserDto userDto) throws RemoteException {
+
     }
 }
