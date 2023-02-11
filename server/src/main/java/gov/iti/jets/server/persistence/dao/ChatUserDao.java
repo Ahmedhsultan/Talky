@@ -77,7 +77,7 @@ public class ChatUserDao extends BaseDaoImpl<ChatUser, Integer> {
         try {
             while (resultSet.next()) {
                 ChatUser chatUser = ChatUser.builder()
-                        .id(resultSet.getLong("id"))
+                        .id(resultSet.getLong("chat_id"))
                         .user_id(resultSet.getString("user_id"))
                         .build();
                 chatUserList.add(chatUser);

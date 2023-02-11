@@ -30,9 +30,9 @@ public class Main extends Application {
         launch();
 //        RegisterService reg;
 //        reg = new RegisterService();
-        UserDto user = new UserDto();
-        user.setId("01090780888");
-        user.setImgPath("01078965432.png");
+//        UserDto user = new UserDto();
+//        user.setId("01090780888");
+//        user.setImgPath("01078965432.png");
 //
 //        try {
 //
