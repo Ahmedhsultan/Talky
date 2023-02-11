@@ -3,7 +3,6 @@ package gov.iti.jets.server.persistence.dao;
 
 import gov.iti.jets.common.util.Constants;
 import gov.iti.jets.server.entity.ChatUser;
-import gov.iti.jets.server.entity.User;
 import gov.iti.jets.server.persistence.DBManagement;
 
 import java.sql.Connection;

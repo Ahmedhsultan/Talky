@@ -41,6 +41,8 @@ public class Constants {
     //Paths
     public static final String mainDir = System.getProperty("user.dir");
     public static final String userImagesDir =  mainDir+"/server\\images\\users\\";
+    public static final String chatImagesDir =  mainDir+"/server\\images\\chats\\";
+
 
     public static String hashPassword(String input) {
         String sha256hex = Hashing.sha256()
@@ -62,12 +64,7 @@ public class Constants {
         ByteArrayInputStream bis = new ByteArrayInputStream(data);
         BufferedImage bImage2 = ImageIO.read(bis);
         File f = new File(path) ;
-
-        System.out.println(path);
-//        f.createNewFile();
-        System.out.println(f.exists());
         String tokens[] = path.split("[.]",0);
-        System.out.println(tokens.length);
         ImageIO.write(bImage2, tokens[tokens.length-1], f);
         System.out.println("image created");
         return f;

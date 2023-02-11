@@ -22,7 +22,6 @@ public class UserController extends UnicastRemoteObject implements UserRemote {
     }
 
     public UserSessionDto register(UserRegistrationDto userRegistrationDto) throws RemoteException {
-        System.out.println("controller");
             return userService.register( userRegistrationDto);
     }
 

@@ -1,6 +1,7 @@
 package gov.iti.jets.server.service;
 
 
+import gov.iti.jets.common.dto.UserCardDto;
 import gov.iti.jets.common.dto.UserDto;
 import gov.iti.jets.common.dto.UserSessionDto;
 import gov.iti.jets.common.dto.registration.UserRegistrationDto;
@@ -29,7 +30,8 @@ public class UserService {
 
 
     public UserSessionDto register(UserRegistrationDto userRegistrationDto) throws RemoteException {
-        UserSessionDto userSessionDto = null;
+
+        UserSessionDto userSessionDto=null;
         if(!Validation.validatePhoneNumber(userRegistrationDto.getUserDto().getId()))
         {
             throw new RemoteException("Invalid Phone Number!!");
@@ -60,7 +62,6 @@ public class UserService {
         }
         userSessionService=new UserSessionService(user);
         userSessionDto= userSessionService.getSessionDto();
-        System.out.println(userRegistrationDto);
         return  userSessionDto;
     }
 
@@ -87,7 +88,6 @@ public class UserService {
             setOnlineStatus(phone, Constants.ONLINE_STATUS_AVAILABLE);
             userSessionService=new UserSessionService(user);
             UserSessionDto userSessionDto= userSessionService.getSessionDto();
-        System.out.println(userSessionDto);
            return userSessionDto;
     }
 
@@ -110,6 +110,11 @@ public class UserService {
         String path = Constants.userImagesDir+dto.getImgPath();
         return Constants.imageToByteArray(path);
     }
+    public byte[] getUserImage(UserCardDto dto) throws IOException {
+        String path = Constants.userImagesDir+dto.getImgPath();
+        return Constants.imageToByteArray(path);
+    }
+
     public UserDto editUser (UserDto userDto) throws RemoteException{
         User user = userMapper.toEntity(userDto);
         try {
@@ -125,4 +130,6 @@ public class UserService {
 
         return  userDto;
     }
+
+
 }

@@ -1,5 +1,8 @@
-/common/target/
+/target/
 /server/target/
 /client/target/
 /.idea/
-/.iml/
+/ChatAppTalkey.iml
+/server/server.iml
+/common/common.iml
+/client/client.iml

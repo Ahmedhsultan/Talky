@@ -14,8 +14,8 @@ import java.sql.Date;
 public class InvitationDto implements  BaseDto{
 
     private long id;
-    private String senderId;
     private String receiverId;
+    private  UserCardDto userCardDto;
     private Date createdOn;
     private String status;
     private boolean isSeen;
