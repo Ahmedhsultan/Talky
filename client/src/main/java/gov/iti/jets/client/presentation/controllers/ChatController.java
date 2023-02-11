@@ -33,6 +33,7 @@ import java.net.URL;
 import java.rmi.RemoteException;
 import java.rmi.registry.Registry;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
@@ -107,7 +108,7 @@ public class ChatController implements Initializable {
                     if(currentPane.getText().equals("Chats")) {
                         chatName.setText(((Label) (newValue.lookup("#userName"))).getText());
 //                        chatIcon.setFill(new ImagePattern(new Image(Constants.byteArrayToImage(arr, img).getPath(),100,100,false,true)));
-                       MessageDto m =  MessagesQueue.getList().get(Integer.parseInt(((Label)(newValue.lookup("#chatID"))).getText()));
+                       List<MessageDto> m =  MessagesQueue.getList().get(Integer.parseInt(((Label)(newValue.lookup("#chatID"))).getText()));
 //                        for(MessageDto message :)
                     }
             }
