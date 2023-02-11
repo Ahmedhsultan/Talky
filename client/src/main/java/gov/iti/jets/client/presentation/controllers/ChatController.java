@@ -288,13 +288,13 @@ public class ChatController implements Initializable {
         invitationsButton.setStyle(null);
         notificationsButton.setStyle(null);
 
-//        addIcon.setImage(null);
-//        addIcon.setDisable(true);
-//        addContactCard.setImage(new Image("image\\icons-add.png"));
-//        addContactCard.setDisable(false);
-//        deleteContactCard.setImage(new Image("image\\removeContact.png"));
-//        deleteContactCard.setDisable(false);
-//        btnAddContacts.setVisible(true);
+        addIcon.setImage(null);
+        addIcon.setDisable(true);
+        addContactCard.setImage(new Image("image\\icons-add.png"));
+        addContactCard.setDisable(false);
+        deleteContactCard.setImage(new Image("image\\removeContact.png"));
+        deleteContactCard.setDisable(false);
+        btnAddContacts.setVisible(true);
 
         contactsButton.setStyle( "-fx-border-width: 0 0 2px 5px; -fx-border-color: purple;");
         paneObservableList.clear();
@@ -328,15 +328,18 @@ public class ChatController implements Initializable {
                 try {
                     reg = RMIManager.getRegistry();
                 } catch (RemoteException e) {
+                    System.out.println(e.getMessage());
                     throw new RuntimeException(e);
                 }
                 IClientInvitation clientInvitation = null;
                 try {
                     clientInvitation = new IClientInvitation();
                 } catch (RemoteException e) {
+                    System.out.println(e.getMessage());
                     throw new RuntimeException(e);
                 }
-                new InvitationService().sendInvit("01090780888",clientInvitation,tx.getText(),reg);
+                System.out.println("sender id = "+userSessionDto.getUser().getId() + "reciever id  = "+ tx.getText());
+                new InvitationService().sendInvit(userSessionDto.getUser().getId(),clientInvitation,tx.getText(),reg);
             }
         }
     }
