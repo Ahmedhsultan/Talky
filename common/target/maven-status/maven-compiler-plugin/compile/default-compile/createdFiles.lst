@@ -15,6 +15,7 @@ gov\iti\jets\common\dto\MessageDto.class
 gov\iti\jets\common\dto\Test.class
 gov\iti\jets\common\dto\InvitationDto$InvitationDtoBuilder.class
 gov\iti\jets\common\network\server\IServer.class
+gov\iti\jets\common\network\server\ServerInvitation.class
 gov\iti\jets\common\dto\UserCardDto.class
 gov\iti\jets\common\network\server\UserRemote.class
 gov\iti\jets\common\dto\ContactDto.class
@@ -24,6 +25,7 @@ gov\iti\jets\common\dto\InvitationDto.class
 gov\iti\jets\common\dto\MessageDto$MessageDtoBuilder.class
 gov\iti\jets\common\Main.class
 gov\iti\jets\common\dto\UserCardDto$UserCardDtoBuilder.class
+gov\iti\jets\common\network\client\ClientInvitation.class
 gov\iti\jets\common\dto\NotificationDto.class
 gov\iti\jets\common\dto\ChatDto.class
 gov\iti\jets\common\dto\ChatUserDto$ChatUserDtoBuilder.class

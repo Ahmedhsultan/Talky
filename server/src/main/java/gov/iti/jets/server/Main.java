@@ -47,8 +47,9 @@ public class Main {
         } catch (RemoteException e) {
 //            e.printStackTrace();
         }
+        while(true){}
 
-        System.out.println("Hello World!");
+//        System.out.println("Hello World!");
     }
 
 

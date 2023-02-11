@@ -127,6 +127,7 @@ public class ChatController implements Initializable {
         invitationsButton.setStyle(null);
         notificationsButton.setStyle(null);
         leftList.setId("");
+        deleteAddDelContact();
         chatsButton.setStyle("-fx-border-width: 0 0 2px 5px; -fx-border-color: purple;");
         paneObservableList.clear();
         for (ChatDto chat : userSessionDto.getChatListDto()) {
@@ -152,6 +153,7 @@ public class ChatController implements Initializable {
         chatsButton.setStyle( null);
         notificationsButton.setStyle(null);
         leftList.setId("");
+        deleteAddDelContact();
         contactsButton.setStyle(  "-fx-border-width: 0 0 2px 5px; -fx-border-color: purple;");
         paneObservableList.clear();
         for (ContactDto contact : userSessionDto.getContactListDto()) {
@@ -174,6 +176,7 @@ public class ChatController implements Initializable {
         contactsButton.setStyle(null);
         notificationsButton.setStyle(null);
         leftList.setId("");
+        deleteAddDelContact();
         invitationsButton.setStyle(  "-fx-border-width: 0 0 2px 5px; -fx-border-color: purple;");
         paneObservableList.clear();
         for(InvitationDto invitation: userSessionDto.getInvitationListDto()) {
@@ -193,6 +196,7 @@ public class ChatController implements Initializable {
         chatsButton.setStyle( null);
         contactsButton.setStyle(null);
         invitationsButton.setStyle(null);
+        deleteAddDelContact();
         leftList.setId("");
         notificationsButton.setStyle(  "-fx-border-width: 0 0 2px 5px; -fx-border-color: purple;");
         paneObservableList.clear();
@@ -335,6 +339,15 @@ public class ChatController implements Initializable {
                 new InvitationService().sendInvit("01090780888",clientInvitation,tx.getText(),reg);
             }
         }
+    }
+    private void deleteAddDelContact(){
+        addIcon.setImage(new Image("image/icons-add.png"));
+        addIcon.setDisable(false);
+        addContactCard.setImage(null);
+        addContactCard.setDisable(true);
+        deleteContactCard.setImage(null);
+        deleteContactCard.setDisable(true);
+        btnAddContacts.setVisible(false);
     }
 
 }
