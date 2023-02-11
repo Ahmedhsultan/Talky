@@ -34,6 +34,8 @@ import java.net.URL;
 import java.rmi.RemoteException;
 import java.rmi.registry.Registry;
 import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -128,11 +130,6 @@ public class RegisterController implements Initializable {
 //        circle.setFill(new ImagePattern(new Image("user.png",200,200,false,true)));
         addCountryChoiceBox();
         circle.setFill(new ImagePattern(new Image("/image/user.png",200,200,false,true)));
-        try {
-            reg = RMIManager.getRegistry();
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
     }
     @FXML
     public void addProfileImage(MouseEvent event) {
@@ -172,13 +169,14 @@ public class RegisterController implements Initializable {
 
             userRegistrationDto = new UserRegistrationDto(user,password.getText());
             try {
-                userSessionDto = new RegisterService().addUser(userRegistrationDto, reg);
+                userSessionDto = new RegisterService().addUser(userRegistrationDto);
                 SceneManager.getSceneManager().switchToChatScene();
 
             }catch (Exception e){
                 e.getMessage();
             }
 
+            SceneManager.getSceneManager().switchToChatScene();
         }
     }
     private boolean validation(){

@@ -4,7 +4,7 @@ package gov.iti.jets.server.controller;
 import gov.iti.jets.common.dto.UserDto;
 import gov.iti.jets.common.dto.UserSessionDto;
 import gov.iti.jets.common.dto.registration.UserRegistrationDto;
-import gov.iti.jets.common.network.UserRemote;
+import gov.iti.jets.common.network.server.UserRemote;
 import gov.iti.jets.server.service.UserService;
 
 import java.rmi.RemoteException;
@@ -23,7 +23,6 @@ public class UserController extends UnicastRemoteObject implements UserRemote {
     }
 
     public UserSessionDto register(UserRegistrationDto userRegistrationDto) throws RemoteException {
-        System.out.println("controller");
             return userService.register( userRegistrationDto);
     }
 

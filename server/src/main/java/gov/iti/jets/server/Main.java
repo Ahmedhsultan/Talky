@@ -33,7 +33,7 @@ public class Main {
         try {
 //             = LocateRegistry.createRegistry(1099);
             Registry reg = RMIManager.getRegistry();
-            reg.rebind("server", new UserController());
+            reg.rebind("register", new UserController());
 //            while(true)
 //            {
 //

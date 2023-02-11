@@ -13,7 +13,7 @@ import java.sql.Date;
 public class Chat implements BaseEntity{
     private long id;
     private String name;
-    private String picture_icon;
+    private String imgPath;
     private Date created_on;
     private Date modified_on;
 }

@@ -35,6 +35,7 @@ public class UserSessionService {
     private NotificationMapper notificationMapper;
     private InvitationMapper invitationMapper;
     private UserSessionDto userSessionDto;
+    private FriendsService friendsService;
 
     public UserSessionService(User user) {
         this.user = user;
@@ -48,6 +49,7 @@ public class UserSessionService {
         chatMapper = new ChatMapper();
         notificationMapper = new NotificationMapper();
         invitationMapper = new InvitationMapper();
+        friendsService = new FriendsService();
     }
 
     public UserSessionDto getSessionDto() {
@@ -58,20 +60,8 @@ public class UserSessionService {
                 .sorted((x,y)-> x.getModified_on().compareTo(y.getModified_on()))
                 .collect(Collectors.toCollection(ArrayList::new));
 
-        //Get user contacts
-        List<Friends> contactList = friendsDao.findAllById(user.getId());
-        //Convert all contacts to set to remove duplicated user
-        Set<String> idsList = contactList.stream().map(x -> new ArrayList<String>(){{
-                    add(x.getId1());
-                    add(x.getId2());
-                }})
-                .flatMap(x -> x.stream())
-                .collect(Collectors.toSet());
-        //Get users from id
-        Set<User> userSet = idsList.stream().map(x -> userDao.findById(x)).collect(Collectors.toSet());
-        //Map all contacts to dto
-        ArrayList<ContactDto> userDtoList = userSet.stream().map(x -> userMapper.toContactDTO(x))
-                .collect(Collectors.toCollection(ArrayList::new));
+        //Get list of user friends
+        ArrayList<ContactDto> userDtoList = friendsService.getListOfFriends(user.getId());
 
         //Get all user notification then order by created date
         ArrayList<NotificationDto> notificationList = notificationDao.getNotificationsByUserId(user.getId())

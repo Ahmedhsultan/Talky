@@ -1,7 +1,7 @@
 package gov.iti.jets.common.dto;
 
 
-import gov.iti.jets.common.network.IClient;
+import gov.iti.jets.common.network.client.IClient;
 import lombok.*;
 
 import java.io.Serializable;

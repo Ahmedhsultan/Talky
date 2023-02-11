@@ -2,3 +2,7 @@
 /server/target/
 /client/target/
 /.idea/
+/ChatAppTalkey.iml
+/server/server.iml
+/common/common.iml
+/client/client.iml

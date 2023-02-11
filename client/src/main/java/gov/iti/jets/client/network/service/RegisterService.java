@@ -5,7 +5,7 @@ import com.jfoenix.controls.JFXSnackbar;
 import gov.iti.jets.client.presentation.controllers.RegisterController;
 import gov.iti.jets.common.dto.UserSessionDto;
 import gov.iti.jets.common.dto.registration.UserRegistrationDto;
-import gov.iti.jets.common.network.UserRemote;
+import gov.iti.jets.common.network.server.UserRemote;
 import javafx.scene.control.Label;
 import javafx.util.Duration;
 
@@ -26,10 +26,10 @@ public class RegisterService {
 //            throw new RuntimeException(e);
 //        }
 //    }
-    public UserSessionDto addUser(UserRegistrationDto user, Registry registry){
+    public UserSessionDto addUser(UserRegistrationDto user){
         UserSessionDto userSessionDto = null;
         try {
-            UserRemote obj = (UserRemote) registry.lookup("server");
+            UserRemote obj = RMIManager.lookUpRegister();
             userSessionDto = obj.register(user);
         } catch (RemoteException e) {
 //            throw new RuntimeException(e);

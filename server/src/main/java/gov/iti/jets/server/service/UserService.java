@@ -1,6 +1,7 @@
 package gov.iti.jets.server.service;
 
 
+import gov.iti.jets.common.dto.UserCardDto;
 import gov.iti.jets.common.dto.UserDto;
 import gov.iti.jets.common.dto.UserSessionDto;
 import gov.iti.jets.common.dto.registration.UserRegistrationDto;
@@ -112,16 +113,26 @@ public class UserService {
         String path = Constants.userImagesDir+dto.getImgPath();
         return Constants.imageToByteArray(path);
     }
-
-
-    public void updateProfile(UserDto userDto) {
-        try {
-            dao.update(userMapper.toEntity(userDto));
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public byte[] getUserImage(UserCardDto dto) throws IOException {
+        String path = Constants.userImagesDir+dto.getImgPath();
+        return Constants.imageToByteArray(path);
     }
 
+    public UserDto editUser (UserDto userDto) throws RemoteException{
+        User user = userMapper.toEntity(userDto);
+        try {
+            dao.update(user);
+        } catch (SQLException e) {
+            throw new RemoteException("Faild to edit user!!");
+        }
+        return getUser(userDto.getId());
+    }
+    public UserDto getUser(String id) throws RemoteException{
+        User user = dao.findById(id);
+        UserDto userDto = userMapper.toDTO(user);
+
+        return  userDto;
+    }
 
 
 }

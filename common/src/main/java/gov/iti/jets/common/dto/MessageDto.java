@@ -1,6 +1,7 @@
 package gov.iti.jets.common.dto;
 
 import lombok.*;
+import java.io.Serializable;
 
 @Getter
 @Setter
@@ -8,7 +9,7 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 @ToString
-public class MessageDto {
+public class MessageDto implements BaseDto , Serializable {
     private String message;
     private String senderId;
 }

@@ -38,28 +38,18 @@ public class PasswordLoginController implements Initializable {
     @FXML
     private Label error;
 
-    Registry reg;
     public static UserSessionDto userSessionDto;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        try {
-            reg = RMIManager.getRegistry();
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
+
     }
 
     public void goToChat(ActionEvent actionEvent) {
         System.out.println(PhoneLoginController.phoneNo);
         LoginService log = new LoginService();
-        Registry reg = null;
-        try {
-            reg = RMIManager.getRegistry();
-            userSessionDto = log.login(PhoneLoginController.phoneNo,password.getText(),reg);
-        } catch (RemoteException e) {
-            System.out.println(e.getMessage());
-        }
-        System.out.println(userSessionDto.getUser().getEmail());
+
+        log.login(PhoneLoginController.phoneNo,password.getText());
+        System.out.println("Login success");
 
         SceneManager.getSceneManager().switchToChatScene();
     }
