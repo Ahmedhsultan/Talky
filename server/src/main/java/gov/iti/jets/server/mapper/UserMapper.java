@@ -38,7 +38,7 @@ public class UserMapper implements BaseMapper<User, UserDto>{
         return dto;
     }
 
-    public ContactDto toContactDTO(User user) {
+    public ContactDto toContactDTO(User user ) {
         String path = Constants.userImagesDir;
         try{
             ContactDto dto = ContactDto.builder()

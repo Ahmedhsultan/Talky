@@ -25,9 +25,9 @@ public class RegisterService {
 //            throw new RuntimeException(e);
 //        }
 //    }
-    public void addUser(UserRegistrationDto user, Registry registry){
+    public void addUser(UserRegistrationDto user){
         try {
-            UserRemote obj = (UserRemote) registry.lookup("server");
+            UserRemote obj = RMIManager.lookUpRegister();
             obj.register(user);
         } catch (RemoteException e) {
 //            throw new RuntimeException(e);

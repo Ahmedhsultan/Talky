@@ -4,6 +4,7 @@ package gov.iti.jets.server.persistence.dao;
 import gov.iti.jets.server.entity.Friends;
 import gov.iti.jets.server.persistence.DBManagement;
 
+import java.rmi.RemoteException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -43,14 +44,21 @@ public class FriendsDao extends BaseDaoImpl<Friends,String>{
     }
 
     @Override
-    public void insert(Friends entity) {
+    public void insert(Friends entity) throws SQLException {
         String query = "INSERT INTO Friends VALUES(?,?);";
 
         try (Connection connection = DBManagement.getConnection();PreparedStatement statement = connection.prepareStatement(query)) {
             setStatement(statement, entity);
             statement.executeUpdate();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        }
+    }
+
+    public void deleteFriends(Friends entity) throws SQLException {
+        String query = "DELETE FROM Friends WHERE (id1 = ? AND id2 = ?) OR (id2 = ? AND id1 = ?) ;";
+
+        try (Connection connection = DBManagement.getConnection();PreparedStatement statement = connection.prepareStatement(query)) {
+            setStatement(statement, entity);
+            statement.executeUpdate();
         }
     }
 

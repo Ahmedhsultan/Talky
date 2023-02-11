@@ -1,9 +1,12 @@
 package gov.iti.jets.client.callBack;
 
 
+import gov.iti.jets.client.Dina.ContactList;
 import gov.iti.jets.client.Dina.MessagesQueue;
 import gov.iti.jets.client.Util.ConnectionFlag;
+import gov.iti.jets.common.dto.ContactDto;
 import gov.iti.jets.common.dto.MessageDto;
+import gov.iti.jets.common.dto.UserDto;
 import gov.iti.jets.common.network.client.IClient;
 
 import java.rmi.RemoteException;
@@ -25,5 +28,37 @@ public class Martinily extends UnicastRemoteObject implements IClient {
         messageDto.setSenderId(senderId);
 
         MessagesQueue.getList().put(chatId,messageDto);
+    }
+
+    @Override
+    public void addToGroup(String userId, long chatId) throws RemoteException {
+
+    }
+
+    @Override
+    public void removefromGroup(String userId, long chatId) throws RemoteException {
+
+    }
+
+    @Override
+    public void addFriend(ContactDto contactDto) throws RemoteException {
+        //Add contact element to contact list
+        ContactList.getList().add(contactDto);
+    }
+
+    @Override
+    public void removeFriend(ContactDto contactDto) throws RemoteException {
+        //Get contactDto element and remove it from the list
+        ContactDto oldContactDto = ContactList.getList().stream().filter(x -> x.getPhoneNumber() == contactDto.getPhoneNumber()).toList().get(0);
+        ContactList.getList().remove(oldContactDto);
+    }
+
+    @Override
+    public void editUser(ContactDto contactDto) throws RemoteException {
+        //Get old contactDto element and remove it from the list
+        ContactDto oldContactDto = ContactList.getList().stream().filter(x -> x.getPhoneNumber() == contactDto.getPhoneNumber()).toList().get(0);
+        ContactList.getList().remove(oldContactDto);
+        //Add new contact element with new user data
+        ContactList.getList().add(contactDto);
     }
 }

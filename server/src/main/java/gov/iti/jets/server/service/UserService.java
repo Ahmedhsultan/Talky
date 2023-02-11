@@ -23,10 +23,10 @@ public class UserService {
     private UserSessionService userSessionService;
 
     public UserService ()
-   {
-       dao = new UserDao();
-       userMapper = new UserMapper();
-   }
+    {
+        dao = new UserDao();
+        userMapper = new UserMapper();
+    }
 
 
     public UserSessionDto register(UserRegistrationDto userRegistrationDto) throws RemoteException {
@@ -40,7 +40,7 @@ public class UserService {
         {
             throw new RemoteException("Invalid Password!!");
         }
-        User user=null;
+        User user = null;
         User tempUser= dao.findById(userRegistrationDto.getUserDto().getId());
         if (tempUser!=null)
         {
@@ -115,7 +115,21 @@ public class UserService {
         return Constants.imageToByteArray(path);
     }
 
-//
+    public UserDto editUser (UserDto userDto) throws RemoteException{
+        User user = userMapper.toEntity(userDto);
+        try {
+            dao.update(user);
+        } catch (SQLException e) {
+            throw new RemoteException("Faild to edit user!!");
+        }
+        return getUser(userDto.getId());
+    }
+    public UserDto getUser(String id) throws RemoteException{
+        User user = dao.findById(id);
+        UserDto userDto = userMapper.toDTO(user);
+
+        return  userDto;
+    }
 
 
 }
