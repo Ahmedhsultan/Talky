@@ -304,7 +304,6 @@ public class ChatController implements Initializable {
     }
     @FXML
     void deleteContact(MouseEvent event) {
-        //System.out.println("Remove "+p.size());
         if(paneObservableList.size()>1){
             paneObservableList.remove(paneObservableList.size()-1);
             leftList.setItems(paneObservableList);
