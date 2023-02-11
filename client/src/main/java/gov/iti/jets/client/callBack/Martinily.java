@@ -2,9 +2,11 @@ package gov.iti.jets.client.callBack;
 
 
 import gov.iti.jets.client.Dina.ContactList;
+import gov.iti.jets.client.Dina.InvitationQueue;
 import gov.iti.jets.client.Dina.MessagesQueue;
 import gov.iti.jets.client.Util.ConnectionFlag;
 import gov.iti.jets.common.dto.ContactDto;
+import gov.iti.jets.common.dto.InvitationDto;
 import gov.iti.jets.common.dto.MessageDto;
 import gov.iti.jets.common.network.client.IClient;
 import gov.iti.jets.common.util.Constants;
@@ -91,4 +93,8 @@ public class Martinily extends UnicastRemoteObject implements IClient {
         }
     }
 
+    @Override
+    public void receiveInvitation(InvitationDto invitationDto) throws RemoteException {
+        InvitationQueue.getList().add(invitationDto);
+    }
 }

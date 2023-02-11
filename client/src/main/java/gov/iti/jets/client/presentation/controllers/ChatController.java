@@ -332,15 +332,9 @@ public class ChatController implements Initializable {
                     System.out.println(e.getMessage());
                     throw new RuntimeException(e);
                 }
-                IClientInvitation clientInvitation = null;
-                try {
-                    clientInvitation = new IClientInvitation();
-                } catch (RemoteException e) {
-                    System.out.println(e.getMessage());
-                    throw new RuntimeException(e);
-                }
+
                 System.out.println("sender id = "+userSessionDto.getUser().getId() + "reciever id  = "+ tx.getText());
-                new InvitationService().sendInvit(userSessionDto.getUser().getId(),clientInvitation,tx.getText(),reg);
+                new InvitationService().sendInvit(userSessionDto.getUser().getId(),tx.getText(),reg);
             }
         }
     }

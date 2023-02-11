@@ -12,7 +12,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.Registry;
 
 public class InvitationService {
-    public void sendInvit(String senderID, ClientInvitation clientInvitation, String receiverID, Registry registry){
+    public void sendInvit(String senderID, String receiverID, Registry registry){
         try {
             ServerInvitation obj = (ServerInvitation) registry.lookup("invitation") ;
             System.out.println(obj);
