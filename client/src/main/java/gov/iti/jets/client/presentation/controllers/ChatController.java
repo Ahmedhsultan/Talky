@@ -4,7 +4,6 @@ package gov.iti.jets.client.presentation.controllers;
 import com.jfoenix.controls.JFXButton;
 import gov.iti.jets.client.Dina.MessagesQueue;
 import gov.iti.jets.client.business.services.PaneManager;
-import gov.iti.jets.client.callBack.IClientInvitation;
 import gov.iti.jets.client.network.service.InvitationService;
 import gov.iti.jets.client.network.service.RMIManager;
 import gov.iti.jets.common.dto.*;
@@ -331,15 +330,9 @@ public class ChatController implements Initializable {
                     System.out.println(e.getMessage());
                     throw new RuntimeException(e);
                 }
-                IClientInvitation clientInvitation = null;
-                try {
-                    clientInvitation = new IClientInvitation();
-                } catch (RemoteException e) {
-                    System.out.println(e.getMessage());
-                    throw new RuntimeException(e);
-                }
+
                 System.out.println("sender id = "+userSessionDto.getUser().getId() + "reciever id  = "+ tx.getText());
-                new InvitationService().sendInvit(userSessionDto.getUser().getId(),clientInvitation,tx.getText(),reg);
+                new InvitationService().sendInvit(userSessionDto.getUser().getId(),tx.getText(),reg);
             }
         }
     }
