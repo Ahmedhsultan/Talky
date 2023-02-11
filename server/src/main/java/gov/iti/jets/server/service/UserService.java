@@ -103,15 +103,17 @@ public class UserService {
     }
 
     public void saveUserImage(UserDto dto) throws IOException {
-        String path = Constants.userImagesDir+dto.getImgPath();
+        System.out.println(Constants.MAIN_DIR);
+        System.out.println(Constants.USER_IMAGES_DIR);
+        String path = Constants.USER_IMAGES_DIR +dto.getImgPath();
         Constants.byteArrayToImage(dto.getImage(), URLDecoder.decode(path, "UTF-8"));
     }
     public byte[] getUserImage(UserDto dto) throws IOException {
-        String path = Constants.userImagesDir+dto.getImgPath();
+        String path = Constants.USER_IMAGES_DIR +dto.getImgPath();
         return Constants.imageToByteArray(path);
     }
     public byte[] getUserImage(UserCardDto dto) throws IOException {
-        String path = Constants.userImagesDir+dto.getImgPath();
+        String path = Constants.USER_IMAGES_DIR +dto.getImgPath();
         return Constants.imageToByteArray(path);
     }
 

@@ -9,6 +9,7 @@ import gov.iti.jets.server.entity.Friends;
 import gov.iti.jets.server.entity.User;
 import gov.iti.jets.server.mapper.UserMapper;
 import gov.iti.jets.server.service.ChatUserService;
+import gov.iti.jets.server.service.FileTransferService;
 import gov.iti.jets.server.service.FriendsService;
 import gov.iti.jets.server.service.UserService;
 
@@ -23,12 +24,14 @@ public class IServerController extends UnicastRemoteObject implements IServer {
     private UserService userService;
     private FriendsService friendsService;
     private UserMapper userMapper;
+    private FileTransferService fileTransferService;
     public IServerController() throws RemoteException {
         super();
         chatUserService = new ChatUserService();
         userService = new UserService();
         friendsService = new FriendsService();
         userMapper = new UserMapper();
+        fileTransferService = new FileTransferService();
     }
 
     @Override
@@ -105,5 +108,11 @@ public class IServerController extends UnicastRemoteObject implements IServer {
             iClient = ConnectedClientsMap.getList().get(element.getPhoneNumber()).getIClient();
             iClient.editUser(contactDto);
         }
+    }
+
+    @Override
+    public synchronized void sendFile(long chatId, String senderId, byte[] bytes, String fileName) throws RemoteException
+    {
+        fileTransferService.sendFile( chatId,  senderId,  bytes,  fileName);
     }
 }

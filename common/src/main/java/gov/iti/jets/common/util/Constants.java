@@ -9,10 +9,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 
 public class Constants {
 
@@ -39,9 +36,19 @@ public class Constants {
     public static final String FIELD_EMPTY = "field can't be empty";
 
     //Paths
-    public static final String mainDir = System.getProperty("user.dir");
-    public static final String userImagesDir =  mainDir+"\\images\\users\\"; //to add server if you run IntelliJ
-    public static final String chatImagesDir =  mainDir+"\\images\\chats\\"; //to add server if you run IntelliJ
+
+    //server
+    public static final String MAIN_DIR = System.getProperty("user.dir");
+    public static final String USER_IMAGES_DIR =  MAIN_DIR +"/images\\users\\";
+    public static final String CHAT_IMAGES_DIR =  MAIN_DIR +"\\images\\chats\\";
+
+    //client
+    public static final String CHAT_FILES_DIR =  MAIN_DIR +"\\files\\";
+
+    //Default buffer size
+    public static final int DEFAULT_BUFFER_SIZE = 5_000_000 ;
+
+
 
 
     public static String hashPassword(String input) {

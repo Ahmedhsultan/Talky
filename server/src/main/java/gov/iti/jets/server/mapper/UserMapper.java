@@ -39,7 +39,7 @@ public class UserMapper implements BaseMapper<User, UserDto>{
     }
 
     public ContactDto toContactDTO(User user ) {
-        String path = Constants.userImagesDir;
+        String path = Constants.USER_IMAGES_DIR;
         try{
             ContactDto dto = ContactDto.builder()
                     .phoneNumber(user.getId())

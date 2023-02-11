@@ -1,7 +1,6 @@
 package gov.iti.jets.server.service;
 
 import gov.iti.jets.common.dto.ChatDto;
-import gov.iti.jets.common.dto.UserDto;
 import gov.iti.jets.common.util.Constants;
 import gov.iti.jets.server.entity.Chat;
 import gov.iti.jets.server.mapper.ChatMapper;
@@ -42,11 +41,11 @@ public class ChatService {
     }
 
     public void saveUChatImage(ChatDto dto) throws IOException {
-        String path = Constants.chatImagesDir+dto.getImgPath();
+        String path = Constants.CHAT_IMAGES_DIR +dto.getImgPath();
         Constants.byteArrayToImage(dto.getImage(), URLDecoder.decode(path, "UTF-8"));
     }
     public byte[] getChatImage(ChatDto dto) throws IOException {
-        String path = Constants.chatImagesDir+dto.getImgPath();
+        String path = Constants.CHAT_IMAGES_DIR +dto.getImgPath();
         return Constants.imageToByteArray(path);
     }
 

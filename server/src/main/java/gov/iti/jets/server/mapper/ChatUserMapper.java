@@ -2,7 +2,6 @@ package gov.iti.jets.server.mapper;
 
 import gov.iti.jets.common.dto.ChatUserDto;
 import gov.iti.jets.server.entity.ChatUser;
-import gov.iti.jets.server.entity.User;
 
 import java.util.ArrayList;
 import java.util.Collection;
