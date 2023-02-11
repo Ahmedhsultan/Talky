@@ -22,7 +22,7 @@ public class InvitationController extends UnicastRemoteObject implements ServerI
 
     @Override
     public void acceptInvitation(String id)  throws RemoteException  {
-
+        //invitationService.acceptInvitation(id);  //should be long not string
     }
 
     @Override

@@ -3,6 +3,7 @@ package gov.iti.jets.server.service;
 
 import gov.iti.jets.common.dto.InvitationDto;
 import gov.iti.jets.common.network.client.ClientInvitation;
+import gov.iti.jets.server.controller.IServerController;
 import gov.iti.jets.server.entity.Invitation;
 import gov.iti.jets.server.entity.User;
 import gov.iti.jets.server.mapper.InvitationMapper;
@@ -11,6 +12,7 @@ import gov.iti.jets.server.persistence.dao.UserDao;
 
 import java.rmi.RemoteException;
 import java.sql.Date;
+import java.util.List;
 
 public class InvitationService {
 
@@ -54,6 +56,11 @@ public class InvitationService {
         invitation.setCreatedOn(new Date(millis));
     }
 
+    public void acceptInvitation(long id) throws RemoteException {
+        Invitation invitation = invitationDao.findById(id);
+        IServerController iServerController = new IServerController();
+        iServerController.addFriend(invitation.getSenderId(),invitation.getReceiverId());
+    }
 
 //    public void acceptInvitation(String invitationID) {
 //
