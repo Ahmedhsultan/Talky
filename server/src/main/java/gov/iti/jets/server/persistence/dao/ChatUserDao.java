@@ -60,7 +60,7 @@ public class ChatUserDao extends BaseDaoImpl<ChatUser, Integer> {
     }
 
     public void deleteIdFromChat(List<ChatUser> entities) throws SQLException{
-        String query = "DELETE FROM chatuser WHERE id = ? AND user_id = ?;";
+        String query = "DELETE FROM chatuser WHERE chat_id = ? AND user_id = ?;";
 
         try (Connection connection = DBManagement.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
             for (ChatUser entity : entities) {
@@ -90,7 +90,7 @@ public class ChatUserDao extends BaseDaoImpl<ChatUser, Integer> {
 
     public List<String> getOnlineUsersByChat(long chatId) throws SQLException {
         //Write select query by ID
-        String query = "SELECT user_id FROM ChatUser WHERE id = " + chatId + " and user_id in (select id from user where is_online_status !=" + Constants.ONLINE_STATUS_OFFLINE + ");";
+        String query = "SELECT user_id FROM ChatUser WHERE chat_id = " + chatId + " and user_id in (select id from user where is_online_status !=" + Constants.ONLINE_STATUS_OFFLINE + ");";
         List<String> list = new ArrayList<>();
 
         try (Connection connection = DBManagement.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
