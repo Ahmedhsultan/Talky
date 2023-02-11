@@ -9,6 +9,7 @@ module gov.iti.jets.server {
     requires lombok;
     requires mysql.connector.j;
     requires gov.iti.jets.common;
+    requires chatter.bot.api;
 
     exports gov.iti.jets.server;
 }

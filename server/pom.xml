@@ -21,6 +21,11 @@
       <groupId>gov.iti.jets</groupId>
       <artifactId>common</artifactId>
     </dependency>
+    <dependency>
+      <groupId>ca.pjer</groupId>
+      <artifactId>chatter-bot-api</artifactId>
+      <version>1.4.7</version>
+    </dependency>
 
 
   </dependencies>

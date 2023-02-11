@@ -23,6 +23,7 @@ public class IServerController extends UnicastRemoteObject implements IServer {
     private FriendsService friendsService;
     private UserMapper userMapper;
     private FileTransferService fileTransferService;
+
     public IServerController() throws RemoteException {
         super();
         chatUserService = new ChatUserService();
@@ -113,4 +114,10 @@ public class IServerController extends UnicastRemoteObject implements IServer {
     {
         fileTransferService.sendFile( chatId,  senderId,  bytes,  fileName);
     }
+
+    @Override
+    public void sendMessageToBot(long chatId, String senderId, String message) throws RemoteException {
+        chatUserService.sendMessageToBot( chatId,  senderId, message);
+    }
+
 }

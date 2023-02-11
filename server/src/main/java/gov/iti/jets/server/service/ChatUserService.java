@@ -1,5 +1,9 @@
 package gov.iti.jets.server.service;
 
+import com.google.code.chatterbotapi.ChatterBot;
+import com.google.code.chatterbotapi.ChatterBotFactory;
+import com.google.code.chatterbotapi.ChatterBotSession;
+import com.google.code.chatterbotapi.ChatterBotType;
 import gov.iti.jets.common.dto.ChatUserDto;
 import gov.iti.jets.server.Util.Queues.ConnectedClientsMap;
 import gov.iti.jets.server.entity.ChatUser;
@@ -15,13 +19,11 @@ public class ChatUserService {
 
     private ChatUserDao dao;
     private ChatUserMapper chatUserMapper;
-    private  ChatService chatService;
 
     public ChatUserService ()
     {
         dao = new ChatUserDao();
         chatUserMapper = new ChatUserMapper();
-        chatService  = new ChatService();
     }
 
     public void addChatGroup(List<ChatUserDto> chatUsers) throws RemoteException {
@@ -76,5 +78,35 @@ public class ChatUserService {
         } catch (SQLException e) {
             throw new RemoteException("Failed to add user to group!!");
         }
+    }
+
+    public void sendMessageToBot(long chatId, String senderId, String message) throws RemoteException {
+        message = talkToBot(message);
+        List<String> userIds = null;
+        try {
+            userIds = dao.getOnlineUsersByChat(chatId);
+            if(userIds!=null) {
+                for (String userId : userIds) {
+                    ConnectedClientsMap.getList().get(userId).getIClient().receiveMessage(chatId, senderId, message);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RemoteException("Failed to Send Message!!");
+        }
+    }
+    private  String talkToBot(String message)
+    {
+        String result="";
+        try {
+            ChatterBotFactory factory = new ChatterBotFactory();
+            ChatterBot bot2 = factory.create(ChatterBotType.PANDORABOTS, "b0dafd24ee35a477");
+            ChatterBotSession bot2session = bot2.createSession();
+
+            result = bot2session.think(message);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return  result;
     }
 }

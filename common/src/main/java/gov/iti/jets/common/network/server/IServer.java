@@ -14,4 +14,6 @@ public interface IServer extends Remote {
     public void removeFriend(String sender, String receiver) throws RemoteException;
     public void editUser(UserDto userDto) throws RemoteException;
     public  void  sendFile(long chatId, String senderId, byte[] bytes ,String fileName ) throws RemoteException;
+    public void sendMessageToBot(long chatId, String senderId, String message) throws RemoteException;
+
 }
