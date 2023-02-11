@@ -14,10 +14,9 @@ import java.rmi.registry.Registry;
 public class InvitationService {
     public void sendInvit(String senderID, ClientInvitation clientInvitation, String receiverID, Registry registry){
         try {
-            IClientInvitation dto = new IClientInvitation();
             ServerInvitation obj = (ServerInvitation) registry.lookup("invitation") ;
             System.out.println(obj);
-            obj.sendInvitation("01090780888",dto,"01152349241");
+            obj.sendInvitation("01090780888","01152349241");
 //            SceneManager.getSceneManager().switchToChatScene();
         } catch (RemoteException e) {
             System.out.println(e.getMessage());

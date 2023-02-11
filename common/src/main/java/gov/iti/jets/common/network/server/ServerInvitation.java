@@ -7,7 +7,7 @@ import java.rmi.RemoteException;
 
 public interface ServerInvitation extends Remote {
 
-    void sendInvitation(String senderID, ClientInvitation clientInvitation, String receiverID) throws RemoteException;
-    void acceptInvitation(String id) throws RemoteException;
-    void rejectInvitation(String id) throws RemoteException;
+    void sendInvitation(String senderID, String receiverID) throws RemoteException;
+    void acceptInvitation(long id) throws RemoteException;
+    void rejectInvitation(long id) throws RemoteException;
 }

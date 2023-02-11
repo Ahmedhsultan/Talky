@@ -5,7 +5,6 @@ import gov.iti.jets.common.dto.UserDto;
 import gov.iti.jets.common.network.client.IClient;
 import gov.iti.jets.common.network.server.IServer;
 import gov.iti.jets.server.Util.Queues.ConnectedClientsMap;
-import gov.iti.jets.server.entity.Friends;
 import gov.iti.jets.server.entity.User;
 import gov.iti.jets.server.mapper.UserMapper;
 import gov.iti.jets.server.service.ChatUserService;
@@ -15,7 +14,6 @@ import gov.iti.jets.server.service.UserService;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class IServerController extends UnicastRemoteObject implements IServer {

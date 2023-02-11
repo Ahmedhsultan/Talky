@@ -16,17 +16,17 @@ public class InvitationController extends UnicastRemoteObject implements ServerI
     }
 
     @Override
-    public void sendInvitation(String senderID, ClientInvitation clientInvitation, String receiverID) throws RemoteException {
-        invitationService.sendInvitation(senderID,clientInvitation, receiverID);
+    public void sendInvitation(String senderID, String receiverID) throws RemoteException {
+        invitationService.sendInvitation(senderID, receiverID);
     }
 
     @Override
-    public void acceptInvitation(String id)  throws RemoteException  {
-
+    public void acceptInvitation(long id)  throws RemoteException  {
+        //invitationService.acceptInvitation(id);  //should be long not string
     }
 
     @Override
-    public void rejectInvitation(String id)  throws RemoteException {
+    public void rejectInvitation(long id)  throws RemoteException {
 
     }
 }

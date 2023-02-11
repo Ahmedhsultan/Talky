@@ -3,6 +3,7 @@ package gov.iti.jets.server.service;
 
 import gov.iti.jets.common.dto.InvitationDto;
 import gov.iti.jets.common.network.client.ClientInvitation;
+import gov.iti.jets.server.controller.IServerController;
 import gov.iti.jets.server.entity.Invitation;
 import gov.iti.jets.server.entity.User;
 import gov.iti.jets.server.mapper.InvitationMapper;
@@ -11,13 +12,13 @@ import gov.iti.jets.server.persistence.dao.UserDao;
 
 import java.rmi.RemoteException;
 import java.sql.Date;
+import java.util.List;
 
 public class InvitationService {
 
     private InvitationDao invitationDao;
     private UserDao userDao;
     private Invitation invitation;
-    private InvitationDto invitationDto;
 
     public InvitationService ()
     {
@@ -27,7 +28,7 @@ public class InvitationService {
     }
 
 
-    public void sendInvitation(String senderID, ClientInvitation clientInvitation, String receiverID) throws RemoteException {
+    public InvitationDto sendInvitation(String senderID, String receiverID) throws RemoteException {
 
         if(userDao.findById(receiverID) == null) {
             throw new RemoteException("Phone Number Not Found!!");
@@ -37,12 +38,10 @@ public class InvitationService {
         //inserting invitation into invitations table
         invitationDao.insert(invitation);
 
-        invitationDto = new InvitationMapper().toDTO(invitation);
+        InvitationDto invitationDto = new InvitationMapper().toDTO(invitation);
         User u=userDao.findById(receiverID);
-        if(!u.getIsOnlineStatus().equals("Offline")) {
-                clientInvitation.receiveInvitation(invitationDto);
-        }
 
+        return invitationDto;
     }
 
     public void createInvitationEntity(String senderID, String receiverID) {
@@ -54,6 +53,11 @@ public class InvitationService {
         invitation.setCreatedOn(new Date(millis));
     }
 
+    public void acceptInvitation(long id) throws RemoteException {
+        Invitation invitation = invitationDao.findById(id);
+        IServerController iServerController = new IServerController();
+        iServerController.addFriend(invitation.getSenderId(),invitation.getReceiverId());
+    }
 
 //    public void acceptInvitation(String invitationID) {
 //
