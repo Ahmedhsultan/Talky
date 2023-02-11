@@ -8,6 +8,7 @@ import gov.iti.jets.client.business.services.SceneManager;
 import gov.iti.jets.client.network.service.RMIManager;
 import gov.iti.jets.client.network.service.RegisterService;
 import gov.iti.jets.common.dto.UserDto;
+import gov.iti.jets.common.dto.UserSessionDto;
 import gov.iti.jets.common.dto.registration.UserRegistrationDto;
 import gov.iti.jets.common.util.Constants;
 import gov.iti.jets.common.util.Validation;
@@ -122,6 +123,8 @@ public class RegisterController implements Initializable {
     Validation validate;
     String gender;
     UserRegistrationDto userRegistrationDto;
+    Registry reg;
+    public static UserSessionDto userSessionDto;
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
 //        circle.setFill(new ImagePattern(new Image("user.png",200,200,false,true)));
@@ -166,7 +169,8 @@ public class RegisterController implements Initializable {
 
             userRegistrationDto = new UserRegistrationDto(user,password.getText());
             try {
-                new RegisterService().addUser(userRegistrationDto);
+                userSessionDto = new RegisterService().addUser(userRegistrationDto);
+                SceneManager.getSceneManager().switchToChatScene();
 
             }catch (Exception e){
                 e.getMessage();

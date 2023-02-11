@@ -5,6 +5,7 @@ import gov.iti.jets.client.business.services.PaneManager;
 import gov.iti.jets.client.business.services.SceneManager;
 import gov.iti.jets.client.network.service.LoginService;
 import gov.iti.jets.client.network.service.RMIManager;
+import gov.iti.jets.common.dto.UserSessionDto;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -36,17 +37,20 @@ public class PasswordLoginController implements Initializable {
 
     @FXML
     private Label error;
+
+    public static UserSessionDto userSessionDto;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
     }
 
     public void goToChat(ActionEvent actionEvent) {
         System.out.println(PhoneLoginController.phoneNo);
         LoginService log = new LoginService();
 
-        log.login(PhoneLoginController.phoneNo,password.getText());
+        userSessionDto = log.login(PhoneLoginController.phoneNo,password.getText());
         System.out.println("Login success");
-        
+
         SceneManager.getSceneManager().switchToChatScene();
     }
 

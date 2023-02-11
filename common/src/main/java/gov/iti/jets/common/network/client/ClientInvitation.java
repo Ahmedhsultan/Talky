@@ -1,4 +1,5 @@
-package gov.iti.jets.server.network;
+package gov.iti.jets.common.network.client;
+
 
 
 import gov.iti.jets.common.dto.InvitationDto;

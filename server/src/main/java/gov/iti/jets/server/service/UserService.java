@@ -23,14 +23,15 @@ public class UserService {
     private UserSessionService userSessionService;
 
     public UserService ()
-    {
-        dao = new UserDao();
-        userMapper = new UserMapper();
-    }
+   {
+       dao = new UserDao();
+       userMapper = new UserMapper();
+   }
 
 
     public UserSessionDto register(UserRegistrationDto userRegistrationDto) throws RemoteException {
 
+        System.out.println("service");
         UserSessionDto userSessionDto=null;
         if(!Validation.validatePhoneNumber(userRegistrationDto.getUserDto().getId()))
         {
@@ -40,7 +41,7 @@ public class UserService {
         {
             throw new RemoteException("Invalid Password!!");
         }
-        User user = null;
+        User user=null;
         User tempUser= dao.findById(userRegistrationDto.getUserDto().getId());
         if (tempUser!=null)
         {
@@ -62,6 +63,7 @@ public class UserService {
         }
         userSessionService=new UserSessionService(user);
         userSessionDto= userSessionService.getSessionDto();
+        System.out.println(userRegistrationDto);
         return  userSessionDto;
     }
 
@@ -88,6 +90,7 @@ public class UserService {
             setOnlineStatus(phone, Constants.ONLINE_STATUS_AVAILABLE);
             userSessionService=new UserSessionService(user);
             UserSessionDto userSessionDto= userSessionService.getSessionDto();
+        System.out.println(userSessionDto);
            return userSessionDto;
     }
 

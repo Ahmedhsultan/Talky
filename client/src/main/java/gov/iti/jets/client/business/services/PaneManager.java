@@ -48,6 +48,23 @@ public class PaneManager {
         return pane;
     }
 
+    public Pane putNotificationPane() {
+        loadPane("notificationCard");
+        return pane;
+    }
+
+    public Pane putProfilePane() {
+        loadPane("Profile");
+        return pane;
+    }
+    public Pane putAddContactCard() {
+        loadPane("addContact");
+        return pane;
+    }
+    public Pane putMenuPane() {
+        loadPane("menu", "containerPane");
+        return pane;
+    }
     private void loadPane(String loadedPane, String primaryPane) {
             try {
                 Parent root = FXMLLoader.load(getClass().getResource(String.format("/views/%s.fxml", loadedPane)));

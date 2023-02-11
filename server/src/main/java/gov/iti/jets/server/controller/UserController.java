@@ -1,6 +1,7 @@
 package gov.iti.jets.server.controller;
 
 
+import gov.iti.jets.common.dto.UserDto;
 import gov.iti.jets.common.dto.UserSessionDto;
 import gov.iti.jets.common.dto.registration.UserRegistrationDto;
 import gov.iti.jets.common.network.server.UserRemote;
@@ -32,4 +33,9 @@ public class UserController extends UnicastRemoteObject implements UserRemote {
     {
         userService.logout(phone);
     }
+
+//    @Override
+//    public void updateProfile(UserDto userDto) throws RemoteException {
+//        userService.editUser(userDto);
+//    }
 }

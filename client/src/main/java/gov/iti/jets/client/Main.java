@@ -2,11 +2,18 @@ package gov.iti.jets.client;
 
 
 import gov.iti.jets.client.business.services.SceneManager;
+import gov.iti.jets.client.network.service.RMIManager;
+import gov.iti.jets.common.dto.ConnectionDto;
 import gov.iti.jets.common.dto.UserDto;
+import gov.iti.jets.common.dto.UserSessionDto;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 
 public class Main extends Application {
     @Override

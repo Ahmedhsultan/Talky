@@ -2,10 +2,10 @@ package gov.iti.jets.server.service;
 
 
 import gov.iti.jets.common.dto.InvitationDto;
+import gov.iti.jets.common.network.client.ClientInvitation;
 import gov.iti.jets.server.entity.Invitation;
 import gov.iti.jets.server.entity.User;
 import gov.iti.jets.server.mapper.InvitationMapper;
-import gov.iti.jets.server.network.ClientInvitation;
 import gov.iti.jets.server.persistence.dao.InvitationDao;
 import gov.iti.jets.server.persistence.dao.UserDao;
 
