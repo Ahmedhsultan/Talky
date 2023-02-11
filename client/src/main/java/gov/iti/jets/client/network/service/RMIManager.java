@@ -18,13 +18,13 @@ import java.rmi.registry.Registry;
  */
 public class RMIManager {
     private static RMIManager rmiManager;
-    private Registry reg ;
+    public Registry reg ;
     private RMIManager() throws RemoteException{
             reg = LocateRegistry.getRegistry(1099);
 
     }
 
-    private synchronized static Registry getRegistry() throws RemoteException{
+    public synchronized static Registry getRegistry() throws RemoteException{
         if(rmiManager == null)
             rmiManager = new RMIManager();
 

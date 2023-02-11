@@ -1,10 +1,15 @@
 package gov.iti.jets.client.presentation.controllers;
 
 
+import com.jfoenix.controls.JFXButton;
 import gov.iti.jets.client.Dina.MessagesQueue;
 import gov.iti.jets.client.business.services.PaneManager;
+import gov.iti.jets.client.callBack.IClientInvitation;
+import gov.iti.jets.client.network.service.InvitationService;
+import gov.iti.jets.client.network.service.RMIManager;
 import gov.iti.jets.common.dto.*;
 import gov.iti.jets.common.util.Constants;
+import gov.iti.jets.common.util.Validation;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -14,6 +19,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -24,9 +30,9 @@ import javafx.scene.shape.Circle;
 
 import java.io.IOException;
 import java.net.URL;
+import java.rmi.RemoteException;
+import java.rmi.registry.Registry;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
-import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
@@ -63,7 +69,15 @@ public class ChatController implements Initializable {
 
     @FXML
     private Circle chatIcon;
+    @FXML
+    private ImageView addIcon;
+    @FXML
+    private ImageView addContactCard;
+    @FXML
+    private ImageView deleteContactCard;
 
+    @FXML
+    private JFXButton btnAddContacts;
     private UserSessionDto userSessionDto;
     ObservableList<Pane> paneObservableList = FXCollections.observableArrayList();
     @Override
@@ -259,6 +273,67 @@ public class ChatController implements Initializable {
             ((Circle) temp.lookup("#userPic")).setFill(new ImagePattern(new Image(Constants.byteArrayToImage(arr, img).getPath(),100,100,false,true)));
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+    @FXML
+    void AddNewContacts(MouseEvent event) {
+        Pane temp = PaneManager.getPaneManager().putAddContactCard();
+        currentPane.setText("Add Contacts");
+        currentPane.setStyle("-fx-font-size: 40; ");
+        chatsButton.setStyle( null);
+        invitationsButton.setStyle(null);
+        notificationsButton.setStyle(null);
+
+//        addIcon.setImage(null);
+//        addIcon.setDisable(true);
+//        addContactCard.setImage(new Image("image\\icons-add.png"));
+//        addContactCard.setDisable(false);
+//        deleteContactCard.setImage(new Image("image\\removeContact.png"));
+//        deleteContactCard.setDisable(false);
+//        btnAddContacts.setVisible(true);
+
+        contactsButton.setStyle( "-fx-border-width: 0 0 2px 5px; -fx-border-color: purple;");
+        paneObservableList.clear();
+        paneObservableList.add(temp);
+        leftList.setItems(paneObservableList);
+    }
+    @FXML
+    void deleteContact(MouseEvent event) {
+        //System.out.println("Remove "+p.size());
+        if(paneObservableList.size()>1){
+            paneObservableList.remove(paneObservableList.size()-1);
+            leftList.setItems(paneObservableList);
+        }
+
+    }
+    @FXML
+    void addNewContact(MouseEvent event) {
+        Pane temp = PaneManager.getPaneManager().putAddContactCard();
+        paneObservableList.add(temp);
+        leftList.setItems(paneObservableList);
+    }
+    @FXML
+    void addContacts(ActionEvent event) {
+        leftList.cellFactoryProperty();
+        for (Pane k: paneObservableList) {
+            TextField tx = (TextField) k.getChildren().get(1);
+            Label label = (Label) k.getChildren().get(2);
+            if(Validation.validatePhoneNumber(tx,label)){
+                System.out.println(tx.getText());
+                Registry reg = null;
+                try {
+                    reg = RMIManager.getRegistry();
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
+                IClientInvitation clientInvitation = null;
+                try {
+                    clientInvitation = new IClientInvitation();
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
+                new InvitationService().sendInvit("01090780888",clientInvitation,tx.getText(),reg);
+            }
         }
     }
 

@@ -57,6 +57,10 @@ public class PaneManager {
         loadPane("Profile");
         return pane;
     }
+    public Pane putAddContactCard() {
+        loadPane("addContact");
+        return pane;
+    }
     public Pane putMenuPane() {
         loadPane("menu", "containerPane");
         return pane;
