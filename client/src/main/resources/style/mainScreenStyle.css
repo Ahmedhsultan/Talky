@@ -18,11 +18,11 @@
     -fx-graphic-text-gap: -40;
 }
 
-
+/* 
 .button:focused {
     -fx-border-width: 0 0 2px 5px;
-    -fx-border-color: purple;
-}
+    -fx-border-color: purple; */
+/* } */
 
 
 
@@ -40,8 +40,16 @@
 .list-view {
     -fx-background-color: transparent;
 }
+.list-view .scroll-bar:vertical {
+    -fx-scale-x: 0;
+}
 
 
+#listOfProfile .list-cell:hover {
+    -fx-translate-x: 0;
+    -fx-translate-y: 0;
+    -fx-effect: none;
+}
 
 #invitationResponseBtns {
   -fx-align-self: center;
@@ -72,7 +80,6 @@
 
 #searchField:focused {
     -fx-border-color: linear-gradient(to bottom right, #cc208e 10%, #6713d2 100%);
-
 }
 
 

@@ -113,7 +113,15 @@ public class UserService {
         return Constants.imageToByteArray(path);
     }
 
-//
+
+    public void updateProfile(UserDto userDto) {
+        try {
+            dao.update(userMapper.toEntity(userDto));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 
 }

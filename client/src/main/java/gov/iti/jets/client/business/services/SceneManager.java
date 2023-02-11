@@ -1,5 +1,7 @@
 package gov.iti.jets.client.business.services;
 
+import gov.iti.jets.client.presentation.controllers.ChatController;
+import gov.iti.jets.common.dto.UserSessionDto;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -18,15 +20,10 @@ public class SceneManager {
     private SceneManager(){}
 
     public static SceneManager getSceneManager(){
-        System.out.println("before");
         if(sceneManager == null){
-            System.out.println("after");
             sceneManager  = new SceneManager();
 
         }
-        System.out.println("after2");
-
-
         return sceneManager;
     }
 
@@ -35,7 +32,6 @@ public class SceneManager {
         if (primaryStage != null) {
             throw new IllegalArgumentException("The Stage Already been initialized");
         }
-        System.out.println("after3");
         primaryStage = stage;
     }
 
@@ -49,10 +45,10 @@ public class SceneManager {
         String sceneName = "Chat";
         primaryStage.setTitle(sceneName);
         loadView(sceneName);
+
     }
 
     public void switchToLoginScene() {
-        System.out.println("after4");
         String sceneName = "Login";
         primaryStage.setTitle(sceneName);
         loadView(sceneName);
@@ -80,4 +76,6 @@ public class SceneManager {
             primaryStage.setScene(scenes.get(name));
         }
     }
+
+
 }

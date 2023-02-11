@@ -6,6 +6,7 @@ import gov.iti.jets.client.callBack.CheckConnection;
 import gov.iti.jets.client.network.service.RMIManager;
 import gov.iti.jets.common.dto.ConnectionDto;
 import gov.iti.jets.common.dto.UserDto;
+import gov.iti.jets.common.dto.UserSessionDto;
 import gov.iti.jets.common.network.IConnection;
 import javafx.application.Application;
 import javafx.stage.Stage;

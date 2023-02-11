@@ -8,6 +8,7 @@ import gov.iti.jets.client.business.services.SceneManager;
 import gov.iti.jets.client.network.service.RMIManager;
 import gov.iti.jets.client.network.service.RegisterService;
 import gov.iti.jets.common.dto.UserDto;
+import gov.iti.jets.common.dto.UserSessionDto;
 import gov.iti.jets.common.dto.registration.UserRegistrationDto;
 import gov.iti.jets.common.util.Constants;
 import gov.iti.jets.common.util.Validation;
@@ -33,8 +34,6 @@ import java.net.URL;
 import java.rmi.RemoteException;
 import java.rmi.registry.Registry;
 import java.sql.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -123,6 +122,7 @@ public class RegisterController implements Initializable {
     String gender;
     UserRegistrationDto userRegistrationDto;
     Registry reg;
+    public static UserSessionDto userSessionDto;
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
 //        circle.setFill(new ImagePattern(new Image("user.png",200,200,false,true)));
@@ -172,13 +172,13 @@ public class RegisterController implements Initializable {
 
             userRegistrationDto = new UserRegistrationDto(user,password.getText());
             try {
-                new RegisterService().addUser(userRegistrationDto, reg);
+                userSessionDto = new RegisterService().addUser(userRegistrationDto, reg);
+                SceneManager.getSceneManager().switchToChatScene();
 
             }catch (Exception e){
                 e.getMessage();
             }
 
-            SceneManager.getSceneManager().switchToChatScene();
         }
     }
     private boolean validation(){

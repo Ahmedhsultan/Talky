@@ -14,6 +14,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
@@ -76,7 +77,7 @@
                   </ImageView>
                </graphic>
                 </JFXButton>
-                <ImageView fx:id="userImage" fitHeight="100.0" fitWidth="96.0" pickOnBounds="true" style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);;">
+                <ImageView fx:id="userImage" accessibleRole="BUTTON" fitHeight="100.0" fitWidth="96.0" onMouseReleased="#OpenProfile" pickOnBounds="true" style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);;">
                     <image>
                         <Image url="@../image/user.png" />
                     </image>
@@ -131,25 +132,31 @@
                   <Insets right="110.0" />
                </StackPane.margin>
             </Rectangle>
-                  <AnchorPane fx:id="leftSide" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="650.0" prefWidth="464.0">
+                  <AnchorPane fx:id="rightAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="574.0" prefWidth="464.0" style="-fx-background-color: #f0f0f0;">
                <children>
-                  <ScrollPane id="scroll" fx:id="rightScrollPane" layoutX="51.0" layoutY="49.0" prefHeight="539.0" prefWidth="475.0" AnchorPane.bottomAnchor="32.0" AnchorPane.leftAnchor="51.0" AnchorPane.rightAnchor="18.0" AnchorPane.topAnchor="49.0" />
+                  <ScrollPane id="scroll" fx:id="rightScrollPane" hbarPolicy="NEVER" layoutY="95.0" prefHeight="481.0" prefWidth="464.0" style="-fx-background-color: #f0f0f0;" AnchorPane.bottomAnchor="-2.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="95.0" />
+                  <Label fx:id="chatName" layoutX="121.0" layoutY="22.0" prefHeight="53.0" prefWidth="242.0">
+                     <font>
+                        <Font size="32.0" />
+                     </font>
+                  </Label>
+                  <Circle id="chatIcon" fx:id="chatIcon" fill="DODGERBLUE" layoutX="47.0" layoutY="47.0" radius="46.0" stroke="BLACK" strokeType="INSIDE" style="-fx-fill: transparent; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" />
                </children>
                <StackPane.margin>
-                  <Insets left="300.0" />
+                  <Insets left="350.0" top="30.0" />
                </StackPane.margin>
                   </AnchorPane>
-                  <AnchorPane fx:id="rightSide" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="555.0" prefWidth="432.0">
+                  <AnchorPane fx:id="leftAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="555.0" prefWidth="404.0">
                <StackPane.margin>
                   <Insets right="550.0" />
                </StackPane.margin>
                <children>
-                  <Pane layoutX="-13.0" layoutY="8.0" prefHeight="568.0" prefWidth="449.0" style="-fx-background-color: #f0f0f0;">
+                  <Pane fx:id="containerPane" layoutX="-13.0" layoutY="8.0" prefHeight="568.0" prefWidth="419.0" style="-fx-background-color: #f0f0f0;">
                      <children>
                         <JFXListView fx:id="leftList" depth="30" layoutX="37.0" layoutY="122.0" prefHeight="415.0" prefWidth="380.0" />
-                        <TextField id="searchField" fx:id="searchField" layoutX="46.0" layoutY="82.0" onKeyReleased="#searchOnList" prefHeight="33.0" prefWidth="357.0" promptText="Search..." />
+                        <TextField id="searchField" fx:id="searchField" layoutX="32.0" layoutY="82.0" onKeyReleased="#searchOnList" prefHeight="33.0" prefWidth="357.0" promptText="Search..." />
                      </children></Pane>
-                  <Label fx:id="currentPane" layoutX="20.0" layoutY="2.0" prefHeight="85.0" prefWidth="360.0" text=" Chats" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="2.0">
+                  <Label fx:id="currentPane" layoutX="9.0" layoutY="2.0" prefHeight="85.0" prefWidth="360.0" text=" Chats" AnchorPane.leftAnchor="9.0" AnchorPane.topAnchor="2.0">
                      <font>
                         <Font name="Kristen ITC" size="54.0" />
                      </font>

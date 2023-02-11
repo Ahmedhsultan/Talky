@@ -48,11 +48,12 @@
             <Insets top="5.0" />
          </padding>
       </Label>
-      <Label id="temestamp" contentDisplay="TOP" layoutX="273.0" layoutY="12.0" prefHeight="26.0" prefWidth="55.0" text="03 Mar" wrapText="true" />
+      <Label id="timestamp" contentDisplay="TOP" layoutX="273.0" layoutY="12.0" prefHeight="26.0" prefWidth="55.0" text="03 Mar" wrapText="true" />
       <Label id="recentMessage" layoutX="92.0" layoutY="37.0" prefHeight="35.0" prefWidth="226.0" text="Hi, How Are you?Hi, How Are you?Hi, How Are you?" textFill="#000000a9">
          <font>
             <Font size="13.0" />
          </font>
       </Label>
+      <Label fx:id="chatID" />
    </children>
 </AnchorPane>
