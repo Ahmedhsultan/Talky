@@ -1,10 +1,6 @@
 package gov.iti.jets.client.network.service;
 
 
-import gov.iti.jets.client.business.services.SceneManager;
-import gov.iti.jets.client.callBack.IClientInvitation;
-import gov.iti.jets.common.dto.InvitationDto;
-import gov.iti.jets.common.network.client.ClientInvitation;
 import gov.iti.jets.common.network.server.ServerInvitation;
 
 import java.rmi.NotBoundException;

@@ -1,7 +1,5 @@
 package gov.iti.jets.common.network.server;
 
-import gov.iti.jets.common.network.client.ClientInvitation;
-
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 

@@ -10,7 +10,6 @@ import gov.iti.jets.common.dto.InvitationDto;
 import gov.iti.jets.common.dto.MessageDto;
 import gov.iti.jets.common.network.client.IClient;
 import gov.iti.jets.common.util.Constants;
-
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
@@ -18,7 +17,6 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -95,6 +93,7 @@ public class Martinily extends UnicastRemoteObject implements IClient {
 
     @Override
     public void receiveInvitation(InvitationDto invitationDto) throws RemoteException {
+        //Add invitation to queue
         InvitationQueue.getList().add(invitationDto);
     }
 }

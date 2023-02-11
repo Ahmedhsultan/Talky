@@ -4,7 +4,6 @@ package gov.iti.jets.client.presentation.controllers;
 import com.jfoenix.controls.JFXButton;
 import gov.iti.jets.client.Dina.MessagesQueue;
 import gov.iti.jets.client.business.services.PaneManager;
-import gov.iti.jets.client.callBack.IClientInvitation;
 import gov.iti.jets.client.network.service.InvitationService;
 import gov.iti.jets.client.network.service.RMIManager;
 import gov.iti.jets.common.dto.*;
