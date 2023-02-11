@@ -2,7 +2,7 @@ package gov.iti.jets.client.presentation.controllers;
 
 import gov.iti.jets.client.network.service.RMIManager;
 import gov.iti.jets.common.dto.UserSessionDto;
-import gov.iti.jets.common.network.UserRemote;
+import gov.iti.jets.common.network.server.UserRemote;
 import gov.iti.jets.common.util.Constants;
 import gov.iti.jets.common.util.Validation;
 import javafx.collections.FXCollections;
@@ -99,13 +99,12 @@ public class ProfileController implements Initializable {
 //            } catch (IOException e) {
 //                e.printStackTrace();
 //            }
-            try {
-                Registry reg = RMIManager.getRegistry();
-                UserRemote userRemote = (UserRemote) reg.lookup("server");
-                userRemote.updateProfile(userSessionDto.getUser());
-            } catch (RemoteException | NotBoundException e) {
-                e.printStackTrace();
-            }
+//            try {
+//                UserRemote userRemote = RMIManager.lookUpRegister();
+//                userRemote.updateProfile(userSessionDto.getUser());
+//            } catch (RemoteException | NotBoundException e) {
+//                e.printStackTrace();
+//            }
             System.out.println( userSessionDto.getUser().getBio());
         }
 

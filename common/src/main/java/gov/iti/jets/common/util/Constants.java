@@ -40,8 +40,8 @@ public class Constants {
 
     //Paths
     public static final String mainDir = System.getProperty("user.dir");
-    public static final String userImagesDir =  mainDir+"/server\\images\\users\\";
-    public static final String chatImagesDir =  mainDir+"/server\\images\\chats\\";
+    public static final String userImagesDir =  mainDir+"\\images\\users\\";
+    public static final String chatImagesDir =  mainDir+"\\images\\chats\\";
 
 
     public static String hashPassword(String input) {

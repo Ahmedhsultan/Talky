@@ -13,5 +13,5 @@ public interface UserRemote extends Remote {
     public UserSessionDto register(UserRegistrationDto userRegistrationDto) throws RemoteException;
     public UserSessionDto login(String phone, String password) throws RemoteException;
     public void logout(String phone) throws RemoteException;
-    public void updateProfile(UserDto userDto) throws RemoteException;
+//    public void updateProfile(UserDto userDto) throws RemoteException;
 }

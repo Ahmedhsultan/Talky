@@ -1,9 +1,9 @@
 package gov.iti.jets.client.presentation.controllers;
 
 
+import gov.iti.jets.client.Dina.MessagesQueue;
 import gov.iti.jets.client.business.services.PaneManager;
 import gov.iti.jets.common.dto.*;
-import gov.iti.jets.common.util.ChatsMapList;
 import gov.iti.jets.common.util.Constants;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -93,7 +93,7 @@ public class ChatController implements Initializable {
                     if(currentPane.getText().equals("Chats")) {
                         chatName.setText(((Label) (newValue.lookup("#userName"))).getText());
 //                        chatIcon.setFill(new ImagePattern(new Image(Constants.byteArrayToImage(arr, img).getPath(),100,100,false,true)));
-                       MessageDto m =  ChatsMapList.getList().get(Integer.parseInt(((Label)(newValue.lookup("#chatID"))).getText()));
+                       MessageDto m =  MessagesQueue.getList().get(Integer.parseInt(((Label)(newValue.lookup("#chatID"))).getText()));
 //                        for(MessageDto message :)
                     }
             }

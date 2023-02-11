@@ -34,8 +34,8 @@ public class UserController extends UnicastRemoteObject implements UserRemote {
         userService.logout(phone);
     }
 
-    @Override
-    public void updateProfile(UserDto userDto) throws RemoteException {
-        userService.updateProfile(userDto);
-    }
+//    @Override
+//    public void updateProfile(UserDto userDto) throws RemoteException {
+//        userService.editUser(userDto);
+//    }
 }
