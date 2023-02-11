@@ -6,18 +6,19 @@ import gov.iti.jets.client.Dina.MessagesQueue;
 import gov.iti.jets.client.Util.ConnectionFlag;
 import gov.iti.jets.common.dto.ContactDto;
 import gov.iti.jets.common.dto.MessageDto;
-import gov.iti.jets.common.dto.UserDto;
 import gov.iti.jets.common.network.client.IClient;
+import gov.iti.jets.common.util.Constants;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
-import java.nio.channels.SeekableByteChannel;
-import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Martinily extends UnicastRemoteObject implements IClient {
     public Martinily() throws RemoteException {
@@ -34,7 +35,13 @@ public class Martinily extends UnicastRemoteObject implements IClient {
         messageDto.setMessage(message);
         messageDto.setSenderId(senderId);
 
-        MessagesQueue.getList().put(chatId,messageDto);
+        if(!MessagesQueue.getList().containsKey(chatId)){
+            List<MessageDto> messageDtoList = new LinkedList<>();
+            messageDtoList.add(messageDto);
+            MessagesQueue.getList().put(chatId,messageDtoList);
+        }else{
+            MessagesQueue.getList().get(chatId).add(messageDto);
+        }
     }
 
     @Override
@@ -74,7 +81,7 @@ public class Martinily extends UnicastRemoteObject implements IClient {
     {
         try {
             ByteBuffer byteBuffer = ByteBuffer.wrap(bytes);
-            FileChannel channel = FileChannel.open(Paths.get(fileName),
+            FileChannel channel = FileChannel.open(Paths.get(Constants.CHAT_FILES_DIR + fileName),
                     StandardOpenOption.CREATE, StandardOpenOption.APPEND);
             channel.write(byteBuffer);
         }

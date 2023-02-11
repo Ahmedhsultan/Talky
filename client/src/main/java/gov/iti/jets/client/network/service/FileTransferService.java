@@ -1,4 +1,4 @@
-package gov.iti.jets.client.business.services;
+package gov.iti.jets.client.network.service;
 
 import gov.iti.jets.client.network.service.RMIManager;
 import gov.iti.jets.common.network.server.IServer;
