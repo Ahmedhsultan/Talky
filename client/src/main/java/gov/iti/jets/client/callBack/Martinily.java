@@ -9,6 +9,13 @@ import gov.iti.jets.common.dto.MessageDto;
 import gov.iti.jets.common.dto.UserDto;
 import gov.iti.jets.common.network.client.IClient;
 
+import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
+import java.nio.channels.SeekableByteChannel;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
@@ -61,4 +68,20 @@ public class Martinily extends UnicastRemoteObject implements IClient {
         //Add new contact element with new user data
         ContactList.getList().add(contactDto);
     }
+
+    @Override
+    public void readFile(long chatId, String senderId, byte[] bytes, String fileName) throws RemoteException
+    {
+        try {
+            ByteBuffer byteBuffer = ByteBuffer.wrap(bytes);
+            FileChannel channel = FileChannel.open(Paths.get(fileName),
+                    StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+            channel.write(byteBuffer);
+        }
+         catch (IOException e) {
+            e.printStackTrace();
+            throw new RemoteException("Failed to send File!!");
+        }
+    }
+
 }

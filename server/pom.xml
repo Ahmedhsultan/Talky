@@ -22,6 +22,7 @@
       <artifactId>common</artifactId>
     </dependency>
 
+
   </dependencies>
 
 <build>
@@ -32,7 +33,9 @@
       <version>3.1.0</version>
       <configuration>
         <mainClass>gov.iti.jets.server.Main</mainClass>
-        <cleanupDaemonThreads>false</cleanupDaemonThreads>
+<!--        <cleanupDaemonThreads>false</cleanupDaemonThreads>-->
+<!--        <async>true</async>-->
+<!--        <keepAlive>true</keepAlive>-->
       </configuration>
     </plugin>
     <plugin>
