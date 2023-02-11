@@ -16,6 +16,7 @@ E:\ITI\ChattingRoomProject\git\Talky\common\src\main\java\gov\iti\jets\common\ne
 E:\ITI\ChattingRoomProject\git\Talky\common\src\main\java\gov\iti\jets\common\dto\ConnectionDto.java
 E:\ITI\ChattingRoomProject\git\Talky\common\src\main\java\gov\iti\jets\common\dto\ChatUserDto.java
 E:\ITI\ChattingRoomProject\git\Talky\common\src\main\java\gov\iti\jets\common\dto\NotificationDto.java
+E:\ITI\ChattingRoomProject\git\Talky\common\src\main\java\gov\iti\jets\common\dto\UserCardDto.java
 E:\ITI\ChattingRoomProject\git\Talky\common\src\main\java\gov\iti\jets\common\dto\BaseDto.java
 E:\ITI\ChattingRoomProject\git\Talky\common\src\main\java\gov\iti\jets\common\Main.java
 E:\ITI\ChattingRoomProject\git\Talky\common\src\main\java\gov\iti\jets\common\network\IConnection.java
