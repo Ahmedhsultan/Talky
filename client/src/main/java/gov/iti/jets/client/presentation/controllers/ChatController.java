@@ -4,6 +4,9 @@ package gov.iti.jets.client.presentation.controllers;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import gov.iti.jets.client.business.services.PaneManager;
+import gov.iti.jets.client.callBack.IClientInvitation;
+import gov.iti.jets.client.network.service.InvitationService;
+import gov.iti.jets.client.network.service.RMIManager;
 import gov.iti.jets.common.util.Constants;
 import gov.iti.jets.common.util.Validation;
 import javafx.beans.value.ChangeListener;
@@ -27,6 +30,8 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 
 import java.net.URL;
+import java.rmi.RemoteException;
+import java.rmi.registry.Registry;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
@@ -204,6 +209,7 @@ public class ChatController implements Initializable {
         chatsButton.setStyle( null);
         invitationsButton.setStyle(null);
         notificationsButton.setStyle(null);
+
         addIcon.setImage(null);
         addIcon.setDisable(true);
         addContactCard.setImage(new Image("image\\icons-add.png"));
@@ -211,6 +217,7 @@ public class ChatController implements Initializable {
         deleteContactCard.setImage(new Image("image\\removeContact.png"));
         deleteContactCard.setDisable(false);
         btnAddContacts.setVisible(true);
+
         contactsButton.setStyle( "-fx-border-width: 0 0 2px 5px; -fx-border-color: purple;");
         p.clear();
         p.add(temp);
@@ -245,6 +252,19 @@ public class ChatController implements Initializable {
             Label label = (Label) k.getChildren().get(2);
             if(Validation.validatePhoneNumber(tx,label)){
                 System.out.println(tx.getText());
+                Registry reg = null;
+                try {
+                    reg = RMIManager.getRegistry();
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
+                IClientInvitation clientInvitation = null;
+                try {
+                    clientInvitation = new IClientInvitation();
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
+                new InvitationService().sendInvit("01090780888",clientInvitation,tx.getText(),reg);
             }
         }
     }

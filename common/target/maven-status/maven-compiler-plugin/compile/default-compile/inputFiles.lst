@@ -6,6 +6,7 @@ E:\ITI\ChattingRoomProject\git\Talky\common\src\main\java\gov\iti\jets\common\dt
 E:\ITI\ChattingRoomProject\git\Talky\common\src\main\java\gov\iti\jets\common\dto\MessageDto.java
 E:\ITI\ChattingRoomProject\git\Talky\common\src\main\java\gov\iti\jets\common\util\ConnectedClientsList.java
 E:\ITI\ChattingRoomProject\git\Talky\common\src\main\java\gov\iti\jets\common\dto\Test.java
+E:\ITI\ChattingRoomProject\git\Talky\common\src\main\java\gov\iti\jets\common\network\ServerInvitation.java
 E:\ITI\ChattingRoomProject\git\Talky\common\src\main\java\module-info.java
 E:\ITI\ChattingRoomProject\git\Talky\common\src\main\java\gov\iti\jets\common\dto\registration\UserRegistrationDto.java
 E:\ITI\ChattingRoomProject\git\Talky\common\src\main\java\gov\iti\jets\common\dto\ChatDto.java
@@ -14,6 +15,7 @@ E:\ITI\ChattingRoomProject\git\Talky\common\src\main\java\gov\iti\jets\common\dt
 E:\ITI\ChattingRoomProject\git\Talky\common\src\main\java\gov\iti\jets\common\util\Validation.java
 E:\ITI\ChattingRoomProject\git\Talky\common\src\main\java\gov\iti\jets\common\network\IClient.java
 E:\ITI\ChattingRoomProject\git\Talky\common\src\main\java\gov\iti\jets\common\dto\ConnectionDto.java
+E:\ITI\ChattingRoomProject\git\Talky\common\src\main\java\gov\iti\jets\common\network\ClientInvitation.java
 E:\ITI\ChattingRoomProject\git\Talky\common\src\main\java\gov\iti\jets\common\dto\ChatUserDto.java
 E:\ITI\ChattingRoomProject\git\Talky\common\src\main\java\gov\iti\jets\common\dto\NotificationDto.java
 E:\ITI\ChattingRoomProject\git\Talky\common\src\main\java\gov\iti\jets\common\dto\UserCardDto.java

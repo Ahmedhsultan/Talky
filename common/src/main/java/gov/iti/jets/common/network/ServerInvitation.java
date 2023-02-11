@@ -1,4 +1,4 @@
-package gov.iti.jets.server.network;
+package gov.iti.jets.common.network;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;

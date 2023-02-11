@@ -5,7 +5,7 @@ import gov.iti.jets.common.dto.InvitationDto;
 import gov.iti.jets.server.entity.Invitation;
 import gov.iti.jets.server.entity.User;
 import gov.iti.jets.server.mapper.InvitationMapper;
-import gov.iti.jets.server.network.ClientInvitation;
+import gov.iti.jets.common.network.ClientInvitation;
 import gov.iti.jets.server.persistence.dao.InvitationDao;
 import gov.iti.jets.server.persistence.dao.UserDao;
 
@@ -27,7 +27,7 @@ public class InvitationService {
     }
 
 
-    //List of ids + info of current user
+
     public void sendInvitation(String senderID, ClientInvitation clientInvitation, String receiverID) throws RemoteException {
 
         if(userDao.findById(receiverID) == null) {

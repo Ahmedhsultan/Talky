@@ -13,18 +13,6 @@ import java.rmi.RemoteException;
 import java.rmi.registry.Registry;
 
 public class RegisterService {
-//    UserRemote obj;
-
-//    public RegisterService(){
-//        try {
-////            String host = InetAddress.getLocalHost().getHostName();
-//            Registry registry = RMIManager.getRegistry();
-//            obj = (UserRemote) registry.lookup("UserRemote");
-//            System.out.println("Client.....");
-//        } catch (Exception e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
     public void addUser(UserRegistrationDto user, Registry registry){
         try {
             UserRemote obj = (UserRemote) registry.lookup("server");

@@ -148,12 +148,29 @@
                      <children>
                         <JFXListView fx:id="leftList" depth="30" layoutX="37.0" layoutY="122.0" prefHeight="415.0" prefWidth="380.0" />
                         <TextField id="searchField" fx:id="searchField" layoutX="46.0" layoutY="82.0" onKeyReleased="#searchOnList" prefHeight="33.0" prefWidth="357.0" promptText="Search..." />
-                     </children></Pane>
+                        <ImageView fx:id="addContactCard" fitHeight="37.0" fitWidth="48.0" layoutX="37.0" layoutY="550.0" onMouseClicked="#addNewContact" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../image/icons-add.png" />
+                           </image>
+                        </ImageView>
+                        <ImageView fx:id="deleteContactCard" fitHeight="39.0" fitWidth="47.0" layoutX="102.0" layoutY="549.0" onMouseClicked="#deleteContact" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../image/removeContact.png" />
+                           </image>
+                        </ImageView>
+                        <JFXButton fx:id="btnAddContacts" layoutX="203.0" layoutY="545.0" onAction="#addContacts" prefHeight="46.0" prefWidth="200.0" stylesheets="@../style/loginStyle.css" text="Add Contacts" />
+                     </children>
+                  </Pane>
                   <Label fx:id="currentPane" layoutX="20.0" layoutY="2.0" prefHeight="85.0" prefWidth="360.0" text=" Chats" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="2.0">
                      <font>
                         <Font name="Kristen ITC" size="54.0" />
                      </font>
                   </Label>
+                  <ImageView fx:id="addIcon" fitHeight="72.0" fitWidth="89.0" layoutX="324.0" layoutY="15.0" onMouseClicked="#AddNewContacts" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../image/icons-add.png" />
+                     </image>
+                  </ImageView>
                </children>
                   </AnchorPane>
             </children>

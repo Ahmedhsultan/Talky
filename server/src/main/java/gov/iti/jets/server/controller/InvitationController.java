@@ -1,8 +1,8 @@
 package gov.iti.jets.server.controller;
 
 
-import gov.iti.jets.server.network.ClientInvitation;
-import gov.iti.jets.server.network.ServerInvitation;
+import gov.iti.jets.common.network.ClientInvitation;
+import gov.iti.jets.common.network.ServerInvitation;
 import gov.iti.jets.server.service.InvitationService;
 
 import java.rmi.RemoteException;
@@ -17,7 +17,7 @@ public class InvitationController extends UnicastRemoteObject implements ServerI
 
     @Override
     public void sendInvitation(String senderID, ClientInvitation clientInvitation, String receiverID) throws RemoteException {
-        invitationService.sendInvitation(senderID, clientInvitation, receiverID);
+        invitationService.sendInvitation(senderID,clientInvitation, receiverID);
     }
 
     @Override
