@@ -48,7 +48,7 @@ public class PasswordLoginController implements Initializable {
         System.out.println(PhoneLoginController.phoneNo);
         LoginService log = new LoginService();
 
-        log.login(PhoneLoginController.phoneNo,password.getText());
+        userSessionDto = log.login(PhoneLoginController.phoneNo,password.getText());
         System.out.println("Login success");
 
         SceneManager.getSceneManager().switchToChatScene();
