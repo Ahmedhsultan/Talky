@@ -11,9 +11,10 @@ import java.sql.Date;
 @NoArgsConstructor
 @Builder
 @ToString
-public class ChatDto implements Serializable ,BaseDto{
+public class ChatDto implements  BaseDto{
     private long id;
     private String name;
-    private String picture_icon;
+    private String imgPath;
     private Date modified_on;
+    private byte[] image;
 }

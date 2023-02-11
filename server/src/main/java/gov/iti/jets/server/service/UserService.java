@@ -23,15 +23,14 @@ public class UserService {
     private UserSessionService userSessionService;
 
     public UserService ()
-   {
-       dao = new UserDao();
-       userMapper = new UserMapper();
-   }
+    {
+        dao = new UserDao();
+        userMapper = new UserMapper();
+    }
 
 
     public UserSessionDto register(UserRegistrationDto userRegistrationDto) throws RemoteException {
 
-        System.out.println("service");
         UserSessionDto userSessionDto=null;
         if(!Validation.validatePhoneNumber(userRegistrationDto.getUserDto().getId()))
         {
@@ -63,35 +62,33 @@ public class UserService {
         }
         userSessionService=new UserSessionService(user);
         userSessionDto= userSessionService.getSessionDto();
-        System.out.println(userRegistrationDto);
         return  userSessionDto;
     }
 
     public UserSessionDto login(String phone, String password) throws RemoteException {
-            if(!Validation.validatePhoneNumber(phone))
-            {
-                throw new RemoteException("Invalid Phone Number!!");
-            }
-            User user = dao.findById(phone);
-            if(user == null)
-            {
-                throw new RemoteException("Phone Number Not Found!!");
-            }
-            if(!Validation.validatePassword(password))
-            {
-                throw new RemoteException("Invalid Password!!");
-            }
+        if(!Validation.validatePhoneNumber(phone))
+        {
+            throw new RemoteException("Invalid Phone Number!!");
+        }
+        User user = dao.findById(phone);
+        if(user == null)
+        {
+            throw new RemoteException("Phone Number Not Found!!");
+        }
+        if(!Validation.validatePassword(password))
+        {
+            throw new RemoteException("Invalid Password!!");
+        }
 
-            String hashedPass = Constants.hashPassword(password);
-            if(!hashedPass.equals(user.getPassword()))
-            {
-                throw new RemoteException("Invalid Password !!");
-            }
-            setOnlineStatus(phone, Constants.ONLINE_STATUS_AVAILABLE);
-            userSessionService=new UserSessionService(user);
-            UserSessionDto userSessionDto= userSessionService.getSessionDto();
-        System.out.println(userSessionDto);
-           return userSessionDto;
+        String hashedPass = Constants.hashPassword(password);
+        if(!hashedPass.equals(user.getPassword()))
+        {
+            throw new RemoteException("Invalid Password !!");
+        }
+        setOnlineStatus(phone, Constants.ONLINE_STATUS_AVAILABLE);
+        userSessionService=new UserSessionService(user);
+        UserSessionDto userSessionDto= userSessionService.getSessionDto();
+        return userSessionDto;
     }
 
     public void setOnlineStatus(String phone, String status) throws RemoteException {
