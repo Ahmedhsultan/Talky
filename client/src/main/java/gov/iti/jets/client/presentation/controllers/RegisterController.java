@@ -122,17 +122,11 @@ public class RegisterController implements Initializable {
     Validation validate;
     String gender;
     UserRegistrationDto userRegistrationDto;
-    Registry reg;
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
 //        circle.setFill(new ImagePattern(new Image("user.png",200,200,false,true)));
         addCountryChoiceBox();
         circle.setFill(new ImagePattern(new Image("/image/user.png",200,200,false,true)));
-        try {
-            reg = RMIManager.getRegistry();
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
     }
     @FXML
     public void addProfileImage(MouseEvent event) {
@@ -172,7 +166,7 @@ public class RegisterController implements Initializable {
 
             userRegistrationDto = new UserRegistrationDto(user,password.getText());
             try {
-                new RegisterService().addUser(userRegistrationDto, reg);
+                new RegisterService().addUser(userRegistrationDto);
 
             }catch (Exception e){
                 e.getMessage();
