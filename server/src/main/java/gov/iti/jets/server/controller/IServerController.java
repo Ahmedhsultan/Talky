@@ -6,6 +6,8 @@ import gov.iti.jets.common.network.client.IClient;
 import gov.iti.jets.common.network.server.IServer;
 import gov.iti.jets.server.Util.Queues.ConnectedClientsMap;
 import gov.iti.jets.server.entity.Friends;
+import gov.iti.jets.server.entity.User;
+import gov.iti.jets.server.mapper.UserMapper;
 import gov.iti.jets.server.service.ChatUserService;
 import gov.iti.jets.server.service.FriendsService;
 import gov.iti.jets.server.service.UserService;
@@ -20,11 +22,13 @@ public class IServerController extends UnicastRemoteObject implements IServer {
     private ChatUserService chatUserService;
     private UserService userService;
     private FriendsService friendsService;
+    private UserMapper userMapper;
     public IServerController() throws RemoteException {
         super();
         chatUserService = new ChatUserService();
         userService = new UserService();
         friendsService = new FriendsService();
+        userMapper = new UserMapper();
     }
 
     @Override
@@ -47,36 +51,51 @@ public class IServerController extends UnicastRemoteObject implements IServer {
     public void addFriend(String id1, String id2) throws RemoteException {
         //Add friendship from db
         friendsService.addFriend(id1,id2);
-        //Get users dto for both users
-        UserDto user1 = userService.getUser(id1);
-        UserDto user2 = userService.getUser(id2);
+
+        //Mapping to ContactDto
+        UserDto userDto1 = userService.getUser(id1);
+        User user1 = userMapper.toEntity(userDto1);
+        ContactDto contactDto1 = userMapper.toContactDTO(user1);
+
+        UserDto userDto2 = userService.getUser(id2);
+        User user2 = userMapper.toEntity(userDto2);
+        ContactDto contactDto2 = userMapper.toContactDTO(user2);
 
         //Notify client to add this user by callBack
         IClient iClient1 = ConnectedClientsMap.getList().get(user1).getIClient();
-        iClient1.addFriend(user2);
+        iClient1.addFriend(contactDto1);
         IClient iClient2 = ConnectedClientsMap.getList().get(user2).getIClient();
-        iClient2.addFriend(user1);
+        iClient2.addFriend(contactDto2);
     }
 
     @Override
     public void removeFriend(String id1, String id2) throws RemoteException {
         //Remove friendship from db
         friendsService.removeFriend(id1,id2);
-        //Get users dto for both users
-        UserDto user1 = userService.getUser(id1);
-        UserDto user2 = userService.getUser(id2);
+
+        //Mapping to ContactDto
+        UserDto userDto1 = userService.getUser(id1);
+        User user1 = userMapper.toEntity(userDto1);
+        ContactDto contactDto1 = userMapper.toContactDTO(user1);
+
+        UserDto userDto2 = userService.getUser(id2);
+        User user2 = userMapper.toEntity(userDto2);
+        ContactDto contactDto2 = userMapper.toContactDTO(user2);
 
         //Notify client to remove this user by callBack
         IClient iClient1 = ConnectedClientsMap.getList().get(user1).getIClient();
-        iClient1.removeFriend(user2);
+        iClient1.removeFriend(contactDto1);
         IClient iClient2 = ConnectedClientsMap.getList().get(user2).getIClient();
-        iClient2.removeFriend(user1);
+        iClient2.removeFriend(contactDto2);
     }
 
     @Override
     public void editUser(UserDto userDto) throws RemoteException {
         //Edit user date in db
         UserDto newUserDto = userService.editUser(userDto);
+        //Mapping to ContactDto
+        User user = userMapper.toEntity(newUserDto);
+        ContactDto contactDto = userMapper.toContactDTO(user);
         //Get user friends
         ArrayList<ContactDto> friendsList = friendsService.getListOfFriends(userDto.getId());
 
@@ -84,7 +103,7 @@ public class IServerController extends UnicastRemoteObject implements IServer {
         IClient iClient =  null;
         for (ContactDto element : friendsList){
             iClient = ConnectedClientsMap.getList().get(element.getPhoneNumber()).getIClient();
-            iClient.editUser(newUserDto);
+            iClient.editUser(contactDto);
         }
     }
 }
