@@ -8,7 +8,6 @@ import java.rmi.RemoteException;
 public class SendMessage {
     public synchronized static void send(long chatId, MessageDto messageDto) throws RemoteException, NotBoundException {
         IServer iServer = RMIManager.lookUpIServer();
-        System.out.println("hena");
         iServer.sendMessage(chatId, messageDto);
     }
 }
