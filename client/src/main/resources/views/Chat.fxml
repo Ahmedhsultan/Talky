@@ -167,9 +167,9 @@
                               <ColorPicker id="highlight" fx:id="highlight" style="-fx-background-color: transparent;" />
                            </graphic>
                         </MenuItem>
-                      <MenuItem mnemonicParsing="false" text="Font Color">
+                      <MenuItem mnemonicParsing="false" text="Text Color">
                            <graphic>
-                              <ColorPicker id="fontColor" fx:id="fontColor" style="-fx-background-color: transparent;" />
+                              <ColorPicker id="fontColor" fx:id="textColor" style="-fx-background-color: transparent;" />
                            </graphic>
                         </MenuItem>
                       <MenuItem mnemonicParsing="false" text="Font Size">
@@ -190,7 +190,7 @@
                                        <graphic>
                                           <HBox prefHeight="30.0" prefWidth="200.0">
                                              <children>
-                                                <JFXCheckBox id="italicBox" fx:id="italicBox1" checkedColor="#6713d2" text=" ">
+                                                <JFXCheckBox id="italicBox" fx:id="underline" checkedColor="#6713d2" text=" ">
                                                    <graphic>
                                                       <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true">
                                                          <image>
@@ -199,7 +199,7 @@
                                                       </ImageView>
                                                    </graphic>
                                                 </JFXCheckBox>
-                                                <JFXCheckBox id="italicBox" fx:id="italicBox" checkedColor="#6713d2" text=" ">
+                                                <JFXCheckBox id="italicBox" fx:id="italic" checkedColor="#6713d2" text=" ">
                                                    <graphic>
                                                       <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true">
                                                          <image>
@@ -208,7 +208,7 @@
                                                       </ImageView>
                                                    </graphic>
                                                 </JFXCheckBox>
-                                                <JFXCheckBox id="boldBox" fx:id="boldBox" checkedColor="#6713d2" text=" ">
+                                                <JFXCheckBox id="boldBox" fx:id="bold" checkedColor="#6713d2" text=" ">
                                                    <graphic>
                                                       <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true">
                                                          <image>
@@ -243,6 +243,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
+                  <JFXListView fx:id="chatVBox" layoutY="98.0" prefHeight="420.0" prefWidth="502.0" />
                </children>
                <StackPane.margin>
                   <Insets left="350.0" top="30.0" />

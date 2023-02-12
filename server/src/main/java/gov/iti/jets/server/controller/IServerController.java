@@ -1,6 +1,7 @@
 package gov.iti.jets.server.controller;
 
 import gov.iti.jets.common.dto.ContactDto;
+import gov.iti.jets.common.dto.MessageDto;
 import gov.iti.jets.common.dto.UserDto;
 import gov.iti.jets.common.network.client.IClient;
 import gov.iti.jets.common.network.server.IServer;
@@ -33,9 +34,9 @@ public class IServerController extends UnicastRemoteObject implements IServer {
     }
 
     @Override
-    public void sendMessage(long chatId, String senderId, String message) throws RemoteException
+    public void sendMessage(long chatId, MessageDto messageDto) throws RemoteException
     {
-        chatUserService.sendMessage( chatId,  senderId, message);
+        chatUserService.sendMessage( chatId, messageDto);
     }
 
     @Override

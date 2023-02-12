@@ -1,15 +1,16 @@
 package gov.iti.jets.client.Dina;
 
 import gov.iti.jets.common.dto.MessageDto;
-import java.util.HashMap;
-import java.util.List;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.ObservableMap;
 
-public class MessagesQueue extends HashMap<Long, List<MessageDto>> {
-    private static MessagesQueue messagesQueue;
-    public static MessagesQueue getList(){
-        if(messagesQueue == null)
-            messagesQueue = new MessagesQueue();
+public class MessagesQueue  {
+    private static ObservableMap<Long, ObservableList<MessageDto>> messages;
+    public static ObservableMap<Long, ObservableList<MessageDto>>  getList(){
+        if(messages == null)
+            messages = FXCollections.observableHashMap();
 
-        return messagesQueue;
+        return messages;
     }
 }

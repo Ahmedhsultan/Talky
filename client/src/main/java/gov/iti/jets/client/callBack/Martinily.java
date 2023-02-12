@@ -10,6 +10,9 @@ import gov.iti.jets.common.dto.InvitationDto;
 import gov.iti.jets.common.dto.MessageDto;
 import gov.iti.jets.common.network.client.IClient;
 import gov.iti.jets.common.util.Constants;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
@@ -30,13 +33,9 @@ public class Martinily extends UnicastRemoteObject implements IClient {
     }
 
     @Override
-    public void receiveMessage(long chatId, String senderId, String message) throws RemoteException {
-        MessageDto messageDto = new MessageDto();
-        messageDto.setMessage(message);
-        messageDto.setSenderId(senderId);
-
+    public void receiveMessage(long chatId, MessageDto messageDto) throws RemoteException {
         if(!MessagesQueue.getList().containsKey(chatId)){
-            List<MessageDto> messageDtoList = new LinkedList<>();
+            ObservableList<MessageDto> messageDtoList = FXCollections.observableArrayList();
             messageDtoList.add(messageDto);
             MessagesQueue.getList().put(chatId,messageDtoList);
         }else{
