@@ -40,12 +40,12 @@
             <DropShadow />
          </effect>
       </Circle>
-      <Label id="userName" fx:id="userName" layoutX="92.0" layoutY="25.0" prefHeight="27.0" prefWidth="230.0" text="Dina Mishahed seny you a message">
+      <Label id="userName" fx:id="notificationMessage" layoutX="92.0" layoutY="25.0" prefHeight="27.0" prefWidth="230.0" text="Dina Mishahed seny you a message">
          <padding>
             <Insets top="5.0" />
          </padding>
       </Label>
-      <Label id="onlineStatus" fx:id="onlineStatus" layoutX="263.0" layoutY="3.0" prefHeight="35.0" prefWidth="66.0" text="03 mar" textFill="#000000a9">
+      <Label id="onlineStatus" fx:id="timestamp" layoutX="263.0" layoutY="3.0" prefHeight="35.0" prefWidth="66.0" text="03 mar" textFill="#000000a9">
          <font>
             <Font size="13.0" />
          </font>
