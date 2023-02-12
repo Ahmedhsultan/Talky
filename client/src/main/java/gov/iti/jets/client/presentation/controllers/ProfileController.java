@@ -66,17 +66,21 @@ public class ProfileController implements Initializable {
         else
             userSessionDto = RegisterController.userSessionDto;
 
-        putBioOnPane(userSessionDto.getUser().getBio());
-//        putChatbotOnPane(userSessionDto.getUser().get);
-//        putImageOnPane(userSessionDto.getUser().getImgPath(), userSessionDto.getUser().getImage());
-        putUserNameOnPane(userSessionDto.getUser().getName());
-        putPhoneNumOnPane(userSessionDto.getUser().getId());
-        putIsOnlineStatusOnPane(userSessionDto.getUser().getIsOnlineStatus());
-
+        putUserDataOnPane();
         userNameText = new TextField(userName.getText());
         bioText = new TextField(bio.getText());
     }
 
+
+    private  void putUserDataOnPane () {
+
+        putBioOnPane(userSessionDto.getUser().getBio());
+        putChatbotOnPane(userSessionDto.getUser().isBotMode());
+//        putImageOnPane(userSessionDto.getUser().getImgPath(), userSessionDto.getUser().getImage());
+        putUserNameOnPane(userSessionDto.getUser().getName());
+        putPhoneNumOnPane(userSessionDto.getUser().getId());
+        putIsOnlineStatusOnPane(userSessionDto.getUser().getIsOnlineStatus());
+    }
     public void changeBio(ActionEvent actionEvent) {
         bioText.setLayoutX(38);
         bioText.setLayoutY(287);

@@ -347,4 +347,6 @@ public class ChatController implements Initializable {
         btnAddContacts.setVisible(false);
     }
 
+    public void sendMessage(ActionEvent actionEvent) {
+    }
 }
