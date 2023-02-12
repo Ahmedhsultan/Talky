@@ -40,7 +40,11 @@ public class ChatUserService {
             userIds = dao.getOnlineUsersByChat(chatId);
             if(userIds!=null) {
                 for (String userId : userIds) {
-                    ConnectedClientsMap.getList().get(userId).getIClient().receiveMessage(chatId, messageDto);
+                    try {
+                        ConnectedClientsMap.getList().get(userId).getIClient().receiveMessage(chatId, messageDto);
+                    }catch (RemoteException re){
+                        re.printStackTrace();
+                    }
                 }
             }
         } catch (SQLException e) {

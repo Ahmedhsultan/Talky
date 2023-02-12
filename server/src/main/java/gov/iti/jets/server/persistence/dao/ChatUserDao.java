@@ -89,8 +89,9 @@ public class ChatUserDao extends BaseDaoImpl<ChatUser, Integer> {
     }
 
     public List<String> getOnlineUsersByChat(long chatId) throws SQLException {
+        chatId = 9;
         //Write select query by ID
-        String query = "SELECT user_id FROM ChatUser WHERE chat_id = " + chatId + " and user_id in (select id from user where is_online_status !=" + Constants.ONLINE_STATUS_OFFLINE + ");";
+        String query = "SELECT user_id FROM ChatUser WHERE chat_id = " + chatId + " and user_id in (select id from user where is_online_status != '" + Constants.ONLINE_STATUS_OFFLINE + "' );";
         List<String> list = new ArrayList<>();
 
         try (Connection connection = DBManagement.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
