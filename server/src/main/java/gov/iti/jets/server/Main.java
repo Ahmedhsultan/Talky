@@ -1,6 +1,7 @@
 package gov.iti.jets.server;
 
 
+import gov.iti.jets.server.controller.IServerController;
 import gov.iti.jets.server.controller.UserController;
 import gov.iti.jets.server.network.RMIManager;
 
@@ -15,18 +16,19 @@ public class Main {
 
     }
     public static void main(String[] args) {
-        try {
-            createDirectory("E:\\hi");
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            createDirectory("E:\\hi");
+//        } catch (RemoteException e) {
+//            e.printStackTrace();
+//        }
         try {
             Registry reg = RMIManager.getRegistry();
             reg.rebind("register", new UserController());
-            while(true)
-            {
-
-            }
+            reg.rebind("iserver", new IServerController());
+//            while(true)
+//            {
+//
+//            }
         } catch (RemoteException e) {
             e.printStackTrace();
         }

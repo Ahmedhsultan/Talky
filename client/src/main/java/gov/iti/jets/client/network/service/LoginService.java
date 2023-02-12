@@ -1,6 +1,7 @@
 package gov.iti.jets.client.network.service;
 
 
+import gov.iti.jets.client.callBack.Martinily;
 import gov.iti.jets.common.dto.UserSessionDto;
 import gov.iti.jets.common.network.server.UserRemote;
 
@@ -14,7 +15,7 @@ public class LoginService {
         try {
             UserRemote obj = RMIManager.lookUpRegister();
             System.out.println(obj);
-            userSessionDto = obj.login(phone,password);
+            userSessionDto = obj.login(phone,password, new Martinily());
         } catch (RemoteException e) {
             System.out.println(e.getMessage());
         } catch (NotBoundException e) {

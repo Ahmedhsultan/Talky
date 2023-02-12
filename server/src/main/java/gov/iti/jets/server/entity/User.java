@@ -1,5 +1,6 @@
 package gov.iti.jets.server.entity;
 
+import gov.iti.jets.common.dto.Interfaces.IUser;
 import lombok.*;
 
 import java.io.Serializable;
@@ -11,7 +12,7 @@ import java.sql.Date;
 @NoArgsConstructor
 @Builder
 @ToString
-public class User implements BaseEntity, Serializable {
+public class User extends IUser implements BaseEntity, Serializable {
     private String id;
     private String name;
     private String email;

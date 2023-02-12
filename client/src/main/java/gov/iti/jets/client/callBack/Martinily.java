@@ -4,10 +4,12 @@ package gov.iti.jets.client.callBack;
 import gov.iti.jets.client.Dina.ContactList;
 import gov.iti.jets.client.Dina.InvitationQueue;
 import gov.iti.jets.client.Dina.MessagesQueue;
+import gov.iti.jets.client.Dina.MyID;
 import gov.iti.jets.client.Util.ConnectionFlag;
 import gov.iti.jets.common.dto.ContactDto;
 import gov.iti.jets.common.dto.InvitationDto;
 import gov.iti.jets.common.dto.MessageDto;
+import gov.iti.jets.common.dto.UserSessionDto;
 import gov.iti.jets.common.network.client.IClient;
 import gov.iti.jets.common.util.Constants;
 import javafx.collections.FXCollections;
@@ -54,9 +56,10 @@ public class Martinily extends UnicastRemoteObject implements IClient {
     }
 
     @Override
-    public void addFriend(ContactDto contactDto) throws RemoteException {
+    public void addFriend(List<ContactDto> contactDtoList) throws RemoteException {
         //Add contact element to contact list
-        ContactList.getList().add(contactDto);
+        for (ContactDto contactDto : contactDtoList)
+            ContactList.getList().add(contactDto);
     }
 
     @Override
@@ -94,5 +97,17 @@ public class Martinily extends UnicastRemoteObject implements IClient {
     public void receiveInvitation(InvitationDto invitationDto) throws RemoteException {
         //Add invitation to queue
         InvitationQueue.getList().add(invitationDto);
+    }
+
+    @Override
+    public void addNewSessetion(UserSessionDto userSessionDto) throws RemoteException {
+        //Add current user ID
+        MyID.getInstance(userSessionDto.getUser().getId()).getMyId();
+        //Clear and add new session to contact list
+        ContactList.getList().clear();
+        ContactList.getList().addAll(userSessionDto.getContactListDto());
+        //Clear and add new session to invitation queue
+        InvitationQueue.getList().clear();
+        InvitationQueue.getList().addAll(userSessionDto.getInvitationListDto());
     }
 }
