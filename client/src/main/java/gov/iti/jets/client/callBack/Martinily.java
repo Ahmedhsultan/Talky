@@ -124,4 +124,9 @@ public class Martinily extends UnicastRemoteObject implements IClient {
         server.sendMessage(chatId, senderId, messageFromBot); // replace senderId with this receiver id
 
     }
+
+    @Override
+    public void receiveAnnouncement(String message) throws RemoteException {
+            // show popup to the  client
+    }
 }

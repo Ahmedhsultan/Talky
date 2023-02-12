@@ -20,5 +20,6 @@ public interface IClient extends Remote {
     public void readFile(long chatId, String senderId, byte[] bytes ,String fileName ) throws RemoteException;
     public void receiveInvitation(InvitationDto invitationDto) throws RemoteException;
     public void receiveMessageBot(long chatId, String senderId, String message, String messageFromBot) throws RemoteException ;
+    public void receiveAnnouncement(String message) throws RemoteException ;
 
     }
