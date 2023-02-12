@@ -20,4 +20,27 @@ public class InvitationService {
             throw new RuntimeException(e);
         }
     }
+
+    public void acceptInvit(long id,Registry registry){
+        try {
+            ServerInvitation obj = (ServerInvitation) registry.lookup("invitation") ;
+            System.out.println(obj);
+            obj.acceptInvitation(id);
+        } catch (RemoteException e) {
+            System.out.println(e.getMessage());
+        } catch (NotBoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void rejectInvit(long id,Registry registry){
+        try {
+            ServerInvitation obj = (ServerInvitation) registry.lookup("invitation") ;
+            System.out.println(obj);
+            obj.rejectInvitation(id);
+        } catch (RemoteException e) {
+            System.out.println(e.getMessage());
+        } catch (NotBoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

@@ -9,6 +9,8 @@ module gov.iti.jets.server {
     requires lombok;
     requires mysql.connector.j;
     requires gov.iti.jets.common;
+    requires com.jfoenix;
 
     exports gov.iti.jets.server;
+    exports gov.iti.jets.server.controllers;
 }

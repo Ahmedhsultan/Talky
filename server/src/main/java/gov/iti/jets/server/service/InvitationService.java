@@ -18,8 +18,7 @@ public class InvitationService {
     private UserDao userDao;
     private Invitation invitation;
 
-    public InvitationService ()
-    {
+    public InvitationService() {
         invitationDao = new InvitationDao();
         userDao = new UserDao();
         invitation = new Invitation();
@@ -28,7 +27,7 @@ public class InvitationService {
 
     public InvitationDto sendInvitation(String senderID, String receiverID) throws RemoteException {
 
-        if(userDao.findById(receiverID) == null) {
+        if (userDao.findById(receiverID) == null) {
             throw new RemoteException("Phone Number Not Found!!");
         }
         createInvitationEntity(senderID, receiverID);
@@ -37,7 +36,7 @@ public class InvitationService {
         invitationDao.insert(invitation);
 
         InvitationDto invitationDto = new InvitationMapper().toDTO(invitation);
-        User u=userDao.findById(receiverID);
+        User u = userDao.findById(receiverID);
 
         return invitationDto;
     }
@@ -57,17 +56,11 @@ public class InvitationService {
         invitationDao.deleteById(id);
         //Notify other user
         IServerController iServerController = new IServerController();
-        iServerController.addFriend(invitation.getSenderId(),invitation.getReceiverId());
+        iServerController.addFriend(invitation.getSenderId(), invitation.getReceiverId());
     }
 
     public void refuseInvitation(long id) throws RemoteException {
         //Get invitation from db then delete it
         invitationDao.deleteById(id);
     }
-
-//    public void acceptInvitation(String invitationID) {
-//
-//        new FriendsDao().insert();
-//
-//    }
 }
