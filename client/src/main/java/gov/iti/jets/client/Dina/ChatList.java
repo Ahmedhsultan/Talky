@@ -1,14 +1,14 @@
 package gov.iti.jets.client.Dina;
 
 import gov.iti.jets.common.dto.ChatDto;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
-import java.util.ArrayList;
-
-public class ChatList extends ArrayList<ChatDto>{
-    private static ChatList chatList;
-    public static ChatList getList(){
+public class ChatList{
+    private static ObservableList<ChatDto> chatList;
+    public static ObservableList<ChatDto> getList(){
         if(chatList == null)
-            chatList = new ChatList();
+            chatList = FXCollections.observableArrayList();
 
         return chatList;
     }
