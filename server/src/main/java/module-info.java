@@ -12,5 +12,5 @@ module gov.iti.jets.server {
     requires com.jfoenix;
 
     exports gov.iti.jets.server;
-    exports gov.iti.jets.server.controllers;
+    exports gov.iti.jets.server.presentation.controllers;
 }
