@@ -128,7 +128,7 @@ public class ChatController implements Initializable {
 
         leftList.setItems(paneObservableList);
 
-//        chatsButton.fire();
+        chatsButton.fire();
 //        test();
         selectChat();
         checkMessages();
