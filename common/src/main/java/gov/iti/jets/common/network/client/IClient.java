@@ -2,6 +2,7 @@ package gov.iti.jets.common.network.client;
 
 import gov.iti.jets.common.dto.ContactDto;
 import gov.iti.jets.common.dto.InvitationDto;
+import gov.iti.jets.common.dto.MessageDto;
 import gov.iti.jets.common.dto.UserDto;
 import gov.iti.jets.common.dto.UserSessionDto;
 
@@ -13,7 +14,7 @@ import java.util.List;
 
 public interface IClient extends Remote {
     public void receive() throws RemoteException;
-    public void receiveMessage(long chatId, String senderId, String message) throws RemoteException;
+    public void receiveMessage(long chatId, MessageDto messageDto) throws RemoteException;
     public void addToGroup(String userId, long chatId) throws RemoteException;
     public void removefromGroup(String userId, long chatId) throws RemoteException;
     public void addFriend(List<ContactDto> contactDtoList) throws RemoteException;

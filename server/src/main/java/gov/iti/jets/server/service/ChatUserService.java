@@ -1,6 +1,7 @@
 package gov.iti.jets.server.service;
 
 import gov.iti.jets.common.dto.ChatUserDto;
+import gov.iti.jets.common.dto.MessageDto;
 import gov.iti.jets.server.Util.Queues.ConnectedClientsMap;
 import gov.iti.jets.server.entity.ChatUser;
 import gov.iti.jets.server.mapper.ChatUserMapper;
@@ -33,13 +34,13 @@ public class ChatUserService {
         }
     }
 
-    public void sendMessage(long chatId, String senderId, String message) throws RemoteException {
+    public void sendMessage(long chatId, MessageDto messageDto) throws RemoteException {
         List<String> userIds = null;
         try {
             userIds = dao.getOnlineUsersByChat(chatId);
             if(userIds!=null) {
                 for (String userId : userIds) {
-                    ConnectedClientsMap.getList().get(userId).getIClient().receiveMessage(chatId, senderId, message);
+                    ConnectedClientsMap.getList().get(userId).getIClient().receiveMessage(chatId, messageDto);
                 }
             }
         } catch (SQLException e) {
