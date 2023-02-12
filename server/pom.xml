@@ -22,18 +22,15 @@
       <artifactId>common</artifactId>
     </dependency>
     <dependency>
-<<<<<<< HEAD
       <groupId>com.jfoenix</groupId>
       <artifactId>jfoenix</artifactId>
     </dependency>
-=======
+    <dependency>
       <groupId>ca.pjer</groupId>
       <artifactId>chatter-bot-api</artifactId>
       <version>1.4.7</version>
     </dependency>
 
-
->>>>>>> origin/feature/chatBot
   </dependencies>
 
 <build>

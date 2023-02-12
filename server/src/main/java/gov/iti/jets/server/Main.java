@@ -7,22 +7,17 @@ import com.google.code.chatterbotapi.ChatterBotSession;
 import com.google.code.chatterbotapi.ChatterBotType;
 import gov.iti.jets.server.controller.UserController;
 import gov.iti.jets.server.network.RMIManager;
-<<<<<<< HEAD
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-=======
 import gov.iti.jets.server.service.ServerService;
->>>>>>> origin/feature/chatBot
 
 import java.io.File;
 import java.rmi.RemoteException;
 import java.rmi.registry.Registry;
 import java.util.Scanner;
-
-<<<<<<< HEAD
 
 public class Main extends Application {
 
@@ -56,11 +51,14 @@ public class Main extends Application {
 //        }
 //        System.out.println("Hello World!");
         launch();
-=======
-public class Main {
-
-    public static void main(String[] args) {
-//        try {
+        ServerService service = new ServerService();
+        System.out.println(service.getGenderStats());
+        System.out.println(service.getUserStatusStats());
+        System.out.println(service.getUserCountryStats());
+//public class Main {
+//
+//    public static void main(String[] args) {
+////        try {
 //            ChatterBotFactory factory = new ChatterBotFactory();
 //
 //
@@ -83,23 +81,19 @@ public class Main {
 //
 //        }
 //
-        try {
-            Registry reg = RMIManager.getRegistry();
-            reg.rebind("register", new UserController());
-            while(true)
-            {
+//        try {
+//            Registry reg = RMIManager.getRegistry();
+//            reg.rebind("register", new UserController());
+//            while(true)
+//            {
+//
+//            }
+//        } catch (RemoteException e) {
+//            e.printStackTrace();
+//        }
 
-            }
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-        ServerService service = new ServerService();
-        System.out.println(service.getGenderStats());
-        System.out.println(service.getUserStatusStats());
-        System.out.println(service.getUserCountryStats());
 
-        System.out.println("Hello World!");
->>>>>>> origin/feature/chatBot
+//        System.out.println("Hello World!");
     }
 
 
