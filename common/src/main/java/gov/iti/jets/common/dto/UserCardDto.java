@@ -1,8 +1,7 @@
 package gov.iti.jets.common.dto;
 
+import gov.iti.jets.common.dto.Interfaces.IUser;
 import lombok.*;
-
-import java.sql.Date;
 
 @Getter
 @Setter
@@ -10,7 +9,7 @@ import java.sql.Date;
 @NoArgsConstructor
 @Builder
 @ToString
-public class UserCardDto  implements  BaseDto{
+public class UserCardDto extends IUser  implements  BaseDto {
     private String id;
     private String name;
     private String imgPath;

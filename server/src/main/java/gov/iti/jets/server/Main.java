@@ -15,18 +15,18 @@ public class Main {
 
     }
     public static void main(String[] args) {
-        try {
-            createDirectory("E:\\hi");
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            createDirectory("E:\\hi");
+//        } catch (RemoteException e) {
+//            e.printStackTrace();
+//        }
         try {
             Registry reg = RMIManager.getRegistry();
             reg.rebind("register", new UserController());
-            while(true)
-            {
-
-            }
+//            while(true)
+//            {
+//
+//            }
         } catch (RemoteException e) {
             e.printStackTrace();
         }
