@@ -9,7 +9,11 @@ module gov.iti.jets.server {
     requires lombok;
     requires mysql.connector.j;
     requires gov.iti.jets.common;
+<<<<<<< HEAD
     requires com.jfoenix;
+=======
+    requires chatter.bot.api;
+>>>>>>> origin/feature/chatBot
 
     exports gov.iti.jets.server;
     exports gov.iti.jets.server.presentation.controllers;
