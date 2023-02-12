@@ -5,16 +5,20 @@ import gov.iti.jets.client.Dina.ContactList;
 import gov.iti.jets.client.Dina.InvitationQueue;
 import gov.iti.jets.client.Dina.MessagesQueue;
 import gov.iti.jets.client.Util.ConnectionFlag;
+import gov.iti.jets.client.network.service.RMIManager;
+import gov.iti.jets.client.network.service.SendMessage;
 import gov.iti.jets.common.dto.ContactDto;
 import gov.iti.jets.common.dto.InvitationDto;
 import gov.iti.jets.common.dto.MessageDto;
 import gov.iti.jets.common.network.client.IClient;
+import gov.iti.jets.common.network.server.IServer;
 import gov.iti.jets.common.util.Constants;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.LinkedList;
@@ -95,5 +99,29 @@ public class Martinily extends UnicastRemoteObject implements IClient {
     public void receiveInvitation(InvitationDto invitationDto) throws RemoteException {
         //Add invitation to queue
         InvitationQueue.getList().add(invitationDto);
+    }
+
+    @Override
+    public void receiveMessageBot(long chatId, String senderId, String message, String messageFromBot) throws RemoteException {
+        MessageDto messageDto = new MessageDto();
+        messageDto.setMessage(message);
+        messageDto.setSenderId(senderId);
+
+        if(!MessagesQueue.getList().containsKey(chatId)){
+            List<MessageDto> messageDtoList = new LinkedList<>();
+            messageDtoList.add(messageDto);
+            MessagesQueue.getList().put(chatId,messageDtoList);
+        }else{
+            MessagesQueue.getList().get(chatId).add(messageDto);
+        }
+        IServer server = null;
+        try {
+            server = RMIManager.lookUpIServer();
+        } catch (NotBoundException e) {
+            e.printStackTrace();
+            throw new RemoteException("Failed to reply to Message");
+        }
+        server.sendMessage(chatId, senderId, messageFromBot); // replace senderId with this receiver id
+
     }
 }

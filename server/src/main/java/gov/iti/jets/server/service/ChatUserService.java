@@ -41,7 +41,13 @@ public class ChatUserService {
             userIds = dao.getOnlineUsersByChat(chatId);
             if(userIds!=null) {
                 for (String userId : userIds) {
-                    ConnectedClientsMap.getList().get(userId).getIClient().receiveMessage(chatId, senderId, message);
+                    if(ConnectedClientsMap.getList().get(userId).getUserDto().isBotMode())
+                    {
+                        ConnectedClientsMap.getList().get(userId).getIClient().receiveMessageBot(chatId, senderId, message, talkToBot(message));
+
+                    }else {
+                        ConnectedClientsMap.getList().get(userId).getIClient().receiveMessage(chatId, senderId, message);
+                    }
                 }
             }
         } catch (SQLException e) {
@@ -80,21 +86,6 @@ public class ChatUserService {
         }
     }
 
-    public void sendMessageToBot(long chatId, String senderId, String message) throws RemoteException {
-        message = talkToBot(message);
-        List<String> userIds = null;
-        try {
-            userIds = dao.getOnlineUsersByChat(chatId);
-            if(userIds!=null) {
-                for (String userId : userIds) {
-                    ConnectedClientsMap.getList().get(userId).getIClient().receiveMessage(chatId, senderId, message);
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RemoteException("Failed to Send Message!!");
-        }
-    }
     private  String talkToBot(String message)
     {
         String result="";
