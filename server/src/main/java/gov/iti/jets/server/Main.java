@@ -1,6 +1,7 @@
 package gov.iti.jets.server;
 
 
+import gov.iti.jets.server.controller.IServerController;
 import gov.iti.jets.server.controller.UserController;
 import gov.iti.jets.server.network.RMIManager;
 
@@ -23,6 +24,7 @@ public class Main {
         try {
             Registry reg = RMIManager.getRegistry();
             reg.rebind("register", new UserController());
+            reg.rebind("iserver", new IServerController());
 //            while(true)
 //            {
 //
