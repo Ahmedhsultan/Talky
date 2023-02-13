@@ -25,10 +25,10 @@ public class Main {
             Registry reg = RMIManager.getRegistry();
             reg.rebind("register", new UserController());
             reg.rebind("iserver", new IServerController());
-//            while(true)
-//            {
-//
-//            }
+            while(true)
+            {
+
+            }
         } catch (RemoteException e) {
             e.printStackTrace();
         }
