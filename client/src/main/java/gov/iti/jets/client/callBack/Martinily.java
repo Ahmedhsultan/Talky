@@ -31,6 +31,7 @@ public class Martinily extends UnicastRemoteObject implements IClient {
 
     @Override
     public void receive() throws RemoteException {
+        System.out.println("recivemsg");
         ConnectionFlag.getInstance().connectedFlag = true;
     }
 
@@ -104,13 +105,19 @@ public class Martinily extends UnicastRemoteObject implements IClient {
 
     @Override
     public void addNewSessetion(UserSessionDto userSessionDto) throws RemoteException {
+        System.out.println("session call back");
         //Add current user ID
         MyID.getInstance(userSessionDto.getUser().getId()).getMyId();
+        System.out.println("session call back1");
         //Clear and add new session to contact list
         ContactList.getList().clear();
         ContactList.getList().addAll(userSessionDto.getContactListDto());
+        System.out.println("session call back2");
         //Clear and add new session to invitation queue
         InvitationQueue.getList().clear();
         InvitationQueue.getList().addAll(userSessionDto.getInvitationListDto());
+        System.out.println("session call back3");
+
+        System.out.println(ContactList.getList().stream().count());
     }
 }
