@@ -1,10 +1,7 @@
 package gov.iti.jets.client.callBack;
 
 
-import gov.iti.jets.client.Dina.ContactList;
-import gov.iti.jets.client.Dina.InvitationQueue;
-import gov.iti.jets.client.Dina.MessagesQueue;
-import gov.iti.jets.client.Dina.MyID;
+import gov.iti.jets.client.Dina.*;
 import gov.iti.jets.client.Util.ConnectionFlag;
 import gov.iti.jets.common.dto.ContactDto;
 import gov.iti.jets.common.dto.InvitationDto;
@@ -105,19 +102,16 @@ public class Martinily extends UnicastRemoteObject implements IClient {
 
     @Override
     public void addNewSessetion(UserSessionDto userSessionDto) throws RemoteException {
-        System.out.println("session call back");
         //Add current user ID
         MyID.getInstance(userSessionDto.getUser().getId()).getMyId();
-        System.out.println("session call back1");
         //Clear and add new session to contact list
         ContactList.getList().clear();
         ContactList.getList().addAll(userSessionDto.getContactListDto());
-        System.out.println("session call back2");
         //Clear and add new session to invitation queue
         InvitationQueue.getList().clear();
         InvitationQueue.getList().addAll(userSessionDto.getInvitationListDto());
-        System.out.println("session call back3");
-
-        System.out.println(ContactList.getList().stream().count());
+        //Clear and add new session to chat queue
+        ChatList.getList().clear();
+        ChatList.getList().addAll(userSessionDto.getChatListDto());
     }
 }

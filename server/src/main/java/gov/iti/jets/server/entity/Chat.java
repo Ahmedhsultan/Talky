@@ -16,4 +16,5 @@ public class Chat implements BaseEntity{
     private String imgPath;
     private Date created_on;
     private Date modified_on;
+    private String type;
 }

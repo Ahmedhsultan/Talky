@@ -48,7 +48,9 @@ public class Constants {
     //Default buffer size
     public static final int DEFAULT_BUFFER_SIZE = 5_000_000 ;
 
-
+    //Chat types
+    public static final String CHAT_ONE_TO_ONE = "OneToOne";
+    public static final String CHAT_GROUP = "GROUP";
 
 
     public static String hashPassword(String input) {

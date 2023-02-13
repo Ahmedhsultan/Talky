@@ -18,5 +18,6 @@ public class ChatDto implements  BaseDto, Serializable{
     private String imgPath;
     private Date modified_on;
     private byte[] image;
+    private String type;
     private ArrayList<String> membersIds;
 }
