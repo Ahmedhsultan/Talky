@@ -23,6 +23,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
@@ -143,7 +144,10 @@
             </Rectangle>
                   <AnchorPane fx:id="rightAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="574.0" prefWidth="506.0" style="-fx-background-color: #f0f0f0;">
                <children>
-                  <ScrollPane id="scroll" fx:id="rightScrollPane" hbarPolicy="NEVER" layoutY="101.0" prefHeight="417.0" prefWidth="464.0" style="-fx-background-color: #f0f0f0;" AnchorPane.bottomAnchor="56.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="101.0" />
+                  <ScrollPane id="scroll" fx:id="rightScrollPane" hbarPolicy="NEVER" layoutY="101.0" prefHeight="417.0" prefWidth="464.0" style="-fx-background-color: #f0f0f0;" AnchorPane.bottomAnchor="56.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="101.0">
+                     <content>
+                        <VBox fx:id="chatVBox" prefHeight="424.0" prefWidth="506.0" spacing="2.0" />
+                     </content></ScrollPane>
                   <Label fx:id="chatName" layoutX="119.0" layoutY="22.0" prefHeight="53.0" prefWidth="306.0">
                      <font>
                         <Font size="32.0" />
@@ -174,7 +178,7 @@
                         </MenuItem>
                       <MenuItem mnemonicParsing="false" text="Font Size">
                            <graphic>
-                              <JFXSlider id="fontSize" fx:id="fontSize" blockIncrement="5.0" max="50.0" showTickLabels="true" showTickMarks="true" />
+                              <JFXSlider id="fontSize" fx:id="fontSize" blockIncrement="5.0" max="50.0" showTickLabels="true" showTickMarks="true" value="15.0" />
                            </graphic>
                         </MenuItem>
                         <MenuItem mnemonicParsing="false">
@@ -243,7 +247,6 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <JFXListView fx:id="chatVBox" layoutY="98.0" prefHeight="420.0" prefWidth="502.0" />
                </children>
                <StackPane.margin>
                   <Insets left="350.0" top="30.0" />
