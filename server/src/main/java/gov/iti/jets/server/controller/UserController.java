@@ -55,5 +55,8 @@ public class UserController extends UnicastRemoteObject implements UserRemote {
     public void logout(String phone) throws RemoteException
     {
         userService.logout(phone);
+        //Remove from ConnectedClients List
+        ConnectionController connectionController = new ConnectionController();
+        connectionController.disConnect(phone);
     }
 }

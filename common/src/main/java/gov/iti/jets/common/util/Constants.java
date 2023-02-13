@@ -52,6 +52,9 @@ public class Constants {
     public static final String CHAT_ONE_TO_ONE = "OneToOne";
     public static final String CHAT_GROUP = "GROUP";
 
+    //Cash id and password file name;
+    public static final String CASH_FILE_NAMW = "cash.text";
+
 
     public static String hashPassword(String input) {
         String sha256hex = Hashing.sha256()

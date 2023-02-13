@@ -102,8 +102,6 @@ public class Martinily extends UnicastRemoteObject implements IClient {
 
     @Override
     public void addNewSessetion(UserSessionDto userSessionDto) throws RemoteException {
-        //Add current user ID
-        MyID.getInstance(userSessionDto.getUser().getId()).getMyId();
         //Clear and add new session to contact list
         ContactList.getList().clear();
         ContactList.getList().addAll(userSessionDto.getContactListDto());
