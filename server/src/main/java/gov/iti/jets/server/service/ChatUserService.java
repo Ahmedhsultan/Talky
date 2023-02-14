@@ -1,6 +1,11 @@
 package gov.iti.jets.server.service;
 
+import com.google.code.chatterbotapi.ChatterBot;
+import com.google.code.chatterbotapi.ChatterBotFactory;
+import com.google.code.chatterbotapi.ChatterBotSession;
+import com.google.code.chatterbotapi.ChatterBotType;
 import gov.iti.jets.common.dto.ChatUserDto;
+import gov.iti.jets.common.dto.MessageDto;
 import gov.iti.jets.server.Util.Queues.ConnectedClientsMap;
 import gov.iti.jets.server.entity.ChatUser;
 import gov.iti.jets.server.mapper.ChatUserMapper;
@@ -47,10 +52,10 @@ public class ChatUserService {
                     }
                     if(ConnectedClientsMap.getList().get(userId).getUserDto().isBotMode())
                     {
-                        ConnectedClientsMap.getList().get(userId).getIClient().receiveMessageBot(chatId, senderId, message, talkToBot(message));
+                        ConnectedClientsMap.getList().get(userId).getIClient().receiveMessageBot(chatId, messageDto, talkToBot(messageDto.getMessage()));
 
                     }else {
-                        ConnectedClientsMap.getList().get(userId).getIClient().receiveMessage(chatId, senderId, message);
+                        ConnectedClientsMap.getList().get(userId).getIClient().receiveMessage(chatId, messageDto);
                     }
                 }
             }

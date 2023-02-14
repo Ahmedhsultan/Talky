@@ -4,6 +4,7 @@ package gov.iti.jets.client.callBack;
 import gov.iti.jets.client.Dina.*;
 import gov.iti.jets.client.Util.ConnectionFlag;
 import gov.iti.jets.client.network.service.PullOnlineUsersFromServer;
+import gov.iti.jets.client.network.service.RMIManager;
 import gov.iti.jets.common.dto.ContactDto;
 import gov.iti.jets.common.dto.InvitationDto;
 import gov.iti.jets.common.dto.MessageDto;
@@ -125,13 +126,13 @@ public class Martinily extends UnicastRemoteObject implements IClient {
     }
 
     @Override
-    public void receiveMessageBot(long chatId, String senderId, String message, String messageFromBot) throws RemoteException {
-        MessageDto messageDto = new MessageDto();
-        messageDto.setMessage(message);
-        messageDto.setSenderId(senderId);
+    public void receiveMessageBot(long chatId, MessageDto messageDto, String messageFromBot) throws RemoteException {
+        MessageDto responseMessage = new MessageDto();
+        responseMessage.setMessage(messageFromBot);
+        responseMessage.setSenderId(MyID.getInstance().getMyId());
 
         if(!MessagesQueue.getList().containsKey(chatId)){
-            List<MessageDto> messageDtoList = new LinkedList<>();
+            ObservableList<MessageDto> messageDtoList =  FXCollections.observableArrayList();
             messageDtoList.add(messageDto);
             MessagesQueue.getList().put(chatId,messageDtoList);
         }else{
@@ -144,12 +145,8 @@ public class Martinily extends UnicastRemoteObject implements IClient {
             e.printStackTrace();
             throw new RemoteException("Failed to reply to Message");
         }
-        server.sendMessage(chatId, senderId, messageFromBot); // replace senderId with this receiver id
+        server.sendMessage(chatId, responseMessage);
 
     }
 
-    @Override
-    public void receiveAnnouncement(String message) throws RemoteException {
-            // show popup to the  client
-    }
 }

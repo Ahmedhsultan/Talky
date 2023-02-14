@@ -6,6 +6,7 @@ import gov.iti.jets.server.Util.Queues.ConnectedClientsMap;
 import gov.iti.jets.server.Util.Queues.StatsLists;
 import gov.iti.jets.server.controller.ConnectionController;
 import gov.iti.jets.server.controller.IServerController;
+import gov.iti.jets.server.controller.InvitationController;
 import gov.iti.jets.server.controller.UserController;
 import gov.iti.jets.server.entity.statistics.CountryStat;
 import gov.iti.jets.server.entity.statistics.GenderStat;
@@ -83,6 +84,7 @@ public class ServerService {
             reg.rebind("register", new UserController());
             reg.rebind("iserver", new IServerController());
             reg.rebind("connection", new ConnectionController());
+            reg.rebind("invitation", new InvitationController());
 
         } catch (RemoteException e) {
             e.printStackTrace();
@@ -95,6 +97,7 @@ public class ServerService {
             reg.unbind("register");
             reg.unbind("iserver");
             reg.unbind("connection");
+            reg.unbind("invitation");
             RMIManager.removeRegistry();
             if (UnicastRemoteObject.unexportObject(reg, true)) {
                 System.out.println("Registry removed!");
