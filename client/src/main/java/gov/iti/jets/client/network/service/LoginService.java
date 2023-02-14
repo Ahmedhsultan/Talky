@@ -22,10 +22,10 @@ public class LoginService {
             userSessionDto = obj.login(phone,password, new Martinily());
         } catch (RemoteException e) {
             e.printStackTrace();
-            throw new RemoteException("Faild to Login!!");
+            throw new RemoteException("Failed to Login!!");
         } catch (NotBoundException e) {
             e.printStackTrace();
-            throw new RemoteException("Faild to Login!!");
+            throw new RemoteException("Failed to Login!!");
         }
         return userSessionDto;
     }
