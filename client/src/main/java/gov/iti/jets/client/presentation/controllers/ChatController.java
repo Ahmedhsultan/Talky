@@ -5,7 +5,9 @@ import com.jfoenix.controls.JFXButton;
 import gov.iti.jets.client.Dina.ContactList;
 import gov.iti.jets.client.Dina.MessagesQueue;
 import gov.iti.jets.client.business.services.PaneManager;
+import gov.iti.jets.client.business.services.SceneManager;
 import gov.iti.jets.client.network.service.InvitationService;
+import gov.iti.jets.client.network.service.LogoutService;
 import gov.iti.jets.client.network.service.RMIManager;
 import gov.iti.jets.client.network.service.SendMessage;
 import gov.iti.jets.common.dto.*;
@@ -20,17 +22,17 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
@@ -39,6 +41,9 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.net.URL;
@@ -81,6 +86,9 @@ public class ChatController implements Initializable {
 
     @FXML
     private Label chatName;
+
+    @FXML
+    private Button logout;
 
     @FXML
     private Circle chatIcon;
@@ -585,5 +593,59 @@ public class ChatController implements Initializable {
         return group;
     }
 
+    @FXML
+    private void logout(){
+        Stage window = new Stage();
+        window.initModality(Modality.APPLICATION_MODAL);
+        window.initStyle(StageStyle.UNDECORATED);
+        window.setTitle("Confirm");
+        window.setMinWidth(250);
+
+        Label label = new Label();
+        label.setText("Choose Logout or Exit");
+
+        Button yesButton = new Button("Logout");
+        yesButton.setStyle("-fx-background-color: rgba(253,68,68,0.62);");
+        yesButton.setMinWidth(150);
+        Button noButton = new Button("Exit");
+        noButton.setStyle("-fx-background-color: #00ff5d;");
+        noButton.setMinWidth(150);
+
+        yesButton.setOnAction(e -> {
+            try {
+                LogoutService.logout(false);
+                SceneManager s =SceneManager.getSceneManager();
+                s.switchToLoginScene();
+            } catch (NotBoundException | RemoteException ex) {
+                ex.printStackTrace();
+            }
+            window.close();
+        });
+
+        noButton.setOnAction(e -> {
+            try {
+                LogoutService.logout(true);
+                SceneManager s =SceneManager.getSceneManager();
+                s.switchToLoginScene();
+            } catch (NotBoundException | RemoteException ex) {
+                ex.printStackTrace();
+            }
+            window.close();
+        });
+
+        HBox hBox = new HBox(10);
+        hBox.getChildren().addAll(yesButton, noButton);
+        hBox.setAlignment(Pos.CENTER);
+        VBox layout = new VBox(20);
+        layout.getChildren().addAll(label, hBox);
+        layout.setAlignment(Pos.CENTER);
+        layout.setPadding(new Insets(20));
+
+        layout.setStyle("-fx-border-color: #9900ff; -fx-border-width: 0.5;");
+
+        Scene scene = new Scene(layout);
+        window.setScene(scene);
+        window.showAndWait();
+    }
 }
 

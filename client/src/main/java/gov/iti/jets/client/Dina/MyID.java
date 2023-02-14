@@ -11,6 +11,8 @@ public class MyID {
     }
 
     public static MyID getInstance(String... myIdAndPassword){
+        if (myIdAndPassword.length == 2)
+            instance = null;
         if(instance == null)
             instance = new MyID(myIdAndPassword[0],myIdAndPassword[1]);
 

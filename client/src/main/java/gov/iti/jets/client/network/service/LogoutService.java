@@ -14,13 +14,17 @@ import java.util.Base64;
 
 public class LogoutService {
     public static void logout(boolean cash) throws NotBoundException, RemoteException {
+        System.out.println("logout");
+
         if(cash){
             encodeAndWriteFile(MyID.getInstance().getMyId(), MyID.getInstance().getPassword());
         }else{
             deleteCash();
         }
+        System.out.println("start logout");
         UserRemote userRemote = RMIManager.lookUpRegister();
         userRemote.logout(MyID.getInstance().getMyId());
+        System.out.println("succ logout");
     }
     public static String[] getCash(){
         return decodeAndReadFile();
@@ -33,14 +37,19 @@ public class LogoutService {
 
         try (FileOutputStream fos = new FileOutputStream(Constants.MAIN_DIR + "\\" + Constants.CASH_FILE_NAMW)) {
             fos.write(encodedString.getBytes());
-            System.out.println("Encoded string saved to file");
+            System.out.println("Encoded string saved to file in "+ Constants.MAIN_DIR + "\\" + Constants.CASH_FILE_NAMW);
         } catch (Exception e) {
             System.out.println("Error while saving encoded string to file: " + e.getMessage());
         }
     }
 
     private static String[] decodeAndReadFile() {
+        //Get file from path
         File file = new File(Constants.MAIN_DIR + "\\" + Constants.CASH_FILE_NAMW);
+        //check if exist if not return null thats mean no data cashed
+        if (!file.exists())
+            return null;
+
         byte[] encodedBytes;
         try (FileInputStream fis = new FileInputStream(file)) {
             encodedBytes = new byte[(int) file.length()];
