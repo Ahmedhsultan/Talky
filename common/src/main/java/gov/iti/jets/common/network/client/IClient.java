@@ -1,18 +1,16 @@
 package gov.iti.jets.common.network.client;
 
-import gov.iti.jets.common.dto.ContactDto;
-import gov.iti.jets.common.dto.InvitationDto;
-import gov.iti.jets.common.dto.MessageDto;
-import gov.iti.jets.common.dto.UserDto;
-import gov.iti.jets.common.dto.UserSessionDto;
+import gov.iti.jets.common.dto.*;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 public interface IClient extends Remote {
+//    static Map<Long, MessageDto>change = new HashMap<>();
     public void receive() throws RemoteException;
     public void receiveMessage(long chatId, MessageDto messageDto) throws RemoteException;
     public void addToGroup(String userId, long chatId) throws RemoteException;

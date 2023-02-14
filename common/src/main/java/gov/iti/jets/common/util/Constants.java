@@ -39,8 +39,8 @@ public class Constants {
 
     //server
     public static final String MAIN_DIR = System.getProperty("user.dir");
-    public static final String USER_IMAGES_DIR =  MAIN_DIR +"\\server\\images\\users\\";
-    public static final String CHAT_IMAGES_DIR =  MAIN_DIR +"\\server\\images\\users\\";
+    public static final String USER_IMAGES_DIR =  MAIN_DIR +"\\images\\users\\";
+    public static final String CHAT_IMAGES_DIR =  MAIN_DIR +"\\images\\users\\";
 
     //client
     public static final String CHAT_FILES_DIR =  MAIN_DIR +"\\files\\";

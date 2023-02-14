@@ -9,6 +9,7 @@ import gov.iti.jets.common.dto.MessageDto;
 import gov.iti.jets.common.dto.UserSessionDto;
 import gov.iti.jets.common.network.client.IClient;
 import gov.iti.jets.common.util.Constants;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -19,8 +20,10 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 public class Martinily extends UnicastRemoteObject implements IClient {
     public Martinily() throws RemoteException {
@@ -34,16 +37,33 @@ public class Martinily extends UnicastRemoteObject implements IClient {
 
     @Override
     public void receiveMessage(long chatId, MessageDto messageDto) throws RemoteException {
-        System.out.println(chatId + messageDto.getMessage() + messageDto.getSenderId());
-        if(!MessagesQueue.getList().containsKey(chatId)){
-            ObservableList<MessageDto> messageDtoList = FXCollections.observableArrayList();
-            messageDtoList.add(messageDto);
-            MessagesQueue.getList().put(chatId,messageDtoList);
-            System.out.println(MessagesQueue.getList().get(chatId).get(MessagesQueue.getList().get(chatId).size()-1));
+//        System.out.println(chatId + messageDto.getMessage() + messageDto.getSenderId());
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                if(!MessagesQueue.getList().containsKey(chatId)){
+                    ObservableList<MessageDto> messageDtoList = FXCollections.observableArrayList();
+                    messageDtoList.add(messageDto);
+                    MessagesQueue.getList().put(chatId,messageDtoList);
+//            System.out.println(MessagesQueue.getList().get(chatId).get(MessagesQueue.getList().get(chatId).size()-1));
 
-        }else{
-            MessagesQueue.getList().get(chatId).add(messageDto);
-        }
+                }else{
+                    MessagesQueue.getList().get(chatId).add(messageDto);
+
+                   if(MessagesQueue.getList().containsKey(-1))
+                       MessagesQueue.getList().remove(-1);
+                   else{
+                       ObservableList<MessageDto> l = FXCollections.observableArrayList();   //honors to Amr
+                       l.add(new MessageDto());
+                       MessagesQueue.getList().put(-1l, l);
+                   }
+
+                }
+                MessagesQueue.change.clear();
+                MessagesQueue.change.put(chatId, messageDto);
+            }
+        });
+
     }
 
     @Override

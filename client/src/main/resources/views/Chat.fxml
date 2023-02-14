@@ -137,16 +137,16 @@
     <center>
         <StackPane id="scroll" prefHeight="708.0" prefWidth="1000.0" stylesheets="@../style/mainScreenStyle.css" BorderPane.alignment="CENTER">
             <children>
-                <Rectangle arcHeight="50.0" arcWidth="50.0" fill="DODGERBLUE" height="650.0" stroke="BLACK" strokeType="INSIDE" style="-fx-fill: #F3F7FF;" width="984.0">
+                <Rectangle arcHeight="50.0" arcWidth="50.0" fill="DODGERBLUE" height="700.0" stroke="BLACK" strokeType="INSIDE" style="-fx-fill: #F3F7FF;" width="984.0">
                <StackPane.margin>
                   <Insets right="110.0" />
                </StackPane.margin>
             </Rectangle>
-                  <AnchorPane fx:id="rightAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="568.0" prefWidth="506.0" style="-fx-background-color: #f0f0f0;">
+                  <AnchorPane fx:id="rightAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="624.0" prefWidth="506.0" style="-fx-background-color: #f0f0f0;">
                <children>
                   <ScrollPane id="scroll" fx:id="rightScrollPane" hbarPolicy="NEVER" layoutY="101.0" prefHeight="417.0" prefWidth="464.0" style="-fx-background-color: #f0f0f0;" AnchorPane.bottomAnchor="56.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="101.0">
                      <content>
-                        <VBox fx:id="chatVBox2" prefHeight="424.0" prefWidth="506.0" spacing="2.0" />
+                        <VBox fx:id="chatVBox" prefHeight="424.0" prefWidth="506.0" spacing="2.0" />
                      </content></ScrollPane>
                   <Label fx:id="chatName" layoutX="119.0" layoutY="22.0" prefHeight="53.0" prefWidth="306.0">
                      <font>
@@ -154,8 +154,8 @@
                      </font>
                   </Label>
                   <Circle id="chatIcon" fx:id="chatIcon" fill="DODGERBLUE" layoutX="46.0" layoutY="46.0" radius="40.0" stroke="BLACK" strokeType="INSIDE" style="-fx-fill: transparent; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" />
-                  <TextArea fx:id="messageField" layoutX="4.0" layoutY="522.0" prefHeight="46.0" prefWidth="358.0" wrapText="true" />
-                  <Button fx:id="attachBtn" layoutX="416.0" layoutY="511.0" mnemonicParsing="false" onAction="#sendFile">
+                  <TextArea fx:id="messageField" layoutY="575.0" prefHeight="46.0" prefWidth="358.0" wrapText="true" />
+                  <Button fx:id="attachBtn" layoutX="411.0" layoutY="569.0" mnemonicParsing="false" onAction="#sendFile">
                      <graphic>
                         <ImageView fitHeight="54.0" fitWidth="42.0" pickOnBounds="true">
                            <image>
@@ -164,7 +164,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <MenuButton layoutX="459.0" layoutY="517.0" mnemonicParsing="false" style="-fx-background-color: transparent;">
+                  <MenuButton layoutX="460.0" layoutY="575.0" mnemonicParsing="false" style="-fx-background-color: transparent;">
                     <items>
                         <MenuItem mnemonicParsing="false" text="Highlight">
                            <graphic>
@@ -238,7 +238,7 @@
                         </ImageView>
                      </graphic>
                   </MenuButton>
-                  <Button fx:id="sendBtn" layoutX="360.0" layoutY="517.0" mnemonicParsing="false" onAction="#sendMessage">
+                  <Button fx:id="sendBtn" layoutX="363.0" layoutY="575.0" mnemonicParsing="false" onAction="#sendMessage">
                      <graphic>
                         <ImageView fitHeight="50.0" fitWidth="40.0" pickOnBounds="true">
                            <image>
@@ -256,10 +256,10 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <JFXListView id="chatVBox" fx:id="chatVBox" layoutY="102.0" prefHeight="422.0" prefWidth="514.0" />
+                  <JFXListView id="chatVBox2" fx:id="chatVBox2" layoutY="102.0" prefHeight="476.0" prefWidth="514.0" />
                </children>
                <StackPane.margin>
-                  <Insets left="350.0" top="-30.0" />
+                  <Insets left="350.0" />
                </StackPane.margin>
                   </AnchorPane>
                   <AnchorPane fx:id="leftAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="613.0" prefWidth="404.0">
@@ -267,7 +267,7 @@
                   <Insets right="600.0" />
                </StackPane.margin>
                <children>
-                  <Pane fx:id="containerPane" layoutX="-13.0" layoutY="8.0" prefHeight="568.0" prefWidth="419.0" style="-fx-background-color: #f0f0f0;">
+                  <Pane fx:id="containerPane" layoutX="-13.0" layoutY="-6.0" prefHeight="620.0" prefWidth="419.0" style="-fx-background-color: #f0f0f0;">
                      <children>
                         <JFXListView fx:id="leftList" depth="30" layoutX="37.0" layoutY="122.0" prefHeight="415.0" prefWidth="380.0" />
                         <TextField id="searchField" fx:id="searchField" layoutX="32.0" layoutY="82.0" onKeyReleased="#searchOnList" prefHeight="33.0" prefWidth="357.0" promptText="Search..." />

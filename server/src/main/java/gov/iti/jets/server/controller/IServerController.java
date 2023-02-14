@@ -37,7 +37,7 @@ public class IServerController extends UnicastRemoteObject implements IServer {
     @Override
     public void sendMessage(long chatId, MessageDto messageDto) throws RemoteException
     {
-        System.out.println("sendmsg");
+//        System.out.println("sendmsg");
         chatUserService.sendMessage( chatId, messageDto);
     }
 
