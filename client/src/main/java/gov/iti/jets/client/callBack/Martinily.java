@@ -23,6 +23,7 @@ import java.nio.file.StandardOpenOption;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -58,7 +59,8 @@ public class Martinily extends UnicastRemoteObject implements IClient {
     }
 
     @Override
-    public void addFriend(List<ContactDto> contactDtoList) throws RemoteException {
+    public void addFriend(ArrayList<ContactDto> contactDtoList) throws RemoteException {
+        System.out.println("ok");
         //Add contact element to contact list
         for (ContactDto contactDto : contactDtoList)
             ContactList.getList().add(contactDto);

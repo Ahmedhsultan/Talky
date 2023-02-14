@@ -30,8 +30,7 @@ public class FriendsService {
     public void addFriend(String first, String second) throws RemoteException {
         Friends friends = new Friends();
         friends.setId1(first);
-        friends.setId1(second);
-        System.out.println(first +"  ---  "+ second);
+        friends.setId2(second);
         try {
             dao.insert(friends);
         } catch (SQLException e) {

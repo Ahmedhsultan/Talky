@@ -83,16 +83,23 @@ public class IServerController extends UnicastRemoteObject implements IServer {
         User user2 = userMapper.toEntity(userDto2);
         ContactDto contactDto2 = userMapper.toContactDTO(user2);
 
+        System.out.println("contactDto2.getPhoneNumber()+contactDto2.getImage()");
+        System.out.println(contactDto2.getPhoneNumber());
         //Notify client to add this user by callBack
-        IClient iClient1 = ConnectedClientsMap.getList().get(user1).getIClient();
-        List<ContactDto> contactDtoList1 = new ArrayList<>();
-        contactDtoList1.add(contactDto1);
-        iClient1.addFriend(contactDtoList1);
+        if (ConnectedClientsMap.getList().containsKey(user1.getId())){
+            IClient iClient1 = ConnectedClientsMap.getList().get(user1.getId()).getIClient();
+            ArrayList<ContactDto> contactDtoList1 = new ArrayList<>();
+            contactDtoList1.add(contactDto1);
+            iClient1.addFriend(contactDtoList1);
+        }
 
-        IClient iClient2 = ConnectedClientsMap.getList().get(user2).getIClient();
-        List<ContactDto> contactDtoList2 = new ArrayList<>();
-        contactDtoList2.add(contactDto2);
-        iClient2.addFriend(contactDtoList2);
+        if (ConnectedClientsMap.getList().containsKey(user2.getId())) {
+            IClient iClient2 = ConnectedClientsMap.getList().get(user2.getId()).getIClient();
+            ArrayList<ContactDto> contactDtoList2 = new ArrayList<>();
+            contactDtoList2.add(contactDto2);
+            iClient2.addFriend(contactDtoList2);
+            System.out.println("44");
+        }
     }
 
     @Override
