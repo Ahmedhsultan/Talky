@@ -8,6 +8,7 @@ import gov.iti.jets.common.dto.registration.UserRegistrationDto;
 import gov.iti.jets.common.util.Constants;
 import gov.iti.jets.common.util.Validation;
 import gov.iti.jets.server.Util.Queues.StatsLists;
+import gov.iti.jets.server.Util.Queues.UsersList;
 import gov.iti.jets.server.entity.User;
 import gov.iti.jets.server.mapper.UserMapper;
 import gov.iti.jets.server.persistence.dao.UserDao;
@@ -19,25 +20,24 @@ import java.io.IOException;
 import java.net.URLDecoder;
 import java.rmi.RemoteException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserService {
 
     private UserDao dao;
     private UserMapper userMapper;
     private UserSessionService userSessionService;
-    private ServerService serverService;
 
     public UserService ()
    {
        dao = new UserDao();
        userMapper = new UserMapper();
-       serverService = new ServerService();
    }
 
 
     public UserSessionDto register(UserRegistrationDto userRegistrationDto) throws RemoteException {
 
-        System.out.println("service");
         UserSessionDto userSessionDto=null;
         if(!Validation.validatePhoneNumber(userRegistrationDto.getUserDto().getId()))
         {
@@ -70,9 +70,6 @@ public class UserService {
         userSessionService=new UserSessionService(user);
         userSessionDto= userSessionService.getSessionDto();
         StatsLists.getInstance().updateUserStats();
-        StatsLists.getInstance().updateGenderStats();
-        StatsLists.getInstance().updateCountryStats();
-
         return  userSessionDto;
     }
 
@@ -100,6 +97,7 @@ public class UserService {
             userSessionService=new UserSessionService(user);
             UserSessionDto userSessionDto= userSessionService.getSessionDto();
             StatsLists.getInstance().updateUserStats();
+            UsersList.getInstance().updateOnlineAndOfflineStats();
            return userSessionDto;
     }
 
@@ -152,5 +150,13 @@ public class UserService {
         }
     }
 
-
+    public List<UserDto> getAllUsers()
+    {
+        List<UserDto> dtos =null;
+        List<User> users = dao.findAll();
+        if(users!=null) {
+            dtos = userMapper.toDTOs(users);
+        }
+        return  dtos;
+    }
 }

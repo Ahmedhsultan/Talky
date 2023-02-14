@@ -27,54 +27,9 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
     }
-    // public static boolean createDirectory(String serverpath) throws RemoteException {
-    //     File serverpathdir = new File(serverpath);
-    //     return serverpathdir.mkdir();
 
-    // }
     public static void main(String[] args) {
-//        try {
-//            createDirectory("E:\\hi");
-//        } catch (RemoteException e) {
-//            e.printStackTrace();
-//        }
-//        try {
-//            Registry reg = RMIManager.getRegistry();
-//            reg.rebind("register", new UserController());
-//            while(true)
-//            {
-//
-//            }
-//        } catch (RemoteException e) {
-//            e.printStackTrace();
-//        }
-//        System.out.println("Hello World!");
-//        Thread th = new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                try {
-//                    ServerService serverService = new ServerService();
-//                    StatsLists.onlineList =  FXCollections.observableArrayList(
-//                            new PieChart.Data("Online",serverService.getUserStatusStats().getNumOfOnline()),
-//                            new PieChart.Data("Offline",serverService.getUserStatusStats().getNumOfOffline())
-//                    );
-//            Registry reg = RMIManager.getRegistry();
-//            reg.rebind("register", new UserController());
-//            reg.rebind("server", new IServerController());
-//            while(true)
-//            {
-//
-//            }
-//        } catch (RemoteException e) {
-//            e.printStackTrace();
-//        }
-//            }
-//        });
-//        th.start();
-
         launch();
-
-
     }
 
 

@@ -116,4 +116,24 @@ public class UserDao extends BaseDaoImpl<User, String> {
             System.out.println(statement.executeUpdate());
         }
     }
+
+//    public List<User> getOfflineUsers()throws SQLException
+//    {
+//        String query = "select * from  user where is_online_status='offline';";
+//
+//        try (Connection connection =DBManagement.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
+//            ResultSet resultSet = statement.executeQuery();
+//
+//            //Convert resultset to List
+//            List<User> list = resultSetToList(resultSet);
+//
+//            return list;
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//            return null;
+//        }
+//    }
+
+
+
 }

@@ -16,6 +16,8 @@ public class ConnectionController extends UnicastRemoteObject implements IConnec
     @Override
     public void connect(ConnectionDto connectionDto) throws RemoteException{
         ConnectedClientsMap.getList().put(connectionDto.getUserDto().getId(),connectionDto);
+        System.out.println("hii "+ConnectedClientsMap.getList().size());
+
     }
 
     @Override

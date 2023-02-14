@@ -1,9 +1,16 @@
 package gov.iti.jets.server.presentation.controllers;
 
+import gov.iti.jets.common.dto.ConnectionDto;
+import gov.iti.jets.common.dto.UserDto;
+import gov.iti.jets.server.Util.Queues.ConnectedClientsMap;
 import gov.iti.jets.server.Util.Queues.StatsLists;
+import gov.iti.jets.server.Util.Queues.UsersList;
+import gov.iti.jets.server.entity.User;
 import gov.iti.jets.server.service.ServerService;
+import gov.iti.jets.server.service.UserService;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
+import javafx.collections.MapChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -42,29 +49,21 @@ public class statisticsController implements Initializable {
 
 public void setActions()
 {
-    StatsLists.getInstance().getStatusList().addListener(new ListChangeListener<PieChart.Data>() {
+    ConnectedClientsMap.getList().addListener(new MapChangeListener<String, ConnectionDto>() {
         @Override
-        public void onChanged(Change<? extends PieChart.Data> change) {
+        public void onChanged(Change<? extends String, ? extends ConnectionDto> change) {
+            System.out.println("On Change");
             statusData.clear();
             statusData.addAll(
                     new PieChart.Data("Online",service.getUserStatusStats().getNumOfOnline()),
                     new PieChart.Data("Offline",service.getUserStatusStats().getNumOfOffline())
             );
-        }
-    });
-    StatsLists.getInstance().getGenderList().addListener(new ListChangeListener<PieChart.Data>() {
-        @Override
-        public void onChanged(Change<? extends PieChart.Data> change) {
+
             genderData.clear();
             genderData.addAll(
                     new PieChart.Data("Male",service.getGenderStats().getNumOfMales()),
                     new PieChart.Data("Female",service.getGenderStats().getNumOfFemales())
             );
-        }
-    });
-    StatsLists.getInstance().getCountryList().addListener(new ListChangeListener<PieChart.Data>() {
-        @Override
-        public void onChanged(Change<? extends PieChart.Data> change) {
 
             Map<String, Long> countryMap = service.getUserCountryStats().getCountryMap();
 
@@ -73,14 +72,74 @@ public void setActions()
                 System.out.println(m.getKey() + "  ===  "+m.getValue());
             }
             barChart.getData().add(dataSeries1);
+
         }
     });
+//
+//    StatsLists.getInstance().getList().addListener(new ListChangeListener<String>() {
+//
+//        @Override
+//        public void onChanged(Change<? extends String> change) {
+//            statusData.clear();
+//            statusData.addAll(
+//                    new PieChart.Data("Online",service.getUserStatusStats().getNumOfOnline()),
+//                    new PieChart.Data("Offline",service.getUserStatusStats().getNumOfOffline())
+//            );
+//
+//            genderData.clear();
+//            genderData.addAll(
+//                    new PieChart.Data("Male",service.getGenderStats().getNumOfMales()),
+//                    new PieChart.Data("Female",service.getGenderStats().getNumOfFemales())
+//            );
+//
+//            Map<String, Long> countryMap = service.getUserCountryStats().getCountryMap();
+//
+//            for(Map.Entry<String, Long> m : countryMap.entrySet()){
+//                dataSeries1.getData().add(new XYChart.Data<>(m.getKey(), m.getValue()));
+//                System.out.println(m.getKey() + "  ===  "+m.getValue());
+//            }
+//            barChart.getData().add(dataSeries1);
+//        }
+//
+//
+//    });
+//
+//    StatsLists.getInstance().getGenderList().addListener(new ListChangeListener<PieChart.Data>() {
+//        @Override
+//        public void onChanged(Change<? extends PieChart.Data> change) {
+//            genderData.clear();
+//            genderData.addAll(
+//                    new PieChart.Data("Male",service.getGenderStats().getNumOfMales()),
+//                    new PieChart.Data("Female",service.getGenderStats().getNumOfFemales())
+//            );
+//        }
+//    });
+//    StatsLists.getInstance().getCountryList().addListener(new ListChangeListener<PieChart.Data>() {
+//        @Override
+//        public void onChanged(Change<? extends PieChart.Data> change) {
+//
+//            Map<String, Long> countryMap = service.getUserCountryStats().getCountryMap();
+//
+//            for(Map.Entry<String, Long> m : countryMap.entrySet()){
+//                dataSeries1.getData().add(new XYChart.Data<>(m.getKey(), m.getValue()));
+//                System.out.println(m.getKey() + "  ===  "+m.getValue());
+//            }
+//            barChart.getData().add(dataSeries1);
+//        }
+//    });
+//
+//    UsersList.getInstance().getUserList().addListener(new ListChangeListener<UserDto>() {
+//        @Override
+//        public void onChanged(Change<? extends UserDto> change) {
+//            System.out.println(new UserService().getAllUsers());
+//        }
+//    });
 }
 
     public void statusStatic(javafx.event.ActionEvent actionEvent) {
 
         statistic.getChildren().clear();
-      statusData = FXCollections.observableArrayList(
+        statusData = FXCollections.observableArrayList(
                 new PieChart.Data("Online",service.getUserStatusStats().getNumOfOnline()),
                 new PieChart.Data("Offline",service.getUserStatusStats().getNumOfOffline())
         );

@@ -1,6 +1,7 @@
 package gov.iti.jets.server.service;
 
 import gov.iti.jets.common.dto.ConnectionDto;
+import gov.iti.jets.common.dto.UserDto;
 import gov.iti.jets.server.Util.Queues.ConnectedClientsMap;
 import gov.iti.jets.server.Util.Queues.StatsLists;
 import gov.iti.jets.server.controller.ConnectionController;
@@ -21,17 +22,19 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 public class ServerService {
 
     private ServerDao serverDao;
-    private UserDao userDao;
 
     public ServerService() {
         serverDao = new ServerDao();
-        userDao = new UserDao();
     }
 
     public GenderStat getGenderStats() {
@@ -105,5 +108,19 @@ public class ServerService {
         }
 
     }
+//    public List<UserDto>  getOnlineUsers()
+//    {
+//        List<UserDto> onlineDtos = new ArrayList<>();
+//                for(ConnectionDto connectionDto:ConnectedClientsMap.getList().values())
+//                {
+//                    onlineDtos.add(connectionDto.getUserDto());
+//                }
+//        return onlineDtos;
+//    }
+//    public List<UserDto>getOfflineUsers()
+//    {
+//        List<UserDto> offlineDtos = new UserService().getOfflineUsers();
+//        return offlineDtos;
+//    }
 
 }

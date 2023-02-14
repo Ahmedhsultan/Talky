@@ -5,13 +5,14 @@ import lombok.*;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.Arrays;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ToString
+//@ToString
 public class UserDto implements BaseDto, Serializable {
 
     private String id;
@@ -26,5 +27,10 @@ public class UserDto implements BaseDto, Serializable {
     private String bio;
     private byte[] image;
 
-
+    @Override
+    public String toString() {
+        return "UserDto{" +
+                "id='" + id +
+                '}';
+    }
 }
