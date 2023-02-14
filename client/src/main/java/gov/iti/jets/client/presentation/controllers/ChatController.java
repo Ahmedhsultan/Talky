@@ -3,7 +3,9 @@ package gov.iti.jets.client.presentation.controllers;
 
 import com.jfoenix.controls.JFXButton;
 import gov.iti.jets.client.Dina.ContactList;
+import gov.iti.jets.client.Dina.InvitationQueue;
 import gov.iti.jets.client.Dina.MessagesQueue;
+import gov.iti.jets.client.Dina.MyID;
 import gov.iti.jets.client.business.services.PaneManager;
 import gov.iti.jets.client.business.services.SceneManager;
 import gov.iti.jets.client.network.service.InvitationService;
@@ -312,12 +314,12 @@ public class ChatController implements Initializable {
         deleteAddDelContact();
         invitationsButton.setStyle(  "-fx-border-width: 0 0 2px 5px; -fx-border-color: purple;");
         paneObservableList.clear();
-        for(InvitationDto invitation: userSessionDto.getInvitationListDto()) {
-//            Pane temp = PaneManager.getPaneManager().putInvitationCard();
-
-//            putImageOnPane(invitation., temp);
-//            putUserNameOnPane(contact.getName(), temp);
-//            paneObservableList.add(temp);
+        for(InvitationDto invitation: InvitationQueue.getList()) {
+            Pane temp = PaneManager.getPaneManager().putInvitationCard();
+            System.out.println(invitation.getUserCardDto().getImgPath());
+            putImageOnPane(invitation.getUserCardDto().getImgPath(), invitation.getUserCardDto().getImage(),temp);
+            putUserNameOnPane(invitation.getUserCardDto().getName(), temp);
+            paneObservableList.add(temp);
         }
 //        leftList.setItems(paneObservableList);
     }
@@ -453,17 +455,7 @@ public class ChatController implements Initializable {
             TextField tx = (TextField) k.getChildren().get(1);
             Label label = (Label) k.getChildren().get(2);
             if(Validation.validatePhoneNumber(tx,label)){
-                System.out.println(tx.getText());
-                Registry reg = null;
-                try {
-                    reg = RMIManager.getRegistry();
-                } catch (RemoteException e) {
-                    System.out.println(e.getMessage());
-                    throw new RuntimeException(e);
-                }
-
-                System.out.println("sender id = "+userSessionDto.getUser().getId() + "reciever id  = "+ tx.getText());
-                new InvitationService().sendInvit(userSessionDto.getUser().getId(),tx.getText(),reg);
+                new InvitationService().sendInvit(MyID.getInstance().getMyId(),tx.getText());
             }
         }
     }
@@ -487,10 +479,12 @@ public class ChatController implements Initializable {
         messageDto.setUnderline(underline.isSelected());
         messageDto.setTextColor("#" + Integer.toHexString(textColor.getValue().hashCode()));
         messageDto.setHighlightColor("#" + Integer.toHexString(highlight.getValue().hashCode()));
-        messageDto.setSenderId(userSessionDto.getUser().getId());
+        messageDto.setSenderId(MyID.getInstance().getMyId());
         messageDto.setFontSize((int)(fontSize.getValue()));
         messageDto.setTimestamp( LocalTime.now().getHour() + ":" + LocalTime.now().getMinute() + "");
         try {
+
+            System.out.println("currentChat" + chatName.getText());
             SendMessage.send(currentChat, messageDto);
         } catch (RemoteException e) {
             e.printStackTrace();

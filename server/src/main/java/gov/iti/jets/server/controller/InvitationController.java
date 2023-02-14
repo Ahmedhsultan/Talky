@@ -21,10 +21,12 @@ public class InvitationController extends UnicastRemoteObject implements ServerI
     public void sendInvitation(String senderID, String receiverID) throws RemoteException {
         //Add invitation to db
         InvitationDto invitationDto = invitationService.sendInvitation(senderID, receiverID);
-
+        System.out.println("wasal server");
         //Notify client to add this user by callBack
-        IClient iClient1 = ConnectedClientsMap.getList().get(receiverID).getIClient();
-        iClient1.receiveInvitation(invitationDto);
+        if(ConnectedClientsMap.getList().containsKey(receiverID)){
+            IClient iClient1 = ConnectedClientsMap.getList().get(receiverID).getIClient();
+            iClient1.receiveInvitation(invitationDto);
+        }
     }
 
     @Override

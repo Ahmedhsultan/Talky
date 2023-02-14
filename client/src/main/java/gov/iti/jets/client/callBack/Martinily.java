@@ -96,6 +96,7 @@ public class Martinily extends UnicastRemoteObject implements IClient {
 
     @Override
     public void receiveInvitation(InvitationDto invitationDto) throws RemoteException {
+        System.out.println("wasal client 2");
         //Add invitation to queue
         InvitationQueue.getList().add(invitationDto);
     }
