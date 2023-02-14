@@ -38,13 +38,10 @@ public class Martinily extends UnicastRemoteObject implements IClient {
 
     @Override
     public void receiveMessage(long chatId, MessageDto messageDto) throws RemoteException {
-        System.out.println(chatId + messageDto.getMessage() + messageDto.getSenderId());
         if(!MessagesQueue.getList().containsKey(chatId)){
             ObservableList<MessageDto> messageDtoList = FXCollections.observableArrayList();
             messageDtoList.add(messageDto);
             MessagesQueue.getList().put(chatId,messageDtoList);
-            System.out.println(MessagesQueue.getList().get(chatId).get(MessagesQueue.getList().get(chatId).size()-1));
-
         }else{
             MessagesQueue.getList().get(chatId).add(messageDto);
         }
