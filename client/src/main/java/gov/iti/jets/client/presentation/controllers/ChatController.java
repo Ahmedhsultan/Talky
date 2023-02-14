@@ -331,7 +331,7 @@ public class ChatController implements Initializable {
                             Registry reg = null;
                             try {
                                 reg = RMIManager.getRegistry();
-                                new InvitationService().acceptInvit(invitationId, reg);
+                                new InvitationService().acceptInvit(invitationId);
                             } catch (RemoteException ex) {
                                 System.out.println(ex.getMessage());
                                 throw new RuntimeException(ex);
@@ -342,7 +342,7 @@ public class ChatController implements Initializable {
                             Registry reg = null;
                             try {
                                 reg = RMIManager.getRegistry();
-                                new InvitationService().rejectInvit(invitationId, reg);
+                                new InvitationService().rejectInvit(invitationId);
                             } catch (RemoteException ex) {
                                 System.out.println(ex.getMessage());
                                 throw new RuntimeException(ex);
@@ -491,7 +491,7 @@ public class ChatController implements Initializable {
                 }
 
                 System.out.println("sender id = "+userSessionDto.getUser().getId() + "reciever id  = "+ tx.getText());
-                new InvitationService().sendInvit(userSessionDto.getUser().getId(),tx.getText(),reg);
+                new InvitationService().sendInvit(userSessionDto.getUser().getId(),tx.getText());
             }
         }
     }

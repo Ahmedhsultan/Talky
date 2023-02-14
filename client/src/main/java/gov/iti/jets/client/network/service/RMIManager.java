@@ -40,4 +40,7 @@ public class RMIManager {
     public synchronized static UserRemote lookUpRegister() throws RemoteException, NotBoundException {
         return (UserRemote) RMIManager.getRegistry().lookup("register");
     }
+    public synchronized static ServerInvitation lookUpInvitation() throws RemoteException, NotBoundException {
+        return (ServerInvitation) RMIManager.getRegistry().lookup("invitation");
+    }
 }
