@@ -3,8 +3,8 @@ package gov.iti.jets.client.callBack;
 
 import gov.iti.jets.client.Dina.*;
 import gov.iti.jets.client.Util.ConnectionFlag;
+import gov.iti.jets.client.network.service.PullOnlineUsersFromServer;
 import gov.iti.jets.client.network.service.RMIManager;
-import gov.iti.jets.client.network.service.SendMessage;
 import gov.iti.jets.common.dto.ContactDto;
 import gov.iti.jets.common.dto.InvitationDto;
 import gov.iti.jets.common.dto.MessageDto;
@@ -98,6 +98,7 @@ public class Martinily extends UnicastRemoteObject implements IClient {
 
     @Override
     public void receiveInvitation(InvitationDto invitationDto) throws RemoteException {
+        System.out.println("wasal client 2");
         //Add invitation to queue
         InvitationQueue.getList().add(invitationDto);
     }
@@ -110,6 +111,35 @@ public class Martinily extends UnicastRemoteObject implements IClient {
 
         if (!MessagesQueue.getList().containsKey(chatId)) {
             List<MessageDto> messageDtoList = new LinkedList<>();
+        }
+    }
+    public void addNewSessetion(UserSessionDto userSessionDto) throws RemoteException {
+        //Clear and add new session to contact list
+        ContactList.getList().clear();
+        ContactList.getList().addAll(userSessionDto.getContactListDto());
+        //Clear and add new session to invitation queue
+        InvitationQueue.getList().clear();
+        InvitationQueue.getList().addAll(userSessionDto.getInvitationListDto());
+        //Clear and add new session to chat queue
+        ChatList.getList().clear();
+        ChatList.getList().addAll(userSessionDto.getChatListDto());
+
+        //Start Online pulling service
+        PullOnlineUsersFromServer.getInstance();
+    }
+    @Override
+    public void receiveAnnouncement(String message) throws RemoteException {
+        // show popup to the  client
+    }
+
+    @Override
+    public void receiveMessageBot(long chatId, MessageDto messageDto, String messageFromBot) throws RemoteException {
+        MessageDto responseMessage = new MessageDto();
+        responseMessage.setMessage(messageFromBot);
+        responseMessage.setSenderId(MyID.getInstance().getMyId());
+
+        if(!MessagesQueue.getList().containsKey(chatId)){
+            ObservableList<MessageDto> messageDtoList =  FXCollections.observableArrayList();
             messageDtoList.add(messageDto);
 //            MessagesQueue.getList().put(chatId, messageDtoList);
         } else {
@@ -125,15 +155,17 @@ public class Martinily extends UnicastRemoteObject implements IClient {
 //        server.sendMessage(chatId, senderId, messageFromBot); // replace senderId with this receiver id
     }
 
-    public void addNewSessetion(UserSessionDto userSessionDto) throws RemoteException {
-        //Clear and add new session to contact list
-        ContactList.getList().clear();
-        ContactList.getList().addAll(userSessionDto.getContactListDto());
-        //Clear and add new session to invitation queue
-        InvitationQueue.getList().clear();
-        InvitationQueue.getList().addAll(userSessionDto.getInvitationListDto());
-        //Clear and add new session to chat queue
-        ChatList.getList().clear();
-        ChatList.getList().addAll(userSessionDto.getChatListDto());
-    }
+//    public void addNewSessetion(UserSessionDto userSessionDto) throws RemoteException {
+//        //Clear and add new session to contact list
+//        ContactList.getList().clear();
+//        ContactList.getList().addAll(userSessionDto.getContactListDto());
+//        //Clear and add new session to invitation queue
+//        InvitationQueue.getList().clear();
+//        InvitationQueue.getList().addAll(userSessionDto.getInvitationListDto());
+//        //Clear and add new session to chat queue
+//        ChatList.getList().clear();
+//        ChatList.getList().addAll(userSessionDto.getChatListDto());
+//        server.sendMessage(chatId, responseMessage);
+//    }
+
 }

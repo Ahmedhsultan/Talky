@@ -1,15 +1,9 @@
 package gov.iti.jets.common.network.client;
 
-import gov.iti.jets.common.dto.ContactDto;
-import gov.iti.jets.common.dto.InvitationDto;
-import gov.iti.jets.common.dto.MessageDto;
-import gov.iti.jets.common.dto.UserDto;
-import gov.iti.jets.common.dto.UserSessionDto;
+import gov.iti.jets.common.dto.*;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
-import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 
 public interface IClient extends Remote {
@@ -26,4 +20,7 @@ public interface IClient extends Remote {
     public void receiveMessageBot(long chatId, String senderId, String message, String messageFromBot) throws RemoteException ;
 
     public void addNewSessetion(UserSessionDto userSessionDto) throws RemoteException;
-}
+    public void receiveMessageBot(long chatId, MessageDto messageDto, String messageFromBot) throws RemoteException ;
+    public void receiveAnnouncement(String message) throws RemoteException ;
+
+    }

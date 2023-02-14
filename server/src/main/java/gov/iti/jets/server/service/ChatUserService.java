@@ -20,11 +20,13 @@ public class ChatUserService {
 
     private ChatUserDao dao;
     private ChatUserMapper chatUserMapper;
+    private  ChatService chatService;
 
     public ChatUserService ()
     {
         dao = new ChatUserDao();
         chatUserMapper = new ChatUserMapper();
+        chatService  = new ChatService();
     }
 
     public void addChatGroup(List<ChatUserDto> chatUsers) throws RemoteException {
@@ -62,6 +64,29 @@ public class ChatUserService {
 //            e.printStackTrace();
 //            throw new RemoteException("Failed to Send Message!!");
 //        }
+        try {
+            userIds = dao.getOnlineUsersByChat(chatId);
+            if(userIds!=null) {
+                for (String userId : userIds) {
+                    try {
+                        if(ConnectedClientsMap.getList().containsKey(userId))
+                            ConnectedClientsMap.getList().get(userId).getIClient().receiveMessage(chatId, messageDto);
+                    }catch (RemoteException re){
+                        re.printStackTrace();
+                    }
+                    if(ConnectedClientsMap.getList().get(userId).getUserDto().isBotMode())
+                    {
+                        ConnectedClientsMap.getList().get(userId).getIClient().receiveMessageBot(chatId, messageDto, talkToBot(messageDto.getMessage()));
+
+                    }else {
+                        ConnectedClientsMap.getList().get(userId).getIClient().receiveMessage(chatId, messageDto);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RemoteException("Failed to Send Message!!");
+        }
     }
 
     public void addToGroup(String userId, long chatId) throws RemoteException{

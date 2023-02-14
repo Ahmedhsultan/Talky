@@ -1,6 +1,7 @@
 package gov.iti.jets.client;
 
 
+import gov.iti.jets.client.Util.Cashing;
 import gov.iti.jets.client.business.services.SceneManager;
 import gov.iti.jets.client.callBack.Martinily;
 import gov.iti.jets.client.network.service.LoginService;
@@ -36,7 +37,7 @@ public class Main extends Application {
         s.initStage(stage);
         s.switchToLoginScene();
 
-        String[] cashed = LogoutService.getCash();
+        String[] cashed = Cashing.getCash();
         if (cashed != null){
             LoginService loginService = new LoginService();
             loginService.login(cashed[0],cashed[1]);

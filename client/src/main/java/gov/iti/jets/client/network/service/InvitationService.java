@@ -13,9 +13,7 @@ public class InvitationService {
             System.out.println(obj);
             obj.sendInvitation(senderID,receiverID);
 //            SceneManager.getSceneManager().switchToChatScene();
-        } catch (RemoteException e) {
-            System.out.println(e.getMessage());
-        } catch (NotBoundException e) {
+        } catch (RemoteException | NotBoundException e) {
             throw new RuntimeException(e);
         }
     }

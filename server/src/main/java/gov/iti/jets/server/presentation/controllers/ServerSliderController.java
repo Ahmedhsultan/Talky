@@ -1,9 +1,11 @@
 package gov.iti.jets.server.presentation.controllers;
 
+import gov.iti.jets.server.service.ServerService;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 
@@ -14,12 +16,23 @@ import java.util.ResourceBundle;
 public class ServerSliderController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        ServerService service = new ServerService();
 
+        startStopBtn.setOnAction(ev->{
+           if(startStopBtn.isSelected())
+           {
+               service.startServer();
+           }else{
+               service.stopServer();
+           }
+        });
     }
     @FXML
     private BorderPane bp;
     @FXML
     private AnchorPane ap;
+    @FXML
+    private ToggleButton startStopBtn;
 
     private void loadPage(String page){
         Parent root =null;
@@ -44,6 +57,7 @@ public class ServerSliderController implements Initializable {
     }
 
     public void startStopServer(javafx.scene.input.MouseEvent mouseEvent) {
-        bp.setCenter(ap);
+
+//        bp.setCenter(ap);
     }
 }

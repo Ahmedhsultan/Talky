@@ -129,7 +129,7 @@
                      <content>
                         <VBox fx:id="chatVBox" prefHeight="424.0" prefWidth="506.0" spacing="2.0" />
                      </content></ScrollPane>
-                  <Label fx:id="chatName" layoutX="119.0" layoutY="22.0" prefHeight="53.0" prefWidth="306.0">
+                  <Label fx:id="chatName" layoutX="98.0" layoutY="22.0" prefHeight="53.0" prefWidth="306.0">
                      <font>
                         <Font size="32.0" />
                      </font>
