@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXToggleButton?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
+<?import com.jfoenix.controls.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<BorderPane fx:id="bp" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gov.iti.jets.server.presentation.controllers.ServerSliderController">
+<BorderPane fx:id="bp" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gov.iti.jets.server.presentation.controllers.ServerSliderController">
    <left>
-      <VBox prefHeight="400.0" prefWidth="158.0" style="-fx-background-color: #6713d2;" BorderPane.alignment="CENTER">
+      <VBox prefHeight="400.0" prefWidth="158.0" BorderPane.alignment="CENTER">
          <children>
             <JFXToggleButton fx:id="startStopBtn" onMouseClicked="#startStopServer" prefHeight="47.0" prefWidth="163.0" style="-fx-background-color: #6713d2; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #ffffff;" text="Start" />
             <JFXButton onMouseClicked="#register" prefHeight="46.0" prefWidth="165.0" style="-fx-background-color: #6713d2; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #FFFFFF;" text="Register" />
@@ -20,7 +16,7 @@
       </VBox>
    </left>
    <center>
-      <AnchorPane fx:id="ap" prefHeight="400.0" prefWidth="494.0" style="-fx-background-color: #dddddd;" BorderPane.alignment="CENTER">
+      <AnchorPane fx:id="ap" prefHeight="400.0" prefWidth="494.0" BorderPane.alignment="CENTER">
          <children>
             <Text layoutX="151.0" layoutY="179.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Start Server" wrappingWidth="164.08984375">
                <font>

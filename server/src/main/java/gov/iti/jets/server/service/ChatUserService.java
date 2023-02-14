@@ -40,6 +40,30 @@ public class ChatUserService {
 
     public void sendMessage(long chatId, MessageDto messageDto) throws RemoteException {
         List<String> userIds = null;
+//        try {
+//            userIds = dao.getOnlineUsersByChat(chatId);
+//            if(userIds!=null) {
+//                for (String userId : userIds) {
+//
+//                    if (ConnectedClientsMap.getList().get(userId).getUserDto().isBotMode()) {
+//                        ConnectedClientsMap.getList().get(userId).getIClient().receiveMessageBot(chatId, senderId, message, talkToBot(message));
+//
+//                    } else {
+//                        ConnectedClientsMap.getList().get(userId).getIClient().receiveMessage(chatId, senderId, message);
+//
+//                        try {
+//                            if (ConnectedClientsMap.getList().containsKey(userId))
+//                                ConnectedClientsMap.getList().get(userId).getIClient().receiveMessage(chatId, messageDto);
+//                        } catch (RemoteException re) {
+//                            re.printStackTrace();
+//                        }
+//                    }
+//                }
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//            throw new RemoteException("Failed to Send Message!!");
+//        }
         try {
             userIds = dao.getOnlineUsersByChat(chatId);
             if(userIds!=null) {
