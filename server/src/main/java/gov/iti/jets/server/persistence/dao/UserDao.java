@@ -134,6 +134,27 @@ public class UserDao extends BaseDaoImpl<User, String> {
 //        }
 //    }
 
+public void editProfile(User entity) throws SQLException{
+    String query = "update  user set " +
+            "name=?" +
+            " ,img_path=?" +
+            " ,is_online_status=?" +
+            " ,bot_mode=?" +
+            " ,bio=?" +
+            " where id = ?";
+
+    try (Connection connection =DBManagement.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
+        statement.setString(1,entity.getName());
+        statement.setString(2,entity.getImgPath());
+        statement.setString(3,entity.getIsOnlineStatus());
+        statement.setBoolean(4,entity.isBotMode());
+        statement.setString(5,entity.getBio());
+        statement.setString(6, entity.getId());
+        System.out.println(statement.executeUpdate());
+    }
+}
+
+
 
 
 }
