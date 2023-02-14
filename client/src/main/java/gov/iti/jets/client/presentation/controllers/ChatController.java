@@ -303,28 +303,32 @@ public class ChatController implements Initializable {
     private void openInvitations(ActionEvent actionEvent) {
         searchField.setVisible(true);
         currentPane.setText("Invitations");
-        chatsButton.setStyle( null);
+        chatsButton.setStyle(null);
         contactsButton.setStyle(null);
         notificationsButton.setStyle(null);
         leftList.setId("");
         deleteAddDelContact();
-        invitationsButton.setStyle(  "-fx-border-width: 0 0 2px 5px; -fx-border-color: purple;");
+        invitationsButton.setStyle("-fx-border-width: 0 0 2px 5px; -fx-border-color: purple;");
         paneObservableList.clear();
-        for (InvitationDto invitation: userSessionDto.getInvitationListDto()) {
-            Pane temp = PaneManager.getPaneManager().putInvitationCard();
-            ((Label)(temp.lookup("#invitId"))).setText( invitation.getId()+"");
-            (temp.lookup("#invitId")).setVisible(false);
-            UserCardDto dto = new UserCardDto();
-            ((Label)(temp.lookup("#userName"))).setText( dto.getName().toString());
-            ((Label)(temp.lookup("#invitationDate"))).setText( invitation.getCreatedOn().toString());
-        for(InvitationDto invitation: InvitationQueue.getList()) {
-            Pane temp = PaneManager.getPaneManager().putInvitationCard();
-            System.out.println(invitation.getUserCardDto().getImgPath());
-            putImageOnPane(invitation.getUserCardDto().getImgPath(), invitation.getUserCardDto().getImage(),temp);
-            putUserNameOnPane(invitation.getUserCardDto().getName(), temp);
+//        for (InvitationDto invitation : userSessionDto.getInvitationListDto()) {
+//            Pane temp = PaneManager.getPaneManager().putInvitationCard();
+//            ((Label) (temp.lookup("#invitId"))).setText(invitation.getId() + "");
+//            (temp.lookup("#invitId")).setVisible(false);
+//            UserCardDto dto = new UserCardDto();
+//            ((Label) (temp.lookup("#userName"))).setText(dto.getName().toString());
+//            ((Label) (temp.lookup("#invitationDate"))).setText(invitation.getCreatedOn().toString());
+//        }
 
+        for (InvitationDto invitation : InvitationQueue.getList()) {
+            Pane temp = PaneManager.getPaneManager().putInvitationCard();
+            ((Label) (temp.lookup("#invitId"))).setText(invitation.getId() + "");
+            (temp.lookup("#invitId")).setVisible(false);
+            System.out.println(invitation.getUserCardDto().getImgPath());
+//            putImageOnPane(invitation.getUserCardDto().getImgPath(), invitation.getUserCardDto().getImage(), temp);
+            putUserNameOnPane(invitation.getUserCardDto().getName(), temp);
             paneObservableList.add(temp);
         }
+
         leftList.setItems(paneObservableList);
     }
 
