@@ -3,7 +3,7 @@ package gov.iti.jets.client.presentation.controllers;
 
 import gov.iti.jets.client.business.services.PaneManager;
 import gov.iti.jets.client.business.services.SceneManager;
-import gov.iti.jets.client.network.service.AlertWindow;
+import gov.iti.jets.client.Util.AlertWindow;
 import gov.iti.jets.client.network.service.LoginService;
 import gov.iti.jets.common.dto.UserSessionDto;
 import javafx.event.ActionEvent;

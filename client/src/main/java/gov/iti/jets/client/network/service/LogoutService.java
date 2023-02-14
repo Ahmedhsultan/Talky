@@ -21,10 +21,10 @@ public class LogoutService {
         }else{
             deleteCash();
         }
-        System.out.println("start logout");
         UserRemote userRemote = RMIManager.lookUpRegister();
         userRemote.logout(MyID.getInstance().getMyId());
-        System.out.println("succ logout");
+        //stop Online pulling service
+        PullOnlineUsersFromServer.getInstance().stopService();
     }
     public static String[] getCash(){
         return decodeAndReadFile();

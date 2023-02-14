@@ -1,6 +1,5 @@
-package gov.iti.jets.client.network.service;
+package gov.iti.jets.client.Util;
 
-import gov.iti.jets.client.business.services.SceneManager;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -12,11 +11,8 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
-
 public class AlertWindow {
-    public AlertWindow(String Msg){
+    public AlertWindow(String Msg ){
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
         window.initStyle(StageStyle.UNDECORATED);

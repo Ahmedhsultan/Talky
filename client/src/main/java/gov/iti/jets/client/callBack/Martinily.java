@@ -3,6 +3,7 @@ package gov.iti.jets.client.callBack;
 
 import gov.iti.jets.client.Dina.*;
 import gov.iti.jets.client.Util.ConnectionFlag;
+import gov.iti.jets.client.network.service.PullOnlineUsersFromServer;
 import gov.iti.jets.common.dto.ContactDto;
 import gov.iti.jets.common.dto.InvitationDto;
 import gov.iti.jets.common.dto.MessageDto;
@@ -112,5 +113,8 @@ public class Martinily extends UnicastRemoteObject implements IClient {
         //Clear and add new session to chat queue
         ChatList.getList().clear();
         ChatList.getList().addAll(userSessionDto.getChatListDto());
+
+        //Start Online pulling service
+        PullOnlineUsersFromServer.getInstance();
     }
 }
