@@ -130,9 +130,15 @@ public class UserService {
     public UserDto editUser (UserDto userDto) throws RemoteException{
         User user = userMapper.toEntity(userDto);
         try {
-            dao.update(user);
+            dao.editProfile(user);
+            saveUserImage(userDto);
         } catch (SQLException e) {
-            throw new RemoteException("Faild to edit user!!");
+            e.printStackTrace();
+            throw new RemoteException("Failed to edit user!!");
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RemoteException("Failed to edit user!!");
+
         }
         return getUser(userDto.getId());
     }

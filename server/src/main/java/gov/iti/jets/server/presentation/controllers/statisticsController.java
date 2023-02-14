@@ -44,43 +44,9 @@ public class statisticsController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         setActions();
         service = new ServerService();
-
     }
 
-public void setActions()
-{
-//    ConnectedClientsMap.getList().addListener(new MapChangeListener<String, ConnectionDto>() {
-//        @Override
-//        public void onChanged(Change<? extends String, ? extends ConnectionDto> change) {
-//            System.out.println("On Change");
-//            if (genderData!=null) {
-//                genderData.clear();
-//                genderData.addAll(
-//                        new PieChart.Data("Male",service.getGenderStats().getNumOfMales()),
-//                        new PieChart.Data("Female",service.getGenderStats().getNumOfFemales())
-//                );
-//            }
-//            if (statusData!=null) {
-//
-//                statusData.clear();
-//                statusData.addAll(
-//                        new PieChart.Data("Online", service.getUserStatusStats().getNumOfOnline()),
-//                        new PieChart.Data("Offline", service.getUserStatusStats().getNumOfOffline())
-//                );
-//            }
-//            if(dataSeries1!=null) {
-//                Map<String, Long> countryMap = service.getUserCountryStats().getCountryMap();
-//
-//                for (Map.Entry<String, Long> m : countryMap.entrySet()) {
-//                    dataSeries1.getData().add(new XYChart.Data<>(m.getKey(), m.getValue()));
-//                    System.out.println(m.getKey() + "  ===  " + m.getValue());
-//                }
-//                barChart.getData().add(dataSeries1);
-//            }
-//
-//        }
-//    });
-//
+public void setActions(){
     StatsLists.getInstance().getList().addListener(new ListChangeListener<String>() {
         public void onChanged(ListChangeListener.Change<? extends String> change) {
 
@@ -98,6 +64,10 @@ public void setActions()
                         new PieChart.Data("Online", service.getUserStatusStats().getNumOfOnline()),
                         new PieChart.Data("Offline", service.getUserStatusStats().getNumOfOffline())
                 );
+                if(statusData.isEmpty())
+                {
+                    System.out.println("empty");
+                }
             }
             if (dataSeries1 != null) {
                 Map<String, Long> countryMap = service.getUserCountryStats().getCountryMap();
@@ -111,37 +81,7 @@ public void setActions()
         }
     });
     }
-//
-//    StatsLists.getInstance().getGenderList().addListener(new ListChangeListener<PieChart.Data>() {
-//        @Override
-//        public void onChanged(Change<? extends PieChart.Data> change) {
-//            genderData.clear();
-//            genderData.addAll(
-//                    new PieChart.Data("Male",service.getGenderStats().getNumOfMales()),
-//                    new PieChart.Data("Female",service.getGenderStats().getNumOfFemales())
-//            );
-//        }
-//    });
-//    StatsLists.getInstance().getCountryList().addListener(new ListChangeListener<PieChart.Data>() {
-//        @Override
-//        public void onChanged(Change<? extends PieChart.Data> change) {
-//
-//            Map<String, Long> countryMap = service.getUserCountryStats().getCountryMap();
-//
-//            for(Map.Entry<String, Long> m : countryMap.entrySet()){
-//                dataSeries1.getData().add(new XYChart.Data<>(m.getKey(), m.getValue()));
-//                System.out.println(m.getKey() + "  ===  "+m.getValue());
-//            }
-//            barChart.getData().add(dataSeries1);
-//        }
-//    });
-//
-//    UsersList.getInstance().getUserList().addListener(new ListChangeListener<UserDto>() {
-//        @Override
-//        public void onChanged(Change<? extends UserDto> change) {
-//            System.out.println(new UserService().getAllUsers());
-//        }
-//    });
+
 
 
     public void statusStatic(javafx.event.ActionEvent actionEvent) {
