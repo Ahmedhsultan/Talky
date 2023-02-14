@@ -13,7 +13,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-
 import java.rmi.RemoteException;
 
 public class ReconnectWindow {
@@ -38,8 +37,9 @@ public class ReconnectWindow {
             try {
                 UserSessionDto sessionDto = loginService.login(MyID.getInstance().getMyId(),MyID.getInstance().getPassword());
                 if(sessionDto != null){
-                    reconnectWindow = null;
                     window.close();
+                    reconnectWindow = null;
+                    window = null;
                 }
             } catch (RemoteException ex) {
                 ex.printStackTrace();
