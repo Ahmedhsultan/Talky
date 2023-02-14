@@ -672,7 +672,7 @@ public class ChatController implements Initializable {
 
         yesButton.setOnAction(e -> {
             try {
-                LogoutService.logout(false);
+                LogoutService.logout();
                 SceneManager s =SceneManager.getSceneManager();
                 s.switchToLoginScene();
             } catch (NotBoundException | RemoteException ex) {

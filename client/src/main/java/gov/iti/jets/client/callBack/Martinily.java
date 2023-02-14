@@ -59,11 +59,11 @@ public class Martinily extends UnicastRemoteObject implements IClient {
     }
 
     @Override
-    public void addFriend(ArrayList<ContactDto> contactDtoList) throws RemoteException {
-        System.out.println("ok");
+    public void addFriend(long id, ArrayList<ContactDto> contactDtoList) throws RemoteException {
         //Add contact element to contact list
         for (ContactDto contactDto : contactDtoList)
             ContactList.getList().add(contactDto);
+        removeInvitation(id);
     }
 
     @Override
@@ -102,6 +102,14 @@ public class Martinily extends UnicastRemoteObject implements IClient {
         System.out.println("wasal client 2");
         //Add invitation to queue
         InvitationQueue.getList().add(invitationDto);
+    }
+    public void removeInvitation(long invitationId) throws RemoteException {
+        //Add invitation to queue
+        List<InvitationDto> invitationDto = InvitationQueue.getList().stream()
+                .filter(x -> x.getId() == invitationId)
+                .toList();
+        if (invitationDto.stream().count() != 0)
+            InvitationQueue.getList().removeAll(invitationDto);
     }
 
     @Override

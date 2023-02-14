@@ -13,7 +13,7 @@ import java.rmi.RemoteException;
 import java.util.Base64;
 
 public class LogoutService {
-    public static void logout(boolean cash) throws NotBoundException, RemoteException {
+    public static void logout() throws NotBoundException, RemoteException {
         deleteCash();
         UserRemote userRemote = RMIManager.lookUpRegister();
         userRemote.logout(MyID.getInstance().getMyId());

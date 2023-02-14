@@ -1,7 +1,10 @@
 package gov.iti.jets.server.service;
 
 
+import gov.iti.jets.common.dto.ContactDto;
 import gov.iti.jets.common.dto.InvitationDto;
+import gov.iti.jets.common.network.client.IClient;
+import gov.iti.jets.server.Util.Queues.ConnectedClientsMap;
 import gov.iti.jets.server.controller.IServerController;
 import gov.iti.jets.server.entity.Invitation;
 import gov.iti.jets.server.entity.User;
@@ -11,6 +14,7 @@ import gov.iti.jets.server.persistence.dao.UserDao;
 
 import java.rmi.RemoteException;
 import java.sql.Date;
+import java.util.ArrayList;
 
 public class InvitationService {
 
@@ -56,12 +60,25 @@ public class InvitationService {
 
         //Notify other user
         IServerController iServerController = new IServerController();
-        iServerController.addFriend(invitation.getSenderId(), invitation.getReceiverId());
+        iServerController.addFriend(id, invitation.getSenderId(), invitation.getReceiverId());
         invitationDao.deleteById(id);
     }
 
     public void refuseInvitation(long id) throws RemoteException {
         //Get invitation from db then delete it
+        Invitation invitation = invitationDao.findById(id);
+        //Get invitation from db then delete it
         invitationDao.deleteById(id);
+
+        //Notify client to add this user by callBack
+        if (ConnectedClientsMap.getList().containsKey(invitation.getReceiverId())){
+            IClient iClient1 = ConnectedClientsMap.getList().get(invitation.getReceiverId()).getIClient();
+            iClient1.removeInvitation(id);
+        }
+
+        if (ConnectedClientsMap.getList().containsKey(invitation.getSenderId())) {
+            IClient iClient2 = ConnectedClientsMap.getList().get(invitation.getSenderId()).getIClient();
+            iClient2.removeInvitation(id);
+        }
     }
 }
