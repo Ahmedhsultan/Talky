@@ -1,9 +1,5 @@
 package gov.iti.jets.server.service;
 
-import com.google.code.chatterbotapi.ChatterBot;
-import com.google.code.chatterbotapi.ChatterBotFactory;
-import com.google.code.chatterbotapi.ChatterBotSession;
-import com.google.code.chatterbotapi.ChatterBotType;
 import gov.iti.jets.common.dto.ChatUserDto;
 import gov.iti.jets.server.Util.Queues.ConnectedClientsMap;
 import gov.iti.jets.server.entity.ChatUser;
@@ -19,11 +15,13 @@ public class ChatUserService {
 
     private ChatUserDao dao;
     private ChatUserMapper chatUserMapper;
+    private  ChatService chatService;
 
     public ChatUserService ()
     {
         dao = new ChatUserDao();
         chatUserMapper = new ChatUserMapper();
+        chatService  = new ChatService();
     }
 
     public void addChatGroup(List<ChatUserDto> chatUsers) throws RemoteException {
@@ -35,12 +33,18 @@ public class ChatUserService {
         }
     }
 
-    public void sendMessage(long chatId, String senderId, String message) throws RemoteException {
+    public void sendMessage(long chatId, MessageDto messageDto) throws RemoteException {
         List<String> userIds = null;
         try {
             userIds = dao.getOnlineUsersByChat(chatId);
             if(userIds!=null) {
                 for (String userId : userIds) {
+                    try {
+                        if(ConnectedClientsMap.getList().containsKey(userId))
+                            ConnectedClientsMap.getList().get(userId).getIClient().receiveMessage(chatId, messageDto);
+                    }catch (RemoteException re){
+                        re.printStackTrace();
+                    }
                     if(ConnectedClientsMap.getList().get(userId).getUserDto().isBotMode())
                     {
                         ConnectedClientsMap.getList().get(userId).getIClient().receiveMessageBot(chatId, senderId, message, talkToBot(message));

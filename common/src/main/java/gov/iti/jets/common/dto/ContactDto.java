@@ -1,5 +1,6 @@
 package gov.iti.jets.common.dto;
 
+import gov.iti.jets.common.dto.Interfaces.IUser;
 import lombok.*;
 import java.io.Serializable;
 
@@ -9,7 +10,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Builder
 @ToString
-public class ContactDto implements Serializable {
+public class ContactDto extends IUser implements Serializable {
     private String phoneNumber;
     private String name;
     private String picture;

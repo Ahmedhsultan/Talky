@@ -2,6 +2,7 @@ package gov.iti.jets.client.network.service;
 
 import gov.iti.jets.common.network.server.IConnection;
 import gov.iti.jets.common.network.server.IServer;
+import gov.iti.jets.common.network.server.ServerInvitation;
 import gov.iti.jets.common.network.server.UserRemote;
 
 import java.rmi.NotBoundException;
@@ -39,5 +40,8 @@ public class RMIManager {
     }
     public synchronized static UserRemote lookUpRegister() throws RemoteException, NotBoundException {
         return (UserRemote) RMIManager.getRegistry().lookup("register");
+    }
+    public synchronized static ServerInvitation lookUpInvitation() throws RemoteException, NotBoundException {
+        return (ServerInvitation) RMIManager.getRegistry().lookup("invitation");
     }
 }

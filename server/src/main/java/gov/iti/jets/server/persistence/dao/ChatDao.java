@@ -15,7 +15,7 @@ public class ChatDao extends BaseDaoImpl<Chat, Long>{
     }
 
     public Chat insertChat(Chat entity) throws SQLException {
-        String query = "insert into chat values(?,?,?,?,?);";
+        String query = "insert into chat values(?,?,?,?,?,?);";
 
         try (Connection connection = DBManagement.getConnection(); PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             statement.setLong(1, entity.getId());
@@ -23,6 +23,7 @@ public class ChatDao extends BaseDaoImpl<Chat, Long>{
             statement.setString(3, entity.getImgPath());
             statement.setDate(4, entity.getCreated_on());
             statement.setDate(5, entity.getModified_on());
+            statement.setString(6,entity.getType());
             statement.executeUpdate();
             ResultSet resultSet =  statement.getGeneratedKeys();
             if(resultSet.next())
@@ -38,16 +39,16 @@ public class ChatDao extends BaseDaoImpl<Chat, Long>{
 
     @Override
     public void insert(Chat entity) throws SQLException {
-        String query = "insert into chat values(?,?,?,?,?);";
+        String query = "insert into chat values(?,?,?,?,?,?);";
 
-        try (Connection connection = DBManagement.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
+        try (Connection connection = DBManagement.getConnection(); PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             statement.setLong(1, entity.getId());
             statement.setString(2, entity.getName());
             statement.setString(3, entity.getImgPath());
             statement.setDate(4, entity.getCreated_on());
             statement.setDate(5, entity.getModified_on());
+            statement.setString(6,entity.getType());
             statement.executeUpdate();
-
         }
     }
 
@@ -67,6 +68,7 @@ public class ChatDao extends BaseDaoImpl<Chat, Long>{
                         .imgPath(resultSet.getString("img_path"))
                         .modified_on(resultSet.getDate("modified_on"))
                         .created_on(resultSet.getDate("created_on"))
+                        .type(resultSet.getString("type"))
                         .build();
                 chats.add(chat);
             }

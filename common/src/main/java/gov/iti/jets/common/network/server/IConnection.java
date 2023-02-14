@@ -8,5 +8,5 @@ import java.rmi.RemoteException;
 
 public interface IConnection extends Remote {
     public void connect(ConnectionDto connectionDto) throws RemoteException;
-    public void disConnect(ConnectionDto connectionDto) throws RemoteException;
+    public void disConnect(String userId) throws RemoteException;
 }

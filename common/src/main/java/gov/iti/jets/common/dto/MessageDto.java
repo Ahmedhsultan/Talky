@@ -1,5 +1,6 @@
 package gov.iti.jets.common.dto;
 
+import javafx.scene.paint.Color;
 import lombok.*;
 import java.io.Serializable;
 
@@ -12,4 +13,12 @@ import java.io.Serializable;
 public class MessageDto implements BaseDto , Serializable {
     private String message;
     private String senderId;
+    private int fontSize;
+    private boolean bold;
+    private boolean italic;
+    private boolean underline;
+    private String font;
+    private String  textColor;
+    private String  highlightColor;
+    private String timestamp;
 }

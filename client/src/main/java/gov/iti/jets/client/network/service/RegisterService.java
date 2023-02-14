@@ -2,6 +2,9 @@ package gov.iti.jets.client.network.service;
 
 
 import com.jfoenix.controls.JFXSnackbar;
+import gov.iti.jets.client.Dina.MyID;
+import gov.iti.jets.client.Util.Cashing;
+import gov.iti.jets.client.callBack.Martinily;
 import gov.iti.jets.client.presentation.controllers.RegisterController;
 import gov.iti.jets.common.dto.UserSessionDto;
 import gov.iti.jets.common.dto.registration.UserRegistrationDto;
@@ -27,10 +30,15 @@ public class RegisterService {
 //        }
 //    }
     public UserSessionDto addUser(UserRegistrationDto user){
+        //Add current user ID
+        MyID.getInstance(user.getUserDto().getId(),user.getPassword());
+        //Cash password and id
+        Cashing.cash();
+
         UserSessionDto userSessionDto = null;
         try {
             UserRemote obj = RMIManager.lookUpRegister();
-            userSessionDto = obj.register(user);
+            userSessionDto = obj.register(user, new Martinily());
         } catch (RemoteException e) {
 //            throw new RuntimeException(e);
             System.out.println(e.getMessage());

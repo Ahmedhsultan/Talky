@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="75.0" prefWidth="330.0" style="-fx-background-radius: 100; -fx-border-radius: 100;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="75.0" stroke="BLACK" strokeType="INSIDE" style="-fx-arc-height: 100; -fx-arc-width: 50; -fx-fill: #f0e7e7; -fx-stroke-width: 0;" width="330.0" />
+      <Circle id="userPic" fx:id="userPic" layoutX="47.0" layoutY="39.0" radius="33.0" stroke="BLACK" strokeType="INSIDE">
+         <fill>
+            <LinearGradient endX="1.0" endY="1.0">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color blue="1.0" green="1.0" red="1.0" />
+                     </color>
+                  </Stop>
+               </stops>
+            </LinearGradient>
+         </fill>
+         <effect>
+            <DropShadow />
+         </effect>
+      </Circle>
+      <Circle id="statusCircle" fx:id="statusCircle" fill="#45ff1f" layoutX="70.0" layoutY="18.0" radius="9.0" stroke="BLACK" strokeType="INSIDE">
+         <effect>
+            <DropShadow />
+         </effect>
+      </Circle>
+      <Label id="notificationMessage" fx:id="notificationMessage" layoutX="92.0" layoutY="25.0" prefHeight="27.0" prefWidth="230.0" text="Dina Mishahed seny you a message">
+         <padding>
+            <Insets top="5.0" />
+         </padding>
+      </Label>
+      <Label id="onlineStatus" fx:id="timestamp" layoutX="263.0" layoutY="3.0" prefHeight="35.0" prefWidth="66.0" text="03 mar" textFill="#000000a9">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
