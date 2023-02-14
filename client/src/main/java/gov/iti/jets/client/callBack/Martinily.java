@@ -38,6 +38,7 @@ public class Martinily extends UnicastRemoteObject implements IClient {
     @Override
     public void receiveMessage(long chatId, MessageDto messageDto) throws RemoteException {
 //        System.out.println(chatId + messageDto.getMessage() + messageDto.getSenderId());
+
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -59,10 +60,11 @@ public class Martinily extends UnicastRemoteObject implements IClient {
                    }
 
                 }
-                MessagesQueue.change.clear();
-                MessagesQueue.change.put(chatId, messageDto);
+
             }
         });
+        MessagesQueue.change.clear();
+        MessagesQueue.change.put(chatId, messageDto);
 
     }
 

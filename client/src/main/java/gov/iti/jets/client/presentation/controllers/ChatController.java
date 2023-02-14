@@ -171,11 +171,6 @@ public class ChatController implements Initializable {
     }
 
 
-//    .values().forEach((k) -> k.addListener((ListChangeListener<MessageDto>) change -> {
-////            System.out.println("changeeeeeeeeeeeeeeeeeeee");
-//    }));//
-
-
     private void checkNewSentMessages() {
         MessagesQueue.getList().addListener(new MapChangeListener<Long, List<MessageDto>>() {
             @Override
@@ -185,8 +180,7 @@ public class ChatController implements Initializable {
                         @Override
                         public void run() {
                             createOneToOneChatList();
-                            System.out.println(MessagesQueue.change);
-                            System.out.println(MessagesQueue.change.keySet().toArray()[0]);
+
                         }
                     });
                 }
