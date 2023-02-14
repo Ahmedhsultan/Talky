@@ -11,7 +11,7 @@ import java.rmi.RemoteException;
 import java.rmi.registry.Registry;
 
 public class LoginService {
-    public UserSessionDto login(String phone, String password){
+    public UserSessionDto login(String phone, String password) throws RemoteException{
         //Add current user ID
         MyID.getInstance(phone,password);
 
@@ -21,9 +21,11 @@ public class LoginService {
             System.out.println(obj);
             userSessionDto = obj.login(phone,password, new Martinily());
         } catch (RemoteException e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
+            throw new RemoteException("Faild to Login!!");
         } catch (NotBoundException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            throw new RemoteException("Faild to Login!!");
         }
         return userSessionDto;
     }

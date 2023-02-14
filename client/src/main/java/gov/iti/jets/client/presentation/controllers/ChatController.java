@@ -483,8 +483,6 @@ public class ChatController implements Initializable {
         messageDto.setFontSize((int)(fontSize.getValue()));
         messageDto.setTimestamp( LocalTime.now().getHour() + ":" + LocalTime.now().getMinute() + "");
         try {
-
-            System.out.println("currentChat" + chatName.getText());
             SendMessage.send(currentChat, messageDto);
         } catch (RemoteException e) {
             e.printStackTrace();
