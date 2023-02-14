@@ -1,10 +1,7 @@
 package gov.iti.jets.client.callBack;
 
 
-import gov.iti.jets.client.Dina.ContactList;
-import gov.iti.jets.client.Dina.InvitationQueue;
-import gov.iti.jets.client.Dina.MessagesQueue;
-import gov.iti.jets.client.Dina.MyID;
+import gov.iti.jets.client.Dina.*;
 import gov.iti.jets.client.Util.ConnectionFlag;
 import gov.iti.jets.common.dto.ContactDto;
 import gov.iti.jets.common.dto.InvitationDto;
@@ -31,18 +28,19 @@ public class Martinily extends UnicastRemoteObject implements IClient {
 
     @Override
     public void receive() throws RemoteException {
+        System.out.println("recivemsg");
         ConnectionFlag.getInstance().connectedFlag = true;
     }
 
     @Override
     public void receiveMessage(long chatId, MessageDto messageDto) throws RemoteException {
-        System.out.println("hena");
+        System.out.println(chatId + messageDto.getMessage() + messageDto.getSenderId());
         if(!MessagesQueue.getList().containsKey(chatId)){
-            System.out.println("hena2");
             ObservableList<MessageDto> messageDtoList = FXCollections.observableArrayList();
             messageDtoList.add(messageDto);
             MessagesQueue.getList().put(chatId,messageDtoList);
-            System.out.println("hena3");
+            System.out.println(MessagesQueue.getList().get(chatId).get(MessagesQueue.getList().get(chatId).size()-1));
+
         }else{
             MessagesQueue.getList().get(chatId).add(messageDto);
         }
@@ -104,13 +102,14 @@ public class Martinily extends UnicastRemoteObject implements IClient {
 
     @Override
     public void addNewSessetion(UserSessionDto userSessionDto) throws RemoteException {
-        //Add current user ID
-        MyID.getInstance(userSessionDto.getUser().getId()).getMyId();
         //Clear and add new session to contact list
         ContactList.getList().clear();
         ContactList.getList().addAll(userSessionDto.getContactListDto());
         //Clear and add new session to invitation queue
         InvitationQueue.getList().clear();
         InvitationQueue.getList().addAll(userSessionDto.getInvitationListDto());
+        //Clear and add new session to chat queue
+        ChatList.getList().clear();
+        ChatList.getList().addAll(userSessionDto.getChatListDto());
     }
 }

@@ -113,7 +113,7 @@
                   </ImageView>
                </graphic>
             </JFXButton>
-                <JFXButton id="logout" mnemonicParsing="false" prefHeight="56.0" prefWidth="36.0" text=" ">
+                <JFXButton fx:id="logout" mnemonicParsing="false" onAction="#logout" prefHeight="56.0" prefWidth="36.0" text=" ">
                     <StackPane.margin>
                         <Insets left="50.0" top="550.0" />
                     </StackPane.margin>
@@ -131,13 +131,13 @@
                   </ImageView>
                </graphic>
                 </JFXButton>
-            </children>
+             </children>
         </StackPane>
     </left>
     <center>
         <StackPane id="scroll" prefHeight="708.0" prefWidth="1000.0" stylesheets="@../style/mainScreenStyle.css" BorderPane.alignment="CENTER">
             <children>
-                <Rectangle arcHeight="50.0" arcWidth="50.0" fill="DODGERBLUE" height="700.0" stroke="BLACK" strokeType="INSIDE" style="-fx-fill: #F3F7FF;" width="984.0">
+                <Rectangle arcHeight="50.0" arcWidth="50.0" fill="DODGERBLUE" height="650.0" stroke="BLACK" strokeType="INSIDE" style="-fx-fill: #F3F7FF;" width="984.0">
                <StackPane.margin>
                   <Insets right="110.0" />
                </StackPane.margin>

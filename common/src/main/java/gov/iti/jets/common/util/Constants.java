@@ -39,8 +39,8 @@ public class Constants {
 
     //server
     public static final String MAIN_DIR = System.getProperty("user.dir");
-    public static final String USER_IMAGES_DIR =  MAIN_DIR +"\\images\\users\\";
-    public static final String CHAT_IMAGES_DIR =  MAIN_DIR +"\\images\\chats\\";
+    public static final String USER_IMAGES_DIR =  MAIN_DIR +"\\server\\images\\users\\";
+    public static final String CHAT_IMAGES_DIR =  MAIN_DIR +"\\server\\images\\users\\";
 
     //client
     public static final String CHAT_FILES_DIR =  MAIN_DIR +"\\files\\";
@@ -48,7 +48,12 @@ public class Constants {
     //Default buffer size
     public static final int DEFAULT_BUFFER_SIZE = 5_000_000 ;
 
+    //Chat types
+    public static final String CHAT_ONE_TO_ONE = "OneToOne";
+    public static final String CHAT_GROUP = "GROUP";
 
+    //Cash id and password file name;
+    public static final String CASH_FILE_NAMW = "cash.text";
 
 
     public static String hashPassword(String input) {

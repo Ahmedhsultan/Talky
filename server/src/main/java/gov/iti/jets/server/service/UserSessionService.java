@@ -59,6 +59,12 @@ public class UserSessionService {
         ArrayList<ChatDto> chatDtoList = chatList.stream().map(x -> chatMapper.toDTO(x))
                 .sorted((x,y)-> x.getModified_on().compareTo(y.getModified_on()))
                 .collect(Collectors.toCollection(ArrayList::new));
+        //Add chat members to chatdto
+        chatDtoList.stream().forEach(x ->{
+                List<ChatUser> chatMembersList = chatUserDao.getMembersByChatId(x.getId());
+                ArrayList<String> chatMembersIdsList = chatMembersList.stream().map(y->y.getUser_id()).collect(Collectors.toCollection(ArrayList::new));
+                x.setMembersIds(chatMembersIdsList);
+        });
 
         //Get list of user friends
         ArrayList<ContactDto> userDtoList = friendsService.getListOfFriends(user.getId());

@@ -41,7 +41,8 @@ public class ChatUserService {
             if(userIds!=null) {
                 for (String userId : userIds) {
                     try {
-                        ConnectedClientsMap.getList().get(userId).getIClient().receiveMessage(chatId, messageDto);
+                        if(ConnectedClientsMap.getList().containsKey(userId))
+                            ConnectedClientsMap.getList().get(userId).getIClient().receiveMessage(chatId, messageDto);
                     }catch (RemoteException re){
                         re.printStackTrace();
                     }

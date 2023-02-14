@@ -2,6 +2,7 @@ package gov.iti.jets.client.network.service;
 
 
 import com.jfoenix.controls.JFXSnackbar;
+import gov.iti.jets.client.Dina.MyID;
 import gov.iti.jets.client.callBack.Martinily;
 import gov.iti.jets.client.presentation.controllers.RegisterController;
 import gov.iti.jets.common.dto.UserSessionDto;
@@ -28,6 +29,9 @@ public class RegisterService {
 //        }
 //    }
     public UserSessionDto addUser(UserRegistrationDto user){
+        //Add current user ID
+        MyID.getInstance(user.getUserDto().getId(),user.getPassword());
+
         UserSessionDto userSessionDto = null;
         try {
             UserRemote obj = RMIManager.lookUpRegister();

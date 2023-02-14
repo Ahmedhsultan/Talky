@@ -7,6 +7,7 @@ import gov.iti.jets.common.dto.UserSessionDto;
 import gov.iti.jets.common.dto.registration.UserRegistrationDto;
 import gov.iti.jets.common.network.client.IClient;
 import gov.iti.jets.common.network.server.UserRemote;
+import gov.iti.jets.server.Util.Queues.ConnectedClientsMap;
 import gov.iti.jets.server.service.UserService;
 
 import java.rmi.RemoteException;
@@ -25,7 +26,15 @@ public class UserController extends UnicastRemoteObject implements UserRemote {
     }
 
     public UserSessionDto register(UserRegistrationDto userRegistrationDto, IClient iClient) throws RemoteException {
-            return userService.register(userRegistrationDto);
+        ConnectionDto connectionDto =new ConnectionDto();
+        connectionDto.setUserDto(userRegistrationDto.getUserDto());
+        connectionDto.setIClient(iClient);
+
+        ConnectionController connectionController = new ConnectionController();
+        connectionController.connect(connectionDto);
+
+        ConnectedClientsMap.getList().put(userRegistrationDto.getUserDto().getId(),connectionDto);
+        return userService.register(userRegistrationDto);
     }
 
     public UserSessionDto login(String phone, String password, IClient iClient) throws RemoteException {
@@ -46,5 +55,8 @@ public class UserController extends UnicastRemoteObject implements UserRemote {
     public void logout(String phone) throws RemoteException
     {
         userService.logout(phone);
+        //Remove from ConnectedClients List
+        ConnectionController connectionController = new ConnectionController();
+        connectionController.disConnect(phone);
     }
 }
