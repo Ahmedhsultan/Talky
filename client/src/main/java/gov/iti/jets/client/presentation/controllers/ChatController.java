@@ -125,7 +125,7 @@ public class ChatController implements Initializable {
     private CheckBox underline;
 
 
-    private UserSessionDto userSessionDto;
+//    private UserSessionDto userSessionDto;
 
     ObservableList <? extends MessageDto> messages = FXCollections.observableArrayList();
     ObservableList<Pane> paneObservableList = FXCollections.observableArrayList();
@@ -138,10 +138,10 @@ public class ChatController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         PaneManager.setPrimaryPane("containerPane", containerPane);
         createFontsList();
-        if(PasswordLoginController.userSessionDto != null)
-            userSessionDto = PasswordLoginController.userSessionDto;
-        else
-            userSessionDto = RegisterController.userSessionDto;
+//        if(PasswordLoginController.userSessionDto != null)
+//            userSessionDto = PasswordLoginController.userSessionDto;
+//        else
+//            userSessionDto = RegisterController.userSessionDto;
         leftList.setItems(paneObservableList);
         chatsButton.fire();
         selectChat();
@@ -165,7 +165,7 @@ public class ChatController implements Initializable {
                     chatsButton.fire();
                 System.out.println("before");
                 if(currentChat.equals(change.getKey())){
-                    if(change.getValueAdded().get(change.getValueAdded().size()-1).getSenderId().equals(userSessionDto.getUser().getId())) {
+                    if(change.getValueAdded().get(change.getValueAdded().size()-1).getSenderId().equals(MyID.getInstance().getMyId())) {
                         Platform.runLater(() -> createMessage(change.getValueAdded().get(change.getValueAdded().size()-1), 1));
                         System.out.println("after");
                     }
@@ -174,7 +174,7 @@ public class ChatController implements Initializable {
                         System.out.println("after2");
                     }
                 }
-                else if(change.getValueAdded().get(change.getValueAdded().size()-1).getSenderId()!=userSessionDto.getUser().getId()) {
+                else if(change.getValueAdded().get(change.getValueAdded().size()-1).getSenderId()!=MyID.getInstance().getMyId()) {
                     Pane temp = PaneManager.getPaneManager().putNotificationPane();
 //                ((ContactDto)(ContactList.getList().stream().filter(x->x.getPhoneNumber()==change.getValueAdded().get(change.getValueAdded().size()-1).getSenderId()))).getName()+" sent you a message");
                     ((Label)(temp.lookup("#notificationMessage"))).setText(change.toString());
@@ -209,7 +209,7 @@ public class ChatController implements Initializable {
                                 //System.out.println(MessagesQueue.getList());
 //                                System.out.println(MessagesQueue.getList().get(currentChat));
                                     for (MessageDto message : MessagesQueue.getList().get(currentChat)) {
-                                        if (message.getSenderId().equals(userSessionDto.getUser().getId())) {
+                                        if (message.getSenderId().equals(MyID.getInstance().getMyId())) {
                                             createMessage(message, 1);
                                         } else {
                                             createMessage(message, 2);
@@ -493,17 +493,6 @@ public class ChatController implements Initializable {
             TextField tx = (TextField) k.getChildren().get(1);
             Label label = (Label) k.getChildren().get(2);
             if(Validation.validatePhoneNumber(tx,label)){
-                System.out.println(tx.getText());
-                Registry reg = null;
-                try {
-                    reg = RMIManager.getRegistry();
-                } catch (RemoteException e) {
-                    System.out.println(e.getMessage());
-                    throw new RuntimeException(e);
-                }
-
-                System.out.println("sender id = "+userSessionDto.getUser().getId() + "reciever id  = "+ tx.getText());
-                new InvitationService().sendInvit(userSessionDto.getUser().getId(),tx.getText());
                 new InvitationService().sendInvit(MyID.getInstance().getMyId(),tx.getText());
             }
         }

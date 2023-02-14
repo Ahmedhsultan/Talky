@@ -10,7 +10,6 @@ public class InvitationService {
     public void sendInvit(String senderID, String receiverID){
         try {
             ServerInvitation obj = RMIManager.lookUpInvitation();
-            System.out.println(obj);
             obj.sendInvitation(senderID,receiverID);
 //            SceneManager.getSceneManager().switchToChatScene();
         } catch (RemoteException | NotBoundException e) {
