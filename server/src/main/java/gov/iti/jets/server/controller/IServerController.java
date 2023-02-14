@@ -1,26 +1,25 @@
 package gov.iti.jets.server.controller;
 
-import gov.iti.jets.common.dto.ContactDto;
-import gov.iti.jets.common.dto.MessageDto;
-import gov.iti.jets.common.dto.UserDto;
+import gov.iti.jets.common.dto.*;
 import gov.iti.jets.common.network.client.IClient;
 import gov.iti.jets.common.network.server.IServer;
+import gov.iti.jets.common.util.Constants;
 import gov.iti.jets.server.Util.Queues.ConnectedClientsMap;
+import gov.iti.jets.server.entity.Chat;
 import gov.iti.jets.server.entity.User;
 import gov.iti.jets.server.mapper.UserMapper;
-import gov.iti.jets.server.service.ChatUserService;
-import gov.iti.jets.server.service.FileTransferService;
-import gov.iti.jets.server.service.FriendsService;
-import gov.iti.jets.server.service.UserService;
+import gov.iti.jets.server.service.*;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
 public class IServerController extends UnicastRemoteObject implements IServer {
 
     private ChatUserService chatUserService;
+    private ChatService chatService;
     private UserService userService;
     private FriendsService friendsService;
     private UserMapper userMapper;
@@ -33,6 +32,7 @@ public class IServerController extends UnicastRemoteObject implements IServer {
         friendsService = new FriendsService();
         userMapper = new UserMapper();
         fileTransferService = new FileTransferService();
+        chatService = new ChatService();
     }
 
     @Override
@@ -54,6 +54,23 @@ public class IServerController extends UnicastRemoteObject implements IServer {
 
     @Override
     public void addFriend(String id1, String id2) throws RemoteException {
+        //Add chat table
+        ChatDto chatDto = new ChatDto();
+        chatDto.setName(id1+","+id2);
+        chatDto.setModified_on(new Date(System.currentTimeMillis()));
+        chatDto.setType(Constants.CHAT_ONE_TO_ONE);
+        Chat chat = chatService.addChat(chatDto);
+        //Add chatUser
+        ChatUserDto chatUserDto1 = new ChatUserDto();
+        chatUserDto1.setUserId(id1);
+        chatUserDto1.setId(chat.getId());
+        ChatUserDto chatUserDto2 = new ChatUserDto();
+        chatUserDto2.setUserId(id2);
+        chatUserDto2.setId(chat.getId());
+        List<ChatUserDto> chatUserDtoList = new ArrayList<>();
+        chatUserDtoList.add(chatUserDto1);
+        chatUserDtoList.add(chatUserDto2);
+        chatUserService.addChatGroup(chatUserDtoList);
         //Add friendship from db
         friendsService.addFriend(id1,id2);
 
