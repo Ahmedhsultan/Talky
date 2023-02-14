@@ -2,6 +2,7 @@ package gov.iti.jets.client.network.service;
 
 import gov.iti.jets.common.network.server.IConnection;
 import gov.iti.jets.common.network.server.IServer;
+import gov.iti.jets.common.network.server.ServerInvitation;
 import gov.iti.jets.common.network.server.UserRemote;
 
 import java.rmi.NotBoundException;
