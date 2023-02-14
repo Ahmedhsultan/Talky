@@ -340,6 +340,7 @@ public class ChatController implements Initializable {
                     System.out.println(ex.getMessage());
                     throw new RuntimeException(ex);
                 }
+                paneObservableList.remove(temp);
             });
 
             JFXButton decline = (JFXButton) (temp.getChildren().get(5));
@@ -354,6 +355,7 @@ public class ChatController implements Initializable {
                     System.out.println(ex.getMessage());
                     throw new RuntimeException(ex);
                 }
+                paneObservableList.remove(temp);
             });
             paneObservableList.add(temp);
         }
