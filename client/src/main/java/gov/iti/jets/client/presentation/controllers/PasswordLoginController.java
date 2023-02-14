@@ -5,7 +5,6 @@ import gov.iti.jets.client.business.services.PaneManager;
 import gov.iti.jets.client.business.services.SceneManager;
 import gov.iti.jets.client.network.service.AlertWindow;
 import gov.iti.jets.client.network.service.LoginService;
-import gov.iti.jets.client.network.service.RMIManager;
 import gov.iti.jets.common.dto.UserSessionDto;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,10 +14,8 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
-
 import java.net.URL;
 import java.rmi.RemoteException;
-import java.rmi.registry.Registry;
 import java.util.ResourceBundle;
 
 
@@ -54,7 +51,7 @@ public class PasswordLoginController implements Initializable {
             System.out.println("Login success");
             SceneManager.getSceneManager().switchToChatScene();
         } catch (RemoteException e) {
-            AlertWindow alertWindow =new AlertWindow(e.getMessage());
+            new AlertWindow(e.getMessage());
         }
 
     }
