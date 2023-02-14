@@ -41,9 +41,9 @@
             <Insets top="5.0" />
          </padding>
       </Label>
-      <Label id="timestamp" contentDisplay="TOP" layoutX="268.0" layoutY="7.0" prefHeight="26.0" prefWidth="55.0" text="03 Mar" wrapText="true" />
-      <JFXButton id="invitationResponseBtns" layoutX="91.0" layoutY="63.0" prefHeight="25.0" prefWidth="83.0" text="Confirm" />
-      <JFXButton id="invitationResponseBtns" layoutX="196.0" layoutY="64.0" prefHeight="25.0" prefWidth="90.0" text="Decline" />
+      <Label id="timestamp" fx:id="invitationDate" contentDisplay="TOP" layoutX="268.0" layoutY="7.0" prefHeight="26.0" prefWidth="55.0" text="03 Mar" wrapText="true" />
+      <JFXButton id="invitationResponseBtns" fx:id="confirInvitation" layoutX="91.0" layoutY="63.0" prefHeight="25.0" prefWidth="83.0" text="Confirm" />
+      <JFXButton id="invitationResponseBtns" fx:id="declineInvitation" layoutX="196.0" layoutY="64.0" prefHeight="25.0" prefWidth="90.0" text="Decline" />
       <Label fx:id="invitId" />
    </children>
 </Pane>

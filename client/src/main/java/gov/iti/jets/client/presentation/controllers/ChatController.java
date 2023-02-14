@@ -313,13 +313,44 @@ public class ChatController implements Initializable {
             ((Label)(temp.lookup("#invitId"))).setText( invitation.getId()+"");
             (temp.lookup("#invitId")).setVisible(false);
             UserCardDto dto = new UserCardDto();
-            ((Label)(temp.lookup("#userName"))).setText( dto.getName()+"");
-
+            ((Label)(temp.lookup("#userName"))).setText( dto.getName().toString());
+            ((Label)(temp.lookup("#invitationDate"))).setText( invitation.getCreatedOn().toString());
             paneObservableList.add(temp);
         }
         leftList.setItems(paneObservableList);
     }
 
+    private void selectInvitation() {
+        leftList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Pane>() {
+            @Override
+            public void changed(ObservableValue<? extends Pane> observable, Pane oldValue, Pane newValue) {
+                if(newValue!=null)
+                    if((currentPane.getText().equals("Invitation"))) {
+                        Long invitationId = Long.parseLong(((Label) (newValue.lookup("#invitId"))).getText());
+                        ((JFXButton) (newValue.lookup("#confirInvitation"))).setOnAction(e -> {
+                            Registry reg = null;
+                            try {
+                                reg = RMIManager.getRegistry();
+                                new InvitationService().acceptInvit(invitationId, reg);
+                            } catch (RemoteException ex) {
+                                System.out.println(ex.getMessage());
+                                throw new RuntimeException(ex);
+                            }
+
+                        });
+                        ((JFXButton) (newValue.lookup("#declineInvitation"))).setOnAction(e -> {
+                            Registry reg = null;
+                            try {
+                                reg = RMIManager.getRegistry();
+                                new InvitationService().rejectInvit(invitationId, reg);
+                            } catch (RemoteException ex) {
+                                System.out.println(ex.getMessage());
+                                throw new RuntimeException(ex);
+                            }
+                        });
+                    }
+    }});
+    }
     @FXML
     private void openNotifications(ActionEvent actionEvent) {
         searchField.setVisible(true);
@@ -645,4 +676,3 @@ public class ChatController implements Initializable {
         window.showAndWait();
     }
 }
-
