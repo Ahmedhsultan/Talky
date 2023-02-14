@@ -39,13 +39,13 @@ public class Martinily extends UnicastRemoteObject implements IClient {
     @Override
     public void receiveMessage(long chatId, MessageDto messageDto) throws RemoteException {
         System.out.println(chatId + messageDto.getMessage() + messageDto.getSenderId());
-        if(!MessagesQueue.getList().containsKey(chatId)){
+        if (!MessagesQueue.getList().containsKey(chatId)) {
             ObservableList<MessageDto> messageDtoList = FXCollections.observableArrayList();
             messageDtoList.add(messageDto);
-            MessagesQueue.getList().put(chatId,messageDtoList);
-            System.out.println(MessagesQueue.getList().get(chatId).get(MessagesQueue.getList().get(chatId).size()-1));
+            MessagesQueue.getList().put(chatId, messageDtoList);
+            System.out.println(MessagesQueue.getList().get(chatId).get(MessagesQueue.getList().get(chatId).size() - 1));
 
-        }else{
+        } else {
             MessagesQueue.getList().get(chatId).add(messageDto);
         }
     }
@@ -84,15 +84,13 @@ public class Martinily extends UnicastRemoteObject implements IClient {
     }
 
     @Override
-    public void readFile(long chatId, String senderId, byte[] bytes, String fileName) throws RemoteException
-    {
+    public void readFile(long chatId, String senderId, byte[] bytes, String fileName) throws RemoteException {
         try {
             ByteBuffer byteBuffer = ByteBuffer.wrap(bytes);
             FileChannel channel = FileChannel.open(Paths.get(Constants.CHAT_FILES_DIR + fileName),
                     StandardOpenOption.CREATE, StandardOpenOption.APPEND);
             channel.write(byteBuffer);
-        }
-         catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
             throw new RemoteException("Failed to send File!!");
         }
@@ -105,17 +103,16 @@ public class Martinily extends UnicastRemoteObject implements IClient {
     }
 
     @Override
-<<<<<<< HEAD
     public void receiveMessageBot(long chatId, String senderId, String message, String messageFromBot) throws RemoteException {
         MessageDto messageDto = new MessageDto();
         messageDto.setMessage(message);
         messageDto.setSenderId(senderId);
 
-        if(!MessagesQueue.getList().containsKey(chatId)){
+        if (!MessagesQueue.getList().containsKey(chatId)) {
             List<MessageDto> messageDtoList = new LinkedList<>();
             messageDtoList.add(messageDto);
-            MessagesQueue.getList().put(chatId,messageDtoList);
-        }else{
+//            MessagesQueue.getList().put(chatId, messageDtoList);
+        } else {
             MessagesQueue.getList().get(chatId).add(messageDto);
         }
         IServer server = null;
@@ -125,9 +122,9 @@ public class Martinily extends UnicastRemoteObject implements IClient {
             e.printStackTrace();
             throw new RemoteException("Failed to reply to Message");
         }
-        server.sendMessage(chatId, senderId, messageFromBot); // replace senderId with this receiver id
+//        server.sendMessage(chatId, senderId, messageFromBot); // replace senderId with this receiver id
+    }
 
-=======
     public void addNewSessetion(UserSessionDto userSessionDto) throws RemoteException {
         //Clear and add new session to contact list
         ContactList.getList().clear();
@@ -138,6 +135,5 @@ public class Martinily extends UnicastRemoteObject implements IClient {
         //Clear and add new session to chat queue
         ChatList.getList().clear();
         ChatList.getList().addAll(userSessionDto.getChatListDto());
->>>>>>> origin/develop
     }
 }

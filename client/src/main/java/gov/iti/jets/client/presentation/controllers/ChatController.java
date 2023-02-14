@@ -140,9 +140,7 @@ public class ChatController implements Initializable {
             userSessionDto = PasswordLoginController.userSessionDto;
         else
             userSessionDto = RegisterController.userSessionDto;
-
         leftList.setItems(paneObservableList);
-
         chatsButton.fire();
         selectChat();
         checkMessages();
@@ -153,9 +151,7 @@ public class ChatController implements Initializable {
         fonts.setItems(fontFamilies);
         fonts.setValue(fontFamilies.get(0));
         fontSize.setValue(15);
-
     }
-
 //    [MessageDto(message=, senderId=01272934956, fontSize=0, bold=false, italic=false,
 //    underline=false, font=null, textColor=0xffffffff, highlightColor=0xffffffff, timestamp=21:34)]
 //    added at key 1
@@ -312,14 +308,16 @@ public class ChatController implements Initializable {
         deleteAddDelContact();
         invitationsButton.setStyle(  "-fx-border-width: 0 0 2px 5px; -fx-border-color: purple;");
         paneObservableList.clear();
-        for(InvitationDto invitation: userSessionDto.getInvitationListDto()) {
-//            Pane temp = PaneManager.getPaneManager().putInvitationCard();
+        for (InvitationDto invitation: userSessionDto.getInvitationListDto()) {
+            Pane temp = PaneManager.getPaneManager().putInvitationCard();
+            ((Label)(temp.lookup("#invitId"))).setText( invitation.getId()+"");
+            (temp.lookup("#invitId")).setVisible(false);
+            UserCardDto dto = new UserCardDto();
+            ((Label)(temp.lookup("#userName"))).setText( dto.getName()+"");
 
-//            putImageOnPane(invitation., temp);
-//            putUserNameOnPane(contact.getName(), temp);
-//            paneObservableList.add(temp);
+            paneObservableList.add(temp);
         }
-//        leftList.setItems(paneObservableList);
+        leftList.setItems(paneObservableList);
     }
 
     @FXML
