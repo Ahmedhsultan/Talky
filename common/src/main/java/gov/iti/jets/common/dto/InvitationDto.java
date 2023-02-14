@@ -3,6 +3,7 @@ package gov.iti.jets.common.dto;
 //import gov.iti.jets.entity.BaseEntity;
 import lombok.*;
 
+import java.io.Serializable;
 import java.sql.Date;
 
 @Getter
@@ -11,7 +12,7 @@ import java.sql.Date;
 @NoArgsConstructor
 @Builder
 @ToString
-public class InvitationDto implements  BaseDto{
+public class InvitationDto implements  BaseDto, Serializable {
 
     private long id;
     private String receiverId;

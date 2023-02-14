@@ -1,10 +1,14 @@
 package gov.iti.jets.server;
 
 
+<<<<<<< HEAD
 import com.google.code.chatterbotapi.ChatterBot;
 import com.google.code.chatterbotapi.ChatterBotFactory;
 import com.google.code.chatterbotapi.ChatterBotSession;
 import com.google.code.chatterbotapi.ChatterBotType;
+=======
+import gov.iti.jets.server.controller.IServerController;
+>>>>>>> origin/develop
 import gov.iti.jets.server.controller.UserController;
 import gov.iti.jets.server.network.RMIManager;
 import javafx.application.Application;
@@ -39,13 +43,21 @@ public class Main extends Application {
 //        } catch (RemoteException e) {
 //            e.printStackTrace();
 //        }
+<<<<<<< HEAD
 //        try {
 //            Registry reg = RMIManager.getRegistry();
 //            reg.rebind("register", new UserController());
+=======
+        try {
+            Registry reg = RMIManager.getRegistry();
+            reg.rebind("register", new UserController());
+            reg.rebind("iserver", new IServerController());
+>>>>>>> origin/develop
 //            while(true)
 //            {
 //
 //            }
+<<<<<<< HEAD
 //        } catch (RemoteException e) {
 //            e.printStackTrace();
 //        }
@@ -94,6 +106,12 @@ public class Main extends Application {
 
 
 //        System.out.println("Hello World!");
+=======
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Hello World!");
+>>>>>>> origin/develop
     }
 
 

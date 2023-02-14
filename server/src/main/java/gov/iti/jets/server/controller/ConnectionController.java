@@ -19,8 +19,8 @@ public class ConnectionController extends UnicastRemoteObject implements IConnec
     }
 
     @Override
-    public void disConnect(ConnectionDto connectionDto) throws RemoteException{
-        if(ConnectedClientsMap.getList().containsKey(connectionDto.getUserDto().getId()))
-            ConnectedClientsMap.getList().remove(connectionDto.getUserDto().getId());
+    public void disConnect(String userId) throws RemoteException{
+        if(ConnectedClientsMap.getList().containsKey(userId))
+            ConnectedClientsMap.getList().remove(userId);
     }
 }

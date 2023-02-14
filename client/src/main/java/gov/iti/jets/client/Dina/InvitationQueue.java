@@ -1,15 +1,13 @@
 package gov.iti.jets.client.Dina;
-
-import gov.iti.jets.common.dto.ContactDto;
 import gov.iti.jets.common.dto.InvitationDto;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
-import java.util.ArrayList;
-
-public class InvitationQueue extends ArrayList<InvitationDto> {
-    private static InvitationQueue invitationQueue;
-    public static InvitationQueue getList(){
+public class InvitationQueue {
+    private static ObservableList<InvitationDto> invitationQueue;
+    public static ObservableList<InvitationDto> getList(){
         if(invitationQueue == null)
-            invitationQueue = new InvitationQueue();
+            invitationQueue = FXCollections.observableArrayList();
 
         return invitationQueue;
     }

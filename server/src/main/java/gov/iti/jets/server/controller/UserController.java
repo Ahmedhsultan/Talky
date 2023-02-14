@@ -1,10 +1,13 @@
 package gov.iti.jets.server.controller;
 
 
+import gov.iti.jets.common.dto.ConnectionDto;
 import gov.iti.jets.common.dto.UserDto;
 import gov.iti.jets.common.dto.UserSessionDto;
 import gov.iti.jets.common.dto.registration.UserRegistrationDto;
+import gov.iti.jets.common.network.client.IClient;
 import gov.iti.jets.common.network.server.UserRemote;
+import gov.iti.jets.server.Util.Queues.ConnectedClientsMap;
 import gov.iti.jets.server.service.UserService;
 
 import java.rmi.RemoteException;
@@ -22,20 +25,38 @@ public class UserController extends UnicastRemoteObject implements UserRemote {
         userService.setOnlineStatus(phone,status);
     }
 
-    public UserSessionDto register(UserRegistrationDto userRegistrationDto) throws RemoteException {
-            return userService.register( userRegistrationDto);
+    public UserSessionDto register(UserRegistrationDto userRegistrationDto, IClient iClient) throws RemoteException {
+        ConnectionDto connectionDto =new ConnectionDto();
+        connectionDto.setUserDto(userRegistrationDto.getUserDto());
+        connectionDto.setIClient(iClient);
+
+        ConnectionController connectionController = new ConnectionController();
+        connectionController.connect(connectionDto);
+
+        ConnectedClientsMap.getList().put(userRegistrationDto.getUserDto().getId(),connectionDto);
+        return userService.register(userRegistrationDto);
     }
 
-    public UserSessionDto login(String phone, String password) throws RemoteException {
-        return userService.login( phone,  password);
+    public UserSessionDto login(String phone, String password, IClient iClient) throws RemoteException {
+        //Get user session data from db
+        UserSessionDto userSessionDto = userService.login(phone,  password);
+        //Establish connection between user and server
+        ConnectionDto connectionDto = new ConnectionDto();
+        connectionDto.setUserDto(userSessionDto.getUser());
+        connectionDto.setIClient(iClient);
+
+        ConnectionController connectionController = new ConnectionController();
+        connectionController.connect(connectionDto);
+        //Notify user with his session data
+        iClient.addNewSessetion(userSessionDto);
+
+        return userSessionDto;
     }
     public void logout(String phone) throws RemoteException
     {
         userService.logout(phone);
+        //Remove from ConnectedClients List
+        ConnectionController connectionController = new ConnectionController();
+        connectionController.disConnect(phone);
     }
-
-//    @Override
-//    public void updateProfile(UserDto userDto) throws RemoteException {
-//        userService.editUser(userDto);
-//    }
 }

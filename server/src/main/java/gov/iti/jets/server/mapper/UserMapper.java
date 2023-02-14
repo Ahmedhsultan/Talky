@@ -2,6 +2,7 @@ package gov.iti.jets.server.mapper;
 
 
 import gov.iti.jets.common.dto.ContactDto;
+import gov.iti.jets.common.dto.Interfaces.IUser;
 import gov.iti.jets.common.dto.UserDto;
 import gov.iti.jets.common.dto.registration.UserRegistrationDto;
 import gov.iti.jets.common.util.Constants;
@@ -38,7 +39,7 @@ public class UserMapper implements BaseMapper<User, UserDto>{
         return dto;
     }
 
-    public ContactDto toContactDTO(User user ) {
+    public ContactDto toContactDTO(IUser user ) {
         String path = Constants.USER_IMAGES_DIR;
         try{
             ContactDto dto = ContactDto.builder()

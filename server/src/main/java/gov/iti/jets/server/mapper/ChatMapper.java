@@ -16,6 +16,7 @@ public class ChatMapper implements BaseMapper<Chat, ChatDto>{
                 .name(chat.getName())
                 .imgPath(chat.getImgPath())
                 .modified_on(chat.getModified_on())
+                .type(chat.getType())
                 .build();
         return dto;
     }
@@ -27,6 +28,7 @@ public class ChatMapper implements BaseMapper<Chat, ChatDto>{
                 .name(dto.getName())
                 .imgPath(dto.getImgPath())
                 .modified_on(dto.getModified_on())
+                .type(dto.getType())
                 .build();
         return entity;
     }

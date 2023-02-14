@@ -1,6 +1,7 @@
 package gov.iti.jets.server.controller;
 
 import gov.iti.jets.common.dto.ContactDto;
+import gov.iti.jets.common.dto.MessageDto;
 import gov.iti.jets.common.dto.UserDto;
 import gov.iti.jets.common.network.client.IClient;
 import gov.iti.jets.common.network.server.IServer;
@@ -15,6 +16,7 @@ import gov.iti.jets.server.service.UserService;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
+import java.util.List;
 
 public class IServerController extends UnicastRemoteObject implements IServer {
 
@@ -34,9 +36,10 @@ public class IServerController extends UnicastRemoteObject implements IServer {
     }
 
     @Override
-    public void sendMessage(long chatId, String senderId, String message) throws RemoteException
+    public void sendMessage(long chatId, MessageDto messageDto) throws RemoteException
     {
-        chatUserService.sendMessage( chatId,  senderId, message);
+        System.out.println("sendmsg");
+        chatUserService.sendMessage( chatId, messageDto);
     }
 
     @Override
@@ -65,9 +68,14 @@ public class IServerController extends UnicastRemoteObject implements IServer {
 
         //Notify client to add this user by callBack
         IClient iClient1 = ConnectedClientsMap.getList().get(user1).getIClient();
-        iClient1.addFriend(contactDto1);
+        List<ContactDto> contactDtoList1 = new ArrayList<>();
+        contactDtoList1.add(contactDto1);
+        iClient1.addFriend(contactDtoList1);
+
         IClient iClient2 = ConnectedClientsMap.getList().get(user2).getIClient();
-        iClient2.addFriend(contactDto2);
+        List<ContactDto> contactDtoList2 = new ArrayList<>();
+        contactDtoList2.add(contactDto2);
+        iClient2.addFriend(contactDtoList2);
     }
 
     @Override

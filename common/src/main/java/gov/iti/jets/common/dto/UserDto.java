@@ -1,6 +1,7 @@
 package gov.iti.jets.common.dto;
 
 
+import gov.iti.jets.common.dto.Interfaces.IUser;
 import lombok.*;
 
 import java.io.Serializable;
@@ -12,7 +13,7 @@ import java.sql.Date;
 @NoArgsConstructor
 @Builder
 @ToString
-public class UserDto implements BaseDto, Serializable {
+public class UserDto extends IUser implements BaseDto, Serializable {
 
     private String id;
     private String name;

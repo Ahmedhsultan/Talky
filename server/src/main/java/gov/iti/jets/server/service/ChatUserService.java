@@ -5,6 +5,7 @@ import com.google.code.chatterbotapi.ChatterBotFactory;
 import com.google.code.chatterbotapi.ChatterBotSession;
 import com.google.code.chatterbotapi.ChatterBotType;
 import gov.iti.jets.common.dto.ChatUserDto;
+import gov.iti.jets.common.dto.MessageDto;
 import gov.iti.jets.server.Util.Queues.ConnectedClientsMap;
 import gov.iti.jets.server.entity.ChatUser;
 import gov.iti.jets.server.mapper.ChatUserMapper;
@@ -35,18 +36,26 @@ public class ChatUserService {
         }
     }
 
-    public void sendMessage(long chatId, String senderId, String message) throws RemoteException {
+    public void sendMessage(long chatId, MessageDto messageDto) throws RemoteException {
         List<String> userIds = null;
         try {
             userIds = dao.getOnlineUsersByChat(chatId);
             if(userIds!=null) {
                 for (String userId : userIds) {
+<<<<<<< HEAD
                     if(ConnectedClientsMap.getList().get(userId).getUserDto().isBotMode())
                     {
                         ConnectedClientsMap.getList().get(userId).getIClient().receiveMessageBot(chatId, senderId, message, talkToBot(message));
 
                     }else {
                         ConnectedClientsMap.getList().get(userId).getIClient().receiveMessage(chatId, senderId, message);
+=======
+                    try {
+                        if(ConnectedClientsMap.getList().containsKey(userId))
+                            ConnectedClientsMap.getList().get(userId).getIClient().receiveMessage(chatId, messageDto);
+                    }catch (RemoteException re){
+                        re.printStackTrace();
+>>>>>>> origin/develop
                     }
                 }
             }

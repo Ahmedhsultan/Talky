@@ -1,14 +1,14 @@
 package gov.iti.jets.client.Dina;
 
-import gov.iti.jets.common.dto.MessageDto;
-
-import java.util.HashMap;
+import gov.iti.jets.common.dto.NotificationDto;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class NotificationQueue {
-    private static NotificationQueue notificationQueue;
-    public static NotificationQueue getList(){
+    private static ObservableList<NotificationDto> notificationQueue;
+    public static ObservableList<NotificationDto> getList(){
         if(notificationQueue == null)
-            notificationQueue = new NotificationQueue();
+            notificationQueue = FXCollections.observableArrayList();
 
         return notificationQueue;
     }

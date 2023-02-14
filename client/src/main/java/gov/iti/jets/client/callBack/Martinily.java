@@ -1,18 +1,20 @@
 package gov.iti.jets.client.callBack;
 
 
-import gov.iti.jets.client.Dina.ContactList;
-import gov.iti.jets.client.Dina.InvitationQueue;
-import gov.iti.jets.client.Dina.MessagesQueue;
+import gov.iti.jets.client.Dina.*;
 import gov.iti.jets.client.Util.ConnectionFlag;
 import gov.iti.jets.client.network.service.RMIManager;
 import gov.iti.jets.client.network.service.SendMessage;
 import gov.iti.jets.common.dto.ContactDto;
 import gov.iti.jets.common.dto.InvitationDto;
 import gov.iti.jets.common.dto.MessageDto;
+import gov.iti.jets.common.dto.UserSessionDto;
 import gov.iti.jets.common.network.client.IClient;
 import gov.iti.jets.common.network.server.IServer;
 import gov.iti.jets.common.util.Constants;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
@@ -30,19 +32,19 @@ public class Martinily extends UnicastRemoteObject implements IClient {
 
     @Override
     public void receive() throws RemoteException {
+        System.out.println("recivemsg");
         ConnectionFlag.getInstance().connectedFlag = true;
     }
 
     @Override
-    public void receiveMessage(long chatId, String senderId, String message) throws RemoteException {
-        MessageDto messageDto = new MessageDto();
-        messageDto.setMessage(message);
-        messageDto.setSenderId(senderId);
-
+    public void receiveMessage(long chatId, MessageDto messageDto) throws RemoteException {
+        System.out.println(chatId + messageDto.getMessage() + messageDto.getSenderId());
         if(!MessagesQueue.getList().containsKey(chatId)){
-            List<MessageDto> messageDtoList = new LinkedList<>();
+            ObservableList<MessageDto> messageDtoList = FXCollections.observableArrayList();
             messageDtoList.add(messageDto);
             MessagesQueue.getList().put(chatId,messageDtoList);
+            System.out.println(MessagesQueue.getList().get(chatId).get(MessagesQueue.getList().get(chatId).size()-1));
+
         }else{
             MessagesQueue.getList().get(chatId).add(messageDto);
         }
@@ -59,9 +61,10 @@ public class Martinily extends UnicastRemoteObject implements IClient {
     }
 
     @Override
-    public void addFriend(ContactDto contactDto) throws RemoteException {
+    public void addFriend(List<ContactDto> contactDtoList) throws RemoteException {
         //Add contact element to contact list
-        ContactList.getList().add(contactDto);
+        for (ContactDto contactDto : contactDtoList)
+            ContactList.getList().add(contactDto);
     }
 
     @Override
@@ -102,6 +105,7 @@ public class Martinily extends UnicastRemoteObject implements IClient {
     }
 
     @Override
+<<<<<<< HEAD
     public void receiveMessageBot(long chatId, String senderId, String message, String messageFromBot) throws RemoteException {
         MessageDto messageDto = new MessageDto();
         messageDto.setMessage(message);
@@ -123,5 +127,17 @@ public class Martinily extends UnicastRemoteObject implements IClient {
         }
         server.sendMessage(chatId, senderId, messageFromBot); // replace senderId with this receiver id
 
+=======
+    public void addNewSessetion(UserSessionDto userSessionDto) throws RemoteException {
+        //Clear and add new session to contact list
+        ContactList.getList().clear();
+        ContactList.getList().addAll(userSessionDto.getContactListDto());
+        //Clear and add new session to invitation queue
+        InvitationQueue.getList().clear();
+        InvitationQueue.getList().addAll(userSessionDto.getInvitationListDto());
+        //Clear and add new session to chat queue
+        ChatList.getList().clear();
+        ChatList.getList().addAll(userSessionDto.getChatListDto());
+>>>>>>> origin/develop
     }
 }

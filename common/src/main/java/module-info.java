@@ -14,4 +14,5 @@ module gov.iti.jets.common {
     exports gov.iti.jets.common.util;
     exports gov.iti.jets.common.network.client;
     exports gov.iti.jets.common.network.server;
+    exports gov.iti.jets.common.dto.Interfaces;
 }
