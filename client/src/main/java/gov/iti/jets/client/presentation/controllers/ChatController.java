@@ -599,7 +599,7 @@ public class ChatController implements Initializable {
         Button yesButton = new Button("Logout");
         yesButton.setStyle("-fx-background-color: rgba(253,68,68,0.62);");
         yesButton.setMinWidth(150);
-        Button noButton = new Button("Exit");
+        Button noButton = new Button("Cancel");
         noButton.setStyle("-fx-background-color: #00ff5d;");
         noButton.setMinWidth(150);
 
@@ -615,13 +615,6 @@ public class ChatController implements Initializable {
         });
 
         noButton.setOnAction(e -> {
-            try {
-                LogoutService.logout(true);
-                SceneManager s =SceneManager.getSceneManager();
-                s.switchToLoginScene();
-            } catch (NotBoundException | RemoteException ex) {
-                ex.printStackTrace();
-            }
             window.close();
         });
 
