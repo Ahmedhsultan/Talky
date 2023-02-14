@@ -2,13 +2,24 @@ package gov.iti.jets.server.service;
 
 import gov.iti.jets.common.dto.ConnectionDto;
 import gov.iti.jets.server.Util.Queues.ConnectedClientsMap;
+import gov.iti.jets.server.Util.Queues.StatsLists;
+import gov.iti.jets.server.controller.ConnectionController;
+import gov.iti.jets.server.controller.IServerController;
+import gov.iti.jets.server.controller.UserController;
 import gov.iti.jets.server.entity.statistics.CountryStat;
 import gov.iti.jets.server.entity.statistics.GenderStat;
 import gov.iti.jets.server.entity.statistics.UserStatusStat;
+import gov.iti.jets.server.network.RMIManager;
 import gov.iti.jets.server.persistence.ServerDao;
 import gov.iti.jets.server.persistence.dao.UserDao;
+import javafx.collections.FXCollections;
+import javafx.scene.chart.PieChart;
 
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+import java.rmi.server.UnicastRemoteObject;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
@@ -62,4 +73,37 @@ public class ServerService {
         for (Map.Entry<String, ConnectionDto> entry : ConnectedClientsMap.getList().entrySet())
             entry.getValue().getIClient().receiveAnnouncement(message);
     }
+
+    public void startServer() {
+        try {
+            Registry reg = RMIManager.getRegistry();
+            reg.rebind("register", new UserController());
+            reg.rebind("iserver", new IServerController());
+            reg.rebind("connection", new ConnectionController());
+
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+
+    }
+    public void stopServer() {
+        try {
+            Registry reg = RMIManager.getRegistry();
+            reg.unbind("register");
+            reg.unbind("iserver");
+            reg.unbind("connection");
+            RMIManager.removeRegistry();
+            if (UnicastRemoteObject.unexportObject(reg, true)) {
+                System.out.println("Registry removed!");
+            } else {
+                System.out.println("Registry can not be removed.");
+            }
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        } catch (NotBoundException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 }

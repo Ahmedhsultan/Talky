@@ -12,7 +12,7 @@
    <left>
       <VBox prefHeight="400.0" prefWidth="158.0" style="-fx-background-color: #6713d2;" BorderPane.alignment="CENTER">
          <children>
-            <JFXToggleButton onMouseClicked="#startStopServer" prefHeight="47.0" prefWidth="163.0" style="-fx-background-color: #6713d2; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #ffffff;" text="Start" />
+            <JFXToggleButton fx:id="startStopBtn" onMouseClicked="#startStopServer" prefHeight="47.0" prefWidth="163.0" style="-fx-background-color: #6713d2; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #ffffff;" text="Start" />
             <JFXButton onMouseClicked="#register" prefHeight="46.0" prefWidth="165.0" style="-fx-background-color: #6713d2; -fx-border-width: 0px 0px 2px 0px; -fx-border-color: #FFFFFF;" text="Register" />
             <JFXButton onMouseClicked="#sendAnnounce" prefHeight="45.0" prefWidth="164.0" style="-fx-background-color: #6713d2; -fx-border-color: #FFFFFF; -fx-border-width: 0px 0px 2px 0px;" text="Send Announcement" />
             <JFXButton onMouseClicked="#statistics" prefHeight="43.0" prefWidth="158.0" style="-fx-background-color: #6713d2; -fx-border-color: #FFFFFF; -fx-border-width: 0px 0px 2px 0px;" text="Statistics" />

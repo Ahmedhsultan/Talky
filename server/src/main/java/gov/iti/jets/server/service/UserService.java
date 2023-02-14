@@ -7,9 +7,13 @@ import gov.iti.jets.common.dto.UserSessionDto;
 import gov.iti.jets.common.dto.registration.UserRegistrationDto;
 import gov.iti.jets.common.util.Constants;
 import gov.iti.jets.common.util.Validation;
+import gov.iti.jets.server.Util.Queues.StatsLists;
 import gov.iti.jets.server.entity.User;
 import gov.iti.jets.server.mapper.UserMapper;
 import gov.iti.jets.server.persistence.dao.UserDao;
+import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.scene.chart.PieChart;
 
 import java.io.IOException;
 import java.net.URLDecoder;
@@ -21,11 +25,13 @@ public class UserService {
     private UserDao dao;
     private UserMapper userMapper;
     private UserSessionService userSessionService;
+    private ServerService serverService;
 
     public UserService ()
    {
        dao = new UserDao();
        userMapper = new UserMapper();
+       serverService = new ServerService();
    }
 
 
@@ -63,7 +69,10 @@ public class UserService {
         }
         userSessionService=new UserSessionService(user);
         userSessionDto= userSessionService.getSessionDto();
-        System.out.println(userRegistrationDto);
+        StatsLists.getInstance().updateUserStats();
+        StatsLists.getInstance().updateGenderStats();
+        StatsLists.getInstance().updateCountryStats();
+
         return  userSessionDto;
     }
 
@@ -90,7 +99,7 @@ public class UserService {
             setOnlineStatus(phone, Constants.ONLINE_STATUS_AVAILABLE);
             userSessionService=new UserSessionService(user);
             UserSessionDto userSessionDto= userSessionService.getSessionDto();
-        System.out.println(userSessionDto);
+            StatsLists.getInstance().updateUserStats();
            return userSessionDto;
     }
 
@@ -134,6 +143,13 @@ public class UserService {
         UserDto userDto = userMapper.toDTO(user);
 
         return  userDto;
+    }
+    public void setAllOffline(){
+        try {
+            dao.setAllOffline();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 

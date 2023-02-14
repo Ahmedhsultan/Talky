@@ -1,5 +1,10 @@
 package gov.iti.jets.server.network;
 
+import gov.iti.jets.server.Util.Queues.StatsLists;
+import gov.iti.jets.server.entity.User;
+import gov.iti.jets.server.service.ServerService;
+import gov.iti.jets.server.service.UserService;
+
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -27,5 +32,12 @@ public class RMIManager {
             rmiManager = new RMIManager();
 
         return rmiManager.reg;
+    }
+    public static void removeRegistry(){
+        UserService userService = new UserService();
+        ServerService serverService = new ServerService();
+        userService.setAllOffline();
+        StatsLists.getInstance().updateUserStats();
+        rmiManager = null;
     }
 }

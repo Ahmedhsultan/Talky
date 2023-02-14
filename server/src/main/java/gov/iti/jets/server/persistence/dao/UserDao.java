@@ -106,4 +106,14 @@ public class UserDao extends BaseDaoImpl<User, String> {
             System.out.println(statement.executeUpdate());
         }
     }
+
+    public void setAllOffline()throws SQLException
+    {
+        String query = "update  user set " +
+                " is_online_status='offline';";
+
+        try (Connection connection =DBManagement.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
+            System.out.println(statement.executeUpdate());
+        }
+    }
 }
