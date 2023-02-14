@@ -53,10 +53,11 @@ public class InvitationService {
     public void acceptInvitation(long id) throws RemoteException {
         //Get invitation from db then delete it
         Invitation invitation = invitationDao.findById(id);
-        invitationDao.deleteById(id);
+
         //Notify other user
         IServerController iServerController = new IServerController();
         iServerController.addFriend(invitation.getSenderId(), invitation.getReceiverId());
+        invitationDao.deleteById(id);
     }
 
     public void refuseInvitation(long id) throws RemoteException {

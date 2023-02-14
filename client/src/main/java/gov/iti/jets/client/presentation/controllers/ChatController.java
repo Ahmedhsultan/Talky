@@ -326,6 +326,35 @@ public class ChatController implements Initializable {
             System.out.println(invitation.getUserCardDto().getImgPath());
 //            putImageOnPane(invitation.getUserCardDto().getImgPath(), invitation.getUserCardDto().getImage(), temp);
             putUserNameOnPane(invitation.getUserCardDto().getName(), temp);
+            System.out.println("fff");
+            Long invitationId = Long.parseLong(((Label) (temp.lookup("#invitId"))).getText());
+            JFXButton accept = (JFXButton) (temp.getChildren().get(4));
+            System.out.println(" " +accept.getText() + accept.getId());
+            accept.setOnAction(e->{
+                Registry reg = null;
+                System.out.println("Accept invitation" + invitationId);
+                try {
+                    reg = RMIManager.getRegistry();
+                    new InvitationService().acceptInvit(invitationId);
+                } catch (RemoteException ex) {
+                    System.out.println(ex.getMessage());
+                    throw new RuntimeException(ex);
+                }
+            });
+
+            JFXButton decline = (JFXButton) (temp.getChildren().get(5));
+            System.out.println(" " +decline.getText() + decline.getId());
+            decline.setOnAction(e->{
+                Registry reg = null;
+                System.out.println("Decline invitation");
+                try {
+                    reg = RMIManager.getRegistry();
+                    new InvitationService().rejectInvit(invitationId);
+                } catch (RemoteException ex) {
+                    System.out.println(ex.getMessage());
+                    throw new RuntimeException(ex);
+                }
+            });
             paneObservableList.add(temp);
         }
 
