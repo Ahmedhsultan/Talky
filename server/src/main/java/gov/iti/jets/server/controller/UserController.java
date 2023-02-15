@@ -47,6 +47,8 @@ public class UserController extends UnicastRemoteObject implements UserRemote {
         connectionDto.setUserDto(userSessionDto.getUser());
         connectionDto.setIClient(iClient);
 
+        if (ConnectedClientsMap.getList().containsKey(phone))
+            throw new RemoteException("Other user User this Acount");
         ConnectionController connectionController = new ConnectionController();
         connectionController.connect(connectionDto);
         //Notify user with his session data

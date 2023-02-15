@@ -8,13 +8,17 @@ import gov.iti.jets.server.persistence.dao.UserDao;
 
 import java.rmi.RemoteException;
 import java.sql.SQLException;
+import java.util.Iterator;
 
 public class CheckConnectedClientStatus implements Runnable{
     @Override
     public void run() {
         while (true){
             UserDao userDao = new UserDao();
-            for (ConnectionDto connectionDto : ConnectedClientsMap.getList().values()) {
+//            for (ConnectionDto connectionDto : ConnectedClientsMap.getList().values()) {
+            Iterator<ConnectionDto> iterator = ConnectedClientsMap.getList().values().iterator();
+            while (iterator.hasNext()) {
+                ConnectionDto connectionDto = iterator.next();
                 try {
                     connectionDto.getIClient().receive();
                     userDao.setOnlineStatus(connectionDto.getUserDto().getId(),Constants.ONLINE_STATUS_AVAILABLE);
@@ -22,7 +26,8 @@ public class CheckConnectedClientStatus implements Runnable{
                 }catch (RemoteException ex){
                     try {
                         if (ConnectedClientsMap.getList().containsKey(connectionDto.getUserDto().getId())){
-                            ConnectedClientsMap.getList().remove(connectionDto.getUserDto().getId());
+//                            ConnectedClientsMap.getList().remove(connectionDto.getUserDto().getId());
+                            iterator.remove();
                             userDao.setOnlineStatus(connectionDto.getUserDto().getId(), Constants.ONLINE_STATUS_OFFLINE);
                             System.out.println( connectionDto.getUserDto().getId() + Constants.ONLINE_STATUS_OFFLINE);
                         }
