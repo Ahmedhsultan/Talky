@@ -1,6 +1,6 @@
 package gov.iti.jets.client.Util;
 
-import gov.iti.jets.client.Dina.*;
+import gov.iti.jets.client.Queues.*;
 
 public class ClearQueues {
     public static void clearAllQueues(){

@@ -3,6 +3,7 @@ package gov.iti.jets.client.callBack;
 
 import gov.iti.jets.client.Queues.*;
 import gov.iti.jets.client.Util.AlertWindow;
+import gov.iti.jets.client.Util.ClearQueues;
 import gov.iti.jets.client.Util.ConnectionFlag;
 import gov.iti.jets.client.network.service.PullOnlineUsersFromServer;
 import gov.iti.jets.client.network.service.RMIManager;
