@@ -59,5 +59,6 @@
          </font>
       </Label>
       <Label fx:id="chatID" layoutX="10.0" layoutY="10.0" />
+      <Label id="userPhoneNumber" fx:id="userPhoneNumber" text="Label" visible="false" />
    </children>
 </AnchorPane>

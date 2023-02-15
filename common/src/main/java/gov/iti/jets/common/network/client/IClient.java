@@ -6,8 +6,10 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public interface IClient extends Remote {
+//    static Map<Long, MessageDto>change = new HashMap<>();
     public void receive() throws RemoteException;
     public void receiveMessage(long chatId, MessageDto messageDto) throws RemoteException;
     public void addToGroup(String userId, long chatId) throws RemoteException;

@@ -2,7 +2,6 @@ package gov.iti.jets.client.callBack;
 
 
 import gov.iti.jets.client.Dina.*;
-import gov.iti.jets.client.Util.AlertWindow;
 import gov.iti.jets.client.Util.ConnectionFlag;
 import gov.iti.jets.client.network.service.PullOnlineUsersFromServer;
 import gov.iti.jets.client.network.service.RMIManager;
@@ -25,9 +24,11 @@ import java.nio.file.StandardOpenOption;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 public class Martinily extends UnicastRemoteObject implements IClient {
     public Martinily() throws RemoteException {
@@ -41,13 +42,35 @@ public class Martinily extends UnicastRemoteObject implements IClient {
 
     @Override
     public void receiveMessage(long chatId, MessageDto messageDto) throws RemoteException {
-        if(!MessagesQueue.getList().containsKey(chatId)){
-            ObservableList<MessageDto> messageDtoList = FXCollections.observableArrayList();
-            messageDtoList.add(messageDto);
-            MessagesQueue.getList().put(chatId,messageDtoList);
-        }else{
-            MessagesQueue.getList().get(chatId).add(messageDto);
-        }
+//        System.out.println(chatId + messageDto.getMessage() + messageDto.getSenderId());
+
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                if(!MessagesQueue.getList().containsKey(chatId)){
+                    ObservableList<MessageDto> messageDtoList = FXCollections.observableArrayList();
+                    messageDtoList.add(messageDto);
+                    MessagesQueue.getList().put(chatId,messageDtoList);
+//            System.out.println(MessagesQueue.getList().get(chatId).get(MessagesQueue.getList().get(chatId).size()-1));
+
+                }else{
+                    MessagesQueue.getList().get(chatId).add(messageDto);
+
+                   if(MessagesQueue.getList().containsKey(-1))
+                       MessagesQueue.getList().remove(-1);
+                   else{
+                       ObservableList<MessageDto> l = FXCollections.observableArrayList();   //honors to Amr
+                       l.add(new MessageDto());
+                       MessagesQueue.getList().put(-1l, l);
+                   }
+
+                }
+
+            }
+        });
+        MessagesQueue.change.clear();
+        MessagesQueue.change.put(chatId, messageDto);
+
     }
 
     @Override

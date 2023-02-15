@@ -1,7 +1,9 @@
 package gov.iti.jets.client.presentation.controllers;
 
 
+import com.google.common.io.Files;
 import com.jfoenix.controls.JFXButton;
+import gov.iti.jets.client.Dina.*;
 import gov.iti.jets.client.Dina.ContactList;
 import gov.iti.jets.client.Dina.InvitationQueue;
 import gov.iti.jets.client.Dina.MessagesQueue;
@@ -13,13 +15,19 @@ import gov.iti.jets.common.dto.*;
 import gov.iti.jets.common.network.server.IServer;
 import gov.iti.jets.common.util.Constants;
 import gov.iti.jets.common.util.Validation;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.MapChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -27,12 +35,14 @@ import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
@@ -45,6 +55,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Duration;
 
 import java.io.File;
 import java.io.IOException;
@@ -57,6 +68,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class ChatController implements Initializable {
@@ -128,29 +140,41 @@ public class ChatController implements Initializable {
     private Button fileBtn;
 
 
+    @FXML
+    private Circle notificationCountCircle;
+    @FXML
+    private Label notificationCountLabel;
+    @FXML
+    private Button closeChatBtn;
+    @FXML
+    private ButtonBar firstButtonBar;
+    @FXML
+    private ButtonBar secondButtonBar;
 
+    private UserSessionDto userSessionDto;
 
-//    private UserSessionDto userSessionDto;
-
-    ObservableList <? extends MessageDto> messages = FXCollections.observableArrayList();
     ObservableList<Pane> paneObservableList = FXCollections.observableArrayList();
     ObservableList<Pane> notificationObservableList = FXCollections.observableArrayList();
     ObservableList<Pane> messagesObservableList = FXCollections.observableArrayList();
+    ObservableList<Pane> contactsObservableList = FXCollections.observableArrayList();
+    ObservableList<Pane> invitationsObservableList = FXCollections.observableArrayList();
+    ObservableList<Pane> chatsObservableList = FXCollections.observableArrayList();
 
-    Long currentChat = 1l;
-    Long prevChat = null;
+    int notificationCount = 0;
+    Long currentChat = null;
+    boolean isChatClosed = true;
+    boolean isBarsVisible = false;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         PaneManager.setPrimaryPane("containerPane", containerPane);
-        createFontsList();
-//        if(PasswordLoginController.userSessionDto != null)
-//            userSessionDto = PasswordLoginController.userSessionDto;
-//        else
-//            userSessionDto = RegisterController.userSessionDto;
-        leftList.setItems(paneObservableList);
-        chatsButton.fire();
-        selectChat();
-        checkMessages();
+        closeChatBtn.fire();
+
+        resetMessageOptions();
+        if (PasswordLoginController.userSessionDto != null)
+            userSessionDto = PasswordLoginController.userSessionDto;
+        else
+            userSessionDto = RegisterController.userSessionDto;
         fileBtn.setOnAction(ev->{
             FileChooser fileChooser = new FileChooser();
             File file = fileChooser.showOpenDialog(null);
@@ -165,106 +189,180 @@ public class ChatController implements Initializable {
                 e.printStackTrace();
             }
         });
+        chatsButton.fire();
+        selectChat();
+        checkInvitations();
+        checkNotifications();
+        checkContacts();
+        checkNewSentMessages();
     }
 
-    private void createFontsList() {
+    private void resetMessageOptions() {
         ObservableList<String> fontFamilies = FXCollections.observableArrayList(Font.getFamilies());
         fonts.setItems(fontFamilies);
         fonts.setValue(fontFamilies.get(0));
-        fontSize.setValue(15);
+        fontSize.setValue(35);
+        textColor.setValue(Color.rgb(103, 19, 210));
+        highlight.setValue(Color.TRANSPARENT);
+        bold.setSelected(true);
+        italic.setSelected(false);
+        underline.setSelected(false);
+
     }
-//    [MessageDto(message=, senderId=01272934956, fontSize=0, bold=false, italic=false,
-//    underline=false, font=null, textColor=0xffffffff, highlightColor=0xffffffff, timestamp=21:34)]
-//    added at key 1
-    private void checkMessages() {
+
+
+    private void checkNewSentMessages() {
         MessagesQueue.getList().addListener(new MapChangeListener<Long, List<MessageDto>>() {
             @Override
             public void onChanged(Change<? extends Long, ? extends List<MessageDto>> change) {
-                if(currentPane.getText().equals("Chats"))
-                    chatsButton.fire();
-                System.out.println("before");
-                if(currentChat.equals(change.getKey())){
-                    if(change.getValueAdded().get(change.getValueAdded().size()-1).getSenderId().equals(MyID.getInstance().getMyId())) {
-                        Platform.runLater(() -> createMessage(change.getValueAdded().get(change.getValueAdded().size()-1), 1));
-                        System.out.println("after");
-                    }
-                    else {
-                        Platform.runLater(() -> createMessage(change.getValueAdded().get(change.getValueAdded().size()-1), 2));
-                        System.out.println("after2");
-                    }
+                if (currentPane.getText().equals("Chats")) {
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            createOneToOneChatList();
+
+                        }
+                    });
                 }
-                else if(change.getValueAdded().get(change.getValueAdded().size()-1).getSenderId()!=MyID.getInstance().getMyId()) {
-                    Pane temp = PaneManager.getPaneManager().putNotificationPane();
-//                ((ContactDto)(ContactList.getList().stream().filter(x->x.getPhoneNumber()==change.getValueAdded().get(change.getValueAdded().size()-1).getSenderId()))).getName()+" sent you a message");
-                    ((Label)(temp.lookup("#notificationMessage"))).setText(change.toString());
-                    notificationObservableList.add(temp);
+                if (currentChat != null && currentChat.equals(MessagesQueue.change.keySet().toArray()[0])) {
+                    if (MessagesQueue.change.get(MessagesQueue.change.keySet().toArray()[0]).getSenderId().equals(MyID.getInstance().getMyId())) {
+                        Platform.runLater(() -> {
+                            createMessage(MessagesQueue.change.get(MessagesQueue.change.keySet().toArray()[0]), 1);
+                        });
+                    } else {
+                        createMessage(MessagesQueue.change.get(MessagesQueue.change.keySet().toArray()[0]), 2);
+                    }
+                } else if (!currentPane.getText().equals("Notifications")) {
+                    notificationCountLabel.setText(++notificationCount + "");
+                    notificationCountCircle.setVisible(true);
+                    notificationCountLabel.setVisible(true);
                 }
-
-//                ob.add(createMessage(Color.DARKBLUE, messageField.getText(), 2));
-//                chatVBox.setItems(ob);
-
-//                System.out.println(change);
-
-//                System.out.println(MessagesQueue.getList());
             }
         });
     }
+
+
+    private void checkInvitations() {
+        InvitationQueue.getList().addListener(new ListChangeListener<InvitationDto>() {
+            @Override
+            public void onChanged(Change<? extends InvitationDto> change) {
+                if (currentPane.getText().equals("Invitations")) {
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            createInvitationList();
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+    private void checkContacts() {
+        ContactList.getList().addListener(new ListChangeListener<ContactDto>() {
+            @Override
+            public void onChanged(Change<? extends ContactDto> change) {
+                if (currentPane.getText().equals("Contacts")) {
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            createContactList();
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+    private void checkNotifications() {
+        NotificationQueue.getList().addListener(new ListChangeListener<NotificationDto>() {
+            @Override
+            public void onChanged(Change<? extends NotificationDto> change) {
+                if (currentPane.getText().equals("Notifications")) {
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            createNotificationList();
+                        }
+
+                    });
+                }
+            }
+        });
+    }
+
+
+//    private void checkNewGroup() {
+//        ChatList.getList().addListener(new ListChangeListener<ChatDto>() {
+//            @Override
+//            public void onChanged(Change<? extends ChatDto> change) {
+//                if (currentPane.getText().equals("Chats")) {
+//                    Platform.runLater(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                          createNewGroupPane(change);
+//                        }
+//                    });
+//                }
+//            }
+//        });
+//    }
+//    private void createNewGroupPane(ListChangeListener.Change<? extends ChatDto> change) {
+//        Pane temp = PaneManager.getPaneManager().putRecentChatCard();
+//        ((Label) (temp.lookup("#chatID"))).setText(change.getId()+"");
+////            putImageOnPane(chat.getPicture_icon(), temp);
+////            putStatusOnPane(ContactList.getList().stream().filter(c-> c.getPhoneNumber() == v.get(v.size()-1).getSenderId()).collect(Collectors.toList()).get(0).getIsOnlineStatus(), temp);
+////            putUserNameOnPane(ContactList.getList().stream().filter(c-> c.getPhoneNumber() == v.get(v.size()-1).getSenderId()).collect(Collectors.toList()).get(0).getName(), temp);
+//        putUserNameOnPane(change.getName(), temp);
+//        putTimeOnPane(change.getModified_on().toString(), temp);
+//        chatsObservableList.add(temp);
+//
+//    }
+
 
     private void selectChat() throws NumberFormatException {
         leftList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Pane>() {
             @Override
             public void changed(ObservableValue<? extends Pane> observable, Pane oldValue, Pane newValue) {
-                if(newValue!=null)
-                    if((currentPane.getText().equals("Contacts") || currentPane.getText().equals("Chats"))) {
-                        currentChat = Long.parseLong (((Label)(newValue.lookup("#chatID"))).getText());
-                        if(oldValue != null)
-                            prevChat = Long.parseLong (((Label)(oldValue.lookup("#chatID"))).getText());
-                        if(currentChat != prevChat){
-                            chatName.setText(((Label) (newValue.lookup("#userName"))).getText());
-//                          chatIcon.setFill(new ImagePattern(new Image(Constants.byteArrayToImage(arr, img).getPath(),100,100,false,true)));
-                            messagesObservableList.clear();
-                            chatVBox.getChildren().clear();
-                            if(MessagesQueue.getList().containsKey(currentChat)) {
-                                //System.out.println(MessagesQueue.getList());
-//                                System.out.println(MessagesQueue.getList().get(currentChat));
-                                    for (MessageDto message : MessagesQueue.getList().get(currentChat)) {
-                                        if (message.getSenderId().equals(MyID.getInstance().getMyId())) {
-                                            createMessage(message, 1);
-                                        } else {
-                                            createMessage(message, 2);
-                                        }
-                                    }
+                if (newValue != null) {
+                    if (currentPane.getText().equals("Contacts") || currentPane.getText().equals("Chats")) {
+                        chatVBox.getChildren().clear();
+                        if (isChatClosed) {
+                            rightAnchorPane.getChildren().remove(rightAnchorPane.getChildren().size() - 1);
+                            isChatClosed = false;
+                        }
+                    }
+                    if (currentPane.getText().equals("Contacts")) {
+                        for (ChatDto chat : ChatList.getList()) {
+                            if (chat.getMembersIds().size() == 2 && (chat.getMembersIds().get(0).equals(((Label) (newValue.lookup("#userPhoneNumber"))).getText()) || chat.getMembersIds().get(1).equals(((Label) (newValue.lookup("#userPhoneNumber"))).getText()))) {
+                                currentChat = chat.getId();
+                            }
+                        }
 
+                    } else if (currentPane.getText().equals("Chats")) {
+                        currentChat = Long.parseLong(((Label) (newValue.lookup("#chatID"))).getText());
+                    }
+                    chatName.setText(((Label) (newValue.lookup("#userName"))).getText());
+//                          chatIcon.setFill(new ImagePattern(new Image(Constants.byteArrayToImage(arr, img).getPath(),100,100,false,true)));
+
+                    if (MessagesQueue.getList().containsKey(currentChat)) {
+                        for (MessageDto message : MessagesQueue.getList().get(currentChat)) {
+                            if (message.getSenderId().equals(userSessionDto.getUser().getId())) {
+                                createMessage(message, 1);
+                            } else {
+                                createMessage(message, 2);
                             }
                         }
                     }
+                }
+
             }
         });
     }
 
-//    long i =0;
-
-
-
     @FXML
     private void openChats(ActionEvent actionEvent) {
-
-//        ObservableList<MessageDto> ob = FXCollections.observableArrayList();
-//
-//        MessageDto messageDto = new MessageDto();
-//        messageDto.setMessage(messageField.getText().trim());
-//        messageDto.setFont(fonts.getSelectionModel().getSelectedItem());
-//        messageDto.setBold(bold.isSelected());
-//        messageDto.setItalic(italic.isSelected());
-//        messageDto.setUnderline(underline.isSelected());
-//        messageDto.setTextColor(textColor.getValue().toString());
-//        messageDto.setHighlightColor(highlight.getValue().toString());
-//        messageDto.setSenderId(userSessionDto.getUser().getId());
-//        messageDto.setTimestamp( LocalTime.now().getHour() + ":" + LocalTime.now().getMinute() + "");
-//
-//        ob.add(messageDto);
-//        MessagesQueue.getList().put(i++,ob);
-//        b.add(1.0);
+//        NotificationQueue.getList().add(i, new NotificationDto(i++, 012, 011, "add", new Date(40000), "add me", false));
         searchField.setVisible(true);
         contactsButton.setStyle(null);
         invitationsButton.setStyle(null);
@@ -273,53 +371,65 @@ public class ChatController implements Initializable {
         leftList.setId("");
         deleteAddDelContact();
         chatsButton.setStyle("-fx-border-width: 0 0 2px 5px; -fx-border-color: purple;");
-        paneObservableList.clear();
-        MessagesQueue.getList().forEach((k, v)->{
-            Pane temp = PaneManager.getPaneManager().putRecentChatCard();
-            ((Label)(temp.lookup("#chatID"))).setText(k+"");
-            (temp.lookup("#chatID")).setVisible(false);
+        createOneToOneChatList();
+    }
+
+    private void createOneToOneChatList() {
+        chatsObservableList.clear();
+        leftList.setItems(chatsObservableList);
+        MessagesQueue.getList().forEach((k, v) -> {
+            if(k != -1) {
+                Pane temp = PaneManager.getPaneManager().putRecentChatCard();
+                ((Label) (temp.lookup("#chatID"))).setText(k.toString());
 //            putImageOnPane(chat.getPicture_icon(), temp);
 //            putStatusOnPane(ContactList.getList().stream().filter(c-> c.getPhoneNumber() == v.get(v.size()-1).getSenderId()).collect(Collectors.toList()).get(0).getIsOnlineStatus(), temp);
 //            putUserNameOnPane(ContactList.getList().stream().filter(c-> c.getPhoneNumber() == v.get(v.size()-1).getSenderId()).collect(Collectors.toList()).get(0).getName(), temp);
-            putMessageOnPane(v.get(v.size()-1).getMessage(), temp);
-            putTimeOnPane(v.get(v.size()-1).getTimestamp(), temp);
-            paneObservableList.add(temp);
+                putMessageOnPane(v.get(v.size() - 1).getMessage(), temp);
+                putTimeOnPane(v.get(v.size() - 1).getTimestamp(), temp);
+                putUserNameOnPane(v.get(v.size() - 1).getSenderId(), temp);
+                chatsObservableList.add(temp);
+            }
         });
 
-        leftList.setItems(paneObservableList);
+//        chatsObservableList.stream().sorted((p, n) -> Integer.parseInt(((Label) (p.lookup("#timestamp"))).getText()));
     }
 
+    int x = 0;
 
     @FXML
     private void openContacts(ActionEvent actionEvent) {
-        long m = 1;
-
+//        InvitationQueue.getList().add(new InvitationDto(x++, "012", new UserCardDto(), null, null, false));
         searchField.setVisible(true);
         currentPane.setText("Contacts");
         invitationsButton.setStyle(null);
-        chatsButton.setStyle( null);
+        chatsButton.setStyle(null);
         notificationsButton.setStyle(null);
         leftList.setId("");
         deleteAddDelContact();
         contactsButton.setStyle("-fx-border-width: 0 0 2px 5px; -fx-border-color: purple;");
-        paneObservableList.clear();
+        createContactList();
+
+    }
+
+    private void createContactList() {
+        contactsObservableList.clear();
+        leftList.setItems(contactsObservableList);
         for (ContactDto contact : ContactList.getList()) {
             Pane temp = PaneManager.getPaneManager().putContactCard();
-            ((Label)(temp.lookup("#chatID"))).setText( m+"");
-            m++;
-            (temp.lookup("#chatID")).setVisible(false);
 //            putImageOnPane(contact.getPicture(), temp);
             putStatusOnPane(contact.getIsOnlineStatus(), temp);
             putUserNameOnPane(contact.getName(), temp);
+            putPhoneNumOnPane(contact.getPhoneNumber(), temp);
             putBioOnPane(contact.getBio(), temp);
             putOnlineStatusOnPane(contact.getIsOnlineStatus(), temp);
-            paneObservableList.add(temp);
+            contactsObservableList.add(temp);
         }
-        leftList.setItems(paneObservableList);
     }
+
 
     @FXML
     private void openInvitations(ActionEvent actionEvent) {
+//        ChatList.getList().add(new ChatDto(9, "habala",null, new Date(50000),null, "OneToOne", null));
         searchField.setVisible(true);
         currentPane.setText("Invitations");
         chatsButton.setStyle(null);
@@ -328,57 +438,86 @@ public class ChatController implements Initializable {
         leftList.setId("");
         deleteAddDelContact();
         invitationsButton.setStyle("-fx-border-width: 0 0 2px 5px; -fx-border-color: purple;");
-        paneObservableList.clear();
-//        for (InvitationDto invitation : userSessionDto.getInvitationListDto()) {
-//            Pane temp = PaneManager.getPaneManager().putInvitationCard();
-//            ((Label) (temp.lookup("#invitId"))).setText(invitation.getId() + "");
-//            (temp.lookup("#invitId")).setVisible(false);
-//            UserCardDto dto = new UserCardDto();
-//            ((Label) (temp.lookup("#userName"))).setText(dto.getName().toString());
-//            ((Label) (temp.lookup("#invitationDate"))).setText(invitation.getCreatedOn().toString());
-//        }
+        createInvitationList();
+    }
 
+    private void createInvitationList() {
+        invitationsObservableList.clear();
+        leftList.setItems(invitationsObservableList);
         for (InvitationDto invitation : InvitationQueue.getList()) {
             Pane temp = PaneManager.getPaneManager().putInvitationCard();
-            ((Label) (temp.lookup("#invitId"))).setText(invitation.getId() + "");
-            (temp.lookup("#invitId")).setVisible(false);
-            System.out.println(invitation.getUserCardDto().getImgPath());
-//            putImageOnPane(invitation.getUserCardDto().getImgPath(), invitation.getUserCardDto().getImage(), temp);
-            putUserNameOnPane(invitation.getUserCardDto().getName(), temp);
-            System.out.println("fff");
-            Long invitationId = Long.parseLong(((Label) (temp.lookup("#invitId"))).getText());
-            JFXButton accept = (JFXButton) (temp.getChildren().get(4));
-            System.out.println(" " +accept.getText() + accept.getId());
-            accept.setOnAction(e->{
-                Registry reg = null;
-                System.out.println("Accept invitation" + invitationId);
-                try {
-                    reg = RMIManager.getRegistry();
-                    new InvitationService().acceptInvit(invitationId);
-                } catch (RemoteException ex) {
-                    System.out.println(ex.getMessage());
-                    throw new RuntimeException(ex);
-                }
-            });
 
-            JFXButton decline = (JFXButton) (temp.getChildren().get(5));
-            System.out.println(" " +decline.getText() + decline.getId());
-            decline.setOnAction(e->{
-                Registry reg = null;
-                System.out.println("Decline invitation");
-                try {
-                    reg = RMIManager.getRegistry();
-                    new InvitationService().rejectInvit(invitationId);
-                } catch (RemoteException ex) {
-                    System.out.println(ex.getMessage());
-                    throw new RuntimeException(ex);
-                }
-            });
-            paneObservableList.add(temp);
+//            putImageOnPane(invitation., temp);
+            putUserNameOnPane(invitation.getReceiverId(), temp);
+//            paneObservableList.add(temp);
+            invitationsObservableList.add(temp);
         }
+    }
 
         leftList.setItems(paneObservableList);
     }
+//
+//    @FXML
+//    private void openInvitations(ActionEvent actionEvent) {
+//        searchField.setVisible(true);
+//        currentPane.setText("Invitations");
+//        chatsButton.setStyle(null);
+//        contactsButton.setStyle(null);
+//        notificationsButton.setStyle(null);
+//        leftList.setId("");
+//        deleteAddDelContact();
+//        invitationsButton.setStyle("-fx-border-width: 0 0 2px 5px; -fx-border-color: purple;");
+//        paneObservableList.clear();
+////        for (InvitationDto invitation : userSessionDto.getInvitationListDto()) {
+////            Pane temp = PaneManager.getPaneManager().putInvitationCard();
+////            ((Label) (temp.lookup("#invitId"))).setText(invitation.getId() + "");
+////            (temp.lookup("#invitId")).setVisible(false);
+////            UserCardDto dto = new UserCardDto();
+////            ((Label) (temp.lookup("#userName"))).setText(dto.getName().toString());
+////            ((Label) (temp.lookup("#invitationDate"))).setText(invitation.getCreatedOn().toString());
+////        }
+//
+//        for (InvitationDto invitation : InvitationQueue.getList()) {
+//            Pane temp = PaneManager.getPaneManager().putInvitationCard();
+//            ((Label) (temp.lookup("#invitId"))).setText(invitation.getId() + "");
+//            (temp.lookup("#invitId")).setVisible(false);
+//            System.out.println(invitation.getUserCardDto().getImgPath());
+////            putImageOnPane(invitation.getUserCardDto().getImgPath(), invitation.getUserCardDto().getImage(), temp);
+//            putUserNameOnPane(invitation.getUserCardDto().getName(), temp);
+//            System.out.println("fff");
+//            Long invitationId = Long.parseLong(((Label) (temp.lookup("#invitId"))).getText());
+//            JFXButton accept = (JFXButton) (temp.getChildren().get(4));
+//            System.out.println(" " +accept.getText() + accept.getId());
+//            accept.setOnAction(e->{
+//                Registry reg = null;
+//                System.out.println("Accept invitation" + invitationId);
+//                try {
+//                    reg = RMIManager.getRegistry();
+//                    new InvitationService().acceptInvit(invitationId);
+//                } catch (RemoteException ex) {
+//                    System.out.println(ex.getMessage());
+//                    throw new RuntimeException(ex);
+//                }
+//            });
+//
+//            JFXButton decline = (JFXButton) (temp.getChildren().get(5));
+//            System.out.println(" " +decline.getText() + decline.getId());
+//            decline.setOnAction(e->{
+//                Registry reg = null;
+//                System.out.println("Decline invitation");
+//                try {
+//                    reg = RMIManager.getRegistry();
+//                    new InvitationService().rejectInvit(invitationId);
+//                } catch (RemoteException ex) {
+//                    System.out.println(ex.getMessage());
+//                    throw new RuntimeException(ex);
+//                }
+//            });
+//            paneObservableList.add(temp);
+//        }
+//
+//        leftList.setItems(paneObservableList);
+//    }
 
     private void selectInvitation() {
         leftList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Pane>() {
@@ -415,13 +554,28 @@ public class ChatController implements Initializable {
     private void openNotifications(ActionEvent actionEvent) {
         searchField.setVisible(true);
         currentPane.setText("Notifications");
-        chatsButton.setStyle( null);
+        chatsButton.setStyle(null);
         contactsButton.setStyle(null);
         invitationsButton.setStyle(null);
         deleteAddDelContact();
         leftList.setId("");
-        notificationsButton.setStyle(  "-fx-border-width: 0 0 2px 5px; -fx-border-color: purple;");
+        notificationsButton.setStyle("-fx-border-width: 0 0 2px 5px; -fx-border-color: purple;");
+        notificationCount = 0;
+        notificationCountCircle.setVisible(false);
+        notificationCountLabel.setVisible(false);
+        createNotificationList();
+
+    }
+
+    private void createNotificationList() {
+        notificationObservableList.clear();
         leftList.setItems(notificationObservableList);
+        NotificationQueue.getList().forEach(n -> {
+            Pane temp = PaneManager.getPaneManager().putNotificationPane();
+            ((Label) (temp.lookup("#notificationMessage"))).setText(n.getStatus());
+            ((Label) (temp.lookup("#timestamp"))).setText(n.getCreated_on() + "");
+            notificationObservableList.add(temp);
+        });
     }
 
     @FXML
@@ -515,7 +669,7 @@ public class ChatController implements Initializable {
         deleteContactCard.setDisable(false);
         btnAddContacts.setVisible(true);
 
-        contactsButton.setStyle( "-fx-border-width: 0 0 2px 5px; -fx-border-color: purple;");
+        contactsButton.setStyle("-fx-border-width: 0 0 2px 5px; -fx-border-color: purple;");
         paneObservableList.clear();
         paneObservableList.add(temp);
         leftList.setItems(paneObservableList);
@@ -545,7 +699,8 @@ public class ChatController implements Initializable {
             }
         }
     }
-    private void deleteAddDelContact(){
+
+    private void deleteAddDelContact() {
         addIcon.setImage(new Image("image/icons-add.png"));
         addIcon.setDisable(false);
         addContactCard.setImage(null);
@@ -556,27 +711,35 @@ public class ChatController implements Initializable {
     }
 
     public void sendMessage(ActionEvent actionEvent) {
-        System.out.println("#" + Integer.toHexString(textColor.getValue().hashCode()));
-        MessageDto messageDto = new MessageDto();
-        messageDto.setMessage(messageField.getText().trim());
-        messageDto.setFont(fonts.getSelectionModel().getSelectedItem());
-        messageDto.setBold(true);
-        messageDto.setItalic(italic.isSelected());
-        messageDto.setUnderline(underline.isSelected());
-        messageDto.setTextColor("#" + Integer.toHexString(textColor.getValue().hashCode()));
-        messageDto.setHighlightColor("#" + Integer.toHexString(highlight.getValue().hashCode()));
-        messageDto.setSenderId(MyID.getInstance().getMyId());
-        messageDto.setFontSize((int)(fontSize.getValue()));
-        messageDto.setTimestamp( LocalTime.now().getHour() + ":" + LocalTime.now().getMinute() + "");
-        try {
-            SendMessage.send(currentChat, messageDto);
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        } catch (NotBoundException e) {
-            e.printStackTrace();
+        if(!messageField.getText().trim().isBlank()) {
+            MessageDto messageDto = new MessageDto();
+            messageDto.setMessage(messageField.getText().trim());
+            messageDto.setFont(fonts.getSelectionModel().getSelectedItem());
+            messageDto.setBold(true);
+            messageDto.setItalic(italic.isSelected());
+            messageDto.setUnderline(underline.isSelected());
+            messageDto.setTextColor("#" + Integer.toHexString(textColor.getValue().hashCode()));
+            messageDto.setHighlightColor("#" + Integer.toHexString(highlight.getValue().hashCode()));
+            messageDto.setSenderId(userSessionDto.getUser().getId());
+            messageDto.setFontSize((int) (fontSize.getValue()));
+            messageDto.setTimestamp(LocalTime.now().getHour() + ":" + LocalTime.now().getMinute() + "");
+            try {
+                SendMessage.send(currentChat, messageDto);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            } catch (NotBoundException e) {
+                e.printStackTrace();
+            }
+            messageField.setText("");
+            Animation animation = new Timeline(new KeyFrame(Duration.seconds(0.5), new KeyValue(rightScrollPane.vvalueProperty(), 1)));
+            animation.play();
         }
-
     }
+
+
+
+
+
 
     public void createMessage(MessageDto messageOptions, int chat) {
 
@@ -586,17 +749,15 @@ public class ChatController implements Initializable {
         HBox sentMessage = new HBox();
 
         if (chat == 1) {
-            sentMessage.getChildren().addAll(createBubble(messageOptions, Color.DARKBLUE));
-            chatVBox.setAlignment(Pos.BASELINE_RIGHT);
+            sentMessage.getChildren().addAll(createBubble(messageOptions, Color.web("#6713d2")));
+            sentMessage.setAlignment(Pos.BASELINE_RIGHT);
         } else {
-            sentMessage.getChildren().addAll(createBubble(messageOptions, Color.LIGHTBLUE));
-            chatVBox.setAlignment(Pos.BASELINE_LEFT);
+            sentMessage.getChildren().addAll(createBubble(messageOptions, Color.web("#cc208e")));
+            sentMessage.setAlignment(Pos.BASELINE_LEFT);
         }
 
         chatVBox.getChildren().add(sentMessage);
 
-//        sentMessage.setTranslateX(x);
-//        return sentMessage;
     }
 
     private Group createBubble(MessageDto messageOptions, Color bubbleColor) {
@@ -605,15 +766,15 @@ public class ChatController implements Initializable {
         messageTemp.setWrappingWidth(250);
         messageTemp.setFont(Font.font(messageOptions.getFont(), messageOptions.getFontSize()));
         messageTemp.setUnderline(messageOptions.isUnderline());
-        if(messageOptions.isBold()){
+        if (messageOptions.isBold()) {
             messageTemp.setStyle("-fx-font-weight: bold;");
         }
-        if(messageOptions.isItalic()) {
+        if (messageOptions.isItalic()) {
             messageTemp.setStyle("-fx-font-weight: italic;");
 
         }
         int messageWidth = (int) messageTemp.getLayoutBounds().getWidth();
-        System.out.println(messageWidth);
+//        System.out.println(messageWidth);
         int messageHeight = (int) messageTemp.getLayoutBounds().getHeight();
 
         Text timeTemp = new Text(messageOptions.getTimestamp());
@@ -627,7 +788,7 @@ public class ChatController implements Initializable {
         int nameWidth = (int) nameTemp.getLayoutBounds().getWidth();
 
         Rectangle bubble = new Rectangle();
-        if(nameWidth < messageWidth)
+        if (nameWidth < messageWidth)
             bubble.setWidth(messageWidth + 25);
         else
             bubble.setWidth(nameWidth + 25);
@@ -636,11 +797,12 @@ public class ChatController implements Initializable {
         bubble.setArcHeight(30);
         bubble.setArcWidth(30);
         bubble.setFill(bubbleColor);
+        bubble.setOpacity(0.3);
 
         Label nameLabel = new Label("Sender name");
         nameLabel.setFont(Font.font("Arial", 15));
         nameLabel.setTextFill(Color.ORANGE);
-        if(messageWidth > nameWidth)
+        if (messageWidth > nameWidth)
             nameLabel.setTranslateX((bubble.getWidth() - messageWidth) / 2);
         else
             nameLabel.setTranslateX((bubble.getWidth() - nameWidth) / 2);
@@ -651,16 +813,37 @@ public class ChatController implements Initializable {
         messageLabel.setMaxWidth(250);
         messageLabel.setFont(Font.font(messageOptions.getFont(), messageOptions.getFontSize()));
         messageLabel.setUnderline(messageOptions.isUnderline());
-        if(messageOptions.isBold()){
-            messageLabel.setStyle("-fx-font-weight: bold;");
+        FontWeight w;
+        if (messageOptions.isBold()) {
+             w = FontWeight.BOLD;
+//
         }
-        if(messageOptions.isItalic()) {
+        else {
+          w  = FontWeight.NORMAL;
+        }
+
+        FontPosture p ;
+        if (messageOptions.isItalic()) {
+            p = FontPosture.ITALIC;
+//            messageLabel.setStyle("-fx-font-weight: bold;");
+        }
+        else {
+          p  = FontPosture.REGULAR;
+        }
+
+
+//
+
+        Font font = Font.font(messageOptions.getFont(), w, p, messageOptions.getFontSize());
+        messageLabel.setFont(font);
+        if (messageOptions.isItalic()) {
             messageLabel.setStyle("-fx-font-weight: italic;");
 
         }
-        messageLabel.setStyle("-fx-text-fill:"+messageOptions.getTextColor()+";-fx-background-color:"+messageOptions.getHighlightColor()+";");
+
+        messageLabel.setStyle("-fx-text-fill:" + messageOptions.getTextColor() + ";-fx-background-color:" + messageOptions.getHighlightColor() + ";");
         messageLabel.setTranslateX((bubble.getWidth() - messageWidth) / 2);
-        messageLabel.setTranslateY(nameHeight+ 7);
+        messageLabel.setTranslateY(nameHeight + 7);
 
         Label timeLabel = new Label(messageOptions.getTimestamp());
         timeLabel.setFont(Font.font("Arial", 10));
@@ -669,6 +852,18 @@ public class ChatController implements Initializable {
         timeLabel.setTranslateY(messageHeight + nameHeight + 10);
         Group group = new Group(bubble, nameLabel, messageLabel, timeLabel);
         return group;
+    }
+
+    File file = null;
+
+    public void sendFile(ActionEvent actionEvent) {
+        FileChooser fc = new FileChooser();
+        fc.setTitle("Select the File you want . . .");
+        file = fc.showOpenDialog(null);
+        if (file != null) {
+            createAttachmentMessage();
+        }
+
     }
 
     @FXML
@@ -718,4 +913,50 @@ public class ChatController implements Initializable {
         window.setScene(scene);
         window.showAndWait();
     }
+
+    private void createAttachmentMessage() {
+        HBox hbox = new HBox();
+        ImageView image = new ImageView(new Image(String.format("/image/%sEX.png", Files.getFileExtension(file.getPath())), 50, 50, false, true));
+        image.setTranslateX(5);
+        Label fileName = new Label(file.getName());
+        fileName.setStyle("-fx-font-size: 12px;  -fx-font-weight: bold; -fx-text-fill: #333333; -fx-text-margin:50px;");
+        hbox.setSpacing(20);
+        hbox.getChildren().addAll(image, fileName);
+        hbox.setMaxWidth(new Text(file.getName()).getLayoutBounds().getWidth() + 100);
+        hbox.setMinHeight(70);
+        image.setTranslateY(10);
+        fileName.setTranslateY(25);
+        hbox.setStyle("-fx-background-color: #e9e1e1; -fx-background-radius: 20; -fx-border-radius:20;");
+        try {
+            new FileTransferService().sendFile(currentChat, userSessionDto.getUser().getId(), file);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+//       chatVBox.getChildren().add(hbox);
+        messagesObservableList.add(hbox);
+    }
+
+    public void closeChat(ActionEvent actionEvent) {
+
+        rightAnchorPane.getChildren().add(0, new ImageView(new Image(String.format("/image/%s.gif", (int) (Math.random() * (6)) + 1 + ""), 506, 633, false, false)));
+        rightAnchorPane.getChildren().get(0).toFront();
+        isChatClosed = true;
+
+
+    }
+
+    public void edit(ActionEvent actionEvent) {
+        if(isBarsVisible){
+            firstButtonBar.setVisible(false);
+            secondButtonBar.setVisible(false);
+            isBarsVisible = false;
+        }
+        else{
+            firstButtonBar.setVisible(true);
+            secondButtonBar.setVisible(true);
+            isBarsVisible = true;
+
+        }
+    }
 }
+
