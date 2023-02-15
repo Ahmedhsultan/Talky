@@ -35,6 +35,7 @@ import java.util.stream.Collectors;
 public class ServerService {
 
     private ServerDao serverDao;
+    private Thread checkClientConnectionThread;
 
     public ServerService() {
         serverDao = new ServerDao();
@@ -88,7 +89,8 @@ public class ServerService {
             reg.rebind("iserver", new IServerController());
             reg.rebind("connection", new ConnectionController());
             reg.rebind("invitation", new InvitationController());
-            System.out.println(reg+"hiiiiiiiiiiiiiii");
+             checkClientConnectionThread = new Thread(new CheckConnectedClientStatus());
+            checkClientConnectionThread.start();
 //            AnnouncementList.getInstance().getList().addListener(new ListChangeListener<String>() {
 //                public void onChanged(ListChangeListener.Change<? extends String> change) {
 //                    try {
@@ -112,6 +114,7 @@ public class ServerService {
             reg.unbind("connection");
             reg.unbind("invitation");
             RMIManager.removeRegistry();
+            checkClientConnectionThread.stop();
             if (UnicastRemoteObject.unexportObject(reg, true)) {
                 System.out.println("Registry removed!");
             } else {

@@ -6,6 +6,7 @@ import gov.iti.jets.server.Util.Queues.ConnectedClientsMap;
 import gov.iti.jets.server.Util.Queues.StatsLists;
 import gov.iti.jets.server.Util.Queues.UsersList;
 import gov.iti.jets.server.entity.User;
+import gov.iti.jets.server.entity.statistics.UserStatusStat;
 import gov.iti.jets.server.service.ServerService;
 import gov.iti.jets.server.service.UserService;
 import javafx.collections.FXCollections;
@@ -59,14 +60,15 @@ public class statisticsController implements Initializable {
         service = new ServerService();
         statistic.getChildren().clear();
         statusBtn.setStyle("-fx-border-width: 2px 2px 2px 2px; -fx-border-color: purple; -fx-background-radius: 10;");
+        UserStatusStat  userStatusStat = service.getUserStatusStats();
         statusData = FXCollections.observableArrayList(
-                new PieChart.Data("Online",service.getUserStatusStats().getNumOfOnline()),
-                new PieChart.Data("Offline",service.getUserStatusStats().getNumOfOffline())
+                new PieChart.Data("Online",userStatusStat.getNumOfOnline()),
+                new PieChart.Data("Offline",userStatusStat.getNumOfOffline())
         );
+        noOfOnline.setText("Online: " + userStatusStat.getNumOfOnline());
+        noOfOofline.setText("Offline: " + userStatusStat.getNumOfOffline());
         PieChart pChart = new PieChart(statusData);
         statistic.getChildren().add(pChart);
-        noOfOnline.setText("Online: " + service.getUserStatusStats().getNumOfOnline());
-        noOfOofline.setText("Online: " + service.getUserStatusStats().getNumOfOffline());
     }
 
 public void setActions(){
