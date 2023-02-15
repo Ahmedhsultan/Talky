@@ -135,10 +135,14 @@ public class IServerController extends UnicastRemoteObject implements IServer {
 
         //Notify all user friends with the new user data
         IClient iClient =  null;
-        for (ContactDto element : friendsList){
-            iClient = ConnectedClientsMap.getList().get(element.getPhoneNumber()).getIClient();
-            iClient.editUser(contactDto);
-        }
+       if(friendsList!=null) {
+           for (ContactDto element : friendsList) {
+               iClient = ConnectedClientsMap.getList().get(element.getPhoneNumber()).getIClient();
+               if (iClient != null) {
+                   iClient.editUser(contactDto);
+               }
+           }
+       }
     }
 
     @Override

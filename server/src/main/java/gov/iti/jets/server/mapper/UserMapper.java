@@ -18,8 +18,8 @@ public class UserMapper implements BaseMapper<User, UserDto>{
 
     @Override
     public UserDto toDTO(User user) {
-        UserService service = new UserService();
-        UserDto dto = UserDto.builder()
+        String path = Constants.USER_IMAGES_DIR;
+        UserDto  dto = UserDto.builder()
                 .id(user.getId())
                 .name(user.getName())
                 .email(user.getEmail())
@@ -32,7 +32,10 @@ public class UserMapper implements BaseMapper<User, UserDto>{
                 .bio(user.getBio())
                 .build();
         try {
-            dto.setImage(service.getUserImage(dto));
+                    if(dto.getImgPath()!=null)
+                    {
+                        dto .setImage(Constants.imageToByteArray(path + user.getImgPath()));
+                    }
         } catch (IOException e) {
             e.printStackTrace();
         }
