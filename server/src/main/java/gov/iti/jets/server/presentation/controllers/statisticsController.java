@@ -44,7 +44,14 @@ public class statisticsController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         setActions();
         service = new ServerService();
-
+        statistic.getChildren().clear();
+        statusBtn.setStyle("-fx-border-width: 2px 2px 2px 2px; -fx-border-color: purple; -fx-background-radius: 10;");
+        statusData = FXCollections.observableArrayList(
+                new PieChart.Data("Online",service.getUserStatusStats().getNumOfOnline()),
+                new PieChart.Data("Offline",service.getUserStatusStats().getNumOfOffline())
+        );
+        PieChart pChart = new PieChart(statusData);
+        statistic.getChildren().add(pChart);
     }
 
 public void setActions()
@@ -145,6 +152,9 @@ public void setActions()
 
 
     public void statusStatic(javafx.event.ActionEvent actionEvent) {
+        statusBtn.setStyle("-fx-border-width: 2px 2px 2px 2px; -fx-border-color: purple; -fx-background-radius: 10;");
+        genderBtn.setStyle("-fx-background-radius: 10; -fx-background-color: #d2c8ee;");
+        countryBtn.setStyle("-fx-background-radius: 10; -fx-background-color: #d2c8ee;");
 
         statistic.getChildren().clear();
         statusData = FXCollections.observableArrayList(
@@ -157,6 +167,9 @@ public void setActions()
 
     public void ganderStatistic(javafx.event.ActionEvent actionEvent) {
         statistic.getChildren().clear();
+        genderBtn.setStyle("-fx-border-width: 2px 2px 2px 2px; -fx-border-color: purple; -fx-background-radius: 10;");
+        statusBtn.setStyle("-fx-background-radius: 10; -fx-background-color: #d2c8ee;");
+        countryBtn.setStyle("-fx-background-radius: 10; -fx-background-color: #d2c8ee;");
         genderData =  FXCollections.observableArrayList(
                 new PieChart.Data("Male",service.getGenderStats().getNumOfMales()),
                 new PieChart.Data("Female",service.getGenderStats().getNumOfFemales())
@@ -167,7 +180,9 @@ public void setActions()
 
     public void countryStatistic(javafx.event.ActionEvent actionEvent) {
         statistic.getChildren().clear();
-
+        countryBtn.setStyle("-fx-border-width: 2px 2px 2px 2px; -fx-border-color: purple; -fx-background-radius: 10;");
+        statusBtn.setStyle("-fx-background-radius: 10; -fx-background-color: #d2c8ee;");
+        genderBtn.setStyle("-fx-background-radius: 10; -fx-background-color: #d2c8ee;");
         CategoryAxis xAxis    = new CategoryAxis();
         xAxis.setLabel("COUNTRIES");
 
