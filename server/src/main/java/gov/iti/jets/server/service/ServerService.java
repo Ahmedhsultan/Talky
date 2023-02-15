@@ -88,6 +88,7 @@ public class ServerService {
             reg.rebind("iserver", new IServerController());
             reg.rebind("connection", new ConnectionController());
             reg.rebind("invitation", new InvitationController());
+            System.out.println(reg+"hiiiiiiiiiiiiiii");
 //            AnnouncementList.getInstance().getList().addListener(new ListChangeListener<String>() {
 //                public void onChanged(ListChangeListener.Change<? extends String> change) {
 //                    try {

@@ -1,6 +1,7 @@
 package gov.iti.jets.server.service;
 
 
+import gov.iti.jets.common.dto.MiniUserDto;
 import gov.iti.jets.common.dto.UserCardDto;
 import gov.iti.jets.common.dto.UserDto;
 import gov.iti.jets.common.dto.UserSessionDto;
@@ -156,13 +157,13 @@ public class UserService {
         }
     }
 
-    public List<UserDto> getAllUsers()
+    public List<MiniUserDto> getAllMiniUsers()
     {
-        List<UserDto> dtos =null;
+        List<MiniUserDto> minis =null;
         List<User> users = dao.findAll();
         if(users!=null) {
-            dtos = userMapper.toDTOs(users);
+            minis = userMapper.toMiniDtos(users);
         }
-        return  dtos;
+        return  minis;
     }
 }
