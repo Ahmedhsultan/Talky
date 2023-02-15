@@ -1,7 +1,10 @@
 package gov.iti.jets.server.service;
 
 
+import gov.iti.jets.common.dto.ContactDto;
 import gov.iti.jets.common.dto.InvitationDto;
+import gov.iti.jets.common.network.client.IClient;
+import gov.iti.jets.server.Util.Queues.ConnectedClientsMap;
 import gov.iti.jets.server.controller.IServerController;
 import gov.iti.jets.server.entity.Invitation;
 import gov.iti.jets.server.entity.User;
@@ -11,6 +14,7 @@ import gov.iti.jets.server.persistence.dao.UserDao;
 
 import java.rmi.RemoteException;
 import java.sql.Date;
+import java.util.ArrayList;
 
 public class InvitationService {
 
@@ -18,8 +22,7 @@ public class InvitationService {
     private UserDao userDao;
     private Invitation invitation;
 
-    public InvitationService ()
-    {
+    public InvitationService() {
         invitationDao = new InvitationDao();
         userDao = new UserDao();
         invitation = new Invitation();
@@ -28,7 +31,7 @@ public class InvitationService {
 
     public InvitationDto sendInvitation(String senderID, String receiverID) throws RemoteException {
 
-        if(userDao.findById(receiverID) == null) {
+        if (userDao.findById(receiverID) == null) {
             throw new RemoteException("Phone Number Not Found!!");
         }
         createInvitationEntity(senderID, receiverID);
@@ -37,7 +40,7 @@ public class InvitationService {
         invitationDao.insert(invitation);
 
         InvitationDto invitationDto = new InvitationMapper().toDTO(invitation);
-        User u=userDao.findById(receiverID);
+        User u = userDao.findById(receiverID);
 
         return invitationDto;
     }
@@ -54,20 +57,28 @@ public class InvitationService {
     public void acceptInvitation(long id) throws RemoteException {
         //Get invitation from db then delete it
         Invitation invitation = invitationDao.findById(id);
-        invitationDao.deleteById(id);
+
         //Notify other user
         IServerController iServerController = new IServerController();
-        iServerController.addFriend(invitation.getSenderId(),invitation.getReceiverId());
+        iServerController.addFriend(id, invitation.getSenderId(), invitation.getReceiverId());
+        invitationDao.deleteById(id);
     }
 
     public void refuseInvitation(long id) throws RemoteException {
         //Get invitation from db then delete it
+        Invitation invitation = invitationDao.findById(id);
+        //Get invitation from db then delete it
         invitationDao.deleteById(id);
-    }
 
-//    public void acceptInvitation(String invitationID) {
-//
-//        new FriendsDao().insert();
-//
-//    }
+        //Notify client to add this user by callBack
+        if (ConnectedClientsMap.getList().containsKey(invitation.getReceiverId())){
+            IClient iClient1 = ConnectedClientsMap.getList().get(invitation.getReceiverId()).getIClient();
+            iClient1.removeInvitation(id);
+        }
+
+        if (ConnectedClientsMap.getList().containsKey(invitation.getSenderId())) {
+            IClient iClient2 = ConnectedClientsMap.getList().get(invitation.getSenderId()).getIClient();
+            iClient2.removeInvitation(id);
+        }
+    }
 }

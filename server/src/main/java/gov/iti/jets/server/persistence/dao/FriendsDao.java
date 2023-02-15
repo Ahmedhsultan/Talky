@@ -46,7 +46,6 @@ public class FriendsDao extends BaseDaoImpl<Friends,String>{
     @Override
     public void insert(Friends entity) throws SQLException {
         String query = "INSERT INTO Friends VALUES(?,?);";
-
         try (Connection connection = DBManagement.getConnection();PreparedStatement statement = connection.prepareStatement(query)) {
             setStatement(statement, entity);
             statement.executeUpdate();

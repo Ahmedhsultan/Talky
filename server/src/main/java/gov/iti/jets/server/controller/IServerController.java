@@ -1,30 +1,31 @@
 package gov.iti.jets.server.controller;
 
-import gov.iti.jets.common.dto.ContactDto;
-import gov.iti.jets.common.dto.MessageDto;
-import gov.iti.jets.common.dto.UserDto;
+import gov.iti.jets.common.dto.*;
 import gov.iti.jets.common.network.client.IClient;
 import gov.iti.jets.common.network.server.IServer;
+import gov.iti.jets.common.util.Constants;
 import gov.iti.jets.server.Util.Queues.ConnectedClientsMap;
+import gov.iti.jets.server.entity.Chat;
+import gov.iti.jets.server.entity.Invitation;
 import gov.iti.jets.server.entity.User;
 import gov.iti.jets.server.mapper.UserMapper;
-import gov.iti.jets.server.service.ChatUserService;
-import gov.iti.jets.server.service.FileTransferService;
-import gov.iti.jets.server.service.FriendsService;
-import gov.iti.jets.server.service.UserService;
+import gov.iti.jets.server.service.*;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
 public class IServerController extends UnicastRemoteObject implements IServer {
 
     private ChatUserService chatUserService;
+    private ChatService chatService;
     private UserService userService;
     private FriendsService friendsService;
     private UserMapper userMapper;
     private FileTransferService fileTransferService;
+
     public IServerController() throws RemoteException {
         super();
         chatUserService = new ChatUserService();
@@ -32,6 +33,7 @@ public class IServerController extends UnicastRemoteObject implements IServer {
         friendsService = new FriendsService();
         userMapper = new UserMapper();
         fileTransferService = new FileTransferService();
+        chatService = new ChatService();
     }
 
     @Override
@@ -52,7 +54,24 @@ public class IServerController extends UnicastRemoteObject implements IServer {
     }
 
     @Override
-    public void addFriend(String id1, String id2) throws RemoteException {
+    public void addFriend(long id, String id1, String id2) throws RemoteException {
+        //Add chat table
+        ChatDto chatDto = new ChatDto();
+        chatDto.setName(id1+","+id2);
+        chatDto.setModified_on(new Date(System.currentTimeMillis()));
+        chatDto.setType(Constants.CHAT_ONE_TO_ONE);
+        Chat chat = chatService.addChat(chatDto);
+        //Add chatUser
+        ChatUserDto chatUserDto1 = new ChatUserDto();
+        chatUserDto1.setUserId(id1);
+        chatUserDto1.setId(chat.getId());
+        ChatUserDto chatUserDto2 = new ChatUserDto();
+        chatUserDto2.setUserId(id2);
+        chatUserDto2.setId(chat.getId());
+        List<ChatUserDto> chatUserDtoList = new ArrayList<>();
+        chatUserDtoList.add(chatUserDto1);
+        chatUserDtoList.add(chatUserDto2);
+        chatUserService.addChatGroup(chatUserDtoList);
         //Add friendship from db
         friendsService.addFriend(id1,id2);
 
@@ -66,15 +85,21 @@ public class IServerController extends UnicastRemoteObject implements IServer {
         ContactDto contactDto2 = userMapper.toContactDTO(user2);
 
         //Notify client to add this user by callBack
-        IClient iClient1 = ConnectedClientsMap.getList().get(user1).getIClient();
-        List<ContactDto> contactDtoList1 = new ArrayList<>();
-        contactDtoList1.add(contactDto1);
-        iClient1.addFriend(contactDtoList1);
+        if (ConnectedClientsMap.getList().containsKey(user1.getId())){
+            IClient iClient1 = ConnectedClientsMap.getList().get(user1.getId()).getIClient();
+            ArrayList<ContactDto> contactDtoList1 = new ArrayList<>();
+            contactDtoList1.add(contactDto2);
+            iClient1.addFriend(id, contactDtoList1);
+//            iClient1.removeInvitation(id);
+        }
 
-        IClient iClient2 = ConnectedClientsMap.getList().get(user2).getIClient();
-        List<ContactDto> contactDtoList2 = new ArrayList<>();
-        contactDtoList2.add(contactDto2);
-        iClient2.addFriend(contactDtoList2);
+        if (ConnectedClientsMap.getList().containsKey(user2.getId())) {
+            IClient iClient2 = ConnectedClientsMap.getList().get(user2.getId()).getIClient();
+            ArrayList<ContactDto> contactDtoList2 = new ArrayList<>();
+            contactDtoList2.add(contactDto1);
+            iClient2.addFriend(id, contactDtoList2);
+//            iClient2.removeInvitation(id);
+        }
     }
 
     @Override
@@ -110,10 +135,14 @@ public class IServerController extends UnicastRemoteObject implements IServer {
 
         //Notify all user friends with the new user data
         IClient iClient =  null;
-        for (ContactDto element : friendsList){
-            iClient = ConnectedClientsMap.getList().get(element.getPhoneNumber()).getIClient();
-            iClient.editUser(contactDto);
-        }
+       if(friendsList!=null) {
+           for (ContactDto element : friendsList) {
+               iClient = ConnectedClientsMap.getList().get(element.getPhoneNumber()).getIClient();
+               if (iClient != null) {
+                   iClient.editUser(contactDto);
+               }
+           }
+       }
     }
 
     @Override
@@ -121,4 +150,5 @@ public class IServerController extends UnicastRemoteObject implements IServer {
     {
         fileTransferService.sendFile( chatId,  senderId,  bytes,  fileName);
     }
+
 }

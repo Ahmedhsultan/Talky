@@ -1,7 +1,10 @@
 package gov.iti.jets.client.presentation.controllers;
 
+import gov.iti.jets.client.Util.AlertWindow;
 import gov.iti.jets.client.network.service.RMIManager;
+import gov.iti.jets.common.dto.UserDto;
 import gov.iti.jets.common.dto.UserSessionDto;
+import gov.iti.jets.common.network.server.IServer;
 import gov.iti.jets.common.network.server.UserRemote;
 import gov.iti.jets.common.util.Constants;
 import gov.iti.jets.common.util.Validation;
@@ -23,6 +26,7 @@ import javafx.stage.FileChooser;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.net.URLDecoder;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.Registry;
@@ -69,6 +73,12 @@ public class ProfileController implements Initializable {
         putUserDataOnPane();
         userNameText = new TextField(userName.getText());
         bioText = new TextField(bio.getText());
+        try {
+            userPic.setFill(new ImagePattern(new Image(saveUserImage(userSessionDto.getUser()),200,200,false,true)));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
 
@@ -96,13 +106,15 @@ public class ProfileController implements Initializable {
             userSessionDto.getUser().setBotMode(chatbot.isSelected());
             userSessionDto.getUser().setIsOnlineStatus(statusComboBox.getSelectionModel().getSelectedItem());
             userSessionDto.getUser().setId(userPhoneNumber.getText());
-//            String s = file.getPath();
-//            userSessionDto.getUser().setImgPath(userPhoneNumber.getText()+ s.substring(s.indexOf(".")));
-//            try {
-//                userSessionDto.getUser().setImage(Constants.imageToByteArray(file.getPath()));
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
+
+            if(file!=null) {
+                userSessionDto.getUser().setImgPath(userPhoneNumber.getText() + file.getPath().substring(file.getPath().indexOf(".")));
+                try {
+                    userSessionDto.getUser().setImage(Constants.imageToByteArray(file.getPath()));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
 //            try {
 //                UserRemote userRemote = RMIManager.lookUpRegister();
 //                userRemote.updateProfile(userSessionDto.getUser());
@@ -110,6 +122,16 @@ public class ProfileController implements Initializable {
 //                e.printStackTrace();
 //            }
             System.out.println( userSessionDto.getUser().getBio());
+            try {
+                IServer iServer = RMIManager.lookUpIServer();
+                iServer.editUser(userSessionDto.getUser());
+                AlertWindow alertWindow = new AlertWindow("Your profile has been updated successfully");
+            } catch (RemoteException e) {
+                e.printStackTrace();
+                AlertWindow alertWindow = new AlertWindow("Failed to update your Profile");
+            } catch (NotBoundException e) {
+                e.printStackTrace();
+            }
         }
 
     }
@@ -164,6 +186,10 @@ public class ProfileController implements Initializable {
         }
     }
 
-
+    public String  saveUserImage(UserDto dto) throws IOException {
+        String path = Constants.USER_IMAGES_DIR +dto.getImgPath();
+        Constants.byteArrayToImage(dto.getImage(), URLDecoder.decode(path, "UTF-8"));
+        return URLDecoder.decode(path, "UTF-8");
+    }
 
 }

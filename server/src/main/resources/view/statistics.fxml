@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+
+<Pane fx:id="statisticpane" prefHeight="325.0" prefWidth="484.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gov.iti.jets.server.presentation.controllers.statisticsController">
+   <children>
+      <VBox prefHeight="325.0" prefWidth="484.0">
+         <children>
+            <Pane prefHeight="83.0" prefWidth="484.0">
+               <children>
+                  <JFXButton fx:id="statusBtn" layoutX="30.0" layoutY="-2.0" onAction="#statusStatic" prefHeight="67.0" prefWidth="131.0" text="Online/Offline" />
+                  <JFXButton fx:id="genderBtn"  layoutX="174.0" layoutY="-2.0" onAction="#ganderStatistic" prefHeight="67.0" prefWidth="131.0" text="Gender" />
+                  <JFXButton fx:id="countryBtn" layoutX="305.0" layoutY="-2.0" onAction="#countryStatistic" prefHeight="67.0" prefWidth="131.0" text="Country" />
+               </children>
+            </Pane>
+            <Pane fx:id="statistic" prefHeight="247.0" prefWidth="484.0" />
+         </children>
+      </VBox>
+   </children>
+</Pane>

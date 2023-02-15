@@ -106,4 +106,55 @@ public class UserDao extends BaseDaoImpl<User, String> {
             System.out.println(statement.executeUpdate());
         }
     }
+
+    public void setAllOffline()throws SQLException
+    {
+        String query = "update  user set " +
+                " is_online_status='offline';";
+
+        try (Connection connection =DBManagement.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
+            System.out.println(statement.executeUpdate());
+        }
+    }
+
+//    public List<User> getOfflineUsers()throws SQLException
+//    {
+//        String query = "select * from  user where is_online_status='offline';";
+//
+//        try (Connection connection =DBManagement.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
+//            ResultSet resultSet = statement.executeQuery();
+//
+//            //Convert resultset to List
+//            List<User> list = resultSetToList(resultSet);
+//
+//            return list;
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//            return null;
+//        }
+//    }
+
+public void editProfile(User entity) throws SQLException{
+    String query = "update  user set " +
+            "name=?" +
+            " ,img_path=?" +
+            " ,is_online_status=?" +
+            " ,bot_mode=?" +
+            " ,bio=?" +
+            " where id = ?";
+
+    try (Connection connection =DBManagement.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
+        statement.setString(1,entity.getName());
+        statement.setString(2,entity.getImgPath());
+        statement.setString(3,entity.getIsOnlineStatus());
+        statement.setBoolean(4,entity.isBotMode());
+        statement.setString(5,entity.getBio());
+        statement.setString(6, entity.getId());
+        System.out.println(statement.executeUpdate());
+    }
+}
+
+
+
+
 }

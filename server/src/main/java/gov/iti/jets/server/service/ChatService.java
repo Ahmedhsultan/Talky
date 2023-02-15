@@ -28,7 +28,8 @@ public class ChatService {
 
         try {
             chat = dao.insertChat(chatMapper.toEntity(dto));
-            saveUChatImage(dto);
+            if (dto.getImage() != null)
+                saveUChatImage(dto);
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RemoteException("Failed to Add Chat!!!");

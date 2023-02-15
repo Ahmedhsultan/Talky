@@ -3,8 +3,8 @@ package gov.iti.jets.client.presentation.controllers;
 
 import gov.iti.jets.client.business.services.PaneManager;
 import gov.iti.jets.client.business.services.SceneManager;
+import gov.iti.jets.client.Util.AlertWindow;
 import gov.iti.jets.client.network.service.LoginService;
-import gov.iti.jets.client.network.service.RMIManager;
 import gov.iti.jets.common.dto.UserSessionDto;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,10 +14,8 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
-
 import java.net.URL;
 import java.rmi.RemoteException;
-import java.rmi.registry.Registry;
 import java.util.ResourceBundle;
 
 
@@ -48,10 +46,14 @@ public class PasswordLoginController implements Initializable {
         System.out.println(PhoneLoginController.phoneNo);
         LoginService log = new LoginService();
 
-        userSessionDto = log.login(PhoneLoginController.phoneNo,password.getText());
-        System.out.println("Login success");
+        try {
+            userSessionDto = log.login(PhoneLoginController.phoneNo,password.getText());
+            System.out.println("Login success");
+            SceneManager.getSceneManager().switchToChatScene();
+        } catch (RemoteException e) {
+            new AlertWindow(e.getMessage());
+        }
 
-        SceneManager.getSceneManager().switchToChatScene();
     }
 
     public void loadRegistration(ActionEvent actionEvent) {
