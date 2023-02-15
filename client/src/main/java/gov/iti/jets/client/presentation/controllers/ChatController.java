@@ -60,7 +60,6 @@ import javafx.util.Duration;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.nio.file.Files;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.Registry;
@@ -137,7 +136,7 @@ public class ChatController implements Initializable {
     @FXML
     private CheckBox underline;
     @FXML
-    private Button fileBtn;
+    private Button attachBtn;
 
 
     @FXML
@@ -175,7 +174,7 @@ public class ChatController implements Initializable {
             userSessionDto = PasswordLoginController.userSessionDto;
         else
             userSessionDto = RegisterController.userSessionDto;
-        fileBtn.setOnAction(ev->{
+        attachBtn.setOnAction(ev->{
             FileChooser fileChooser = new FileChooser();
             File file = fileChooser.showOpenDialog(null);
 
@@ -452,7 +451,6 @@ public class ChatController implements Initializable {
 //            paneObservableList.add(temp);
             invitationsObservableList.add(temp);
         }
-    }
 
         leftList.setItems(paneObservableList);
     }
