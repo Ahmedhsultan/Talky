@@ -1,0 +1,47 @@
+.button {
+    -fx-background-color: #5607bd;
+    -fx-border-radius: 15;
+    -fx-background-radius: 15;
+    -fx-border-color: white;
+    -fx-font-size: 22;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-background-insets: 0, 0 0 0 0;
+    -fx-effect: dropshadow(three-pass-box, #6713d2, 5, 0.0, 0, 1);
+}
+
+.button:hover {
+    -fx-background-color:
+        linear-gradient(from 0% 93% to 0% 100%, #6713d2 100, #4e4eb8 0%)
+}
+.label {
+    -fx-background-radius: 6, 5;
+    -fx-background-insets: 0, 1;
+    -fx-effect: dropshadow(three-pass-box, #8d8597, 5, 0.0, 0, 1);
+    -fx-text-fill: #7950F2;
+    -fx-font-size:42;
+    -fx-font-weight: bold;
+}
+.text-area {
+    -fx-border-radius: 10;
+    -fx-background-radius: 15;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: left 10 center;
+    -fx-background-size: 18;
+    -fx-padding: 0 0 0 30;
+    -fx-font-size: 15;
+    fx-background-color: #6713d2;
+    -fx-background-insets: 0, 1 1 1 1;
+    -fx-text-fill: #6713d2;
+    -fx-effect: dropshadow(three-pass-box, #6713d2, 5, 0.0, 0, 1);
+}
+.text-area .content {
+	-fx-background-color: white;
+	-fx-background-insets: 0;
+	-fx-background-radius: 0;
+}
+.text-area:focused .content {
+	-fx-background-color: white;
+	-fx-background-insets: 0;
+	-fx-background-radius: 0;
+}

@@ -3,22 +3,30 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="284.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gov.iti.jets.server.presentation.controllers.AnnouncementController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" stylesheets="/style/AnnounceStyle.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gov.iti.jets.server.presentation.controllers.AnnouncementController">
    <children>
-      <Label layoutX="187.0" layoutY="14.0" prefHeight="35.0" prefWidth="236.0" text="Send Announcement">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#d2c8ee" height="600.0" stroke="BLACK" strokeType="INSIDE" width="800.0" />
+      <Label layoutX="187.0" layoutY="14.0" prefHeight="62.0" prefWidth="421.0" text="Send Announcement">
          <font>
-            <Font name="Times New Roman" size="28.0" />
+            <Font name="Times New Roman" size="33.0" />
          </font>
       </Label>
-      <TextArea fx:id="text" layoutX="165.0" layoutY="85.0" prefHeight="79.0" prefWidth="271.0" promptText="Enter Your Announcement" />
-      <JFXButton fx:id="sendBtn" buttonType="RAISED" layoutX="262.0" layoutY="198.0" prefHeight="35.0" prefWidth="87.0" text="Send">
+      <TextArea fx:id="text" layoutX="85.0" layoutY="217.0" prefHeight="180.0" prefWidth="330.0" promptText="Enter Your Announcement" stylesheets="@../style/AnnounceStyle.css" />
+      <JFXButton fx:id="sendBtn" buttonType="RAISED" layoutX="559.0" layoutY="499.0" prefHeight="48.0" prefWidth="191.0" text="Send">
          <font>
             <Font name="Times New Roman" size="18.0" />
          </font>
       </JFXButton>
+      <ImageView fitHeight="298.0" fitWidth="251.0" layoutX="491.0" layoutY="108.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="/image/Announcement.png" />
+         </image>
+      </ImageView>
    </children>
 </Pane>

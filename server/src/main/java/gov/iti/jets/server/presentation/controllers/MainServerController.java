@@ -28,6 +28,7 @@ public class MainServerController implements Initializable {
     }
 
     public void onAnnouncement(ActionEvent actionEvent) {
+        loadPage("sendAnnounce");
     }
 
     public void onStatistics(ActionEvent actionEvent) {
