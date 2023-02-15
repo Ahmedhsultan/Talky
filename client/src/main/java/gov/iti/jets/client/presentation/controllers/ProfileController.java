@@ -62,6 +62,9 @@ public class ProfileController implements Initializable {
     TextField userNameText, bioText;
 
     UserSessionDto userSessionDto;
+
+    ObservableList<String> statusObservableList = FXCollections.observableArrayList(Constants.ONLINE_STATUS_AVAILABLE,Constants.ONLINE_STATUS_AWAY,Constants.ONLINE_STATUS_BUSY);
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -70,7 +73,7 @@ public class ProfileController implements Initializable {
         else
             userSessionDto = RegisterController.userSessionDto;
 
-        putUserDataOnPane();
+//        putUserDataOnPane();
         userNameText = new TextField(userName.getText());
         bioText = new TextField(bio.getText());
         try {
@@ -78,6 +81,9 @@ public class ProfileController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        statusComboBox.setItems(statusObservableList);
+        statusComboBox.setValue(userSessionDto.getUser().getIsOnlineStatus());
+        System.out.println(userSessionDto.getUser().getIsOnlineStatus());
 
     }
 
@@ -90,6 +96,7 @@ public class ProfileController implements Initializable {
         putUserNameOnPane(userSessionDto.getUser().getName());
         putPhoneNumOnPane(userSessionDto.getUser().getId());
         putIsOnlineStatusOnPane(userSessionDto.getUser().getIsOnlineStatus());
+        //putImageOnPane();
     }
     public void changeBio(ActionEvent actionEvent) {
         bioText.setLayoutX(38);
@@ -126,6 +133,7 @@ public class ProfileController implements Initializable {
                 IServer iServer = RMIManager.lookUpIServer();
                 iServer.editUser(userSessionDto.getUser());
                 AlertWindow alertWindow = new AlertWindow("Your profile has been updated successfully");
+
             } catch (RemoteException e) {
                 e.printStackTrace();
                 AlertWindow alertWindow = new AlertWindow("Failed to update your Profile");
@@ -178,9 +186,9 @@ public class ProfileController implements Initializable {
         ((CheckBox)containerPane.lookup("#chatbot")).setSelected(enabled);
     }
 
-    private  void putImageOnPane(String img, byte [] arr) {
+    private  void putImageOnPane() {
         try {
-            ((Circle) containerPane.lookup("#userPic")).setFill(new ImagePattern(new Image(Constants.byteArrayToImage(arr, img).getPath(),100,100,false,true)));
+            ((Circle) containerPane.lookup("#userPic")).setFill(new ImagePattern(new Image(saveUserImage(userSessionDto.getUser()),100,100,false,true)));
         } catch (IOException e) {
             e.printStackTrace();
         }

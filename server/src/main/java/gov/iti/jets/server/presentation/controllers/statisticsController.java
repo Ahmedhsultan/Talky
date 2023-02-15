@@ -6,6 +6,8 @@ import gov.iti.jets.server.Util.Queues.ConnectedClientsMap;
 import gov.iti.jets.server.Util.Queues.StatsLists;
 import gov.iti.jets.server.Util.Queues.UsersList;
 import gov.iti.jets.server.entity.User;
+import gov.iti.jets.server.entity.statistics.GenderStat;
+import gov.iti.jets.server.entity.statistics.UserStatusStat;
 import gov.iti.jets.server.service.ServerService;
 import gov.iti.jets.server.service.UserService;
 import javafx.collections.FXCollections;
@@ -16,6 +18,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.*;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
 import java.net.URL;
@@ -34,40 +39,71 @@ public class statisticsController implements Initializable {
     @FXML
     private Button countryBtn;
 
+    @FXML
+    private Label noOfOnline;
+
+    @FXML
+    private Label noOfOofline;
+    @FXML
+    private ImageView img1;
+    @FXML
+    private ImageView img2;
+
     private XYChart.Series dataSeries1;
     private  BarChart  barChart;
 
     private ServerService service;
+    private  int current;
 
     private  ObservableList<PieChart.Data> statusData, genderData;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         setActions();
         service = new ServerService();
+        statistic.getChildren().clear();
+        statusBtn.setStyle("-fx-border-width: 2px 2px 2px 2px; -fx-border-color: purple; -fx-background-radius: 10;");
+        UserStatusStat  userStatusStat = service.getUserStatusStats();
+        statusData = FXCollections.observableArrayList(
+                new PieChart.Data("Online",userStatusStat.getNumOfOnline()),
+                new PieChart.Data("Offline",userStatusStat.getNumOfOffline())
+        );
+        noOfOnline.setText("Online: " + userStatusStat.getNumOfOnline());
+        noOfOofline.setText("Offline: " + userStatusStat.getNumOfOffline());
+        PieChart pChart = new PieChart(statusData);
+        statistic.getChildren().add(pChart);
     }
 
 public void setActions(){
     StatsLists.getInstance().getList().addListener(new ListChangeListener<String>() {
         public void onChanged(ListChangeListener.Change<? extends String> change) {
+            GenderStat genderStat = service.getGenderStats();
 
             if (genderData != null) {
+
                 genderData.clear();
                 genderData.addAll(
-                        new PieChart.Data("Male", service.getGenderStats().getNumOfMales()),
-                        new PieChart.Data("Female", service.getGenderStats().getNumOfFemales())
+                        new PieChart.Data("Male", genderStat.getNumOfMales()),
+                        new PieChart.Data("Female", genderStat.getNumOfFemales())
                 );
             }
+            UserStatusStat  userStatusStat = service.getUserStatusStats();
+
             if (statusData != null) {
 
                 statusData.clear();
                 statusData.addAll(
-                        new PieChart.Data("Online", service.getUserStatusStats().getNumOfOnline()),
-                        new PieChart.Data("Offline", service.getUserStatusStats().getNumOfOffline())
+                        new PieChart.Data("Online", userStatusStat.getNumOfOnline()),
+                        new PieChart.Data("Offline", userStatusStat.getNumOfOffline())
                 );
-                if(statusData.isEmpty())
-                {
-                    System.out.println("empty");
-                }
+
+            }
+            if(current ==0) {
+                noOfOnline.setText("Online: " + userStatusStat.getNumOfOnline());
+                noOfOofline.setText("Offline: " + userStatusStat.getNumOfOffline());
+            }else if(current==1)
+            {
+                noOfOnline.setText("Male: " + genderStat.getNumOfMales());
+                noOfOofline.setText("Female: " + genderStat.getNumOfFemales());
             }
             if (dataSeries1 != null) {
                 Map<String, Long> countryMap = service.getUserCountryStats().getCountryMap();
@@ -85,7 +121,7 @@ public void setActions(){
 
 
     public void statusStatic(javafx.event.ActionEvent actionEvent) {
-
+        current = 0;
         statistic.getChildren().clear();
         statusData = FXCollections.observableArrayList(
                 new PieChart.Data("Online",service.getUserStatusStats().getNumOfOnline()),
@@ -93,21 +129,37 @@ public void setActions(){
         );
         PieChart pChart = new PieChart(statusData);
         statistic.getChildren().add(pChart);
+        noOfOnline.setText("Online: " + service.getUserStatusStats().getNumOfOnline());
+        noOfOofline.setText("Offline: " + service.getUserStatusStats().getNumOfOffline());
+        img2.setImage(new Image("image/offlinr-people.jpg"));
+        img1.setImage(new Image("image/online-poeple.png"));
     }
 
     public void ganderStatistic(javafx.event.ActionEvent actionEvent) {
+        current=1;
         statistic.getChildren().clear();
+        genderBtn.setStyle("-fx-border-width: 2px 2px 2px 2px; -fx-border-color: purple; -fx-background-radius: 10;");
+        statusBtn.setStyle("-fx-background-radius: 10; -fx-background-color: #d2c8ee;");
+        countryBtn.setStyle("-fx-background-radius: 10; -fx-background-color: #d2c8ee;");
+        GenderStat genderStat = service.getGenderStats();
+
         genderData =  FXCollections.observableArrayList(
-                new PieChart.Data("Male",service.getGenderStats().getNumOfMales()),
-                new PieChart.Data("Female",service.getGenderStats().getNumOfFemales())
+                new PieChart.Data("Male",genderStat.getNumOfMales()),
+                new PieChart.Data("Female",genderStat.getNumOfFemales())
         );
         PieChart pChart = new PieChart(genderData);
         statistic.getChildren().add(pChart);
+        noOfOnline.setText("Male: " + genderStat.getNumOfMales());
+        noOfOofline.setText("Female: " + genderStat.getNumOfFemales());
+        img1.setImage(new Image("image/icons8-standing-man-50.png"));
+        img2.setImage(new Image("image/icons8-female-51.png"));
     }
 
     public void countryStatistic(javafx.event.ActionEvent actionEvent) {
         statistic.getChildren().clear();
-
+        countryBtn.setStyle("-fx-border-width: 2px 2px 2px 2px; -fx-border-color: purple; -fx-background-radius: 10;");
+        statusBtn.setStyle("-fx-background-radius: 10; -fx-background-color: #d2c8ee;");
+        genderBtn.setStyle("-fx-background-radius: 10; -fx-background-color: #d2c8ee;");
         CategoryAxis xAxis    = new CategoryAxis();
         xAxis.setLabel("COUNTRIES");
 
@@ -129,5 +181,9 @@ public void setActions(){
         barChart.getData().add(dataSeries1);
 
         statistic.getChildren().add(barChart);
+        noOfOnline.setText("");
+        noOfOofline.setText("");
+        img1.setImage(null);
+        img2.setImage(null);
     }
 }

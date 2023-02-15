@@ -3,6 +3,7 @@ package gov.iti.jets.server.mapper;
 
 import gov.iti.jets.common.dto.ContactDto;
 import gov.iti.jets.common.dto.Interfaces.IUser;
+import gov.iti.jets.common.dto.MiniUserDto;
 import gov.iti.jets.common.dto.UserDto;
 import gov.iti.jets.common.dto.registration.UserRegistrationDto;
 import gov.iti.jets.common.util.Constants;
@@ -99,5 +100,25 @@ public class UserMapper implements BaseMapper<User, UserDto>{
         user.setPassword(userRegistrationDto.getPassword());
         return user;
 
+    }
+
+    public MiniUserDto toMiniUser(User user) {
+        MiniUserDto  mini = MiniUserDto.builder()
+                .id(user.getId())
+                .name(user.getName())
+                .email(user.getEmail())
+                .gender(user.getGender())
+                .country(user.getCountry())
+                .isOnlineStatus(user.getIsOnlineStatus())
+                .build();
+
+        return mini;
+    }
+
+    public ArrayList<MiniUserDto> toMiniDtos(Collection<User> users) {
+        return (ArrayList<MiniUserDto>) users.
+                stream()
+                .map(this::toMiniUser)
+                .collect(Collectors.toList());
     }
 }
