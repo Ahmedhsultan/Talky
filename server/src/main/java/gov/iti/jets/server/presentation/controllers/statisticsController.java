@@ -131,8 +131,8 @@ public void setActions(){
         statistic.getChildren().add(pChart);
         noOfOnline.setText("Online: " + service.getUserStatusStats().getNumOfOnline());
         noOfOofline.setText("Offline: " + service.getUserStatusStats().getNumOfOffline());
-        img1.setImage(new Image("image/offlinr-people.png"));
-        img2.setImage(new Image("image/online-poeple.png"));
+        img2.setImage(new Image("image/offlinr-people.jpg"));
+        img1.setImage(new Image("image/online-poeple.png"));
     }
 
     public void ganderStatistic(javafx.event.ActionEvent actionEvent) {

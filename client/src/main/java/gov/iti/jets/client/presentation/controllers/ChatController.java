@@ -58,6 +58,7 @@ import javafx.util.Duration;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.net.URLDecoder;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.Registry;
@@ -146,6 +147,9 @@ public class ChatController implements Initializable {
     @FXML
     private ButtonBar secondButtonBar;
 
+    @FXML
+    private ImageView userImage;
+
     private UserSessionDto userSessionDto;
 
     ObservableList<Pane> paneObservableList = FXCollections.observableArrayList();
@@ -154,6 +158,7 @@ public class ChatController implements Initializable {
     ObservableList<Pane> contactsObservableList = FXCollections.observableArrayList();
     ObservableList<Pane> invitationsObservableList = FXCollections.observableArrayList();
     ObservableList<Pane> chatsObservableList = FXCollections.observableArrayList();
+
 
     int notificationCount = 0;
     Long currentChat = null;
@@ -176,7 +181,7 @@ public class ChatController implements Initializable {
 
             try {
                 if (file != null) {
-                    new FileTransferService().sendFile(1,"01111315033",file);
+                    new FileTransferService().sendFile(currentChat, userSessionDto.getUser().getId(),file);
                 }
             } catch (RemoteException e) {
                 e.printStackTrace();
@@ -184,12 +189,20 @@ public class ChatController implements Initializable {
                 e.printStackTrace();
             }
         });
+
+        try {
+            userImage.setImage(new Image(saveUserImage(userSessionDto.getUser()),200,200,false,true));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         chatsButton.fire();
         selectChat();
         checkInvitations();
         checkNotifications();
         checkContacts();
         checkNewSentMessages();
+        selectInvitation();
     }
 
     private void resetMessageOptions() {
@@ -327,31 +340,32 @@ public class ChatController implements Initializable {
                             rightAnchorPane.getChildren().remove(rightAnchorPane.getChildren().size() - 1);
                             isChatClosed = false;
                         }
-                    }
-                    if (currentPane.getText().equals("Contacts")) {
-                        for (ChatDto chat : ChatList.getList()) {
-                            if (chat.getMembersIds().size() == 2 && (chat.getMembersIds().get(0).equals(((Label) (newValue.lookup("#userPhoneNumber"))).getText()) || chat.getMembersIds().get(1).equals(((Label) (newValue.lookup("#userPhoneNumber"))).getText()))) {
-                                currentChat = chat.getId();
-                            }
-                        }
 
-                    } else if (currentPane.getText().equals("Chats")) {
-                        currentChat = Long.parseLong(((Label) (newValue.lookup("#chatID"))).getText());
-                    }
-                    chatName.setText(((Label) (newValue.lookup("#userName"))).getText());
+                        if (currentPane.getText().equals("Contacts")) {
+                            for (ChatDto chat : ChatList.getList()) {
+                                if (chat.getMembersIds().size() == 2 && (chat.getMembersIds().get(0).equals(((Label) (newValue.lookup("#userPhoneNumber"))).getText()) || chat.getMembersIds().get(1).equals(((Label) (newValue.lookup("#userPhoneNumber"))).getText()))) {
+                                    currentChat = chat.getId();
+                                }
+                            }
+
+                        } else if (currentPane.getText().equals("Chats")) {
+                            currentChat = Long.parseLong(((Label) (newValue.lookup("#chatID"))).getText());
+                        }
+                        chatName.setText(((Label) (newValue.lookup("#userName"))).getText());
 //                          chatIcon.setFill(new ImagePattern(new Image(Constants.byteArrayToImage(arr, img).getPath(),100,100,false,true)));
 
-                    if (MessagesQueue.getList().containsKey(currentChat)) {
-                        for (MessageDto message : MessagesQueue.getList().get(currentChat)) {
-                            if (message.getSenderId().equals(userSessionDto.getUser().getId())) {
-                                createMessage(message, 1);
-                            } else {
-                                createMessage(message, 2);
+                        if (MessagesQueue.getList().containsKey(currentChat)) {
+                            for (MessageDto message : MessagesQueue.getList().get(currentChat)) {
+                                if (message.getSenderId().equals(userSessionDto.getUser().getId())) {
+                                    createMessage(message, 1);
+                                } else {
+                                    createMessage(message, 2);
+                                }
                             }
                         }
                     }
-                }
 
+                }
             }
         });
     }
@@ -418,6 +432,7 @@ public class ChatController implements Initializable {
             putPhoneNumOnPane(contact.getPhoneNumber(), temp);
             putBioOnPane(contact.getBio(), temp);
             putOnlineStatusOnPane(contact.getIsOnlineStatus(), temp);
+//            putImageOnPane(contact,temp);
             contactsObservableList.add(temp);
         }
     }
@@ -584,10 +599,10 @@ public class ChatController implements Initializable {
         paneObservableList.clear();
         leftList.setId("listOfProfile");
         Pane temp = PaneManager.getPaneManager().putProfilePane();
-//        putBioOnPane(userSessionDto.getUser().getBio(), temp);
-//        putUserNameOnPane(userSessionDto.getUser().getName(), temp);
-//        putPhoneNumOnPane(userSessionDto.getUser().getId(), temp);
-//        putIsOnlineStatusOnPane(userSessionDto.getUser().getIsOnlineStatus(), temp);
+        putBioOnPane(userSessionDto.getUser().getBio(), temp);
+        putUserNameOnPane(userSessionDto.getUser().getName(), temp);
+        putPhoneNumOnPane(userSessionDto.getUser().getId(), temp);
+        //putIsOnlineStatusOnPane(userSessionDto.getUser().getIsOnlineStatus(), temp);
 //        putImageOnPane(userSessionDto.getUser().getImgPath(), userSessionDto.getUser().getImage(), temp);
         paneObservableList.add(temp);
         leftList.setItems(paneObservableList);
@@ -640,9 +655,9 @@ public class ChatController implements Initializable {
         ((Label)temp.lookup("#bio")).setText(bio);
     }
 
-    private  void putImageOnPane(String img, byte [] arr, Pane temp) {
+    private  void putImageOnPane( ContactDto dto,Pane temp) {
         try {
-            ((Circle) temp.lookup("#userPic")).setFill(new ImagePattern(new Image(Constants.byteArrayToImage(arr, img).getPath(),100,100,false,true)));
+            ((Circle) temp.lookup("#userPic")).setFill(new ImagePattern(new Image(saveUserImage(dto),100,100,false,true)));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -952,6 +967,17 @@ public class ChatController implements Initializable {
             isBarsVisible = true;
 
         }
+    }
+
+    public String  saveUserImage(ContactDto dto) throws IOException {
+        String path = Constants.USER_IMAGES_DIR +dto.getImgPath();
+        Constants.byteArrayToImage(dto.getImage(), URLDecoder.decode(path, "UTF-8"));
+        return URLDecoder.decode(path, "UTF-8");
+    }
+    public String  saveUserImage(UserDto dto) throws IOException {
+        String path = Constants.USER_IMAGES_DIR +dto.getImgPath();
+        Constants.byteArrayToImage(dto.getImage(), URLDecoder.decode(path, "UTF-8"));
+        return URLDecoder.decode(path, "UTF-8");
     }
 }
 
