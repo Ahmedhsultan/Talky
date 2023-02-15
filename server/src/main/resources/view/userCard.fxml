@@ -1,43 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.shape.Circle?>
-<?import javafx.scene.shape.Rectangle?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="790.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="790.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#d3d0da" height="60.0" stroke="WHITE" strokeType="INSIDE" style="-fx-arc-height: 30; -fx-arc-width: 30;" width="780.0" />
-      <Label fx:id="UserName" layoutX="78.0" layoutY="-1.0" prefHeight="60.0" prefWidth="126.0" text="Dina Mishahed">
+      <Label fx:id="UserName" layoutX="31.0" layoutY="-1.0" prefHeight="60.0" prefWidth="126.0" text="Dina Mishahed">
          <font>
             <Font name="Arial Rounded MT Bold" size="14.0" />
          </font>
       </Label>
-      <Label fx:id="userPhone" layoutX="216.0" layoutY="-1.0" prefHeight="60.0" prefWidth="143.0" text="01090780888">
+      <Label fx:id="userPhone" layoutX="160.0" layoutY="-1.0" prefHeight="60.0" prefWidth="143.0" text="01090780888">
          <font>
             <Font name="Arial Rounded MT Bold" size="14.0" />
          </font>
       </Label>
-      <Label fx:id="userEmail" layoutX="337.0" prefHeight="60.0" prefWidth="154.0" text="dina@gmail.com">
+      <Label fx:id="userEmail" layoutX="285.0" prefHeight="60.0" prefWidth="154.0" text="dina@gmail.com">
          <font>
             <Font name="Arial Rounded MT Bold" size="14.0" />
          </font>
       </Label>
-      <Label fx:id="userGender" layoutX="518.0" prefHeight="60.0" prefWidth="134.0" text="Female">
+      <Label fx:id="userGender" layoutX="470.0" prefHeight="60.0" prefWidth="134.0" text="Female">
          <font>
             <Font name="Arial Rounded MT Bold" size="14.0" />
          </font>
       </Label>
-      <Label fx:id="userCountry" layoutX="595.0" prefHeight="60.0" prefWidth="114.0" text="Egypt">
+      <Label fx:id="userCountry" layoutX="565.0" prefHeight="60.0" prefWidth="114.0" text="Egypt">
          <font>
             <Font name="Arial Rounded MT Bold" size="14.0" />
          </font>
       </Label>
-      <Circle fill="#c850f2" layoutX="37.0" layoutY="29.0" radius="25.0" stroke="#656060" strokeType="INSIDE" />
-      <ImageView fitHeight="60.0" fitWidth="79.0" layoutX="667.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="52.0" fitWidth="43.0" layoutX="679.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../image/icons8-checkmark-64.png" />
          </image>

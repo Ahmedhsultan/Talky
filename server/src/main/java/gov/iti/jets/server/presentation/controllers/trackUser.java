@@ -89,7 +89,7 @@ public class trackUser implements Initializable {
         ((Label)(temp.lookup("#userCountry"))).setText(dto.getCountry());
         ImageView s = null;
 //        try {
-           s = (ImageView) temp.getChildren().get(7);
+           s = (ImageView) temp.getChildren().get(6);
 // =new ImageView(new Image(URLDecoder.decode(Constants.USER_IMAGES_DIR+dto.getImgPath(),"UTF-8"))));
 //        } catch (IOException e) {
 //            e.printStackTrace();
