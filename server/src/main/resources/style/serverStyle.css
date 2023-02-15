@@ -1,0 +1,47 @@
+.button {
+    -fx-background-color: transparent;
+    -fx-font-size: 15;
+    -fx-font-family: "Rockwell";
+    -fx-font-style: oblique;
+    -fx-font-weight: 900;
+    -fx-text-fill: rgb(250, 243, 243);
+    -fx-graphic-text-gap: -60;
+}
+/* 
+
+
+#buttons {
+    -fx-graphic-text-gap: -40;
+} */
+
+/*
+.button:focused {
+    -fx-border-width: 0 0 2px 5px;
+    -fx-border-color: purple; */
+/* } */
+
+
+
+
+.list-cell {
+    -fx-background-color: transparent;
+    -fx-text-fill: #6713d2;
+}
+
+.list-cell:hover {
+    -fx-translate-x: -10;
+    -fx-translate-y: -10;
+    -fx-effect: dropshadow(three-pass-box, #6713d2, 5, 0.0, 0, 1);
+    -fx-text-fill: #6713d2;
+}
+
+.list-view {
+    -fx-background-color: transparent;
+}
+.list-view .scroll-bar:vertical {
+    -fx-scale-x: 0;
+}
+
+.list-view .lable:hover {
+    -fx-text-fill: #6713d2;
+}

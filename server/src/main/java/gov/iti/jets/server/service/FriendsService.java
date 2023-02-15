@@ -31,6 +31,7 @@ public class FriendsService {
         Friends friends = new Friends();
         friends.setId1(first);
         friends.setId2(second);
+        System.out.println(first +"  ---  "+ second);
         try {
             dao.insert(friends);
         } catch (SQLException e) {
