@@ -22,6 +22,11 @@ public class InvitationController extends UnicastRemoteObject implements ServerI
         //Add invitation to db
         InvitationDto invitationDto = invitationService.sendInvitation(senderID, receiverID);
         System.out.println("wasal server");
+
+        //Receiver has invite sender before
+        if(invitationDto == null){
+            return;
+        }
         //Notify client to add this user by callBack
         if(ConnectedClientsMap.getList().containsKey(receiverID)){
             IClient iClient1 = ConnectedClientsMap.getList().get(receiverID).getIClient();
