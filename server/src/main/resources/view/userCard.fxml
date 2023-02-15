@@ -1,18 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="68.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="790.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Circle fill="DODGERBLUE" layoutX="41.0" layoutY="34.0" radius="27.0" stroke="BLACK" strokeType="INSIDE" />
-      <Label layoutX="97.0" layoutY="17.0" prefHeight="35.0" prefWidth="88.0" text="Name" />
-      <Label layoutX="201.0" layoutY="17.0" prefHeight="35.0" prefWidth="103.0" text="Phone" />
-      <Label layoutX="304.0" layoutY="17.0" prefHeight="35.0" prefWidth="134.0" text="Email" />
-      <Label layoutX="410.0" layoutY="17.0" prefHeight="35.0" prefWidth="88.0" text="Status" />
-      <ImageView fitHeight="54.0" fitWidth="76.0" layoutX="560.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#d3d0da" height="60.0" stroke="WHITE" strokeType="INSIDE" style="-fx-arc-height: 30; -fx-arc-width: 30;" width="780.0" />
+      <Label fx:id="UserName" layoutX="90.0" layoutY="-1.0" prefHeight="60.0" prefWidth="114.0" text="Dina Mishahed" textFill="#473c4a">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="userPhone" layoutX="211.0" layoutY="-2.0" prefHeight="60.0" prefWidth="143.0" text="01090780888" textFill="#473c4a">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="userEmail" layoutX="318.0" layoutY="-2.0" prefHeight="60.0" prefWidth="154.0" text="dina@gmail.com" textFill="#473c4a">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="userGender" layoutX="461.0" prefHeight="60.0" prefWidth="134.0" text="Female" textFill="#473c4a">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="userCountry" layoutX="572.0" prefHeight="60.0" prefWidth="114.0" text="Egypt" textFill="#473c4a">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="14.0" />
+         </font>
+      </Label>
+      <Circle fill="DODGERBLUE" layoutX="37.0" layoutY="29.0" radius="25.0" stroke="BLACK" strokeType="INSIDE" />
+      <ImageView fitHeight="50.0" fitWidth="76.0" layoutX="678.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../image/icons8-checkmark-64.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

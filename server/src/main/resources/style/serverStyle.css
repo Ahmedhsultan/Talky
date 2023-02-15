@@ -4,19 +4,15 @@
     -fx-font-family: "Rockwell";
     -fx-font-style: oblique;
     -fx-font-weight: 900;
-    -fx-text-fill: black;
+    -fx-text-fill: rgb(250, 243, 243);
     -fx-graphic-text-gap: -60;
 }
-
+/* 
 
 
 #buttons {
     -fx-graphic-text-gap: -40;
-}
-
-#logout {
-    -fx-graphic-text-gap: -40;
-}
+} */
 
 /*
 .button:focused {
@@ -25,7 +21,7 @@
 /* } */
 
 
-
+/* 
 
 .list-cell {
     -fx-background-color: transparent;
@@ -86,4 +82,4 @@
     -fx-border-color: linear-gradient(to bottom right, #cc208e 10%, #6713d2 100%);
 }
 
-
+ */

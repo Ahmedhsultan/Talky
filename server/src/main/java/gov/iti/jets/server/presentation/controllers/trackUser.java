@@ -22,15 +22,16 @@ public class trackUser implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        paneObservableList.add(loadPaneUserCard());
-        paneObservableList.add(loadPaneUserCard());
-        paneObservableList.add(loadPaneUserCard());
+        paneObservableList.add(loadPaneUserCard("UserRow"));
+        paneObservableList.add(loadPaneUserCard("userCard"));
+        paneObservableList.add(loadPaneUserCard("userCard"));
+        paneObservableList.add(loadPaneUserCard("userCard"));
         userListView.setItems(paneObservableList);
     }
-    private Pane loadPaneUserCard() {
+    private Pane loadPaneUserCard(String name) {
         Pane pane = null;
         try {
-            Parent root = FXMLLoader.load(getClass().getResource(String.format("/view/userCard.fxml")));
+            Parent root = FXMLLoader.load(getClass().getResource(String.format("/view/%s.fxml",name)));
             pane = (Pane) root;
         } catch (IOException e) {
             e.printStackTrace();
