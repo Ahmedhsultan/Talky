@@ -20,7 +20,6 @@ public class ConnectionController extends UnicastRemoteObject implements IConnec
 //        Platform.runLater(()-> {
             ConnectedClientsMap.getList().put(connectionDto.getUserDto().getId(), connectionDto);
             StatsLists.getInstance().updateUserStats();
-            System.out.println("hii "+ConnectedClientsMap.getList().size());
 //                          });
 
 

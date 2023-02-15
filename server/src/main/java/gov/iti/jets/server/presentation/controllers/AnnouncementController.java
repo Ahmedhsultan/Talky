@@ -30,18 +30,15 @@ public class AnnouncementController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-            sendBtn.setOnAction(ev->{
+
+
+        sendBtn.setOnAction(ev->{
                 serverService = new ServerService();
                     try {
-                        IServer server=  (IServer) RMIManager.getRegistry().lookup("iserver");
-                        server.sendAnnouncement(text.getText());
+                        serverService.sendAnnouncement(text.getText());
                     } catch (RemoteException e) {
                         e.printStackTrace();
-                    } catch (NotBoundException e) {
-                        e.printStackTrace();
                     }
-//                    AnnouncementList.getInstance().getList().add(text.getText());
-
             });
     }
 }

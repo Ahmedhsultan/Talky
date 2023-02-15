@@ -13,6 +13,7 @@ import gov.iti.jets.common.dto.UserSessionDto;
 import gov.iti.jets.common.network.client.IClient;
 import gov.iti.jets.common.network.server.IServer;
 import gov.iti.jets.common.util.Constants;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -130,7 +131,13 @@ public class Martinily extends UnicastRemoteObject implements IClient {
     }
     @Override
     public void receiveAnnouncement(String message) throws RemoteException {
-        AlertWindow alertWindow = new AlertWindow(message);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                AlertWindow alertWindow = new AlertWindow(message);
+
+            }
+        });
     }
 
     @Override

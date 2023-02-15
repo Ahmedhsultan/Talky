@@ -14,6 +14,7 @@ import gov.iti.jets.server.entity.statistics.UserStatusStat;
 import gov.iti.jets.server.network.RMIManager;
 import gov.iti.jets.server.persistence.ServerDao;
 import gov.iti.jets.server.persistence.dao.UserDao;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.scene.chart.PieChart;
@@ -74,9 +75,10 @@ public class ServerService {
     }
 
     public void sendAnnouncement(String message) throws RemoteException {
-        for (Map.Entry<String, ConnectionDto> entry : ConnectedClientsMap.getList().entrySet()) {
-            entry.getValue().getIClient().receiveAnnouncement(message);
-        }
+
+                for (Map.Entry<String, ConnectionDto> entry : ConnectedClientsMap.getList().entrySet()) {
+                        entry.getValue().getIClient().receiveAnnouncement(message);
+                }
     }
 
     public void startServer() {

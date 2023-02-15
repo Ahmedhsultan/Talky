@@ -147,10 +147,4 @@ public class IServerController extends UnicastRemoteObject implements IServer {
         fileTransferService.sendFile( chatId,  senderId,  bytes,  fileName);
     }
 
-    @Override
-    public void sendAnnouncement(String message) throws RemoteException {
-            new ServerService().sendAnnouncement(message);
-    }
-
-
 }
