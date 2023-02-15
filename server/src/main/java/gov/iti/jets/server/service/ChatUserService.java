@@ -38,7 +38,7 @@ public class ChatUserService {
         }
     }
 
-    public void sendMessage(long chatId, MessageDto messageDto) throws RemoteException {
+    public void sendMessage(long chatId, MessageDto messageDto, boolean isb) throws RemoteException {
         List<String> userIds = null;
 //        try {
 //            userIds = dao.getOnlineUsersByChat(chatId);

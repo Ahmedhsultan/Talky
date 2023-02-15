@@ -43,6 +43,9 @@ public class IClientImpl extends UnicastRemoteObject implements IClient {
     public void receiveMessage(long chatId, MessageDto messageDto) throws RemoteException {
         System.out.println("New Msg" + chatId + messageDto.getMessage() + messageDto.getSenderId());
 
+        MessagesQueue.change.clear();
+        MessagesQueue.change.put(chatId, messageDto);
+
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -50,27 +53,31 @@ public class IClientImpl extends UnicastRemoteObject implements IClient {
                     ObservableList<MessageDto> messageDtoList = FXCollections.observableArrayList();
                     messageDtoList.add(messageDto);
                     MessagesQueue.getList().put(chatId,messageDtoList);
-//            System.out.println(MessagesQueue.getList().get(chatId).get(MessagesQueue.getList().get(chatId).size()-1));
+                    System.out.println("before");
+
 
                 }else{
                     MessagesQueue.getList().get(chatId).add(messageDto);
+                    MessagesQueue.change.clear();
+                    MessagesQueue.change.put(chatId, messageDto);
+                    System.out.println("Messages keys" + MessagesQueue.change.keySet());
 
-                   if(MessagesQueue.getList().containsKey(-1))
+
+                    if(MessagesQueue.getList().containsKey(-1)) {
                        MessagesQueue.getList().remove(-1);
+                       System.out.println("-1 removed");
+
+                   }
                    else{
                        ObservableList<MessageDto> l = FXCollections.observableArrayList();   //honors to Amr
                        l.add(new MessageDto());
                        MessagesQueue.getList().put(-1l, l);
+                       System.out.println("-1 added");
                    }
-
                 }
-                System.out.println("messageqount=" + MessagesQueue.getList().get(chatId).size());
-                MessagesQueue.change.clear();
-                MessagesQueue.change.put(chatId, messageDto);
-                System.out.println("messageqount=" + MessagesQueue.getList().get(chatId).size());
-
             }
         });
+
 
     }
 
@@ -169,25 +176,29 @@ public class IClientImpl extends UnicastRemoteObject implements IClient {
 
     @Override
     public void receiveMessageBot(long chatId, MessageDto messageDto, String messageFromBot) throws RemoteException {
+
         MessageDto responseMessage = new MessageDto();
         responseMessage.setMessage(messageFromBot);
         responseMessage.setSenderId(MyID.getInstance().getMyId());
 
-        if(!MessagesQueue.getList().containsKey(chatId)){
-            ObservableList<MessageDto> messageDtoList =  FXCollections.observableArrayList();
-            messageDtoList.add(messageDto);
-            MessagesQueue.getList().put(chatId,messageDtoList);
-        }else{
-            MessagesQueue.getList().get(chatId).add(messageDto);
-        }
+        receiveMessage(chatId, messageDto);
+//
+//        if(!MessagesQueue.getList().containsKey(chatId)){
+//            ObservableList<MessageDto> messageDtoList =  FXCollections.observableArrayList();
+//            messageDtoList.add(messageDto);
+//            MessagesQueue.getList().put(chatId,messageDtoList);
+//        }else{
+//            MessagesQueue.getList().get(chatId).add(messageDto);
+//        }
         IServer server = null;
         try {
             server = RMIManager.lookUpIServer();
+            server.sendMessage(chatId, responseMessage);
+
         } catch (NotBoundException e) {
             e.printStackTrace();
             throw new RemoteException("Failed to reply to Message");
         }
-        server.sendMessage(chatId, responseMessage);
 
     }
 
