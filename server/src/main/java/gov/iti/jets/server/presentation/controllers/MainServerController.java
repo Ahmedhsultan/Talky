@@ -28,9 +28,11 @@ public class MainServerController implements Initializable {
     }
 
     public void onAnnouncement(ActionEvent actionEvent) {
+        loadPage("sendAnnounce");
     }
 
     public void onStatistics(ActionEvent actionEvent) {
+        loadPage("statistics");
     }
 
     private void loadPage(String page){
