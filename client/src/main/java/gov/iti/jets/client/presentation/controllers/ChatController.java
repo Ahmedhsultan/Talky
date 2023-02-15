@@ -566,7 +566,7 @@ public class ChatController implements Initializable {
                             }
                         });
                     }
-    }});
+            }});
     }
     @FXML
     private void openNotifications(ActionEvent actionEvent) {
@@ -834,11 +834,11 @@ public class ChatController implements Initializable {
         messageLabel.setUnderline(messageOptions.isUnderline());
         FontWeight w;
         if (messageOptions.isBold()) {
-             w = FontWeight.BOLD;
+            w = FontWeight.BOLD;
 //
         }
         else {
-          w  = FontWeight.NORMAL;
+            w  = FontWeight.NORMAL;
         }
 
         FontPosture p ;
@@ -847,7 +847,7 @@ public class ChatController implements Initializable {
 //            messageLabel.setStyle("-fx-font-weight: bold;");
         }
         else {
-          p  = FontPosture.REGULAR;
+            p  = FontPosture.REGULAR;
         }
 
 
@@ -989,4 +989,3 @@ public class ChatController implements Initializable {
         return URLDecoder.decode(path, "UTF-8");
     }
 }
-
