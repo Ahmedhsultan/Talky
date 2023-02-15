@@ -175,24 +175,32 @@ public class ChatController implements Initializable {
             userSessionDto = PasswordLoginController.userSessionDto;
         else
             userSessionDto = RegisterController.userSessionDto;
-        attachBtn.setOnAction(ev->{
-            FileChooser fileChooser = new FileChooser();
-            File file = fileChooser.showOpenDialog(null);
+//        attachBtn.setOnAction(ev->{
+//            FileChooser fileChooser = new FileChooser();
+//            File file = fileChooser.showOpenDialog(null);
+//
+//            try {
+//                if (file != null) {
+//                    new FileTransferService().sendFile(currentChat, MyID.getInstance().getMyId(), file);
+//                }
+//            } catch (RemoteException e) {
+//                e.printStackTrace();
+//            }catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        });
+        System.out.println("my id :  ======== "+MyID.getInstance().getMyId());
+        for (ContactDto contact: ContactList.getList()){
 
-            try {
-                if (file != null) {
-                    new FileTransferService().sendFile(currentChat, userSessionDto.getUser().getId(),file);
-                }
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            }catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
-
+            System.out.println("all ids :  ======== "+contact.getId());
+        }
         try {
-            userImage.setImage(new Image(saveUserImage(userSessionDto.getUser()),200,200,false,true));
+            ContactDto contact = ContactList.getList().stream().filter(x->x.getId().equals(MyID.getInstance().getMyId())).toList().get(0);
+            System.out.println(contact.getImgPath());
+            userImage.setImage(new Image(saveUserImage(contact),200,200,false,true));
+            System.out.println("doneeeeeee");
         } catch (IOException e) {
+            System.out.println("exceptionnnnnnnn");
             e.printStackTrace();
         }
 
@@ -356,7 +364,7 @@ public class ChatController implements Initializable {
 
                         if (MessagesQueue.getList().containsKey(currentChat)) {
                             for (MessageDto message : MessagesQueue.getList().get(currentChat)) {
-                                if (message.getSenderId().equals(userSessionDto.getUser().getId())) {
+                                if (message.getSenderId().equals(MyID.getInstance().getMyId())) {
                                     createMessage(message, 1);
                                 } else {
                                     createMessage(message, 2);
@@ -429,7 +437,7 @@ public class ChatController implements Initializable {
 //            putImageOnPane(contact.getPicture(), temp);
             putStatusOnPane(contact.getIsOnlineStatus(), temp);
             putUserNameOnPane(contact.getName(), temp);
-            putPhoneNumOnPane(contact.getPhoneNumber(), temp);
+            putPhoneNumOnPane(contact.getId(), temp);
             putBioOnPane(contact.getBio(), temp);
             putOnlineStatusOnPane(contact.getIsOnlineStatus(), temp);
 //            putImageOnPane(contact,temp);
@@ -598,11 +606,12 @@ public class ChatController implements Initializable {
         searchField.setVisible(false);
         paneObservableList.clear();
         leftList.setId("listOfProfile");
+        ContactDto contact = ContactList.getList().stream().filter(x->x.getId().equals(MyID.getInstance().getMyId())).toList().get(0);
         Pane temp = PaneManager.getPaneManager().putProfilePane();
-        putBioOnPane(userSessionDto.getUser().getBio(), temp);
-        putUserNameOnPane(userSessionDto.getUser().getName(), temp);
-        putPhoneNumOnPane(userSessionDto.getUser().getId(), temp);
-        //putIsOnlineStatusOnPane(userSessionDto.getUser().getIsOnlineStatus(), temp);
+        putBioOnPane(contact.getBio(), temp);
+        putUserNameOnPane(contact.getName(), temp);
+        putPhoneNumOnPane(contact.getId(), temp);
+//        putIsOnlineStatusOnPane(userSessionDto.getUser().getIsOnlineStatus(), temp);
 //        putImageOnPane(userSessionDto.getUser().getImgPath(), userSessionDto.getUser().getImage(), temp);
         paneObservableList.add(temp);
         leftList.setItems(paneObservableList);
@@ -730,7 +739,7 @@ public class ChatController implements Initializable {
             messageDto.setUnderline(underline.isSelected());
             messageDto.setTextColor("#" + Integer.toHexString(textColor.getValue().hashCode()));
             messageDto.setHighlightColor("#" + Integer.toHexString(highlight.getValue().hashCode()));
-            messageDto.setSenderId(userSessionDto.getUser().getId());
+            messageDto.setSenderId(MyID.getInstance().getMyId());
             messageDto.setFontSize((int) (fontSize.getValue()));
             messageDto.setTimestamp(LocalTime.now().getHour() + ":" + LocalTime.now().getMinute() + "");
             try {

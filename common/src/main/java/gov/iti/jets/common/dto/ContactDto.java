@@ -11,10 +11,11 @@ import java.io.Serializable;
 @Builder
 @ToString
 public class ContactDto extends IUser implements Serializable {
-    private String phoneNumber;
+    private String id;
     private String name;
-    private String picture;
+    private String imgPath;
     private String isOnlineStatus;
     private String bio;
     private byte[] image;
+    private boolean botMode;
 }

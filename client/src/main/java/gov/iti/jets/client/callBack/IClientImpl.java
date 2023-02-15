@@ -27,7 +27,6 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 public class IClientImpl extends UnicastRemoteObject implements IClient {
@@ -96,14 +95,14 @@ public class IClientImpl extends UnicastRemoteObject implements IClient {
     @Override
     public void removeFriend(ContactDto contactDto) throws RemoteException {
         //Get contactDto element and remove it from the list
-        ContactDto oldContactDto = ContactList.getList().stream().filter(x -> x.getPhoneNumber() == contactDto.getPhoneNumber()).toList().get(0);
+        ContactDto oldContactDto = ContactList.getList().stream().filter(x -> x.getId() == contactDto.getId()).toList().get(0);
         ContactList.getList().remove(oldContactDto);
     }
 
     @Override
     public void editUser(ContactDto contactDto) throws RemoteException {
         //Get old contactDto element and remove it from the list
-        ContactDto oldContactDto = ContactList.getList().stream().filter(x -> x.getPhoneNumber() == contactDto.getPhoneNumber()).toList().get(0);
+        ContactDto oldContactDto = ContactList.getList().stream().filter(x -> x.getId() == contactDto.getId()).toList().get(0);
         ContactList.getList().remove(oldContactDto);
         //Add new contact element with new user data
         ContactList.getList().add(contactDto);

@@ -11,7 +11,7 @@ public class ContactList {
             contactList = FXCollections.observableArrayList();
 
         for (var item : contactList)
-            System.out.println("contact = " + item.getPhoneNumber());
+            System.out.println("contact = " + item.getId());
         return contactList;
     }
 }

@@ -6,7 +6,6 @@ import gov.iti.jets.common.network.server.IServer;
 import gov.iti.jets.common.util.Constants;
 import gov.iti.jets.server.Util.Queues.ConnectedClientsMap;
 import gov.iti.jets.server.entity.Chat;
-import gov.iti.jets.server.entity.Invitation;
 import gov.iti.jets.server.entity.User;
 import gov.iti.jets.server.mapper.UserMapper;
 import gov.iti.jets.server.service.*;
@@ -137,7 +136,7 @@ public class IServerController extends UnicastRemoteObject implements IServer {
         IClient iClient =  null;
        if(friendsList!=null) {
            for (ContactDto element : friendsList) {
-               iClient = ConnectedClientsMap.getList().get(element.getPhoneNumber()).getIClient();
+               iClient = ConnectedClientsMap.getList().get(element.getId()).getIClient();
                if (iClient != null) {
                    iClient.editUser(contactDto);
                }
