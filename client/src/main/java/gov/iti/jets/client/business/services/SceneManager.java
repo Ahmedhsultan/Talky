@@ -15,7 +15,7 @@ public class SceneManager {
 
     private static SceneManager sceneManager;
     private Stage primaryStage;
-    private final Map<String, Scene> scenes = new HashMap<>();
+    private Map<String, Scene> scenes = new HashMap<>();
 
     private SceneManager(){}
 
@@ -25,6 +25,10 @@ public class SceneManager {
 
         }
         return sceneManager;
+    }
+
+    public void clear(){
+        scenes.clear();
     }
 
 

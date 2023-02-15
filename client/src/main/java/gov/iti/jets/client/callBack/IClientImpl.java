@@ -26,6 +26,7 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class IClientImpl extends UnicastRemoteObject implements IClient {
@@ -137,6 +138,9 @@ public class IClientImpl extends UnicastRemoteObject implements IClient {
 
     @Override
     public void addNewSessetion(UserSessionDto userSessionDto) throws RemoteException {
+        //Clear all queues
+        ClearQueues.clearAllQueues();
+
         //Clear and add new session to contact list
         ContactList.getList().clear();
         ContactList.getList().addAll(userSessionDto.getContactListDto());
@@ -182,6 +186,7 @@ public class IClientImpl extends UnicastRemoteObject implements IClient {
             throw new RemoteException("Failed to reply to Message");
         }
         server.sendMessage(chatId, responseMessage);
+
     }
 
 }
