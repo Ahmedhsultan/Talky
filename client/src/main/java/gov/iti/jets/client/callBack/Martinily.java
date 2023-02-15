@@ -2,6 +2,7 @@ package gov.iti.jets.client.callBack;
 
 
 import gov.iti.jets.client.Dina.*;
+import gov.iti.jets.client.Util.ClearQueues;
 import gov.iti.jets.client.Util.ConnectionFlag;
 import gov.iti.jets.client.network.service.PullOnlineUsersFromServer;
 import gov.iti.jets.client.network.service.RMIManager;
@@ -114,14 +115,14 @@ public class Martinily extends UnicastRemoteObject implements IClient {
 
     @Override
     public void addNewSessetion(UserSessionDto userSessionDto) throws RemoteException {
+        //Clear all queues
+        ClearQueues.clearAllQueues();
+
         //Clear and add new session to contact list
-        ContactList.getList().clear();
         ContactList.getList().addAll(userSessionDto.getContactListDto());
         //Clear and add new session to invitation queue
-        InvitationQueue.getList().clear();
         InvitationQueue.getList().addAll(userSessionDto.getInvitationListDto());
         //Clear and add new session to chat queue
-        ChatList.getList().clear();
         ChatList.getList().addAll(userSessionDto.getChatListDto());
 
         //Start Online pulling service

@@ -1,13 +1,8 @@
 package gov.iti.jets.client.Dina;
 
 import gov.iti.jets.common.dto.ContactDto;
-import gov.iti.jets.common.dto.InvitationDto;
-import gov.iti.jets.common.dto.MessageDto;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 
 public class ContactList {
     private static ObservableList<ContactDto> contactList;
@@ -15,6 +10,8 @@ public class ContactList {
         if(contactList == null)
             contactList = FXCollections.observableArrayList();
 
+        for (var item : contactList)
+            System.out.println("contact = " + item.getPhoneNumber());
         return contactList;
     }
 }

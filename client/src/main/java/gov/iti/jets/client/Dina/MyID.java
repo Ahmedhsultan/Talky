@@ -24,4 +24,8 @@ public class MyID {
     public String getPassword(){
         return password;
     }
+    public void clear(){
+        myId = null;
+        password = null;
+    }
 }
