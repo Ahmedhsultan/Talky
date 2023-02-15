@@ -273,6 +273,7 @@ public class ChatController implements Initializable {
         NotificationQueue.getList().addListener(new ListChangeListener<NotificationDto>() {
             @Override
             public void onChanged(Change<? extends NotificationDto> change) {
+
                 if (currentPane.getText().equals("Notifications")) {
                     Platform.runLater(new Runnable() {
                         @Override
