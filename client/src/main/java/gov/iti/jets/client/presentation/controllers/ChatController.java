@@ -8,11 +8,9 @@ import gov.iti.jets.client.Dina.MessagesQueue;
 import gov.iti.jets.client.Dina.MyID;
 import gov.iti.jets.client.business.services.PaneManager;
 import gov.iti.jets.client.business.services.SceneManager;
-import gov.iti.jets.client.network.service.InvitationService;
-import gov.iti.jets.client.network.service.LogoutService;
-import gov.iti.jets.client.network.service.RMIManager;
-import gov.iti.jets.client.network.service.SendMessage;
+import gov.iti.jets.client.network.service.*;
 import gov.iti.jets.common.dto.*;
+import gov.iti.jets.common.network.server.IServer;
 import gov.iti.jets.common.util.Constants;
 import gov.iti.jets.common.util.Validation;
 import javafx.application.Platform;
@@ -43,12 +41,15 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.Registry;
@@ -123,6 +124,10 @@ public class ChatController implements Initializable {
     private CheckBox bold;
     @FXML
     private CheckBox underline;
+    @FXML
+    private Button fileBtn;
+
+
 
 
 //    private UserSessionDto userSessionDto;
@@ -146,6 +151,20 @@ public class ChatController implements Initializable {
         chatsButton.fire();
         selectChat();
         checkMessages();
+        fileBtn.setOnAction(ev->{
+            FileChooser fileChooser = new FileChooser();
+            File file = fileChooser.showOpenDialog(null);
+
+            try {
+                if (file != null) {
+                    new FileTransferService().sendFile(1,"01111315033",file);
+                }
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     private void createFontsList() {

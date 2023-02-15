@@ -136,7 +136,7 @@
                   </Label>
                   <Circle id="chatIcon" fx:id="chatIcon" fill="DODGERBLUE" layoutX="46.0" layoutY="46.0" radius="40.0" stroke="BLACK" strokeType="INSIDE" style="-fx-fill: transparent; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" />
                   <TextArea fx:id="messageField" layoutX="4.0" layoutY="522.0" prefHeight="46.0" prefWidth="358.0" wrapText="true" />
-                  <Button layoutX="416.0" layoutY="511.0" mnemonicParsing="false">
+                  <Button  fx:id="fileBtn" layoutX="416.0" layoutY="511.0" mnemonicParsing="false">
                      <graphic>
                         <ImageView fitHeight="54.0" fitWidth="42.0" pickOnBounds="true">
                            <image>

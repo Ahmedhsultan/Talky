@@ -40,40 +40,7 @@ public class StatsLists{
             StatsLists.getInstance().list.add("");
         });
     }
-//    public ObservableList<PieChart.Data> getStatusList() {
-//        return statusList;
-//    }
-//
-//    public ObservableList<PieChart.Data> getGenderList() {
-//        return genderList;
-//    }
-//
-//    public ObservableList<PieChart.Data> getCountryList() {
-//        return countryList;
-//    }
 
-//    public void updateUserStats()
-//    {
-//        Platform.runLater(()->{
-//            StatsLists.getInstance().statusList.clear();
-//            StatsLists.getInstance().statusList.add(new PieChart.Data("",0.0));
-//        });
-//    }
-//    public void updateGenderStats()
-//    {
-//        Platform.runLater(()->{
-//            StatsLists.getInstance().genderList.clear();
-//            StatsLists.getInstance().genderList.add( new PieChart.Data("",0.0));
-//        });
-//    }
-//    public void updateCountryStats()
-//    {
-//        Platform.runLater(()->{
-//            StatsLists.getInstance().countryList.clear();
-//            StatsLists.getInstance().countryList.add(new PieChart.Data("",0.0));
-//
-//        });
-//    }
 
 
 }

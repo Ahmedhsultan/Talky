@@ -32,7 +32,9 @@ public class FileTransferService {
             userIds = chatUserDao.getOnlineUsersByChat(chatId);
             if(userIds!=null) {
                 for (String userId : userIds) {
-                    ConnectedClientsMap.getList().get(userId).getIClient().readFile(chatId, senderId, bytes , fileName);
+                    if(!userId.equals(senderId)) {
+                        ConnectedClientsMap.getList().get(userId).getIClient().readFile(chatId, senderId, bytes, fileName);
+                    }
                 }
             }
         } catch (SQLException e) {

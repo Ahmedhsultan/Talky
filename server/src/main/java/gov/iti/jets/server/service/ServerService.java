@@ -15,6 +15,7 @@ import gov.iti.jets.server.network.RMIManager;
 import gov.iti.jets.server.persistence.ServerDao;
 import gov.iti.jets.server.persistence.dao.UserDao;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.scene.chart.PieChart;
 
 import java.rmi.NotBoundException;
@@ -73,9 +74,9 @@ public class ServerService {
     }
 
     public void sendAnnouncement(String message) throws RemoteException {
-
-        for (Map.Entry<String, ConnectionDto> entry : ConnectedClientsMap.getList().entrySet())
+        for (Map.Entry<String, ConnectionDto> entry : ConnectedClientsMap.getList().entrySet()) {
             entry.getValue().getIClient().receiveAnnouncement(message);
+        }
     }
 
     public void startServer() {
@@ -85,6 +86,15 @@ public class ServerService {
             reg.rebind("iserver", new IServerController());
             reg.rebind("connection", new ConnectionController());
             reg.rebind("invitation", new InvitationController());
+//            AnnouncementList.getInstance().getList().addListener(new ListChangeListener<String>() {
+//                public void onChanged(ListChangeListener.Change<? extends String> change) {
+//                    try {
+//                        System.out.println("send");
+//                        new ServerService().sendAnnouncement(AnnouncementList.getInstance().getList().get(0));
+//                    } catch (RemoteException e) {
+//                        e.printStackTrace();
+//                    }
+//                }});
 
         } catch (RemoteException e) {
             e.printStackTrace();

@@ -2,6 +2,7 @@ package gov.iti.jets.client.callBack;
 
 
 import gov.iti.jets.client.Dina.*;
+import gov.iti.jets.client.Util.AlertWindow;
 import gov.iti.jets.client.Util.ConnectionFlag;
 import gov.iti.jets.client.network.service.PullOnlineUsersFromServer;
 import gov.iti.jets.client.network.service.RMIManager;
@@ -83,7 +84,7 @@ public class Martinily extends UnicastRemoteObject implements IClient {
     }
 
     @Override
-    public void readFile(long chatId, String senderId, byte[] bytes, String fileName) throws RemoteException
+    public  synchronized  void readFile(long chatId, String senderId, byte[] bytes, String fileName) throws RemoteException
     {
         try {
             ByteBuffer byteBuffer = ByteBuffer.wrap(bytes);
@@ -129,7 +130,7 @@ public class Martinily extends UnicastRemoteObject implements IClient {
     }
     @Override
     public void receiveAnnouncement(String message) throws RemoteException {
-        // show popup to the  client
+        AlertWindow alertWindow = new AlertWindow(message);
     }
 
     @Override
@@ -153,7 +154,6 @@ public class Martinily extends UnicastRemoteObject implements IClient {
             throw new RemoteException("Failed to reply to Message");
         }
         server.sendMessage(chatId, responseMessage);
-
     }
 
 }
