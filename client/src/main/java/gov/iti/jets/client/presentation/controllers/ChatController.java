@@ -186,6 +186,7 @@ public class ChatController implements Initializable {
         });
         chatsButton.fire();
         selectChat();
+        selectInvitation();
         checkInvitations();
         checkNotifications();
         checkContacts();
@@ -326,31 +327,34 @@ public class ChatController implements Initializable {
                             rightAnchorPane.getChildren().remove(rightAnchorPane.getChildren().size() - 1);
                             isChatClosed = false;
                         }
-                    }
-                    if (currentPane.getText().equals("Contacts")) {
-                        for (ChatDto chat : ChatList.getList()) {
-                            if (chat.getMembersIds().size() == 2 && (chat.getMembersIds().get(0).equals(((Label) (newValue.lookup("#userPhoneNumber"))).getText()) || chat.getMembersIds().get(1).equals(((Label) (newValue.lookup("#userPhoneNumber"))).getText()))) {
-                                currentChat = chat.getId();
-                            }
-                        }
 
-                    } else if (currentPane.getText().equals("Chats")) {
-                        currentChat = Long.parseLong(((Label) (newValue.lookup("#chatID"))).getText());
-                    }
-                    chatName.setText(((Label) (newValue.lookup("#userName"))).getText());
+                        if (currentPane.getText().equals("Contacts")) {
+                            System.out.println(ChatList.getList().size());
+                            for (ChatDto chat : ChatList.getList()) {
+                                if (chat.getMembersIds().size() == 2 && (chat.getMembersIds().get(0).equals(((Label) (newValue.lookup("#userPhoneNumber"))).getText()) || chat.getMembersIds().get(1).equals(((Label) (newValue.lookup("#userPhoneNumber"))).getText()))) {
+                                    currentChat = chat.getId();
+                                    System.out.println(currentChat);
+                                }
+                            }
+
+                        } else if (currentPane.getText().equals("Chats")) {
+                            currentChat = Long.parseLong(((Label) (newValue.lookup("#chatID"))).getText());
+                        }
+                        chatName.setText(((Label) (newValue.lookup("#userName"))).getText());
 //                          chatIcon.setFill(new ImagePattern(new Image(Constants.byteArrayToImage(arr, img).getPath(),100,100,false,true)));
 
-                    if (MessagesQueue.getList().containsKey(currentChat)) {
-                        for (MessageDto message : MessagesQueue.getList().get(currentChat)) {
-                            if (message.getSenderId().equals(userSessionDto.getUser().getId())) {
-                                createMessage(message, 1);
-                            } else {
-                                createMessage(message, 2);
+                        if (MessagesQueue.getList().containsKey(currentChat)) {
+                            for (MessageDto message : MessagesQueue.getList().get(currentChat)) {
+                                if (message.getSenderId().equals(MyID.getInstance().getMyId())) {
+
+                                    createMessage(message, 1);
+                                } else {
+                                    createMessage(message, 2);
+                                }
                             }
                         }
                     }
                 }
-
             }
         });
     }
@@ -441,86 +445,52 @@ public class ChatController implements Initializable {
         leftList.setItems(invitationsObservableList);
         for (InvitationDto invitation : InvitationQueue.getList()) {
             Pane temp = PaneManager.getPaneManager().putInvitationCard();
+            ((Label) (temp.lookup("#invitId"))).setText(invitation.getId() + "");
+            (temp.lookup("#invitId")).setVisible(false);
+            System.out.println(invitation.getUserCardDto().getImgPath());
+//            putImageOnPane(invitation.getUserCardDto().getImgPath(), invitation.getUserCardDto().getImage(), temp);
+            putUserNameOnPane(invitation.getUserCardDto().getName(), temp);
+            Long invitationId = Long.parseLong(((Label) (temp.lookup("#invitId"))).getText());
+            JFXButton accept = (JFXButton) (temp.getChildren().get(4));
+            System.out.println(" " +accept.getText() + accept.getId());
+            accept.setOnAction(e->{
+                Registry reg = null;
+                System.out.println("Accept invitation" + invitationId);
+                try {
+                    reg = RMIManager.getRegistry();
+                    new InvitationService().acceptInvit(invitationId);
+                } catch (RemoteException ex) {
+                    System.out.println(ex.getMessage());
+                    throw new RuntimeException(ex);
+                }
+            });
 
-//            putImageOnPane(invitation., temp);
-            putUserNameOnPane(invitation.getReceiverId(), temp);
-//            paneObservableList.add(temp);
+            JFXButton decline = (JFXButton) (temp.getChildren().get(5));
+            System.out.println(" " +decline.getText() + decline.getId());
+            decline.setOnAction(e->{
+                Registry reg = null;
+                System.out.println("Decline invitation");
+                try {
+                    reg = RMIManager.getRegistry();
+                    new InvitationService().rejectInvit(invitationId);
+                } catch (RemoteException ex) {
+                    System.out.println(ex.getMessage());
+                    throw new RuntimeException(ex);
+                }
+            });
             invitationsObservableList.add(temp);
         }
 
-        leftList.setItems(paneObservableList);
     }
-//
-//    @FXML
-//    private void openInvitations(ActionEvent actionEvent) {
-//        searchField.setVisible(true);
-//        currentPane.setText("Invitations");
-//        chatsButton.setStyle(null);
-//        contactsButton.setStyle(null);
-//        notificationsButton.setStyle(null);
-//        leftList.setId("");
-//        deleteAddDelContact();
-//        invitationsButton.setStyle("-fx-border-width: 0 0 2px 5px; -fx-border-color: purple;");
-//        paneObservableList.clear();
-////        for (InvitationDto invitation : userSessionDto.getInvitationListDto()) {
-////            Pane temp = PaneManager.getPaneManager().putInvitationCard();
-////            ((Label) (temp.lookup("#invitId"))).setText(invitation.getId() + "");
-////            (temp.lookup("#invitId")).setVisible(false);
-////            UserCardDto dto = new UserCardDto();
-////            ((Label) (temp.lookup("#userName"))).setText(dto.getName().toString());
-////            ((Label) (temp.lookup("#invitationDate"))).setText(invitation.getCreatedOn().toString());
-////        }
-//
-//        for (InvitationDto invitation : InvitationQueue.getList()) {
-//            Pane temp = PaneManager.getPaneManager().putInvitationCard();
-//            ((Label) (temp.lookup("#invitId"))).setText(invitation.getId() + "");
-//            (temp.lookup("#invitId")).setVisible(false);
-//            System.out.println(invitation.getUserCardDto().getImgPath());
-////            putImageOnPane(invitation.getUserCardDto().getImgPath(), invitation.getUserCardDto().getImage(), temp);
-//            putUserNameOnPane(invitation.getUserCardDto().getName(), temp);
-//            System.out.println("fff");
-//            Long invitationId = Long.parseLong(((Label) (temp.lookup("#invitId"))).getText());
-//            JFXButton accept = (JFXButton) (temp.getChildren().get(4));
-//            System.out.println(" " +accept.getText() + accept.getId());
-//            accept.setOnAction(e->{
-//                Registry reg = null;
-//                System.out.println("Accept invitation" + invitationId);
-//                try {
-//                    reg = RMIManager.getRegistry();
-//                    new InvitationService().acceptInvit(invitationId);
-//                } catch (RemoteException ex) {
-//                    System.out.println(ex.getMessage());
-//                    throw new RuntimeException(ex);
-//                }
-//            });
-//
-//            JFXButton decline = (JFXButton) (temp.getChildren().get(5));
-//            System.out.println(" " +decline.getText() + decline.getId());
-//            decline.setOnAction(e->{
-//                Registry reg = null;
-//                System.out.println("Decline invitation");
-//                try {
-//                    reg = RMIManager.getRegistry();
-//                    new InvitationService().rejectInvit(invitationId);
-//                } catch (RemoteException ex) {
-//                    System.out.println(ex.getMessage());
-//                    throw new RuntimeException(ex);
-//                }
-//            });
-//            paneObservableList.add(temp);
-//        }
-//
-//        leftList.setItems(paneObservableList);
-//    }
 
     private void selectInvitation() {
         leftList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Pane>() {
             @Override
             public void changed(ObservableValue<? extends Pane> observable, Pane oldValue, Pane newValue) {
                 if(newValue!=null)
-                    if((currentPane.getText().equals("Invitation"))) {
+                    if((currentPane.getText().equals("Invitations"))) {
                         Long invitationId = Long.parseLong(((Label) (newValue.lookup("#invitId"))).getText());
-                        ((JFXButton) (newValue.lookup("#confirInvitation"))).setOnAction(e -> {
+                        ((JFXButton) (newValue.lookup("#confirmnInvitation"))).setOnAction(e -> {
                             Registry reg = null;
                             try {
                                 reg = RMIManager.getRegistry();
@@ -544,6 +514,7 @@ public class ChatController implements Initializable {
                     }
     }});
     }
+
     @FXML
     private void openNotifications(ActionEvent actionEvent) {
         searchField.setVisible(true);
@@ -664,28 +635,29 @@ public class ChatController implements Initializable {
         btnAddContacts.setVisible(true);
 
         contactsButton.setStyle("-fx-border-width: 0 0 2px 5px; -fx-border-color: purple;");
-        paneObservableList.clear();
-        paneObservableList.add(temp);
-        leftList.setItems(paneObservableList);
+
+        invitationsObservableList.clear();
+        leftList.setItems(invitationsObservableList);
+        invitationsObservableList.add(temp);
     }
     @FXML
     void deleteContact(MouseEvent event) {
-        if(paneObservableList.size()>1){
-            paneObservableList.remove(paneObservableList.size()-1);
-            leftList.setItems(paneObservableList);
+        if(invitationsObservableList.size()>1){
+            invitationsObservableList.remove(invitationsObservableList.size()-1);
+//            leftList.setItems(paneObservableList);
         }
 
     }
     @FXML
     void addNewContact(MouseEvent event) {
         Pane temp = PaneManager.getPaneManager().putAddContactCard();
-        paneObservableList.add(temp);
-        leftList.setItems(paneObservableList);
+        invitationsObservableList.add(temp);
+//        leftList.setItems(paneObservableList);
     }
     @FXML
     void addContacts(ActionEvent event) {
         leftList.cellFactoryProperty();
-        for (Pane k: paneObservableList) {
+        for (Pane k: invitationsObservableList) {
             TextField tx = (TextField) k.getChildren().get(1);
             Label label = (Label) k.getChildren().get(2);
             if(Validation.validatePhoneNumber(tx,label)){
