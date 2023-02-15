@@ -73,7 +73,6 @@ public class ProfileController implements Initializable {
         putUserDataOnPane();
         userNameText = new TextField(userName.getText());
         bioText = new TextField(bio.getText());
-        System.out.println(userSessionDto.getUser());
         try {
             userPic.setFill(new ImagePattern(new Image(saveUserImage(userSessionDto.getUser()),200,200,false,true)));
         } catch (IOException e) {
@@ -126,9 +125,10 @@ public class ProfileController implements Initializable {
             try {
                 IServer iServer = RMIManager.lookUpIServer();
                 iServer.editUser(userSessionDto.getUser());
-                AlertWindow alertWindow = new AlertWindow("Profile has been updated successfully");
+                AlertWindow alertWindow = new AlertWindow("Your profile has been updated successfully");
             } catch (RemoteException e) {
                 e.printStackTrace();
+                AlertWindow alertWindow = new AlertWindow("Failed to update your Profile");
             } catch (NotBoundException e) {
                 e.printStackTrace();
             }
@@ -187,8 +187,6 @@ public class ProfileController implements Initializable {
     }
 
     public String  saveUserImage(UserDto dto) throws IOException {
-        System.out.println(Constants.MAIN_DIR);
-        System.out.println(Constants.USER_IMAGES_DIR);
         String path = Constants.USER_IMAGES_DIR +dto.getImgPath();
         Constants.byteArrayToImage(dto.getImage(), URLDecoder.decode(path, "UTF-8"));
         return URLDecoder.decode(path, "UTF-8");
