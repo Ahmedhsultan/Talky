@@ -2,6 +2,7 @@ package gov.iti.jets.server.service;
 
 
 import gov.iti.jets.common.dto.ConnectionDto;
+import gov.iti.jets.common.util.Constants;
 import gov.iti.jets.server.Util.Queues.ConnectedClientsMap;
 import gov.iti.jets.server.persistence.dao.UserDao;
 
@@ -21,8 +22,8 @@ public class CheckConnectedClientStatus implements Runnable{
                 }catch (RemoteException ex){
                     try {
                         ConnectedClientsMap.getList().remove(connectionDto.getUserDto().getId());
-                        userDao.setOnlineStatus(connectionDto.getUserDto().getId(),"Offline");
-                        System.out.println( connectionDto.getUserDto().getId() + "Offline");
+                        userDao.setOnlineStatus(connectionDto.getUserDto().getId(), Constants.ONLINE_STATUS_AVAILABLE);
+                        System.out.println( connectionDto.getUserDto().getId() + Constants.ONLINE_STATUS_OFFLINE);
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
                     }

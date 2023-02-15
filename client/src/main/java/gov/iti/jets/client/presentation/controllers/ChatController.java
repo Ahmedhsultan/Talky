@@ -619,9 +619,9 @@ public class ChatController implements Initializable {
 
 
     private void putStatusOnPane(String status, Pane temp) {
-        if(status.equals("Offline"))
+        if(status.equals(Constants.ONLINE_STATUS_OFFLINE))
             ((Circle)(temp.lookup("#statusCircle"))).setFill(Color.RED);
-        else if(status.equals("Online"))
+        else if(status.equals(Constants.ONLINE_STATUS_AVAILABLE))
             ((Circle)(temp.lookup("#statusCircle"))).setFill(Color.GREEN);
         else if(status.equals("NA"))
             ((Circle)(temp.lookup("#statusCircle"))).setRadius(0);
@@ -629,7 +629,7 @@ public class ChatController implements Initializable {
 
 
     private void putOnlineStatusOnPane(String status, Pane temp) {
-        if(status.equals("Offline"))
+        if(status.equals(Constants.ONLINE_STATUS_OFFLINE))
             ((Label)temp.lookup("#onlineStatus")).setText("");
         else
             ((Label)temp.lookup("#onlineStatus")).setText(status);
