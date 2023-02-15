@@ -19,7 +19,7 @@ public class PullOnlineUsersFromServer {
                 System.out.println("run");
                 while (true){
                     try {
-                        Thread.sleep(10000);
+                        Thread.sleep(6000);
                         iServer = getIserver();
 //                        iServer.getOnlineUsers(MyID.getInstance().getMyId());
                     } catch (InterruptedException e) {

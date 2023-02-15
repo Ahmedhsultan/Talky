@@ -36,13 +36,13 @@ public class IClientImpl extends UnicastRemoteObject implements IClient {
 
     @Override
     public void receive() throws RemoteException {
-        System.out.println("recivemsg");
+        System.out.println("ServerCall");
         ConnectionFlag.getInstance().connectedFlag = true;
     }
 
     @Override
     public void receiveMessage(long chatId, MessageDto messageDto) throws RemoteException {
-//        System.out.println(chatId + messageDto.getMessage() + messageDto.getSenderId());
+        System.out.println("New Msg" + chatId + messageDto.getMessage() + messageDto.getSenderId());
 
         Platform.runLater(new Runnable() {
             @Override
@@ -65,11 +65,13 @@ public class IClientImpl extends UnicastRemoteObject implements IClient {
                    }
 
                 }
+                System.out.println("messageqount=" + MessagesQueue.getList().get(chatId).size());
+                MessagesQueue.change.clear();
+                MessagesQueue.change.put(chatId, messageDto);
+                System.out.println("messageqount=" + MessagesQueue.getList().get(chatId).size());
 
             }
         });
-        MessagesQueue.change.clear();
-        MessagesQueue.change.put(chatId, messageDto);
 
     }
 
@@ -143,14 +145,14 @@ public class IClientImpl extends UnicastRemoteObject implements IClient {
         ClearQueues.clearAllQueues();
 
         //Clear and add new session to contact list
-        ContactList.getList().clear();
         ContactList.getList().addAll(userSessionDto.getContactListDto());
         //Clear and add new session to invitation queue
-        InvitationQueue.getList().clear();
         InvitationQueue.getList().addAll(userSessionDto.getInvitationListDto());
         //Clear and add new session to chat queue
-        ChatList.getList().clear();
         ChatList.getList().addAll(userSessionDto.getChatListDto());
+//        //Message and Chat Queue
+//        for (var ele : ChatList.getList())
+//        MessagesQueue.getList().put(ele.getId() , FXCollections.observableArrayList());
 
         //Start Online pulling service
         PullOnlineUsersFromServer.getInstance();

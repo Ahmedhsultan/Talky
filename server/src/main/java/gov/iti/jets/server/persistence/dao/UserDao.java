@@ -94,7 +94,7 @@ public class UserDao extends BaseDaoImpl<User, String> {
         statement.setBoolean(12, entity.isBotMode());
         statement.setString(13, entity.getBio());
     }
-    public void setOnlineStatus(String phone, String status)throws SQLException
+    public synchronized void setOnlineStatus(String phone, String status)throws SQLException
     {
         String query = "update  user set " +
                 " is_online_status=?" +

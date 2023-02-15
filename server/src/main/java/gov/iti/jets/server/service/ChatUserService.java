@@ -69,17 +69,13 @@ public class ChatUserService {
             if(userIds!=null) {
                 for (String userId : userIds) {
                     try {
-                        if(ConnectedClientsMap.getList().containsKey(userId))
+                        if(ConnectedClientsMap.getList().get(userId).getUserDto().isBotMode()) {
+                            ConnectedClientsMap.getList().get(userId).getIClient().receiveMessageBot(chatId, messageDto, talkToBot(messageDto.getMessage()));
+                        }else {
                             ConnectedClientsMap.getList().get(userId).getIClient().receiveMessage(chatId, messageDto);
+                        }
                     }catch (RemoteException re){
                         re.printStackTrace();
-                    }
-                    if(ConnectedClientsMap.getList().get(userId).getUserDto().isBotMode())
-                    {
-                        ConnectedClientsMap.getList().get(userId).getIClient().receiveMessageBot(chatId, messageDto, talkToBot(messageDto.getMessage()));
-
-                    }else {
-                        ConnectedClientsMap.getList().get(userId).getIClient().receiveMessage(chatId, messageDto);
                     }
                 }
             }

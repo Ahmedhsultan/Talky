@@ -17,13 +17,15 @@ public class CheckConnectedClientStatus implements Runnable{
             for (ConnectionDto connectionDto : ConnectedClientsMap.getList().values()) {
                 try {
                     connectionDto.getIClient().receive();
-                    userDao.setOnlineStatus(connectionDto.getUserDto().getId(),"Online");
-                    System.out.println( connectionDto.getUserDto().getId() + "Online");
+                    userDao.setOnlineStatus(connectionDto.getUserDto().getId(),Constants.ONLINE_STATUS_AVAILABLE);
+                    System.out.println( connectionDto.getUserDto().getId() + Constants.ONLINE_STATUS_AVAILABLE);
                 }catch (RemoteException ex){
                     try {
-                        ConnectedClientsMap.getList().remove(connectionDto.getUserDto().getId());
-                        userDao.setOnlineStatus(connectionDto.getUserDto().getId(), Constants.ONLINE_STATUS_AVAILABLE);
-                        System.out.println( connectionDto.getUserDto().getId() + Constants.ONLINE_STATUS_OFFLINE);
+                        if (ConnectedClientsMap.getList().containsKey(connectionDto.getUserDto().getId())){
+                            ConnectedClientsMap.getList().remove(connectionDto.getUserDto().getId());
+                            userDao.setOnlineStatus(connectionDto.getUserDto().getId(), Constants.ONLINE_STATUS_OFFLINE);
+                            System.out.println( connectionDto.getUserDto().getId() + Constants.ONLINE_STATUS_OFFLINE);
+                        }
                     } catch (SQLException e) {
                         throw new RuntimeException(e);
                     }
@@ -33,7 +35,7 @@ public class CheckConnectedClientStatus implements Runnable{
             }
 
             try {
-                Thread.sleep(30000);
+                Thread.sleep(5000);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }

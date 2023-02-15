@@ -38,6 +38,8 @@ public class UserController extends UnicastRemoteObject implements UserRemote {
     }
 
     public UserSessionDto login(String phone, String password, IClient iClient) throws RemoteException {
+        if (ConnectedClientsMap.getList().containsKey(phone))
+            throw new RemoteException("Other user User this Acount");
         //Get user session data from db
         UserSessionDto userSessionDto = userService.login(phone,  password);
         //Establish connection between user and server
