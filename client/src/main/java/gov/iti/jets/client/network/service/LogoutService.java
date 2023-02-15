@@ -2,6 +2,7 @@ package gov.iti.jets.client.network.service;
 
 import gov.iti.jets.client.Dina.MyID;
 import gov.iti.jets.client.Util.ClearQueues;
+import gov.iti.jets.client.business.services.SceneManager;
 import gov.iti.jets.common.network.server.UserRemote;
 import gov.iti.jets.common.util.Constants;
 
@@ -22,6 +23,8 @@ public class LogoutService {
         PullOnlineUsersFromServer.getInstance().stopService();
         //Clear Queues
         ClearQueues.clearAllQueues();
+        //Clear SceneManager PaneManger
+        SceneManager.getSceneManager().clear();
     }
 
     private static void deleteCash(){
