@@ -37,12 +37,14 @@ public class Main extends Application {
         s.initStage(stage);
         s.switchToLoginScene();
 
-        String[] cashed = Cashing.getCash();
-        if (cashed != null){
-            LoginService loginService = new LoginService();
-            loginService.login(cashed[0],cashed[1]);
-            SceneManager.getSceneManager().switchToChatScene();
-        }
+        s.clearSceneManager();
+
+//        String[] cashed = Cashing.getCash();
+//        if (cashed != null){
+//            LoginService loginService = new LoginService();
+//            loginService.login(cashed[0],cashed[1]);
+//            SceneManager.getSceneManager().switchToChatScene();
+//        }
 
     }
     public static void main(String[] args) {

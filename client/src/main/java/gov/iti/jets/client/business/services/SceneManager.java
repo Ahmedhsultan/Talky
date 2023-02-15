@@ -27,6 +27,9 @@ public class SceneManager {
         return sceneManager;
     }
 
+    public void clearSceneManager(){
+        scenes.clear();
+    }
 
     public void initStage(Stage stage) {
         if (primaryStage != null) {

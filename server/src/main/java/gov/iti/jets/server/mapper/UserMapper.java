@@ -7,19 +7,18 @@ import gov.iti.jets.common.dto.UserDto;
 import gov.iti.jets.common.dto.registration.UserRegistrationDto;
 import gov.iti.jets.common.util.Constants;
 import gov.iti.jets.server.entity.User;
-import gov.iti.jets.server.service.UserService;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
-public class UserMapper implements BaseMapper<User, UserDto>{
+public class UserMapper implements BaseMapper<User, UserDto> {
 
     @Override
     public UserDto toDTO(User user) {
         String path = Constants.USER_IMAGES_DIR;
-        UserDto  dto = UserDto.builder()
+        UserDto dto = UserDto.builder()
                 .id(user.getId())
                 .name(user.getName())
                 .email(user.getEmail())
@@ -32,32 +31,35 @@ public class UserMapper implements BaseMapper<User, UserDto>{
                 .bio(user.getBio())
                 .build();
         try {
-                    if(dto.getImgPath()!=null)
-                    {
-                        dto .setImage(Constants.imageToByteArray(path + user.getImgPath()));
-                    }
+            if (dto.getImgPath() != null) {
+                dto.setImage(Constants.imageToByteArray(path + user.getImgPath()));
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
         return dto;
     }
 
-    public ContactDto toContactDTO(IUser user ) {
+    public ContactDto toContactDTO(IUser user) {
         String path = Constants.USER_IMAGES_DIR;
-        try{
-            ContactDto dto = ContactDto.builder()
-                    .phoneNumber(user.getId())
-                    .name(user.getName())
-                    .image(Constants.imageToByteArray(path + user.getImgPath()))
-                    .picture(user.getImgPath())
-                    .isOnlineStatus(user.getIsOnlineStatus())
-                    .bio(user.getBio())
-                    .build();
-            return dto;
-        }catch (IOException ex){
-            ex.printStackTrace();
+        ContactDto dto = ContactDto.builder()
+                .phoneNumber(user.getId())
+                .name(user.getName())
+                .picture(user.getImgPath())
+                .isOnlineStatus(user.getIsOnlineStatus())
+                .bio(user.getBio())
+                .build();
+
+        try {
+            if (dto.getImgPath() != null) {
+                dto.setImage(Constants.imageToByteArray(path + user.getImgPath()));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        return null;
+        return dto;
+
+
     }
 
     @Override
@@ -93,8 +95,7 @@ public class UserMapper implements BaseMapper<User, UserDto>{
                 .collect(Collectors.toList());
     }
 
-    public User regDtoToEntity(UserRegistrationDto userRegistrationDto)
-    {
+    public User regDtoToEntity(UserRegistrationDto userRegistrationDto) {
         User user = toEntity(userRegistrationDto.getUserDto());
         user.setPassword(userRegistrationDto.getPassword());
         return user;
