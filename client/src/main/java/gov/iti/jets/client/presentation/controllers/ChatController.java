@@ -6,6 +6,7 @@ import com.jfoenix.controls.JFXButton;
 import gov.iti.jets.client.Dina.*;
 import gov.iti.jets.client.business.services.PaneManager;
 import gov.iti.jets.client.business.services.SceneManager;
+import gov.iti.jets.client.callBack.Martinily;
 import gov.iti.jets.client.network.service.*;
 import gov.iti.jets.common.dto.*;
 import gov.iti.jets.common.util.Constants;
@@ -22,6 +23,7 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.MapChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -60,6 +62,7 @@ import java.rmi.registry.Registry;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class ChatController implements Initializable {
@@ -109,6 +112,8 @@ public class ChatController implements Initializable {
     private JFXButton btnAddContacts;
     @FXML
     private ScrollPane rightScrollPane;
+    //    @FXML
+//    private ListView chatVBox;
     @FXML
     private VBox chatVBox;
     @FXML
@@ -141,7 +146,7 @@ public class ChatController implements Initializable {
     private Button fileBtn;
 
 
-//    private UserSessionDto userSessionDto;
+    private UserSessionDto userSessionDto;
 
     ObservableList<Pane> paneObservableList = FXCollections.observableArrayList();
     ObservableList<Pane> notificationObservableList = FXCollections.observableArrayList();
@@ -155,14 +160,13 @@ public class ChatController implements Initializable {
     boolean isChatClosed = true;
     boolean isBarsVisible = false;
 
-    UserSessionDto userSessionDto = null;
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         PaneManager.setPrimaryPane("containerPane", containerPane);
         closeChatBtn.fire();
-//        createFontsList();
 
+//        rightAnchorPane.getChildren().add(0, new ImageView(new Image(String.format("/image/%s.gif", (int) (Math.random() * (6)) + 1 + ""))));
+//        rightAnchorPane.getChildren().get(0).toFront();
         resetMessageOptions();
         if (PasswordLoginController.userSessionDto != null)
             userSessionDto = PasswordLoginController.userSessionDto;
@@ -170,7 +174,6 @@ public class ChatController implements Initializable {
             userSessionDto = RegisterController.userSessionDto;
         chatsButton.fire();
         selectChat();
-
         checkInvitations();
         checkNotifications();
         checkContacts();
@@ -340,9 +343,6 @@ public class ChatController implements Initializable {
         });
     }
 
-//    long i =0;
-
-
     @FXML
     private void openChats(ActionEvent actionEvent) {
 //        NotificationQueue.getList().add(i, new NotificationDto(i++, 012, 011, "add", new Date(40000), "add me", false));
@@ -407,7 +407,6 @@ public class ChatController implements Initializable {
             putOnlineStatusOnPane(contact.getIsOnlineStatus(), temp);
             contactsObservableList.add(temp);
         }
-        leftList.setItems(paneObservableList);
     }
 
 
@@ -438,7 +437,6 @@ public class ChatController implements Initializable {
         }
 
 
-        leftList.setItems(paneObservableList);
 }
 
     private void selectInvitation() {
@@ -602,6 +600,7 @@ public class ChatController implements Initializable {
 
     @FXML
     void deleteContact(MouseEvent event) {
+        //System.out.println("Remove "+p.size());
         if (paneObservableList.size() > 1) {
             paneObservableList.remove(paneObservableList.size() - 1);
             leftList.setItems(paneObservableList);
@@ -639,7 +638,7 @@ public class ChatController implements Initializable {
     }
 
     public void sendMessage(ActionEvent actionEvent) {
-        if (!messageField.getText().trim().isBlank()) {
+        if(!messageField.getText().trim().isBlank()) {
             MessageDto messageDto = new MessageDto();
             messageDto.setMessage(messageField.getText().trim());
             messageDto.setFont(fonts.getSelectionModel().getSelectedItem());
@@ -663,6 +662,10 @@ public class ChatController implements Initializable {
             animation.play();
         }
     }
+
+
+
+
 
 
     public void createMessage(MessageDto messageOptions, int chat) {
@@ -735,18 +738,20 @@ public class ChatController implements Initializable {
         messageLabel.setUnderline(messageOptions.isUnderline());
         FontWeight w;
         if (messageOptions.isBold()) {
-            w = FontWeight.BOLD;
+             w = FontWeight.BOLD;
 //
-        } else {
-            w = FontWeight.NORMAL;
+        }
+        else {
+          w  = FontWeight.NORMAL;
         }
 
-        FontPosture p;
+        FontPosture p ;
         if (messageOptions.isItalic()) {
             p = FontPosture.ITALIC;
 //            messageLabel.setStyle("-fx-font-weight: bold;");
-        } else {
-            p = FontPosture.REGULAR;
+        }
+        else {
+          p  = FontPosture.REGULAR;
         }
 
 
@@ -775,64 +780,68 @@ public class ChatController implements Initializable {
     File file = null;
 
     public void sendFile(ActionEvent actionEvent) {
-
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Select the File you want . . .");
-        File file = fileChooser.showOpenDialog(null);
-
+        FileChooser fc = new FileChooser();
+        fc.setTitle("Select the File you want . . .");
+        file = fc.showOpenDialog(null);
         if (file != null) {
             createAttachmentMessage();
         }
-
 
     }
 
     @FXML
     private void logout() {
-//        Stage window = new Stage();
-//        window.initModality(Modality.APPLICATION_MODAL);
-//        window.initStyle(StageStyle.UNDECORATED);
-//        window.setTitle("Confirm");
-//        window.setMinWidth(250);
-//
-//        Label label = new Label();
-//        label.setText("Choose Logout or Exit");
-//
-//        Button yesButton = new Button("Logout");
-//        yesButton.setStyle("-fx-background-color: rgba(253,68,68,0.62);");
-//        yesButton.setMinWidth(150);
-//        Button noButton = new Button("Cancel");
-//        noButton.setStyle("-fx-background-color: #00ff5d;");
-//        noButton.setMinWidth(150);
-//
-//        yesButton.setOnAction(e -> {
-//            try {
-//                LogoutService.logout();
-//                SceneManager s = SceneManager.getSceneManager();
-//                s.switchToLoginScene();
-//            } catch (NotBoundException | RemoteException ex) {
-//                ex.printStackTrace();
-//            }
-//            window.close();
-//        });
-//
-//        noButton.setOnAction(e -> {
-//            window.close();
-//        });
-//
-//        HBox hBox = new HBox(10);
-//        hBox.getChildren().addAll(yesButton, noButton);
-//        hBox.setAlignment(Pos.CENTER);
-//        VBox layout = new VBox(20);
-//        layout.getChildren().addAll(label, hBox);
-//        layout.setAlignment(Pos.CENTER);
-//        layout.setPadding(new Insets(20));
-//
-//        layout.setStyle("-fx-border-color: #9900ff; -fx-border-width: 0.5;");
-//
-//        Scene scene = new Scene(layout);
-//        window.setScene(scene);
-//        window.showAndWait();
+        Stage window = new Stage();
+        window.initModality(Modality.APPLICATION_MODAL);
+        window.initStyle(StageStyle.UNDECORATED);
+        window.setTitle("Confirm");
+        window.setMinWidth(250);
+
+        Label label = new Label();
+        label.setText("Choose Logout or Exit");
+
+        Button yesButton = new Button("Logout");
+        yesButton.setStyle("-fx-background-color: rgba(253,68,68,0.62);");
+        yesButton.setMinWidth(150);
+        Button noButton = new Button("Exit");
+        noButton.setStyle("-fx-background-color: #00ff5d;");
+        noButton.setMinWidth(150);
+
+        yesButton.setOnAction(e -> {
+            try {
+                LogoutService.logout();
+                SceneManager s = SceneManager.getSceneManager();
+                s.switchToLoginScene();
+            } catch (NotBoundException | RemoteException ex) {
+                ex.printStackTrace();
+            }
+            window.close();
+        });
+
+        noButton.setOnAction(e -> {
+            try {
+                LogoutService.logout();
+                SceneManager s = SceneManager.getSceneManager();
+                s.switchToLoginScene();
+            } catch (NotBoundException | RemoteException ex) {
+                ex.printStackTrace();
+            }
+            window.close();
+        });
+
+        HBox hBox = new HBox(10);
+        hBox.getChildren().addAll(yesButton, noButton);
+        hBox.setAlignment(Pos.CENTER);
+        VBox layout = new VBox(20);
+        layout.getChildren().addAll(label, hBox);
+        layout.setAlignment(Pos.CENTER);
+        layout.setPadding(new Insets(20));
+
+        layout.setStyle("-fx-border-color: #9900ff; -fx-border-width: 0.5;");
+
+        Scene scene = new Scene(layout);
+        window.setScene(scene);
+        window.showAndWait();
     }
 
     private void createAttachmentMessage() {
@@ -867,11 +876,12 @@ public class ChatController implements Initializable {
     }
 
     public void edit(ActionEvent actionEvent) {
-        if (isBarsVisible) {
+        if(isBarsVisible){
             firstButtonBar.setVisible(false);
             secondButtonBar.setVisible(false);
             isBarsVisible = false;
-        } else {
+        }
+        else{
             firstButtonBar.setVisible(true);
             secondButtonBar.setVisible(true);
             isBarsVisible = true;

@@ -4,7 +4,7 @@
     -fx-font-family: "Rockwell";
     -fx-font-style: oblique;
     -fx-font-weight: 900;
-    -fx-text-fill: #000000;
+    -fx-text-fill: black;
     -fx-graphic-text-gap: -60;
 }
 
@@ -17,6 +17,15 @@
 #logout {
     -fx-graphic-text-gap: -40;
 }
+
+/* 
+.button:focused {
+    -fx-border-width: 0 0 2px 5px;
+    -fx-border-color: purple; */
+/* } */
+
+
+
 
 .list-cell {
     -fx-background-color: transparent;
@@ -44,27 +53,6 @@
     -fx-translate-x: 0;
     -fx-translate-y: 0;
     -fx-effect: none;
-}
-#messageField {
-    -fx-background-color:  #e0b8d2;
-    
-    -fx-background-radius: 50;
-    -fx-border-radius: 50;
-
-}
-
-#messageField  .scroll-pane {
-    -fx-background-color: transparent;
-}
-#messageField  .scroll-pane .viewport{
-    -fx-background-color: transparent;
-}
-#messageField  .scroll-pane .content{
-    -fx-background-color: transparent;
-}
-
-#messageField:focused {
-    -fx-effect: dropshadow(three-pass-box, #6713d2, 5, 0.0, 0, 1);
 }
 
 #invitationResponseBtns {

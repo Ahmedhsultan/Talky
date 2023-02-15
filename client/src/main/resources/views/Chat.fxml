@@ -2,16 +2,16 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXCheckBox?>
+<?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXListView?>
 <?import com.jfoenix.controls.JFXSlider?>
 <?import javafx.geometry.Insets?>
 <?import javafx.geometry.Rectangle2D?>
-<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.ColorPicker?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
@@ -20,6 +20,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
@@ -37,7 +38,7 @@
                         <Insets bottom="120.0" right="45.0" />
                     </StackPane.margin>
                     <graphic>
-                        <ImageView fitHeight="46.0" fitWidth="46.0" pickOnBounds="true" style="-fx-translate-x: -100;">
+                        <ImageView fitHeight="46.0" fitWidth="46.0" pickOnBounds="true" style="-fx-translate-x: -90;">
                             <viewport>
                                 <Rectangle2D />
                             </viewport>
@@ -55,7 +56,7 @@
                         <Insets right="50.0" top="50.0" />
                     </StackPane.margin>
                <graphic>
-                  <ImageView fitHeight="46.0" fitWidth="46.0" pickOnBounds="true" style="-fx-translate-x: -70;">
+                  <ImageView fitHeight="46.0" fitWidth="46.0" pickOnBounds="true" style="-fx-translate-x: -60;">
                      <viewport>
                         <Rectangle2D />
                      </viewport>
@@ -99,37 +100,17 @@
                   <Insets right="50.0" top="380.0" />
                </StackPane.margin>
                <graphic>
-                  <StackPane maxWidth="-Infinity" prefHeight="62.0" prefWidth="32.0">
-                     <children>
-                        <ImageView fitHeight="57.0" fitWidth="59.0" pickOnBounds="true">
-                           <viewport>
-                              <Rectangle2D />
-                           </viewport>
-                           <image>
-                              <Image url="@../image/notifications.png" />
-                           </image>
-                           <effect>
-                              <DropShadow />
-                           </effect>
-                        </ImageView>
-                        <Circle id="notificationCountCircle" fx:id="notificationCountCircle" fill="DODGERBLUE" radius="14.0" stroke="BLACK" strokeType="INSIDE" visible="false">
-                           <StackPane.margin>
-                              <Insets bottom="40.0" left="30.0" />
-                           </StackPane.margin>
-                           <effect>
-                              <DropShadow />
-                           </effect>
-                        </Circle>
-                        <Label fx:id="notificationCountLabel" text="1" visible="false">
-                           <StackPane.margin>
-                              <Insets bottom="40.0" left="30.0" />
-                           </StackPane.margin>
-                        </Label>
-                     </children>
-                     <padding>
-                        <Insets left="-150.0" />
-                     </padding>
-                  </StackPane>
+                  <ImageView fitHeight="46.0" fitWidth="46.0" pickOnBounds="true" style="-fx-translate-x: -70;">
+                     <viewport>
+                        <Rectangle2D />
+                     </viewport>
+                     <image>
+                        <Image url="@../image/notifications.png" />
+                     </image>
+                     <effect>
+                        <DropShadow />
+                     </effect>
+                  </ImageView>
                </graphic>
             </JFXButton>
                 <JFXButton fx:id="logout" mnemonicParsing="false" onAction="#logout" prefHeight="56.0" prefWidth="36.0" text=" ">
@@ -163,125 +144,119 @@
             </Rectangle>
                   <AnchorPane fx:id="rightAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="624.0" prefWidth="506.0" style="-fx-background-color: #f0f0f0;">
                <children>
-                  <ScrollPane id="scroll" fx:id="rightScrollPane" hbarPolicy="NEVER" layoutY="101.0" prefHeight="450.0" prefWidth="506.0" style="-fx-background-color: #f0f0f0;" vbarPolicy="NEVER" AnchorPane.bottomAnchor="73.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="101.0">
+                  <ScrollPane id="scroll" fx:id="rightScrollPane" hbarPolicy="NEVER" layoutY="101.0" prefHeight="417.0" prefWidth="464.0" style="-fx-background-color: #f0f0f0;" AnchorPane.bottomAnchor="56.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="101.0">
                      <content>
-                        <VBox fx:id="chatVBox" prefHeight="449.0" prefWidth="506.0" spacing="2.0" />
-                     </content>
-                  </ScrollPane>
+                        <VBox fx:id="chatVBox" prefHeight="424.0" prefWidth="506.0" spacing="2.0" />
+                     </content></ScrollPane>
                   <Label fx:id="chatName" layoutX="119.0" layoutY="22.0" prefHeight="53.0" prefWidth="306.0">
                      <font>
                         <Font size="32.0" />
                      </font>
                   </Label>
                   <Circle id="chatIcon" fx:id="chatIcon" fill="DODGERBLUE" layoutX="46.0" layoutY="46.0" radius="40.0" stroke="BLACK" strokeType="INSIDE" style="-fx-fill: transparent; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);" />
-                  <Button fx:id="closeChatBtn" layoutX="446.0" layoutY="7.0" mnemonicParsing="false" onAction="#closeChat" prefHeight="26.0" prefWidth="26.0">
+                  <TextArea fx:id="messageField" layoutY="575.0" prefHeight="46.0" prefWidth="358.0" wrapText="true" />
+                  <Button fx:id="attachBtn" layoutX="411.0" layoutY="569.0" mnemonicParsing="false" onAction="#sendFile">
+                     <graphic>
+                        <ImageView fitHeight="54.0" fitWidth="42.0" pickOnBounds="true">
+                           <image>
+                              <Image url="@../image/attach.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <MenuButton layoutX="460.0" layoutY="575.0" mnemonicParsing="false" style="-fx-background-color: transparent;">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="Highlight">
+                           <graphic>
+                              <ColorPicker id="highlight" fx:id="highlight" style="-fx-background-color: transparent;" />
+                           </graphic>
+                        </MenuItem>
+                      <MenuItem mnemonicParsing="false" text="Text Color">
+                           <graphic>
+                              <ColorPicker id="fontColor" fx:id="textColor" style="-fx-background-color: transparent;" />
+                           </graphic>
+                        </MenuItem>
+                      <MenuItem mnemonicParsing="false" text="Font Size">
+                           <graphic>
+                              <JFXSlider id="fontSize" fx:id="fontSize" blockIncrement="5.0" max="50.0" showTickLabels="true" showTickMarks="true" value="15.0" />
+                           </graphic>
+                        </MenuItem>
+                        <MenuItem mnemonicParsing="false">
+                           <graphic>
+                              <JFXComboBox id="fonts" fx:id="fonts" minWidth="150.0" promptText="Font Family" />
+                           </graphic>
+                        </MenuItem>
+                        <MenuItem mnemonicParsing="false">
+                           <graphic>
+                              <MenuButton minWidth="150.0" mnemonicParsing="false" style="-fx-background-color: transparent;" text="Font Style">
+                                <items>
+                                  <MenuItem mnemonicParsing="false">
+                                       <graphic>
+                                          <HBox prefHeight="30.0" prefWidth="200.0">
+                                             <children>
+                                                <JFXCheckBox id="italicBox" fx:id="underline" checkedColor="#6713d2" text=" ">
+                                                   <graphic>
+                                                      <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true">
+                                                         <image>
+                                                            <Image url="@../image/underline.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                   </graphic>
+                                                </JFXCheckBox>
+                                                <JFXCheckBox id="italicBox" fx:id="italic" checkedColor="#6713d2" text=" ">
+                                                   <graphic>
+                                                      <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true">
+                                                         <image>
+                                                            <Image url="@../image/italic.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                   </graphic>
+                                                </JFXCheckBox>
+                                                <JFXCheckBox id="boldBox" fx:id="bold" checkedColor="#6713d2" text=" ">
+                                                   <graphic>
+                                                      <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true">
+                                                         <image>
+                                                            <Image url="@../image/bold.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                   </graphic>
+                                                </JFXCheckBox>
+                                             </children>
+                                          </HBox>
+                                       </graphic>
+                                    </MenuItem>
+                                </items>
+                              </MenuButton>
+                           </graphic>
+                        </MenuItem>
+                    </items>
+                     <graphic>
+                        <ImageView fitHeight="50.0" fitWidth="40.0" pickOnBounds="true">
+                           <image>
+                              <Image url="@../image/editMessage.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </MenuButton>
+                  <Button fx:id="sendBtn" layoutX="363.0" layoutY="575.0" mnemonicParsing="false" onAction="#sendMessage">
+                     <graphic>
+                        <ImageView fitHeight="50.0" fitWidth="40.0" pickOnBounds="true">
+                           <image>
+                              <Image url="@../image/send.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="closeChatBtn" layoutX="445.0" layoutY="-5.0" mnemonicParsing="false" onAction="#closeChat" prefHeight="26.0" prefWidth="26.0">
                      <graphic>
                         <ImageView fitHeight="48.0" fitWidth="50.0" pickOnBounds="true">
                            <image>
                               <Image url="@../image/x.png" />
                            </image>
-                           <effect>
-                              <DropShadow />
-                           </effect>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
                         </ImageView>
                      </graphic>
                   </Button>
-                  <TextArea id="messageField" fx:id="messageField" layoutY="562.0" maxHeight="-Infinity" maxWidth="460.0" minWidth="348.0" prefHeight="59.0" prefWidth="372.0" wrapText="true">
-                     <font>
-                        <Font name="Calibri" size="22.0" />
-                     </font>
-                  </TextArea>
-                  <Button fx:id="editBtn" layoutX="367.0" layoutY="571.0" minWidth="44.0" mnemonicParsing="false" onAction="#edit" prefHeight="38.0" prefWidth="44.0">
-                     <graphic>
-                        <ImageView fitHeight="37.0" fitWidth="32.0" pickOnBounds="true">
-                           <image>
-                              <Image url="@../image/editMessage.png" />
-                           </image>
-                           <effect>
-                              <DropShadow />
-                           </effect>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </ImageView>
-                     </graphic>
-                  </Button>
-                  <Button fx:id="attachBtn" layoutX="409.0" layoutY="571.0" minWidth="41.0" mnemonicParsing="false" onAction="#sendFile" prefHeight="40.0" prefWidth="41.0">
-                     <graphic>
-                        <ImageView fitHeight="44.0" fitWidth="36.0" pickOnBounds="true">
-                           <image>
-                              <Image url="@../image/attach.png" />
-                           </image>
-                           <effect>
-                              <DropShadow />
-                           </effect>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </ImageView>
-                     </graphic>
-                  </Button>
-                  <Button fx:id="sendBtn" layoutX="454.0" layoutY="575.0" minWidth="39.0" mnemonicParsing="false" onAction="#sendMessage" prefHeight="36.0" prefWidth="39.0">
-                     <graphic>
-                        <ImageView fitHeight="41.0" fitWidth="33.0" pickOnBounds="true">
-                           <image>
-                              <Image url="@../image/send.png" />
-                           </image>
-                           <effect>
-                              <DropShadow />
-                           </effect>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </ImageView>
-                     </graphic>
-                  </Button>
-                  <ButtonBar fx:id="firstButtonBar" layoutY="510.0" prefHeight="40.0" prefWidth="509.0" visible="false">
-                     <buttons>
-                        <JFXCheckBox fx:id="underline" checkedColor="#6713d2" maxWidth="20.0" prefHeight="0.0" text=" " translateX="-20.0">
-                           <graphic>
-                              <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true">
-                                 <image>
-                                    <Image url="@../image/underline.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </JFXCheckBox>
-                        <JFXCheckBox fx:id="italic" checkedColor="#6713d2" maxWidth="30.0" prefHeight="30.0" text=" " translateX="-20.0">
-                           <graphic>
-                              <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true">
-                                 <image>
-                                    <Image url="@../image/italic.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </JFXCheckBox>
-                        <JFXCheckBox fx:id="bold" checkedColor="#6713d2" maxWidth="50.0" minHeight="30.0" minWidth="64.0" prefHeight="20.0" prefWidth="30.0" text=" " translateX="-20.0">
-                           <graphic>
-                              <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true">
-                                 <image>
-                                    <Image url="@../image/bold.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </JFXCheckBox>
-                        <JFXSlider id="fontSize" fx:id="fontSize" blockIncrement="5.0" max="50.0" prefHeight="49.0" prefWidth="200.0" showTickLabels="true" showTickMarks="true" translateX="-20.0" value="15.0" />
-                     </buttons>
-                  </ButtonBar>
-                  <ButtonBar fx:id="secondButtonBar" layoutY="475.0" prefHeight="40.0" prefWidth="509.0" visible="false">
-                     <buttons>
-                        <ComboBox id="fonts" fx:id="fonts" minWidth="150.0" prefHeight="29.0" prefWidth="213.0" promptText="Font Family" style="-fx-background-color: Transparent;">
-                           <opaqueInsets>
-                              <Insets />
-                           </opaqueInsets>
-                        </ComboBox>
-                        <ColorPicker id="highlight" fx:id="highlight" style="-fx-background-color: transparent;" translateX="-20.0" />
-                        <ColorPicker id="fontColor" fx:id="textColor" style="-fx-background-color: transparent;" translateX="-40.0" />
-                     </buttons>
-                  </ButtonBar>
+                  <JFXListView id="chatVBox2" fx:id="chatVBox2" layoutY="102.0" prefHeight="476.0" prefWidth="514.0" />
                </children>
                <StackPane.margin>
                   <Insets left="350.0" />
