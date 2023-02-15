@@ -6,11 +6,14 @@ import com.jfoenix.controls.JFXButton;
 import gov.iti.jets.client.Dina.*;
 import gov.iti.jets.client.business.services.PaneManager;
 import gov.iti.jets.client.business.services.SceneManager;
-import gov.iti.jets.client.callBack.Martinily;
 import gov.iti.jets.client.network.service.*;
 import gov.iti.jets.common.dto.*;
 import gov.iti.jets.common.util.Constants;
 import gov.iti.jets.common.util.Validation;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -19,6 +22,7 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.MapChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -39,11 +43,14 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Duration;
 
 import java.io.File;
 import java.io.IOException;
@@ -54,6 +61,7 @@ import java.rmi.registry.Registry;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class ChatController implements Initializable {
@@ -103,8 +111,6 @@ public class ChatController implements Initializable {
     private JFXButton btnAddContacts;
     @FXML
     private ScrollPane rightScrollPane;
-    //    @FXML
-//    private ListView chatVBox;
     @FXML
     private VBox chatVBox;
     @FXML
@@ -123,7 +129,16 @@ public class ChatController implements Initializable {
     private CheckBox bold;
     @FXML
     private CheckBox underline;
-
+    @FXML
+    private Circle notificationCountCircle;
+    @FXML
+    private Label notificationCountLabel;
+    @FXML
+    private Button closeChatBtn;
+    @FXML
+    private ButtonBar firstButtonBar;
+    @FXML
+    private ButtonBar secondButtonBar;
 
     private UserSessionDto userSessionDto;
 
@@ -134,23 +149,23 @@ public class ChatController implements Initializable {
     ObservableList<Pane> invitationsObservableList = FXCollections.observableArrayList();
     ObservableList<Pane> chatsObservableList = FXCollections.observableArrayList();
 
-
+    int notificationCount = 0;
     Long currentChat = null;
     boolean isChatClosed = true;
+    boolean isBarsVisible = false;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         PaneManager.setPrimaryPane("containerPane", containerPane);
+        closeChatBtn.fire();
 
-        rightAnchorPane.getChildren().add(0, new ImageView(new Image(String.format("/image/%s.gif", (int) (Math.random() * (6)) + 1 + ""))));
-        rightAnchorPane.getChildren().get(0).toFront();
         resetMessageOptions();
         if (PasswordLoginController.userSessionDto != null)
             userSessionDto = PasswordLoginController.userSessionDto;
         else
             userSessionDto = RegisterController.userSessionDto;
+        chatsButton.fire();
         selectChat();
-//        checkMessages();
         checkInvitations();
         checkNotifications();
         checkContacts();
@@ -161,10 +176,10 @@ public class ChatController implements Initializable {
         ObservableList<String> fontFamilies = FXCollections.observableArrayList(Font.getFamilies());
         fonts.setItems(fontFamilies);
         fonts.setValue(fontFamilies.get(0));
-        fontSize.setValue(20);
-        textColor.setValue(Color.BLACK);
+        fontSize.setValue(35);
+        textColor.setValue(Color.rgb(103, 19, 210));
         highlight.setValue(Color.TRANSPARENT);
-        bold.setSelected(false);
+        bold.setSelected(true);
         italic.setSelected(false);
         underline.setSelected(false);
 
@@ -184,73 +199,22 @@ public class ChatController implements Initializable {
                         }
                     });
                 }
-                if(currentChat.equals(MessagesQueue.change.keySet().toArray()[0])){
+                if (currentChat != null && currentChat.equals(MessagesQueue.change.keySet().toArray()[0])) {
                     if (MessagesQueue.change.get(MessagesQueue.change.keySet().toArray()[0]).getSenderId().equals(MyID.getInstance().getMyId())) {
                         Platform.runLater(() -> {
                             createMessage(MessagesQueue.change.get(MessagesQueue.change.keySet().toArray()[0]), 1);
                         });
-                        System.out.println("after");
                     } else {
                         createMessage(MessagesQueue.change.get(MessagesQueue.change.keySet().toArray()[0]), 2);
-                        System.out.println("after2");
                     }
+                } else if (!currentPane.getText().equals("Notifications")) {
+                    notificationCountLabel.setText(++notificationCount + "");
+                    notificationCountCircle.setVisible(true);
+                    notificationCountLabel.setVisible(true);
                 }
             }
         });
     }
-
-    private void checkMessages() {
-//        MessagesQueue.getList().addListener(new MapChangeListener<Long, List<MessageDto>>() {
-//            @Override
-//            public void onChanged(Change<? extends Long, ? extends List<MessageDto>> change) {
-//                if (currentPane.getText().equals("Chats")) {
-        //                    Platform.runLater(new Runnable() {
-        //                        @Override
-        //                        public void run() {
-        //                            createInvitationList();
-        //                            leftList.getItems().clear();
-        //                            leftList.setItems(invitationsObservableList);
-        //                        }
-
-        //                    });
-//                }
-
-//                Platform.runLater(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        chatsButton.fire();
-//                        leftList.setItems(paneObservableList);
-//                    }
-//                });
-//                System.out.println("before");
-//                if (currentChat.equals(change.getKey())) {
-//                    if (change.getValueAdded().get(change.getValueAdded().size() - 1).getSenderId().equals(userSessionDto.getUser().getId())) {
-//                        Platform.runLater(() -> {
-//                            createMessage(change.getValueAdded().get(change.getValueAdded().size() - 1), 1);
-////                            chatVBox.setItems(messagesObservableList);
-//                        });
-//                        System.out.println("after");
-//                    } else {
-//                        Platform.runLater(() -> createMessage(change.getValueAdded().get(change.getValueAdded().size() - 1), 2));
-//                        System.out.println("after2");
-//                    }
-//                }
-//                else if(change.getValueAdded().get(change.getValueAdded().size()-1).getSenderId()!=userSessionDto.getUser().getId()) {
-//                    Pane temp = PaneManager.getPaneManager().putNotificationPane();
-////                ((ContactDto)(ContactList.getList().stream().filter(x->x.getPhoneNumber()==change.getValueAdded().get(change.getValueAdded().size()-1).getSenderId()))).getName()+" sent you a message");
-//                    ((Label)(temp.lookup("#notificationMessage"))).setText(change.toString());
-//                    notificationObservableList.add(temp);
-//                }
-
-//                ob.add(createMessage(Color.DARKBLUE, messageField.getText(), 2));
-//                chatVBox.setItems(ob);
-
-//                System.out.println(change);
-
-//                System.out.println(MessagesQueue.getList());
-    }
-//        });
-//    }
 
 
     private void checkInvitations() {
@@ -261,7 +225,6 @@ public class ChatController implements Initializable {
                     Platform.runLater(new Runnable() {
                         @Override
                         public void run() {
-//                            System.out.println("eeeeeeeeewwwwwwwwwwwwwwwwwwwweeeeeeeeee");
                             createInvitationList();
                         }
                     });
@@ -350,7 +313,6 @@ public class ChatController implements Initializable {
                                 currentChat = chat.getId();
                             }
                         }
-//                        System.out.println(currentChat);
 
                     } else if (currentPane.getText().equals("Chats")) {
                         currentChat = Long.parseLong(((Label) (newValue.lookup("#chatID"))).getText());
@@ -358,7 +320,6 @@ public class ChatController implements Initializable {
                     chatName.setText(((Label) (newValue.lookup("#userName"))).getText());
 //                          chatIcon.setFill(new ImagePattern(new Image(Constants.byteArrayToImage(arr, img).getPath(),100,100,false,true)));
 
-                    System.out.println("curr" + currentChat);
                     if (MessagesQueue.getList().containsKey(currentChat)) {
                         for (MessageDto message : MessagesQueue.getList().get(currentChat)) {
                             if (message.getSenderId().equals(userSessionDto.getUser().getId())) {
@@ -392,6 +353,7 @@ public class ChatController implements Initializable {
         chatsObservableList.clear();
         leftList.setItems(chatsObservableList);
         MessagesQueue.getList().forEach((k, v) -> {
+            if(k != -1) {
                 Pane temp = PaneManager.getPaneManager().putRecentChatCard();
                 ((Label) (temp.lookup("#chatID"))).setText(k.toString());
 //            putImageOnPane(chat.getPicture_icon(), temp);
@@ -401,6 +363,7 @@ public class ChatController implements Initializable {
                 putTimeOnPane(v.get(v.size() - 1).getTimestamp(), temp);
                 putUserNameOnPane(v.get(v.size() - 1).getSenderId(), temp);
                 chatsObservableList.add(temp);
+            }
         });
 
 //        chatsObservableList.stream().sorted((p, n) -> Integer.parseInt(((Label) (p.lookup("#timestamp"))).getText()));
@@ -476,6 +439,9 @@ public class ChatController implements Initializable {
         deleteAddDelContact();
         leftList.setId("");
         notificationsButton.setStyle("-fx-border-width: 0 0 2px 5px; -fx-border-color: purple;");
+        notificationCount = 0;
+        notificationCountCircle.setVisible(false);
+        notificationCountLabel.setVisible(false);
         createNotificationList();
 
     }
@@ -639,46 +605,45 @@ public class ChatController implements Initializable {
     }
 
     public void sendMessage(ActionEvent actionEvent) {
-        MessageDto messageDto = new MessageDto();
-        messageDto.setMessage(messageField.getText().trim());
-        messageDto.setFont(fonts.getSelectionModel().getSelectedItem());
-        messageDto.setBold(true);
-        messageDto.setItalic(italic.isSelected());
-        messageDto.setUnderline(underline.isSelected());
-        messageDto.setTextColor("#" + Integer.toHexString(textColor.getValue().hashCode()));
-        messageDto.setHighlightColor("#" + Integer.toHexString(highlight.getValue().hashCode()));
-        messageDto.setSenderId(userSessionDto.getUser().getId());
-        messageDto.setFontSize((int) (fontSize.getValue()));
-        messageDto.setTimestamp(LocalTime.now().getHour() + ":" + LocalTime.now().getMinute() + "");
-        try {
-//            if(!MessagesQueue.getList().containsKey(currentChat)){
-//                ObservableList<MessageDto> messageDtoList = FXCollections.observableArrayList();
-//                messageDtoList.add(messageDto);
-//                MessagesQueue.getList().put(currentChat,messageDtoList);
-//            System.out.println(MessagesQueue.getList().get(currentChat).get(MessagesQueue.getList().get(currentChat).size()-1));
-//
-//            }else{
-//                MessagesQueue.getList().get(currentChat).add(messageDto);
-//
-//            }
-            SendMessage.send(currentChat, messageDto);
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        } catch (NotBoundException e) {
-            e.printStackTrace();
+        if(!messageField.getText().trim().isBlank()) {
+            MessageDto messageDto = new MessageDto();
+            messageDto.setMessage(messageField.getText().trim());
+            messageDto.setFont(fonts.getSelectionModel().getSelectedItem());
+            messageDto.setBold(true);
+            messageDto.setItalic(italic.isSelected());
+            messageDto.setUnderline(underline.isSelected());
+            messageDto.setTextColor("#" + Integer.toHexString(textColor.getValue().hashCode()));
+            messageDto.setHighlightColor("#" + Integer.toHexString(highlight.getValue().hashCode()));
+            messageDto.setSenderId(userSessionDto.getUser().getId());
+            messageDto.setFontSize((int) (fontSize.getValue()));
+            messageDto.setTimestamp(LocalTime.now().getHour() + ":" + LocalTime.now().getMinute() + "");
+            try {
+                SendMessage.send(currentChat, messageDto);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            } catch (NotBoundException e) {
+                e.printStackTrace();
+            }
+            messageField.setText("");
+            Animation animation = new Timeline(new KeyFrame(Duration.seconds(0.5), new KeyValue(rightScrollPane.vvalueProperty(), 1)));
+            animation.play();
         }
-
     }
+
+
+
+
+
 
     public void createMessage(MessageDto messageOptions, int chat) {
         HBox sentMessage = new HBox();
 
         if (chat == 1) {
-            sentMessage.getChildren().addAll(createBubble(messageOptions, Color.DARKBLUE));
-            chatVBox.setAlignment(Pos.BASELINE_RIGHT);
+            sentMessage.getChildren().addAll(createBubble(messageOptions, Color.web("#6713d2")));
+            sentMessage.setAlignment(Pos.BASELINE_RIGHT);
         } else {
-            sentMessage.getChildren().addAll(createBubble(messageOptions, Color.LIGHTBLUE));
-            chatVBox.setAlignment(Pos.BASELINE_LEFT);
+            sentMessage.getChildren().addAll(createBubble(messageOptions, Color.web("#cc208e")));
+            sentMessage.setAlignment(Pos.BASELINE_LEFT);
         }
 
         chatVBox.getChildren().add(sentMessage);
@@ -722,6 +687,7 @@ public class ChatController implements Initializable {
         bubble.setArcHeight(30);
         bubble.setArcWidth(30);
         bubble.setFill(bubbleColor);
+        bubble.setOpacity(0.3);
 
         Label nameLabel = new Label("Sender name");
         nameLabel.setFont(Font.font("Arial", 15));
@@ -737,13 +703,34 @@ public class ChatController implements Initializable {
         messageLabel.setMaxWidth(250);
         messageLabel.setFont(Font.font(messageOptions.getFont(), messageOptions.getFontSize()));
         messageLabel.setUnderline(messageOptions.isUnderline());
+        FontWeight w;
         if (messageOptions.isBold()) {
-            messageLabel.setStyle("-fx-font-weight: bold;");
+             w = FontWeight.BOLD;
+//
         }
+        else {
+          w  = FontWeight.NORMAL;
+        }
+
+        FontPosture p ;
+        if (messageOptions.isItalic()) {
+            p = FontPosture.ITALIC;
+//            messageLabel.setStyle("-fx-font-weight: bold;");
+        }
+        else {
+          p  = FontPosture.REGULAR;
+        }
+
+
+//
+
+        Font font = Font.font(messageOptions.getFont(), w, p, messageOptions.getFontSize());
+        messageLabel.setFont(font);
         if (messageOptions.isItalic()) {
             messageLabel.setStyle("-fx-font-weight: italic;");
 
         }
+
         messageLabel.setStyle("-fx-text-fill:" + messageOptions.getTextColor() + ";-fx-background-color:" + messageOptions.getHighlightColor() + ";");
         messageLabel.setTranslateX((bubble.getWidth() - messageWidth) / 2);
         messageLabel.setTranslateY(nameHeight + 7);
@@ -847,9 +834,26 @@ public class ChatController implements Initializable {
     }
 
     public void closeChat(ActionEvent actionEvent) {
-        rightAnchorPane.getChildren().add(0, new ImageView(new Image(String.format("/image/%s.gif", (int) (Math.random() * (6)) + 1 + ""))));
+
+        rightAnchorPane.getChildren().add(0, new ImageView(new Image(String.format("/image/%s.gif", (int) (Math.random() * (6)) + 1 + ""), 506, 633, false, false)));
         rightAnchorPane.getChildren().get(0).toFront();
         isChatClosed = true;
+
+
+    }
+
+    public void edit(ActionEvent actionEvent) {
+        if(isBarsVisible){
+            firstButtonBar.setVisible(false);
+            secondButtonBar.setVisible(false);
+            isBarsVisible = false;
+        }
+        else{
+            firstButtonBar.setVisible(true);
+            secondButtonBar.setVisible(true);
+            isBarsVisible = true;
+
+        }
     }
 }
 
