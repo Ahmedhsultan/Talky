@@ -59,6 +59,7 @@ public class FriendsService {
                 }})
                 .flatMap(x -> x.stream())
                 .collect(Collectors.toSet());
+        idsList.add(id);
         //Remove register user from list of contact
 //        idsList.remove(id);
         //Get users from id
