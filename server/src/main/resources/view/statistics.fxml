@@ -2,6 +2,7 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -77,6 +78,22 @@
             </JFXButton>
          </children>
       </Pane>
-      <Pane fx:id="statistic" layoutX="5.0" layoutY="144.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="442.0" prefWidth="793.0" style="-fx-background-radius: 10; -fx-background-color: #d2c8ee;"/>
+      <Pane style="-fx-background-radius: 10; -fx-background-color: #d2c8ee;" fx:id="statistic" layoutX="5.0" layoutY="144.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="442.0" prefWidth="585.0" />
+      <Pane layoutX="583.0" layoutY="153.0" prefHeight="442.0" prefWidth="211.0" >
+         <children>
+            <ImageView fx:id="img1" fitHeight="116.0" fitWidth="176.0" layoutX="39.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="/image/online-poeple.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="img2" fitHeight="108.0" fitWidth="130.0" layoutX="39.0" layoutY="229.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="/image/offlinr-people.jpg" />
+               </image>
+            </ImageView>
+            <Label fx:id="noOfOnline" layoutX="72.0" layoutY="139.0" style="-fx-font-size: 15;  -fx-font-style: oblique;"/>
+            <Label fx:id="noOfOofline" layoutX="72.0" layoutY="353.0" style="-fx-font-size: 15;  -fx-font-style: oblique;"/>
+         </children>
+      </Pane>
    </children>
 </Pane>
