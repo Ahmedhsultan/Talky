@@ -11,33 +11,33 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="790.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#d3d0da" height="60.0" stroke="WHITE" strokeType="INSIDE" style="-fx-arc-height: 30; -fx-arc-width: 30;" width="780.0" />
-      <Label fx:id="UserName" layoutX="90.0" layoutY="-1.0" prefHeight="60.0" prefWidth="114.0" text="Dina Mishahed" textFill="#473c4a">
+      <Label fx:id="UserName" layoutX="78.0" layoutY="-1.0" prefHeight="60.0" prefWidth="126.0" text="Dina Mishahed">
          <font>
             <Font name="Arial Rounded MT Bold" size="14.0" />
          </font>
       </Label>
-      <Label fx:id="userPhone" layoutX="211.0" layoutY="-2.0" prefHeight="60.0" prefWidth="143.0" text="01090780888" textFill="#473c4a">
+      <Label fx:id="userPhone" layoutX="216.0" layoutY="-1.0" prefHeight="60.0" prefWidth="143.0" text="01090780888">
          <font>
             <Font name="Arial Rounded MT Bold" size="14.0" />
          </font>
       </Label>
-      <Label fx:id="userEmail" layoutX="318.0" layoutY="-2.0" prefHeight="60.0" prefWidth="154.0" text="dina@gmail.com" textFill="#473c4a">
+      <Label fx:id="userEmail" layoutX="337.0" prefHeight="60.0" prefWidth="154.0" text="dina@gmail.com">
          <font>
             <Font name="Arial Rounded MT Bold" size="14.0" />
          </font>
       </Label>
-      <Label fx:id="userGender" layoutX="461.0" prefHeight="60.0" prefWidth="134.0" text="Female" textFill="#473c4a">
+      <Label fx:id="userGender" layoutX="518.0" prefHeight="60.0" prefWidth="134.0" text="Female">
          <font>
             <Font name="Arial Rounded MT Bold" size="14.0" />
          </font>
       </Label>
-      <Label fx:id="userCountry" layoutX="572.0" prefHeight="60.0" prefWidth="114.0" text="Egypt" textFill="#473c4a">
+      <Label fx:id="userCountry" layoutX="595.0" prefHeight="60.0" prefWidth="114.0" text="Egypt">
          <font>
             <Font name="Arial Rounded MT Bold" size="14.0" />
          </font>
       </Label>
-      <Circle fill="DODGERBLUE" layoutX="37.0" layoutY="29.0" radius="25.0" stroke="BLACK" strokeType="INSIDE" />
-      <ImageView fitHeight="50.0" fitWidth="76.0" layoutX="678.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
+      <Circle fill="#c850f2" layoutX="37.0" layoutY="29.0" radius="25.0" stroke="#656060" strokeType="INSIDE" />
+      <ImageView fitHeight="60.0" fitWidth="79.0" layoutX="667.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../image/icons8-checkmark-64.png" />
          </image>

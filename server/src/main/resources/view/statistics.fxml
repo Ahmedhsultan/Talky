@@ -2,21 +2,21 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
 
-<Pane fx:id="statisticpane" prefHeight="325.0" prefWidth="484.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gov.iti.jets.server.presentation.controllers.statisticsController">
+<Pane fx:id="statisticpane" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gov.iti.jets.server.presentation.controllers.statisticsController">
    <children>
-      <VBox prefHeight="325.0" prefWidth="484.0">
+      <Pane maxWidth="1.7976931348623157E308" prefHeight="153.0" prefWidth="800.0">
          <children>
-            <Pane prefHeight="83.0" prefWidth="484.0">
-               <children>
-                  <JFXButton fx:id="statusBtn" layoutX="30.0" layoutY="-2.0" onAction="#statusStatic" prefHeight="67.0" prefWidth="131.0" text="Online/Offline" />
-                  <JFXButton fx:id="genderBtn"  layoutX="174.0" layoutY="-2.0" onAction="#ganderStatistic" prefHeight="67.0" prefWidth="131.0" text="Gender" />
-                  <JFXButton fx:id="countryBtn" layoutX="305.0" layoutY="-2.0" onAction="#countryStatistic" prefHeight="67.0" prefWidth="131.0" text="Country" />
-               </children>
-            </Pane>
-            <Pane fx:id="statistic" prefHeight="247.0" prefWidth="484.0" />
+            <JFXButton fx:id="statusBtn" layoutX="23.0" layoutY="36.0" onAction="#statusStatic" prefHeight="99.0" prefWidth="236.0" style="-fx-background-color: #eadead; -fx-border-radius: 33;" text="Button">
+               <graphic>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="72.0" stroke="BLACK" strokeType="INSIDE" width="103.0" />
+               </graphic>
+            </JFXButton>
+            <JFXButton fx:id="genderBtn" layoutX="335.0" layoutY="43.0" onAction="#ganderStatistic" prefHeight="67.0" prefWidth="131.0" text="Gender" />
+            <JFXButton fx:id="countryBtn" layoutX="557.0" layoutY="43.0" onAction="#countryStatistic" prefHeight="67.0" prefWidth="131.0" text="Country" />
          </children>
-      </VBox>
+      </Pane>
+      <Pane fx:id="statistic" layoutX="14.0" layoutY="150.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="436.0" prefWidth="791.0" />
    </children>
 </Pane>

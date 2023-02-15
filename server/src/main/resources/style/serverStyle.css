@@ -21,16 +21,18 @@
 /* } */
 
 
-/* 
+
 
 .list-cell {
     -fx-background-color: transparent;
+    -fx-text-fill: #6713d2;
 }
 
 .list-cell:hover {
     -fx-translate-x: -10;
     -fx-translate-y: -10;
     -fx-effect: dropshadow(three-pass-box, #6713d2, 5, 0.0, 0, 1);
+    -fx-text-fill: #6713d2;
 }
 
 .list-view {
@@ -40,46 +42,6 @@
     -fx-scale-x: 0;
 }
 
-.slider .track{
-    -progress : 0.2;
-    -fx-background-color: linear-gradient(to right, #2D819D -progress, #969696 -progress);
+.list-view .lable:hover {
+    -fx-text-fill: #6713d2;
 }
-
-#listOfProfile .list-cell:hover {
-    -fx-translate-x: 0;
-    -fx-translate-y: 0;
-    -fx-effect: none;
-}
-
-#invitationResponseBtns {
-  -fx-align-self: center;
-
-  -fx-background-color: #7a7676e6;
-
-  -fx-font-family: Neucha, sans-serif;
-}
-#invitationResponseBtns:hover{
-    -fx-border-style: solid;
-    -fx-border-width: 2px;
-    -fx-border-color: linear-gradient(to bottom right, #cc208e 10%, #6713d2 100%);
-}
-
-#invitationResponseBtns:focused {
-    -fx-border-style: solid;
-    -fx-border-width: 2px;
-    -fx-border-color: linear-gradient(to bottom right, #cc208e 10%, #6713d2 100%);
-
-}
-
-#searchField {
-    -fx-background-color: transparent;
-    -fx-border-style: solid;
-    -fx-border-width: 0 0 2px 0;
-    -fx-border-color:   #a1a0a1;
-}
-
-#searchField:focused {
-    -fx-border-color: linear-gradient(to bottom right, #cc208e 10%, #6713d2 100%);
-}
-
- */

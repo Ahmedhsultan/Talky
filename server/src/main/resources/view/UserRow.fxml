@@ -8,27 +8,27 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="790.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#7950f2" height="60.0" stroke="WHITE" strokeType="INSIDE" style="-fx-arc-height: 30; -fx-arc-width: 30;" width="780.0" />
-      <Label fx:id="UserName" layoutX="90.0" layoutY="-1.0" prefHeight="60.0" prefWidth="95.0" text="Name" textFill="WHITE">
+      <Label fx:id="UserName" layoutX="78.0" layoutY="-1.0" prefHeight="60.0" prefWidth="95.0" text="  Name" textFill="WHITE">
          <font>
             <Font name="Bernard MT Condensed" size="18.0" />
          </font></Label>
-      <Label fx:id="userPhone" layoutX="190.0" layoutY="-2.0" prefHeight="60.0" prefWidth="114.0" text="Phone" textFill="WHITE">
+      <Label fx:id="userPhone" layoutX="216.0" layoutY="-2.0" prefHeight="60.0" prefWidth="114.0" text="Phone" textFill="WHITE">
          <font>
             <Font name="Bernard MT Condensed" size="18.0" />
          </font></Label>
-      <Label fx:id="userEmail" layoutX="304.0" layoutY="-2.0" prefHeight="60.0" prefWidth="134.0" text="Email" textFill="WHITE">
+      <Label fx:id="userEmail" layoutX="337.0" layoutY="-2.0" prefHeight="60.0" prefWidth="134.0" text="Email" textFill="WHITE">
          <font>
             <Font name="Bernard MT Condensed" size="18.0" />
          </font></Label>
-      <Label fx:id="userGender" layoutX="454.0" prefHeight="60.0" prefWidth="88.0" text="Gender" textFill="WHITE">
+      <Label fx:id="userGender" layoutX="518.0" prefHeight="60.0" prefWidth="88.0" text="Gender" textFill="WHITE">
          <font>
             <Font name="Bernard MT Condensed" size="18.0" />
          </font></Label>
-      <Label fx:id="userCountry" layoutX="577.0" prefHeight="60.0" prefWidth="88.0" text="Country" textFill="WHITE">
+      <Label fx:id="userCountry" layoutX="595.0" prefHeight="60.0" prefWidth="88.0" text="Country" textFill="WHITE">
          <font>
             <Font name="Bernard MT Condensed" size="18.0" />
          </font></Label>
-      <Label fx:id="userStatus" layoutX="686.0" layoutY="-2.0" prefHeight="60.0" prefWidth="88.0" text="Status" textFill="WHITE">
+      <Label fx:id="userStatus" layoutX="667.0" layoutY="-2.0" prefHeight="60.0" prefWidth="88.0" text="Status" textFill="WHITE">
          <font>
             <Font name="Bernard MT Condensed" size="18.0" />
          </font></Label>
