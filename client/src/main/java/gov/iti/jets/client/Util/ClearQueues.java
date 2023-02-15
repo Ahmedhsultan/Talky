@@ -8,7 +8,7 @@ public class ClearQueues {
         ContactList.getList().clear();
         InvitationQueue.getList().clear();
         MessagesQueue.getList().clear();
-        MyID.getInstance().clear();
+//        MyID.getInstance().clear();
         NotificationQueue.getList().clear();
     }
 }
