@@ -1,6 +1,6 @@
 package gov.iti.jets.client.network.service;
 
-import gov.iti.jets.client.Dina.ChatList;
+import gov.iti.jets.client.Queues.ChatList;
 import gov.iti.jets.common.dto.ChatDto;
 import gov.iti.jets.common.util.Constants;
 

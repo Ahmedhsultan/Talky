@@ -2,9 +2,9 @@ package gov.iti.jets.client.network.service;
 
 
 import com.jfoenix.controls.JFXSnackbar;
-import gov.iti.jets.client.Dina.MyID;
+import gov.iti.jets.client.Queues.MyID;
 import gov.iti.jets.client.Util.Cashing;
-import gov.iti.jets.client.callBack.Martinily;
+import gov.iti.jets.client.callBack.IClientImpl;
 import gov.iti.jets.client.presentation.controllers.RegisterController;
 import gov.iti.jets.common.dto.UserSessionDto;
 import gov.iti.jets.common.dto.registration.UserRegistrationDto;
@@ -14,7 +14,6 @@ import javafx.util.Duration;
 
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import java.rmi.registry.Registry;
 
 public class RegisterService {
 //    UserRemote obj;
@@ -38,7 +37,7 @@ public class RegisterService {
         UserSessionDto userSessionDto = null;
         try {
             UserRemote obj = RMIManager.lookUpRegister();
-            userSessionDto = obj.register(user, new Martinily());
+            userSessionDto = obj.register(user, new IClientImpl());
         } catch (RemoteException e) {
 //            throw new RuntimeException(e);
             System.out.println(e.getMessage());

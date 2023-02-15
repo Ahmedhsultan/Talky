@@ -1,4 +1,4 @@
-package gov.iti.jets.client.Dina;
+package gov.iti.jets.client.Queues;
 
 import gov.iti.jets.common.dto.MessageDto;
 import javafx.collections.FXCollections;

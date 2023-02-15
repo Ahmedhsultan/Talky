@@ -1,6 +1,6 @@
 package gov.iti.jets.client.Util;
 
-import gov.iti.jets.client.Dina.MyID;
+import gov.iti.jets.client.Queues.MyID;
 import gov.iti.jets.common.util.Constants;
 
 import java.io.File;

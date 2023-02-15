@@ -17,32 +17,33 @@ public class DashboardController implements Initializable {
     @FXML
     ImageView switchButton;
 
-    boolean flag = true;
+    boolean flag = false;
     private ServerService service = new ServerService();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        SwitchOff();
     }
 
 
     public void switchonOff(MouseEvent mouseEvent) {
         if(flag) {
-            SwitchOn();
-            service.startServer();
+            SwitchOff();
+            service.stopServer();
             flag = false;
         }
         else {
-            SwitchOff();
-            service.stopServer();
+            SwitchOn();
+            service.startServer();
             flag = true;
         }
     }
 
-    private void SwitchOn(){
+    private void SwitchOff(){
         gift.setImage(new Image("/image/iranserver-iran.gif"));
         switchButton.setImage(new Image("image/icons8-light-switch.png"));
     }
-    private void SwitchOff(){
+    private void SwitchOn(){
         gift.setImage(new Image("/image/iranserver-blue-bot.gif"));
         switchButton.setImage(new Image("/image/icons8-light-switch-64.png"));
     }

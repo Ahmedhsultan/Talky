@@ -29,6 +29,7 @@ public class trackUser implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
         paneObservableList.add(loadPaneUserCard("UserRow"));
 
 //        UsersData.forEach((k, v)->{

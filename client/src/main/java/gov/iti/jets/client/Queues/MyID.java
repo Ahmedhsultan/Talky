@@ -1,4 +1,4 @@
-package gov.iti.jets.client.Dina;
+package gov.iti.jets.client.Queues;
 
 public class MyID {
     private static MyID instance;

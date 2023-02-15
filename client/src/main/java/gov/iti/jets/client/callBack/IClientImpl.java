@@ -1,7 +1,7 @@
 package gov.iti.jets.client.callBack;
 
 
-import gov.iti.jets.client.Dina.*;
+import gov.iti.jets.client.Queues.*;
 import gov.iti.jets.client.Util.AlertWindow;
 import gov.iti.jets.client.Util.ConnectionFlag;
 import gov.iti.jets.client.network.service.PullOnlineUsersFromServer;
@@ -25,14 +25,11 @@ import java.nio.file.StandardOpenOption;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.HashMap;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
-public class Martinily extends UnicastRemoteObject implements IClient {
-    public Martinily() throws RemoteException {
+public class IClientImpl extends UnicastRemoteObject implements IClient {
+    public IClientImpl() throws RemoteException {
     }
 
     @Override
