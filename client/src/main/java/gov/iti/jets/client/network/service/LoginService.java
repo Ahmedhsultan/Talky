@@ -23,7 +23,7 @@ public class LoginService {
             userSessionDto = obj.login(phone,password, new IClientImpl());
         } catch (RemoteException e) {
             e.printStackTrace();
-            throw new RemoteException("Failed to Login!!");
+            throw new RemoteException(e.getMessage().split(":")[2]);
         } catch (NotBoundException e) {
             e.printStackTrace();
             throw new RemoteException("Failed to Login!!");
