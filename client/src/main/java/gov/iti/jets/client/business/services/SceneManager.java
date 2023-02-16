@@ -66,7 +66,7 @@ public class SceneManager {
 
         else if (!scenes.containsKey(name)) {
             try {
-                Parent root = FXMLLoader.load(getClass().getResource(String.format("/views/%s.fxml", name)));
+                Parent root = FXMLLoader.load(getClass().getClassLoader().getResource(String.format("views/%s.fxml", name)));
                 Scene scene = new Scene(root, 1200, 700);
                 scenes.put(name, scene);
                 primaryStage.setResizable(false);

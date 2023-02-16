@@ -24,7 +24,7 @@ public class DBManagement {
 
             poolDataSource.setURL("jdbc:mysql://localhost:3306/talkey?characterEncoding=latin1");
             poolDataSource.setUser("root");
-            poolDataSource.setPassword("dina2023");
+            poolDataSource.setPassword("root");
 
             poolConn = poolDataSource.getPooledConnection();
         } catch (SQLException e) {

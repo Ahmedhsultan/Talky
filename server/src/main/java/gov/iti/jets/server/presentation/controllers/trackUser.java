@@ -72,7 +72,7 @@ public class trackUser implements Initializable {
     private Pane loadPaneUserCard(String name) {
         Pane pane = null;
         try {
-            Parent root = FXMLLoader.load(getClass().getResource(String.format("/view/%s.fxml",name)));
+            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource(String.format("view/%s.fxml",name)));
             pane = (Pane) root;
         } catch (IOException e) {
             e.printStackTrace();

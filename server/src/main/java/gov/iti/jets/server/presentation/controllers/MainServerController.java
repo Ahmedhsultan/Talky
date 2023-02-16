@@ -38,7 +38,7 @@ public class MainServerController implements Initializable {
     private void loadPage(String page){
         Parent root =null;
         try {
-            root = FXMLLoader.load(getClass().getResource("/view/"+page+".fxml"));
+            root = FXMLLoader.load(getClass().getClassLoader().getResource("view/"+page+".fxml"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
