@@ -25,10 +25,10 @@ public class FileTransferService {
                 count = fChan.read(mBuf);
                 if (count != -1) {
                     mBuf.rewind();
-                    iServer.sendFile(chatId, senderId, mBuf.array(), file.getName());
+                    iServer.sendFile(chatId, senderId, mBuf.array(), file.getName(),true);
                 }
             } while (count != -1);
-
+            iServer.sendFile(chatId, senderId, mBuf.array(), file.getName(),false);
         } catch (IOException e) {
             e.printStackTrace();
             throw new RemoteException("Failed to send File!!");

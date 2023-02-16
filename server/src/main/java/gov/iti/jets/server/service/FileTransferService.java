@@ -26,14 +26,14 @@ public class FileTransferService {
 
     }
 
-    public void sendFile(long chatId, String senderId, byte[] bytes, String fileName) throws RemoteException {
+    public void sendFile(long chatId, String senderId, byte[] bytes, String fileName, boolean flag) throws RemoteException {
         List<String> userIds = null;
         try {
             userIds = chatUserDao.getOnlineUsersByChat(chatId);
             if(userIds!=null) {
                 for (String userId : userIds) {
                     if(!userId.equals(senderId)) {
-                        ConnectedClientsMap.getList().get(userId).getIClient().readFile(chatId, senderId, bytes, fileName);
+                        ConnectedClientsMap.getList().get(userId).getIClient().readFile(chatId, senderId, bytes, fileName, flag);
                     }
                 }
             }

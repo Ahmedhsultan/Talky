@@ -166,14 +166,14 @@ public class ChatController implements Initializable {
         closeChatBtn.fire();
 
         resetMessageOptions();
-
-        try {
-            ContactDto contact = ContactList.getList().stream().filter(x -> x.getId().equals(MyID.getInstance().getMyId())).toList().get(0);
-//            System.out.println(contact.getImgPath());
-            userImage.setImage(new Image(saveUserImage(contact), 200, 200, false, true));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//
+//        try {
+////            ContactDto contact = ContactList.getList().stream().filter(x -> x.getId().equals(MyID.getInstance().getMyId())).toList().get(0);
+////            System.out.println(contact.getImgPath());
+//            userImage.setImage(new Image(saveUserImage(contact), 200, 200, false, true));
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
         chatsButton.fire();
         selectChat();
@@ -202,7 +202,6 @@ public class ChatController implements Initializable {
         MessagesQueue.getList().addListener(new MapChangeListener<Long, List<MessageDto>>() {
             @Override
             public void onChanged(Change<? extends Long, ? extends List<MessageDto>> changes) {
-//                System.out.println("MessagesQueue.change.keySet().toArray()[0]).getSenderId()"+ MessagesQueue.change.get(MessagesQueue.change.keySet().toArray()[0]));
 
                 if (currentPane.getText().equals("Chats")) {
                     Platform.runLater(new Runnable() {
@@ -216,12 +215,25 @@ public class ChatController implements Initializable {
 
                 if (currentChat != null && currentChat.equals(MessagesQueue.change.keySet().toArray()[0])) {
 //                    System.out.println(MessagesQueue.change.keySet());
+                    ContactDto contact = ContactList.getList().stream().filter(x -> MessagesQueue.change.get(MessagesQueue.change.keySet().toArray()[0]).getSenderId().equals(x.getId())).toList().get(0);
                     if (MessagesQueue.change.get(MessagesQueue.change.keySet().toArray()[0]).getSenderId().equals(MyID.getInstance().getMyId())) {
-                        Platform.runLater(() -> {
-                            createMessage(MessagesQueue.change.get(MessagesQueue.change.keySet().toArray()[0]), 1);
-                        });
+                        if (MessagesQueue.change.get(MessagesQueue.change.keySet().toArray()[0]).getMessage().startsWith("-1")) {
+                            createAttachmentMessage(MessagesQueue.change.get(MessagesQueue.change.keySet().toArray()[0]).getMessage().substring(0, 9) );
+                        } else {
+
+                            Platform.runLater(() -> {
+                                createMessage(MessagesQueue.change.get(MessagesQueue.change.keySet().toArray()[0]), 1, contact.getName());
+                            });
+                        }
                     } else {
-                        createMessage(MessagesQueue.change.get(MessagesQueue.change.keySet().toArray()[0]), 2);
+                        if (MessagesQueue.change.get(MessagesQueue.change.keySet().toArray()[0]).getMessage().startsWith("fileTrans")) {
+                            createAttachmentMessage(MessagesQueue.change.get(MessagesQueue.change.keySet().toArray()[0]).getMessage().substring(0, 9));
+                        } else {
+
+                            Platform.runLater(() -> {
+                                createMessage(MessagesQueue.change.get(MessagesQueue.change.keySet().toArray()[0]), 2, contact.getName());
+                            });
+                        }
                     }
                 } else if ((currentChat == null && !currentPane.getText().equals("Notifications")) || (currentChat != null && !currentPane.getText().equals("Notifications")
                         && !currentChat.equals(MessagesQueue.change.keySet().toArray()[0])
@@ -341,11 +353,11 @@ public class ChatController implements Initializable {
                             currentChat = Long.parseLong(((Label) (newValue.lookup("#chatID"))).getText());
                         }
                         chatName.setText(((Label) (newValue.lookup("#userName"))).getText());
-                        System.out.println(((Circle)(newValue.getChildren().get(1))));
+                        System.out.println(((Circle) (newValue.getChildren().get(1))));
 //                        chatIcon.setFill(new ImagePattern(newValue.));
 
                         try {
-                            chatIcon.setFill(new ImagePattern(new Image(saveUserImage(getUserPic()),230, 27, false, true)));
+                            chatIcon.setFill(new ImagePattern(new Image(saveUserImage(getUserPic()), 230, 27, false, true)));
 
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -353,10 +365,11 @@ public class ChatController implements Initializable {
 
                         if (MessagesQueue.getList().containsKey(currentChat)) {
                             for (MessageDto message : MessagesQueue.getList().get(currentChat)) {
+                                ContactDto contact = ContactList.getList().stream().filter(x -> MessagesQueue.change.get(MessagesQueue.change.keySet().toArray()[0]).getSenderId().equals(x.getId())).toList().get(0);
                                 if (message.getSenderId().equals(MyID.getInstance().getMyId())) {
-                                    createMessage(message, 1);
+                                    createMessage(message, 1, contact.getName());
                                 } else {
-                                    createMessage(message, 2);
+                                    createMessage(message, 2, contact.getName());
                                 }
                             }
                         }
@@ -367,25 +380,23 @@ public class ChatController implements Initializable {
         });
     }
 
-    private ContactDto getUserPic(){
+    private ContactDto getUserPic() {
         ContactDto con = new ContactDto();
 
-        for(ChatDto dto : ChatList.getList()){
-            if(!dto.getMembersIds().get(0).equals(MyID.getInstance().getMyId())){
+        for (ChatDto dto : ChatList.getList()) {
+            if (!dto.getMembersIds().get(0).equals(MyID.getInstance().getMyId())) {
                 ContactDto contact = ContactList.getList().stream().filter(c -> c.getId().equals(dto.getMembersIds().get(0))).toList().get(0);
                 con.setImage(contact.getImage());
                 con.setImgPath(contact.getImgPath());
-            }
-            else {
+            } else {
                 ContactDto contact = ContactList.getList().stream().filter(c -> c.getId().equals(dto.getMembersIds().get(1))).toList().get(0);
                 con.setImage(contact.getImage());
                 con.setImgPath(contact.getImgPath());
 
             }
         }
-       return con;
+        return con;
     }
-
 
 
     @FXML
@@ -409,7 +420,7 @@ public class ChatController implements Initializable {
                 Pane temp = PaneManager.getPaneManager().putRecentChatCard();
                 ((Label) (temp.lookup("#chatID"))).setText(k.toString());
                 putImageOnPane(getUserPic(), temp);
-                putStatusOnPane(ContactList.getList().stream().filter(c -> c.getId().equals( v.get(v.size() - 1).getSenderId())).toList().get(0).getIsOnlineStatus(), temp);
+                putStatusOnPane(ContactList.getList().stream().filter(c -> c.getId().equals(v.get(v.size() - 1).getSenderId())).toList().get(0).getIsOnlineStatus(), temp);
                 putMessageOnPane(v.get(v.size() - 1).getMessage(), temp);
                 putTimeOnPane(v.get(v.size() - 1).getTimestamp(), temp);
                 putUserNameOnPane(v.get(v.size() - 1).getSenderId(), temp);
@@ -823,15 +834,15 @@ public class ChatController implements Initializable {
     }
 
 
-    public void createMessage(MessageDto messageOptions, int chat) {
+    public void createMessage(MessageDto messageOptions, int chat, String senderName) {
 
         HBox sentMessage = new HBox();
 
         if (chat == 1) {
-            sentMessage.getChildren().addAll(createBubble(messageOptions, Color.web("#6713d2")));
+            sentMessage.getChildren().addAll(createBubble(messageOptions, Color.web("#6713d2"), senderName));
             sentMessage.setAlignment(Pos.BASELINE_RIGHT);
         } else {
-            sentMessage.getChildren().addAll(createBubble(messageOptions, Color.web("#cc208e")));
+            sentMessage.getChildren().addAll(createBubble(messageOptions, Color.web("#cc208e"), senderName));
             sentMessage.setAlignment(Pos.BASELINE_LEFT);
         }
 
@@ -841,7 +852,7 @@ public class ChatController implements Initializable {
 
     }
 
-    private Group createBubble(MessageDto messageOptions, Color bubbleColor) {
+    private Group createBubble(MessageDto messageOptions, Color bubbleColor, String senderName) {
 
 
         FontWeight w;
@@ -875,7 +886,7 @@ public class ChatController implements Initializable {
         int timeHeight = (int) timeTemp.getLayoutBounds().getHeight();
         int timeWidth = (int) timeTemp.getLayoutBounds().getWidth();
 
-        Text nameTemp = new Text("sender name");
+        Text nameTemp = new Text(senderName);
         nameTemp.setFont(Font.font("Arial", 15));
         int nameHeight = (int) nameTemp.getLayoutBounds().getHeight();
         int nameWidth = (int) nameTemp.getLayoutBounds().getWidth();
@@ -926,7 +937,12 @@ public class ChatController implements Initializable {
         fc.setTitle("Select the File you want . . .");
         file = fc.showOpenDialog(null);
         if (file != null) {
-            createAttachmentMessage();
+            try {
+                new FileTransferService().sendFile(currentChat, MyID.getInstance().getMyId(), file);
+                createAttachmentMessage(file.getName());
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
         }
 
     }
@@ -979,26 +995,22 @@ public class ChatController implements Initializable {
         window.showAndWait();
     }
 
-    private void createAttachmentMessage() {
+    private void createAttachmentMessage(String file) {
         HBox hbox = new HBox();
-        ImageView image = new ImageView(new Image(String.format("/image/%sEX.png", Files.getFileExtension(file.getPath())), 50, 50, false, true));
+        ImageView image = new ImageView(new Image(String.format("/image/%sEX.png", Files.getFileExtension(file) , 25, 25, false, true)));
         image.setTranslateX(5);
-        Label fileName = new Label(file.getName());
-        fileName.setStyle("-fx-font-size: 12px;  -fx-font-weight: bold; -fx-text-fill: #333333; -fx-text-margin:50px;");
+        Label fileNameLabel = new Label(file);
+        fileNameLabel.setStyle("-fx-font-size: 10px;  -fx-font-weight: bold; -fx-text-fill: #333333; -fx-text-margin:50px;");
         hbox.setSpacing(20);
-        hbox.getChildren().addAll(image, fileName);
-        hbox.setMaxWidth(new Text(file.getName()).getLayoutBounds().getWidth() + 100);
+        hbox.getChildren().addAll(image, fileNameLabel);
+        hbox.setMaxWidth(new Text(fileNameLabel.getText()).getLayoutBounds().getWidth() + 100);
         hbox.setMinHeight(70);
         image.setTranslateY(10);
-        fileName.setTranslateY(25);
-        hbox.setStyle("-fx-background-color: #e9e1e1; -fx-background-radius: 20; -fx-border-radius:20;");
-        try {
-            new FileTransferService().sendFile(currentChat, MyID.getInstance().getMyId(), file);
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
-//       chatVBox.getChildren().add(hbox);
+        fileNameLabel.setTranslateY(25);
         messagesObservableList.add(hbox);
+        hbox.setStyle("-fx-background-color: #e9e1e1; -fx-background-radius: 20; -fx-border-radius:20;");
+        chatVBox.getChildren().add(hbox);
+
     }
 
     public void closeChat(ActionEvent actionEvent) {

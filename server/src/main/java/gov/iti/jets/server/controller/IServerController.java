@@ -145,9 +145,9 @@ public class IServerController extends UnicastRemoteObject implements IServer {
     }
 
     @Override
-    public synchronized void sendFile(long chatId, String senderId, byte[] bytes, String fileName) throws RemoteException
+    public synchronized void sendFile(long chatId, String senderId, byte[] bytes, String fileName, boolean flag) throws RemoteException
     {
-        fileTransferService.sendFile( chatId,  senderId,  bytes,  fileName);
+        fileTransferService.sendFile( chatId,  senderId,  bytes,  fileName, flag);
     }
 
 }
