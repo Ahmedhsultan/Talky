@@ -15,6 +15,7 @@ import gov.iti.jets.server.persistence.dao.UserDao;
 import java.rmi.RemoteException;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.List;
 
 public class InvitationService {
 
@@ -30,10 +31,30 @@ public class InvitationService {
 
 
     public InvitationDto sendInvitation(String senderID, String receiverID) throws RemoteException {
-
+        if (senderID.equals(receiverID)) {
+            throw new RemoteException("Cant invite your self!!");
+        }
         if (userDao.findById(receiverID) == null) {
             throw new RemoteException("Phone Number Not Found!!");
         }
+        //Check if is there any invitation
+        List<Invitation> invitations = invitationDao.getInvitationByReceiverId(receiverID);
+        if (invitations != null){
+            for (Invitation ele : invitations){
+                if(ele.getSenderId().equals(senderID))
+                    throw new RemoteException("This number has invited before!!");
+            }
+        }
+        invitations = invitationDao.getInvitationByReceiverId(senderID);
+        if (invitations != null){
+            for (Invitation ele : invitations){
+                if(ele.getSenderId().equals(receiverID)){
+                    acceptInvitation(ele.getId());
+                    return null;
+                }
+            }
+        }
+
         createInvitationEntity(senderID, receiverID);
 
         //inserting invitation into invitations table

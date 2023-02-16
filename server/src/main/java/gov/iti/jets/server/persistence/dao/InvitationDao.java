@@ -4,10 +4,7 @@ package gov.iti.jets.server.persistence.dao;
 import gov.iti.jets.server.entity.Invitation;
 import gov.iti.jets.server.persistence.DBManagement;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,9 +18,14 @@ public class InvitationDao extends BaseDaoImpl<Invitation, Long> {
     public void insert(Invitation entity) {
         String query = "insert into invitation values(?,?,?,?,?,?);";
 
-        try (Connection connection = DBManagement.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
+        try (Connection connection = DBManagement.getConnection(); PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             setInvitationStatement(statement, entity);
             statement.executeUpdate();
+            ResultSet resultSet = statement.getGeneratedKeys();
+            if(resultSet.next()) {
+                entity.setId(resultSet.getLong(1));
+            }
+//            List<Invitation> invitationList = resultSetToList(resultSet);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

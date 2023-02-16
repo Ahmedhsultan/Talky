@@ -8,6 +8,7 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.rmi.RemoteException;
 
 public class Main extends Application {
     @Override
@@ -28,9 +29,13 @@ public class Main extends Application {
 
         String[] cashed = Cashing.getCash();
         if (cashed != null){
-            LoginService loginService = new LoginService();
-            loginService.login(cashed[0],cashed[1]);
-            SceneManager.getSceneManager().switchToChatScene();
+            try {
+                LoginService loginService = new LoginService();
+                loginService.login(cashed[0],cashed[1]);
+                s.switchToChatScene();
+            }catch (RemoteException ex){
+                s.switchToLoginScene();
+            }
         }
 
     }

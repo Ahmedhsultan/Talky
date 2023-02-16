@@ -114,7 +114,7 @@ public class ServerService {
             reg.unbind("connection");
             reg.unbind("invitation");
             RMIManager.removeRegistry();
-            checkClientConnectionThread.stop();
+//            checkClientConnectionThread.stop();
             if (UnicastRemoteObject.unexportObject(reg, true)) {
                 System.out.println("Registry removed!");
             } else {

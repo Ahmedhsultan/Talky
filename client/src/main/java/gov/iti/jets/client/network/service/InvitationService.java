@@ -1,6 +1,7 @@
 package gov.iti.jets.client.network.service;
 
 
+import gov.iti.jets.client.Util.AlertWindow;
 import gov.iti.jets.common.network.server.ServerInvitation;
 
 import java.rmi.NotBoundException;
@@ -11,8 +12,11 @@ public class InvitationService {
         try {
             ServerInvitation obj = RMIManager.lookUpInvitation();
             obj.sendInvitation(senderID,receiverID);
+            new AlertWindow(receiverID + " has invited successful");
 //            SceneManager.getSceneManager().switchToChatScene();
         } catch (RemoteException | NotBoundException e) {
+            String msg = e.getMessage().split(":")[2];
+            new AlertWindow(msg);
             throw new RuntimeException(e);
         }
     }

@@ -9,9 +9,6 @@ public class ContactList {
     public static ObservableList<ContactDto> getList(){
         if(contactList == null)
             contactList = FXCollections.observableArrayList();
-
-        for (var item : contactList)
-            System.out.println("contact = " + item.getPhoneNumber());
         return contactList;
     }
 }

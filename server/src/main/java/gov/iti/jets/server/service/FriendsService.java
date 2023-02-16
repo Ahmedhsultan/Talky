@@ -59,8 +59,9 @@ public class FriendsService {
                 }})
                 .flatMap(x -> x.stream())
                 .collect(Collectors.toSet());
+        idsList.add(id);
         //Remove register user from list of contact
-        idsList.remove(id);
+//        idsList.remove(id);
         //Get users from id
         Set<User> userSet = idsList.stream().map(x -> userDao.findById(x)).collect(Collectors.toSet());
         //Map all contacts to dto

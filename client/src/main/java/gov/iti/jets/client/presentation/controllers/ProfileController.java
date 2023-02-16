@@ -1,11 +1,12 @@
 package gov.iti.jets.client.presentation.controllers;
 
+import gov.iti.jets.client.Queues.ContactList;
+import gov.iti.jets.client.Queues.MyID;
 import gov.iti.jets.client.Util.AlertWindow;
 import gov.iti.jets.client.network.service.RMIManager;
+import gov.iti.jets.common.dto.ContactDto;
 import gov.iti.jets.common.dto.UserDto;
-import gov.iti.jets.common.dto.UserSessionDto;
 import gov.iti.jets.common.network.server.IServer;
-import gov.iti.jets.common.network.server.UserRemote;
 import gov.iti.jets.common.util.Constants;
 import gov.iti.jets.common.util.Validation;
 import javafx.collections.FXCollections;
@@ -29,7 +30,6 @@ import java.net.URL;
 import java.net.URLDecoder;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import java.rmi.registry.Registry;
 import java.util.Arrays;
 import java.util.ResourceBundle;
 
@@ -61,35 +61,38 @@ public class ProfileController implements Initializable {
     File file;
     TextField userNameText, bioText;
 
-    UserSessionDto userSessionDto;
+    ContactDto contact = ContactList.getList().stream().filter(x->x.getId().equals(MyID.getInstance().getMyId())).toList().get(0);
+
+    ObservableList<String> statusObservableList = FXCollections.observableArrayList(Constants.ONLINE_STATUS_AVAILABLE,Constants.ONLINE_STATUS_AWAY,Constants.ONLINE_STATUS_BUSY);
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        if(PasswordLoginController.userSessionDto != null)
-            userSessionDto = PasswordLoginController.userSessionDto;
-        else
-            userSessionDto = RegisterController.userSessionDto;
-
-        putUserDataOnPane();
+//        putUserDataOnPane();
         userNameText = new TextField(userName.getText());
         bioText = new TextField(bio.getText());
         try {
-            userPic.setFill(new ImagePattern(new Image(saveUserImage(userSessionDto.getUser()),200,200,false,true)));
+            userPic.setFill(new ImagePattern(new Image(saveUserImage(contact),200,200,false,true)));
         } catch (IOException e) {
             e.printStackTrace();
         }
+        statusComboBox.setItems(statusObservableList);
+        statusComboBox.setValue(contact.getIsOnlineStatus());
+        System.out.println(contact.getIsOnlineStatus());
 
     }
 
 
     private  void putUserDataOnPane () {
+        ContactDto contact = ContactList.getList().stream().filter(x->x.getId().equals(MyID.getInstance().getMyId())).toList().get(0);
 
-        putBioOnPane(userSessionDto.getUser().getBio());
-        putChatbotOnPane(userSessionDto.getUser().isBotMode());
+        putBioOnPane(contact.getBio());
+        putChatbotOnPane(contact.isBotMode());
 //        putImageOnPane(userSessionDto.getUser().getImgPath(), userSessionDto.getUser().getImage());
-        putUserNameOnPane(userSessionDto.getUser().getName());
-        putPhoneNumOnPane(userSessionDto.getUser().getId());
-        putIsOnlineStatusOnPane(userSessionDto.getUser().getIsOnlineStatus());
+        putUserNameOnPane(contact.getName());
+        putPhoneNumOnPane(contact.getId());
+        putIsOnlineStatusOnPane(contact.getIsOnlineStatus());
+        //putImageOnPane();
     }
     public void changeBio(ActionEvent actionEvent) {
         bioText.setLayoutX(38);
@@ -100,17 +103,19 @@ public class ProfileController implements Initializable {
     }
 
     public void saveChanges(ActionEvent actionEvent) {
+        ContactDto contact = ContactList.getList().stream().filter(x->x.getId().equals(MyID.getInstance().getMyId())).toList().get(0);
+
         if(Validation.validateBio(bioText, bioError ) & Validation.validateName(userNameText.getText(),userNameText, nameError)) {
-            userSessionDto.getUser().setBio(bioText.getText());
-            userSessionDto.getUser().setName(userNameText.getText());
-            userSessionDto.getUser().setBotMode(chatbot.isSelected());
-            userSessionDto.getUser().setIsOnlineStatus(statusComboBox.getSelectionModel().getSelectedItem());
-            userSessionDto.getUser().setId(userPhoneNumber.getText());
+           contact.setBio(bioText.getText());
+            contact.setName(userNameText.getText());
+            contact.setBotMode(chatbot.isSelected());
+            contact.setIsOnlineStatus(statusComboBox.getSelectionModel().getSelectedItem());
+            contact.setId(userPhoneNumber.getText());
 
             if(file!=null) {
-                userSessionDto.getUser().setImgPath(userPhoneNumber.getText() + file.getPath().substring(file.getPath().indexOf(".")));
+                contact.setImgPath(userPhoneNumber.getText() + file.getPath().substring(file.getPath().indexOf(".")));
                 try {
-                    userSessionDto.getUser().setImage(Constants.imageToByteArray(file.getPath()));
+                    contact.setImage(Constants.imageToByteArray(file.getPath()));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -121,11 +126,20 @@ public class ProfileController implements Initializable {
 //            } catch (RemoteException | NotBoundException e) {
 //                e.printStackTrace();
 //            }
-            System.out.println( userSessionDto.getUser().getBio());
+            System.out.println( contact.getBio());
             try {
                 IServer iServer = RMIManager.lookUpIServer();
-                iServer.editUser(userSessionDto.getUser());
+                UserDto user = new UserDto();
+                user.setId(contact.getId());
+                user.setName(contact.getName());
+                user.setIsOnlineStatus(contact.getIsOnlineStatus());
+                user.setBio(contact.getBio());
+                user.setImage(contact.getImage());
+                user.setImgPath(contact.getImgPath());
+                user.setBotMode(contact.isBotMode());
+                iServer.editUser(user);
                 AlertWindow alertWindow = new AlertWindow("Your profile has been updated successfully");
+
             } catch (RemoteException e) {
                 e.printStackTrace();
                 AlertWindow alertWindow = new AlertWindow("Failed to update your Profile");
@@ -178,15 +192,20 @@ public class ProfileController implements Initializable {
         ((CheckBox)containerPane.lookup("#chatbot")).setSelected(enabled);
     }
 
-    private  void putImageOnPane(String img, byte [] arr) {
+    private  void putImageOnPane() {
         try {
-            ((Circle) containerPane.lookup("#userPic")).setFill(new ImagePattern(new Image(Constants.byteArrayToImage(arr, img).getPath(),100,100,false,true)));
+            ((Circle) containerPane.lookup("#userPic")).setFill(new ImagePattern(new Image(saveUserImage(contact),100,100,false,true)));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public String  saveUserImage(UserDto dto) throws IOException {
+        String path = Constants.USER_IMAGES_DIR +dto.getImgPath();
+        Constants.byteArrayToImage(dto.getImage(), URLDecoder.decode(path, "UTF-8"));
+        return URLDecoder.decode(path, "UTF-8");
+    }
+    public String  saveUserImage(ContactDto dto) throws IOException {
         String path = Constants.USER_IMAGES_DIR +dto.getImgPath();
         Constants.byteArrayToImage(dto.getImage(), URLDecoder.decode(path, "UTF-8"));
         return URLDecoder.decode(path, "UTF-8");

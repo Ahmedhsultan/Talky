@@ -8,7 +8,6 @@ import gov.iti.jets.common.dto.UserDto;
 import gov.iti.jets.common.dto.registration.UserRegistrationDto;
 import gov.iti.jets.common.util.Constants;
 import gov.iti.jets.server.entity.User;
-import gov.iti.jets.server.service.UserService;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -47,10 +46,10 @@ public class UserMapper implements BaseMapper<User, UserDto>{
         String path = Constants.USER_IMAGES_DIR;
         try{
             ContactDto dto = ContactDto.builder()
-                    .phoneNumber(user.getId())
+                    .id(user.getId())
                     .name(user.getName())
                     .image(Constants.imageToByteArray(path + user.getImgPath()))
-                    .picture(user.getImgPath())
+                    .imgPath(user.getImgPath())
                     .isOnlineStatus(user.getIsOnlineStatus())
                     .bio(user.getBio())
                     .build();
