@@ -341,13 +341,15 @@ public class ChatController implements Initializable {
                             currentChat = Long.parseLong(((Label) (newValue.lookup("#chatID"))).getText());
                         }
                         chatName.setText(((Label) (newValue.lookup("#userName"))).getText());
+                        System.out.println(((Circle)(newValue.getChildren().get(1))));
+//                        chatIcon.setFill(new ImagePattern(newValue.));
 
-//                        try {
-//                            chatIcon.setFill(new ImagePattern(new Image(saveUserImage(getUserPic()),230, 27, false, true)));
-//
-//                        } catch (IOException e) {
-//                            e.printStackTrace();
-//                        }
+                        try {
+                            chatIcon.setFill(new ImagePattern(new Image(saveUserImage(getUserPic()),230, 27, false, true)));
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
 
                         if (MessagesQueue.getList().containsKey(currentChat)) {
                             for (MessageDto message : MessagesQueue.getList().get(currentChat)) {
@@ -375,7 +377,7 @@ public class ChatController implements Initializable {
                 con.setImgPath(contact.getImgPath());
             }
             else {
-                ContactDto contact = ContactList.getList().stream().filter(c -> c.getId().equals(dto.getMembersIds().get(1))).toList().get(1);
+                ContactDto contact = ContactList.getList().stream().filter(c -> c.getId().equals(dto.getMembersIds().get(1))).toList().get(0);
                 con.setImage(contact.getImage());
                 con.setImgPath(contact.getImgPath());
 
@@ -406,22 +408,7 @@ public class ChatController implements Initializable {
             if (k != -1) {
                 Pane temp = PaneManager.getPaneManager().putRecentChatCard();
                 ((Label) (temp.lookup("#chatID"))).setText(k.toString());
-                ContactDto con = new ContactDto();
-
-                for(ChatDto dto : ChatList.getList()){
-                    if(!dto.getMembersIds().get(0).equals(MyID.getInstance().getMyId())){
-                        ContactDto contact = ContactList.getList().stream().filter(c -> c.getId().equals(dto.getMembersIds().get(0))).toList().get(0);
-                        con.setImage(contact.getImage());
-                        con.setImgPath(contact.getImgPath());
-                    }
-                    else {
-                        ContactDto contact = ContactList.getList().stream().filter(c -> c.getId().equals(dto.getMembersIds().get(1))).toList().get(1);
-                        con.setImage(contact.getImage());
-                        con.setImgPath(contact.getImgPath());
-
-                    }
-                }
-                putImageOnPane(con, temp);
+                putImageOnPane(getUserPic(), temp);
                 putStatusOnPane(ContactList.getList().stream().filter(c -> c.getId().equals( v.get(v.size() - 1).getSenderId())).toList().get(0).getIsOnlineStatus(), temp);
                 putMessageOnPane(v.get(v.size() - 1).getMessage(), temp);
                 putTimeOnPane(v.get(v.size() - 1).getTimestamp(), temp);
