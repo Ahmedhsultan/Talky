@@ -5,12 +5,10 @@ import gov.iti.jets.client.Queues.*;
 import gov.iti.jets.client.Util.AlertWindow;
 import gov.iti.jets.client.Util.ClearQueues;
 import gov.iti.jets.client.Util.ConnectionFlag;
+import gov.iti.jets.client.network.service.GetChatIdbyUserId;
 import gov.iti.jets.client.network.service.PullOnlineUsersFromServer;
 import gov.iti.jets.client.network.service.RMIManager;
-import gov.iti.jets.common.dto.ContactDto;
-import gov.iti.jets.common.dto.InvitationDto;
-import gov.iti.jets.common.dto.MessageDto;
-import gov.iti.jets.common.dto.UserSessionDto;
+import gov.iti.jets.common.dto.*;
 import gov.iti.jets.common.network.client.IClient;
 import gov.iti.jets.common.network.server.IServer;
 import gov.iti.jets.common.util.Constants;
@@ -92,10 +90,13 @@ public class IClientImpl extends UnicastRemoteObject implements IClient {
     }
 
     @Override
-    public void addFriend(long id, ArrayList<ContactDto> contactDtoList) throws RemoteException {
+    public void addFriend(long id, ArrayList<ContactDto> contactDtoList, ChatDto chatDto) throws RemoteException {
+        System.out.println("add friend");
         //Add contact element to contact list
-        for (ContactDto contactDto : contactDtoList)
+        for (ContactDto contactDto : contactDtoList){
             ContactList.getList().add(contactDto);
+        }
+        ChatList.getList().add(chatDto);
         removeInvitation(id);
     }
 
@@ -104,6 +105,8 @@ public class IClientImpl extends UnicastRemoteObject implements IClient {
         //Get contactDto element and remove it from the list
         ContactDto oldContactDto = ContactList.getList().stream().filter(x -> x.getId() == contactDto.getId()).toList().get(0);
         ContactList.getList().remove(oldContactDto);
+        long chatId = GetChatIdbyUserId.get(contactDto.getId());
+        MessagesQueue.getList().remove(chatId);
     }
 
     @Override

@@ -7,6 +7,7 @@ import gov.iti.jets.common.util.Constants;
 import gov.iti.jets.server.Util.Queues.ConnectedClientsMap;
 import gov.iti.jets.server.entity.Chat;
 import gov.iti.jets.server.entity.User;
+import gov.iti.jets.server.mapper.ChatMapper;
 import gov.iti.jets.server.mapper.UserMapper;
 import gov.iti.jets.server.service.*;
 
@@ -15,6 +16,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class IServerController extends UnicastRemoteObject implements IServer {
 
@@ -71,6 +73,11 @@ public class IServerController extends UnicastRemoteObject implements IServer {
         chatUserDtoList.add(chatUserDto1);
         chatUserDtoList.add(chatUserDto2);
         chatUserService.addChatGroup(chatUserDtoList);
+        //Map to ChatDto and add memebers
+        ChatMapper chatMapper = new ChatMapper();
+        ChatDto newchatDto = chatMapper.toDTO(chat);
+        newchatDto.setMembersIds(chatUserDtoList.stream().map(x->x.getUserId()).collect(Collectors.toCollection(ArrayList::new)));
+
         //Add friendship from db
         friendsService.addFriend(id1,id2);
 
@@ -88,7 +95,7 @@ public class IServerController extends UnicastRemoteObject implements IServer {
             IClient iClient1 = ConnectedClientsMap.getList().get(user1.getId()).getIClient();
             ArrayList<ContactDto> contactDtoList1 = new ArrayList<>();
             contactDtoList1.add(contactDto2);
-            iClient1.addFriend(id, contactDtoList1);
+            iClient1.addFriend(id, contactDtoList1,newchatDto);
 //            iClient1.removeInvitation(id);
         }
 
@@ -96,7 +103,7 @@ public class IServerController extends UnicastRemoteObject implements IServer {
             IClient iClient2 = ConnectedClientsMap.getList().get(user2.getId()).getIClient();
             ArrayList<ContactDto> contactDtoList2 = new ArrayList<>();
             contactDtoList2.add(contactDto1);
-            iClient2.addFriend(id, contactDtoList2);
+            iClient2.addFriend(id, contactDtoList2, newchatDto);
 //            iClient2.removeInvitation(id);
         }
     }

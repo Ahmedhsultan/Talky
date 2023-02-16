@@ -14,7 +14,7 @@ public interface IClient extends Remote {
     public void receiveMessage(long chatId, MessageDto messageDto) throws RemoteException;
     public void addToGroup(String userId, long chatId) throws RemoteException;
     public void removefromGroup(String userId, long chatId) throws RemoteException;
-    public void addFriend(long id, ArrayList<ContactDto> contactDtoList) throws RemoteException;
+    public void addFriend(long id, ArrayList<ContactDto> contactDtoList, ChatDto chatDto) throws RemoteException;
     public void removeFriend(ContactDto contactDto) throws RemoteException;
     public void editUser(ContactDto contactDto) throws RemoteException;
     public void readFile(long chatId, String senderId, byte[] bytes ,String fileName ) throws RemoteException;
