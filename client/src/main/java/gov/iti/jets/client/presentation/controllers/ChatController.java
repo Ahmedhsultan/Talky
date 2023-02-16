@@ -223,15 +223,16 @@ public class ChatController implements Initializable {
                     } else {
                         createMessage(MessagesQueue.change.get(MessagesQueue.change.keySet().toArray()[0]), 2);
                     }
-                    System.out.println(MyID.getInstance().getMyId());
-                    System.out.println(MessagesQueue.change.get(MessagesQueue.change.keySet().toArray()[0]).getSenderId());
-                }
-                else if ((currentChat == null && !currentPane.getText().equals("Notifications")) || (currentChat!=null && !currentPane.getText().equals("Notifications")
-                            && !currentChat.equals(MessagesQueue.change.keySet().toArray()[0])
-                            && !MyID.getInstance().getMyId().equals(MessagesQueue.change.get(MessagesQueue.change.keySet().toArray()[0]).getSenderId()))) {
+                } else if ((currentChat == null && !currentPane.getText().equals("Notifications")) || (currentChat != null && !currentPane.getText().equals("Notifications")
+                        && !currentChat.equals(MessagesQueue.change.keySet().toArray()[0])
+                        && !MyID.getInstance().getMyId().equals(MessagesQueue.change.get(MessagesQueue.change.keySet().toArray()[0]).getSenderId()))) {
+//                    System.out.println("MessagesQueue.change.keySet().toArray()[0]).getSenderId()" + MessagesQueue.change.keySet().toArray()[0]);
                     notificationCountLabel.setText(++notificationCount + "");
                     notificationCountCircle.setVisible(true);
                     notificationCountLabel.setVisible(true);
+                    createNotificationList((Long) MessagesQueue.change.keySet().toArray()[0], MessagesQueue.change.get(MessagesQueue.change.keySet().toArray()[0]).getTimestamp(), MessagesQueue.change.get(MessagesQueue.change.keySet().toArray()[0]).getSenderId());
+                } else {
+                    createNotificationList((Long) MessagesQueue.change.keySet().toArray()[0], MessagesQueue.change.get(MessagesQueue.change.keySet().toArray()[0]).getTimestamp(), MessagesQueue.change.get(MessagesQueue.change.keySet().toArray()[0]).getSenderId());
                 }
             }
         });
@@ -279,8 +280,7 @@ public class ChatController implements Initializable {
                     Platform.runLater(new Runnable() {
                         @Override
                         public void run() {
-                            System.out.println(change);
-//                            createNotificationList();
+                            leftList.setItems(notificationObservableList);
                         }
 
                     });
@@ -341,7 +341,15 @@ public class ChatController implements Initializable {
                             currentChat = Long.parseLong(((Label) (newValue.lookup("#chatID"))).getText());
                         }
                         chatName.setText(((Label) (newValue.lookup("#userName"))).getText());
-//                          chatIcon.setFill(new ImagePattern(new Image(Constants.byteArrayToImage(arr, img).getPath(),100,100,false,true)));
+                        System.out.println(((Circle)(newValue.getChildren().get(1))));
+//                        chatIcon.setFill(new ImagePattern(newValue.));
+
+                        try {
+                            chatIcon.setFill(new ImagePattern(new Image(saveUserImage(getUserPic()),230, 27, false, true)));
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
 
                         if (MessagesQueue.getList().containsKey(currentChat)) {
                             for (MessageDto message : MessagesQueue.getList().get(currentChat)) {
@@ -359,9 +367,29 @@ public class ChatController implements Initializable {
         });
     }
 
+    private ContactDto getUserPic(){
+        ContactDto con = new ContactDto();
+
+        for(ChatDto dto : ChatList.getList()){
+            if(!dto.getMembersIds().get(0).equals(MyID.getInstance().getMyId())){
+                ContactDto contact = ContactList.getList().stream().filter(c -> c.getId().equals(dto.getMembersIds().get(0))).toList().get(0);
+                con.setImage(contact.getImage());
+                con.setImgPath(contact.getImgPath());
+            }
+            else {
+                ContactDto contact = ContactList.getList().stream().filter(c -> c.getId().equals(dto.getMembersIds().get(1))).toList().get(0);
+                con.setImage(contact.getImage());
+                con.setImgPath(contact.getImgPath());
+
+            }
+        }
+       return con;
+    }
+
+
+
     @FXML
     private void openChats(ActionEvent actionEvent) {
-//        NotificationQueue.getList().add(i, new NotificationDto(i++, 012, 011, "add", new Date(40000), "add me", false));
         searchField.setVisible(true);
         contactsButton.setStyle(null);
         invitationsButton.setStyle(null);
@@ -377,12 +405,11 @@ public class ChatController implements Initializable {
         chatsObservableList.clear();
         leftList.setItems(chatsObservableList);
         MessagesQueue.getList().forEach((k, v) -> {
-            if(k != -1) {
+            if (k != -1) {
                 Pane temp = PaneManager.getPaneManager().putRecentChatCard();
                 ((Label) (temp.lookup("#chatID"))).setText(k.toString());
-//            putImageOnPane(chat.getPicture_icon(), temp);
-//            putStatusOnPane(ContactList.getList().stream().filter(c-> c.getPhoneNumber() == v.get(v.size()-1).getSenderId()).collect(Collectors.toList()).get(0).getIsOnlineStatus(), temp);
-//            putUserNameOnPane(ContactList.getList().stream().filter(c-> c.getPhoneNumber() == v.get(v.size()-1).getSenderId()).collect(Collectors.toList()).get(0).getName(), temp);
+                putImageOnPane(getUserPic(), temp);
+                putStatusOnPane(ContactList.getList().stream().filter(c -> c.getId().equals( v.get(v.size() - 1).getSenderId())).toList().get(0).getIsOnlineStatus(), temp);
                 putMessageOnPane(v.get(v.size() - 1).getMessage(), temp);
                 putTimeOnPane(v.get(v.size() - 1).getTimestamp(), temp);
                 putUserNameOnPane(v.get(v.size() - 1).getSenderId(), temp);
@@ -390,14 +417,12 @@ public class ChatController implements Initializable {
             }
         });
 
-//        chatsObservableList.stream().sorted((p, n) -> Integer.parseInt(((Label) (p.lookup("#timestamp"))).getText()));
+
     }
 
-    int x = 0;
 
     @FXML
     private void openContacts(ActionEvent actionEvent) {
-//        InvitationQueue.getList().add(new InvitationDto(x++, "012", new UserCardDto(), null, null, false));
         searchField.setVisible(true);
         currentPane.setText("Contacts");
         invitationsButton.setStyle(null);
@@ -417,14 +442,14 @@ public class ChatController implements Initializable {
             if (contact.getId().equals(MyID.getInstance().getMyId()))
                 continue;
             Pane temp = PaneManager.getPaneManager().putContactCard();
-//            putImageOnPane(contact.getPicture(), temp);
+            putImageOnPane(contact, temp);
             putStatusOnPane(contact.getIsOnlineStatus(), temp);
             putUserNameOnPane(contact.getName(), temp);
             putPhoneNumOnPane(contact.getId(), temp);
             putBioOnPane(contact.getBio(), temp);
             putOnlineStatusOnPane(contact.getIsOnlineStatus(), temp);
-//            putImageOnPane(contact,temp);
             contactsObservableList.add(temp);
+
         }
     }
 
@@ -480,7 +505,6 @@ public class ChatController implements Initializable {
 
         for (InvitationDto invitation : InvitationQueue.getList()) {
             Pane temp = PaneManager.getPaneManager().putInvitationCard();
-            System.out.println( "invitation id :" + invitation.getId());
             ((Label) (temp.lookup("#invitId"))).setText(invitation.getId() + "");
             (temp.lookup("#invitId")).setVisible(false);
             System.out.println(invitation.getUserCardDto().getImgPath());
@@ -489,8 +513,8 @@ public class ChatController implements Initializable {
             System.out.println("fff");
             Long invitationId = Long.parseLong(((Label) (temp.lookup("#invitId"))).getText());
             JFXButton accept = (JFXButton) (temp.getChildren().get(4));
-            System.out.println(" " +accept.getText() + accept.getId());
-            accept.setOnAction(e->{
+            System.out.println(" " + accept.getText() + accept.getId());
+            accept.setOnAction(e -> {
                 Registry reg = null;
                 System.out.println("Accept invitation" + invitationId);
                 try {
@@ -503,8 +527,8 @@ public class ChatController implements Initializable {
             });
 
             JFXButton decline = (JFXButton) (temp.getChildren().get(5));
-            System.out.println(" " +decline.getText() + decline.getId());
-            decline.setOnAction(e->{
+            System.out.println(" " + decline.getText() + decline.getId());
+            decline.setOnAction(e -> {
                 Registry reg = null;
                 System.out.println("Decline invitation");
                 try {
@@ -525,8 +549,8 @@ public class ChatController implements Initializable {
         leftList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Pane>() {
             @Override
             public void changed(ObservableValue<? extends Pane> observable, Pane oldValue, Pane newValue) {
-                if(newValue!=null)
-                    if((currentPane.getText().equals("Invitations"))) {
+                if (newValue != null)
+                    if ((currentPane.getText().equals("Invitations"))) {
                         Long invitationId = Long.parseLong(((Label) (newValue.lookup("#invitId"))).getText());
                         ((JFXButton) (newValue.lookup("#confirInvitation"))).setOnAction(e -> {
                             Registry reg = null;
@@ -550,8 +574,10 @@ public class ChatController implements Initializable {
                             }
                         });
                     }
-    }});
+            }
+        });
     }
+
     @FXML
     private void openNotifications(ActionEvent actionEvent) {
         searchField.setVisible(true);
@@ -565,42 +591,55 @@ public class ChatController implements Initializable {
         notificationCount = 0;
         notificationCountCircle.setVisible(false);
         notificationCountLabel.setVisible(false);
-//        createNotificationList();
         leftList.setItems(notificationObservableList);
+        System.out.println("itemsss:  " + leftList.getItems());
 
     }
 
-    private void createNotificationList(Long chatId, String content, String timestamp  ) {
+    private void createNotificationList(Long chatId, String timestamp, String senderId) {
+        Pane temp = PaneManager.getPaneManager().putNotificationPane();
+        ChatDto chatDto = ChatList.getList().stream().filter(x -> chatId.equals(x.getId())).toList().get(0);
 
-       ChatDto chatDto = ChatList.getList().stream().filter(x-> chatId.equals(x.getId())).toList().get(0);
-
-        ContactDto contactDto = new ContactDto();
-        contactDto.setImage(chatDto.getImage());
-        contactDto.setImgPath(chatDto.getImgPath());
-            Pane temp = PaneManager.getPaneManager().putNotificationPane();
-            ((Label) (temp.lookup("#notificationMessage"))).setText(content);
-            putUserNameOnPane(chatDto.getName(), temp);
-            putTimeOnPane(timestamp, temp);
-
-        try {
-            ((Circle) (temp.lookup("#userPic"))).setFill(new ImagePattern(new Image(saveUserImage(contactDto))));
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (ChatList.getList().stream().filter(e -> chatId.equals(e.getId())).toList().get(0).getType().equals(Constants.CHAT_GROUP)) {
+            ContactDto contactDto = new ContactDto();
+            contactDto.setImage(chatDto.getImage());
+            contactDto.setImgPath(chatDto.getImgPath());
+            try {
+                Image im = new Image(saveUserImage(contactDto), 230, 27, false, true);
+                ((Circle) (temp.lookup("#userPic"))).setFill(new ImagePattern(im));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            String imgPath = ContactList.getList().stream().filter(x -> x.getId().equals(senderId)).toList().get(0).getImgPath();
+            byte[] imgArr = ContactList.getList().stream().filter(x -> x.getId().equals(senderId)).toList().get(0).getImage();
+            ContactDto contactDto = new ContactDto();
+            contactDto.setImage(imgArr);
+            contactDto.setImgPath(imgPath);
+            try {
+                Image im = new Image(saveUserImage(contactDto), 230, 27, false, true);
+                ((Circle) (temp.lookup("#userPic"))).setFill(new ImagePattern(im));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
+        ((Label) (temp.lookup("#notificationMessage"))).setText(chatDto.getName() + " Sent You a Message");
+        putTimeOnPane(timestamp, temp);
+
         notificationObservableList.add(temp);
     }
 
     @FXML
     private void OpenProfile(MouseEvent mouseEvent) {
         currentPane.setText("Profile");
-        chatsButton.setStyle( null);
+        chatsButton.setStyle(null);
         contactsButton.setStyle(null);
         invitationsButton.setStyle(null);
         notificationsButton.setStyle(null);
         searchField.setVisible(false);
         paneObservableList.clear();
         leftList.setId("listOfProfile");
-        ContactDto contact = ContactList.getList().stream().filter(x->x.getId().equals(MyID.getInstance().getMyId())).toList().get(0);
+        ContactDto contact = ContactList.getList().stream().filter(x -> x.getId().equals(MyID.getInstance().getMyId())).toList().get(0);
         Pane temp = PaneManager.getPaneManager().putProfilePane();
         putBioOnPane(contact.getBio(), temp);
         putUserNameOnPane(contact.getName(), temp);
@@ -615,7 +654,7 @@ public class ChatController implements Initializable {
 
     @FXML
     private void searchOnList(KeyEvent keyEvent) {
-        ObservableList<Pane> c = FXCollections.observableArrayList(paneObservableList.stream().filter(x->((Label)(x.lookup("#userName"))).getText().toLowerCase().contains(searchField.getText().toLowerCase())).collect(Collectors.toList()));
+        ObservableList<Pane> c = FXCollections.observableArrayList(paneObservableList.stream().filter(x -> ((Label) (x.lookup("#userName"))).getText().toLowerCase().contains(searchField.getText().toLowerCase())).collect(Collectors.toList()));
         leftList.setItems(c);
     }
 
@@ -625,52 +664,84 @@ public class ChatController implements Initializable {
     }
 
     private void putTimeOnPane(String time, Pane temp) {
-        ((Label)temp.lookup("#timestamp")).setText(time);
+        ((Label) temp.lookup("#timestamp")).setText(time);
     }
 
     private void putUserNameOnPane(String userName, Pane temp) {
-        ((Label)temp.lookup("#userName")).setText(userName);
+        ((Label) temp.lookup("#userName")).setText(userName);
     }
 
     private void putPhoneNumOnPane(String phone, Pane temp) {
-        ((Label)temp.lookup("#userPhoneNumber")).setText(phone);
+        ((Label) temp.lookup("#userPhoneNumber")).setText(phone);
     }
 
 
     private void putStatusOnPane(String status, Pane temp) {
-        if(status.equals(Constants.ONLINE_STATUS_OFFLINE))
-            ((Circle)(temp.lookup("#statusCircle"))).setFill(Color.RED);
-        else if(status.equals(Constants.ONLINE_STATUS_AVAILABLE))
-            ((Circle)(temp.lookup("#statusCircle"))).setFill(Color.GREEN);
-        else if(status.equals("NA"))
-            ((Circle)(temp.lookup("#statusCircle"))).setRadius(0);
+        if (status.equals(Constants.ONLINE_STATUS_OFFLINE))
+            ((Circle) (temp.lookup("#statusCircle"))).setFill(Color.RED);
+        else if (status.equals(Constants.ONLINE_STATUS_AVAILABLE))
+            ((Circle) (temp.lookup("#statusCircle"))).setFill(Color.GREEN);
+        else if (status.equals("NA"))
+            ((Circle) (temp.lookup("#statusCircle"))).setRadius(0);
     }
 
 
     private void putOnlineStatusOnPane(String status, Pane temp) {
-        if(status.equals(Constants.ONLINE_STATUS_OFFLINE))
-            ((Label)temp.lookup("#onlineStatus")).setText("");
+        if (status.equals(Constants.ONLINE_STATUS_OFFLINE))
+            ((Label) temp.lookup("#onlineStatus")).setText("");
         else
-            ((Label)temp.lookup("#onlineStatus")).setText(status);
+            ((Label) temp.lookup("#onlineStatus")).setText(status);
     }
 
     private void putBioOnPane(String bio, Pane temp) {
-        ((Label)temp.lookup("#bio")).setText(bio);
+        ((Label) temp.lookup("#bio")).setText(bio);
     }
 
-    private  void putImageOnPane( ContactDto dto,Pane temp) {
+
+    private Image getImage(Long chatId, String senderId) {
+        ChatDto chatDto = ChatList.getList().stream().filter(x -> chatId.equals(x.getId())).toList().get(0);
+        Image im = null;
+        if (ChatList.getList().stream().filter(e -> chatId.equals(e.getId())).toList().get(0).getType().equals(Constants.CHAT_GROUP)) {
+            ContactDto contactDto = new ContactDto();
+            contactDto.setImage(chatDto.getImage());
+            contactDto.setImgPath(chatDto.getImgPath());
+            try {
+                im = new Image(saveUserImage(contactDto), 230, 27, false, true);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            String imgPath = ContactList.getList().stream().filter(x -> x.getId().equals(senderId)).toList().get(0).getImgPath();
+            byte[] imgArr = ContactList.getList().stream().filter(x -> x.getId().equals(senderId)).toList().get(0).getImage();
+            ContactDto contactDto = new ContactDto();
+            contactDto.setImage(imgArr);
+            contactDto.setImgPath(imgPath);
+            try {
+                im = new Image(saveUserImage(contactDto), 230, 27, false, true);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return im;
+    }
+
+
+    private void putImageOnPane(ContactDto dto, Pane temp) {         //for contacts
+
         try {
-            ((Circle) temp.lookup("#userPic")).setFill(new ImagePattern(new Image(saveUserImage(dto),100,100,false,true)));
+            Image im = new Image(saveUserImage(dto), 230, 27, false, true);
+            ((Circle) (temp.lookup("#userPic"))).setFill(new ImagePattern(im));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
     @FXML
     void AddNewContacts(MouseEvent event) {
         Pane temp = PaneManager.getPaneManager().putAddContactCard();
         currentPane.setText("Add Contacts");
         currentPane.setStyle("-fx-font-size: 40; ");
-        chatsButton.setStyle( null);
+        chatsButton.setStyle(null);
         invitationsButton.setStyle(null);
         notificationsButton.setStyle(null);
 
@@ -687,28 +758,31 @@ public class ChatController implements Initializable {
         paneObservableList.add(temp);
         leftList.setItems(paneObservableList);
     }
+
     @FXML
     void deleteContact(MouseEvent event) {
-        if(paneObservableList.size()>1){
-            paneObservableList.remove(paneObservableList.size()-1);
+        if (paneObservableList.size() > 1) {
+            paneObservableList.remove(paneObservableList.size() - 1);
             leftList.setItems(paneObservableList);
         }
 
     }
+
     @FXML
     void addNewContact(MouseEvent event) {
         Pane temp = PaneManager.getPaneManager().putAddContactCard();
         paneObservableList.add(temp);
         leftList.setItems(paneObservableList);
     }
+
     @FXML
     void addContacts(ActionEvent event) {
         leftList.cellFactoryProperty();
-        for (Pane k: paneObservableList) {
+        for (Pane k : paneObservableList) {
             TextField tx = (TextField) k.getChildren().get(1);
             Label label = (Label) k.getChildren().get(2);
-            if(Validation.validatePhoneNumber(tx,label)){
-                new InvitationService().sendInvit(MyID.getInstance().getMyId(),tx.getText());
+            if (Validation.validatePhoneNumber(tx, label)) {
+                new InvitationService().sendInvit(MyID.getInstance().getMyId(), tx.getText());
             }
         }
     }
@@ -724,7 +798,7 @@ public class ChatController implements Initializable {
     }
 
     public void sendMessage(ActionEvent actionEvent) {
-        if(!messageField.getText().trim().isBlank()) {
+        if (!messageField.getText().trim().isBlank()) {
             MessageDto messageDto = new MessageDto();
             messageDto.setMessage(messageField.getText().trim());
             messageDto.setFont(fonts.getSelectionModel().getSelectedItem());
@@ -771,22 +845,19 @@ public class ChatController implements Initializable {
     private Group createBubble(MessageDto messageOptions, Color bubbleColor) {
 
 
-
         FontWeight w;
         if (messageOptions.isBold()) {
             w = FontWeight.BOLD;
 //
-        }
-        else {
-            w  = FontWeight.NORMAL;
+        } else {
+            w = FontWeight.NORMAL;
         }
 
-        FontPosture p ;
+        FontPosture p;
         if (messageOptions.isItalic()) {
             p = FontPosture.ITALIC;
-        }
-        else {
-            p  = FontPosture.REGULAR;
+        } else {
+            p = FontPosture.REGULAR;
         }
 
         Font font = Font.font(messageOptions.getFont(), w, p, messageOptions.getFontSize());
@@ -882,7 +953,7 @@ public class ChatController implements Initializable {
         yesButton.setOnAction(e -> {
             try {
                 LogoutService.logout();
-                SceneManager s =SceneManager.getSceneManager();
+                SceneManager s = SceneManager.getSceneManager();
                 s.switchToLoginScene();
             } catch (NotBoundException | RemoteException ex) {
                 ex.printStackTrace();
@@ -942,12 +1013,11 @@ public class ChatController implements Initializable {
     }
 
     public void edit(ActionEvent actionEvent) {
-        if(isBarsVisible){
+        if (isBarsVisible) {
             firstButtonBar.setVisible(false);
             secondButtonBar.setVisible(false);
             isBarsVisible = false;
-        }
-        else{
+        } else {
             firstButtonBar.setVisible(true);
             secondButtonBar.setVisible(true);
             isBarsVisible = true;
@@ -955,13 +1025,14 @@ public class ChatController implements Initializable {
         }
     }
 
-    public String  saveUserImage(ContactDto dto) throws IOException {
-        String path = Constants.USER_IMAGES_DIR +dto.getImgPath();
+    public String saveUserImage(ContactDto dto) throws IOException {
+        String path = Constants.USER_IMAGES_DIR + dto.getImgPath();
         Constants.byteArrayToImage(dto.getImage(), URLDecoder.decode(path, "UTF-8"));
         return URLDecoder.decode(path, "UTF-8");
     }
-    public String  saveUserImage(UserDto dto) throws IOException {
-        String path = Constants.USER_IMAGES_DIR +dto.getImgPath();
+
+    public String saveUserImage(UserDto dto) throws IOException {
+        String path = Constants.USER_IMAGES_DIR + dto.getImgPath();
         Constants.byteArrayToImage(dto.getImage(), URLDecoder.decode(path, "UTF-8"));
         return URLDecoder.decode(path, "UTF-8");
     }
