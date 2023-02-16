@@ -20,4 +20,5 @@ public class NotificationDto implements BaseDto, Serializable {
     private Date created_on;
     private String status;
     private boolean is_seen;
+    private String name;
 }

@@ -157,4 +157,17 @@ public class IServerController extends UnicastRemoteObject implements IServer {
         fileTransferService.sendFile( chatId,  senderId,  bytes,  fileName);
     }
 
+    @Override
+    public ArrayList<String> getOnlineUsers(String id) throws RemoteException {
+        ArrayList<String> onlineList = new ArrayList<>();
+        //Get list of user friends
+        ArrayList<ContactDto> userDtoList = friendsService.getListOfFriends(id);
+        for (var ele : userDtoList){
+            if(!ele.getIsOnlineStatus().equals(Constants.ONLINE_STATUS_OFFLINE)){
+                onlineList.add(ele.getId());
+            }
+        }
+        return onlineList;
+    }
+
 }
