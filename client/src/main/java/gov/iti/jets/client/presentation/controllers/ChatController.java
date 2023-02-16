@@ -173,7 +173,6 @@ public class ChatController implements Initializable {
 
         try {
             ContactDto contact = ContactList.getList().stream().filter(x->x.getId().equals(MyID.getInstance().getMyId())).toList().get(0);
-            System.out.println(contact.getImgPath());
             userImage.setImage(new Image(saveUserImage(contact),200,200,false,true));
         } catch (IOException e) {
             e.printStackTrace();
@@ -415,6 +414,8 @@ public class ChatController implements Initializable {
         contactsObservableList.clear();
         leftList.setItems(contactsObservableList);
         for (ContactDto contact : ContactList.getList()) {
+            if (contact.getId().equals(MyID.getInstance().getMyId()))
+                continue;
             Pane temp = PaneManager.getPaneManager().putContactCard();
 //            putImageOnPane(contact.getPicture(), temp);
             putStatusOnPane(contact.getIsOnlineStatus(), temp);
@@ -479,6 +480,7 @@ public class ChatController implements Initializable {
 
         for (InvitationDto invitation : InvitationQueue.getList()) {
             Pane temp = PaneManager.getPaneManager().putInvitationCard();
+            System.out.println( "invitation id :" + invitation.getId());
             ((Label) (temp.lookup("#invitId"))).setText(invitation.getId() + "");
             (temp.lookup("#invitId")).setVisible(false);
             System.out.println(invitation.getUserCardDto().getImgPath());
