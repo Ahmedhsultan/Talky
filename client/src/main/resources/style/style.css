@@ -1,0 +1,18 @@
+.bubble-box-left {
+    -fx-background-color: lightblue;
+    -fx-padding: 10;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+}
+
+.bubble-box-right {
+    -fx-background-color: lightgreen;
+    -fx-padding: 10;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+}
+
+.message-label {
+    -fx-font-size: 14px;
+    -fx-wrap-text: true;
+}

@@ -51,26 +51,19 @@ public class IClientImpl extends UnicastRemoteObject implements IClient {
                     ObservableList<MessageDto> messageDtoList = FXCollections.observableArrayList();
                     messageDtoList.add(messageDto);
                     MessagesQueue.getList().put(chatId,messageDtoList);
-                    System.out.println("before");
-
-
                 }else{
                     MessagesQueue.getList().get(chatId).add(messageDto);
                     MessagesQueue.change.clear();
                     MessagesQueue.change.put(chatId, messageDto);
-                    System.out.println("Messages keys" + MessagesQueue.change.keySet());
 
 
                     if(MessagesQueue.getList().containsKey(-1)) {
                        MessagesQueue.getList().remove(-1);
-                       System.out.println("-1 removed");
-
                    }
                    else{
                        ObservableList<MessageDto> l = FXCollections.observableArrayList();   //honors to Amr
                        l.add(new MessageDto());
                        MessagesQueue.getList().put(-1l, l);
-                       System.out.println("-1 added");
                    }
                 }
             }
@@ -159,10 +152,6 @@ public class IClientImpl extends UnicastRemoteObject implements IClient {
         InvitationQueue.getList().addAll(userSessionDto.getInvitationListDto());
         //Clear and add new session to chat queue
         ChatList.getList().addAll(userSessionDto.getChatListDto());
-//        //Message and Chat Queue
-//        for (var ele : ChatList.getList())
-//        MessagesQueue.getList().put(ele.getId() , FXCollections.observableArrayList());
-
         //Start Online pulling service
         PullOnlineUsersFromServer.getInstance();
     }

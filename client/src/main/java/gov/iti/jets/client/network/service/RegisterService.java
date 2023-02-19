@@ -1,7 +1,6 @@
 package gov.iti.jets.client.network.service;
 
 
-import com.jfoenix.controls.JFXSnackbar;
 import gov.iti.jets.client.Queues.MyID;
 import gov.iti.jets.client.Util.Cashing;
 import gov.iti.jets.client.callBack.IClientImpl;
@@ -39,11 +38,6 @@ public class RegisterService {
             UserRemote obj = RMIManager.lookUpRegister();
             userSessionDto = obj.register(user, new IClientImpl());
         } catch (RemoteException e) {
-//            throw new RuntimeException(e);
-            System.out.println(e.getMessage());
-            JFXSnackbar snackbar = new JFXSnackbar(new RegisterController().rootPane);
-            final JFXSnackbar.SnackbarEvent snackbarEvent = new JFXSnackbar.SnackbarEvent(new Label(e.getMessage()), Duration.seconds(5.33), null);
-            snackbar.enqueue(snackbarEvent);
         } catch (NotBoundException e) {
             e.printStackTrace();
         }

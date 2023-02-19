@@ -34,7 +34,11 @@ public class PaneManager {
     }
 
     public Pane putRecentChatCard() {
-        loadPane("chatCard");
+        loadPane("Bubble");
+        return pane;
+    }
+    public Pane putRightRecentChatCard() {
+        loadPane("RightBubble");
         return pane;
     }
 
@@ -44,7 +48,22 @@ public class PaneManager {
     }
 
     public Pane putInvitationCard() {
-        loadPane("invitationCard");
+        loadPane("InvitationCard");
+        return pane;
+    }
+
+    public Pane putInvitationButton() {
+        loadPane("AddContactButton");
+        return pane;
+    }
+
+    public Pane putNotification() {
+        loadPane("Notification");
+        return pane;
+    }
+
+    public Pane putInvitationView() {
+        loadPane("AddContactView");
         return pane;
     }
 

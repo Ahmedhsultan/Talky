@@ -3,7 +3,6 @@ package gov.iti.jets.client.network.service;
 import gov.iti.jets.client.Queues.ContactList;
 import gov.iti.jets.client.Queues.MyID;
 import gov.iti.jets.client.Queues.NotificationQueue;
-import gov.iti.jets.client.Util.AlertWindow;
 import gov.iti.jets.client.Util.ReconnectWindow;
 import gov.iti.jets.common.dto.ContactDto;
 import gov.iti.jets.common.dto.NotificationDto;
@@ -13,7 +12,6 @@ import javafx.application.Platform;
 
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class PullOnlineUsersFromServer {
@@ -24,28 +22,40 @@ public class PullOnlineUsersFromServer {
         thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                System.out.println("run");
                 while (true){
                     try {
                         Thread.sleep(6000);
                         iServer = getIserver();
+                        System.out.println("run");
 
                         NotificationDto notificationDto = new NotificationDto();
                         List<String> onlineList = iServer.getOnlineUsers(MyID.getInstance().getMyId());
                         for(var ele : ContactList.getList()){
                             if (onlineList.contains(ele.getId())){
                                 if (ele.getIsOnlineStatus().equals(Constants.ONLINE_STATUS_OFFLINE)){
+                                    System.out.println("on");
                                     ele.setIsOnlineStatus(Constants.ONLINE_STATUS_AVAILABLE);
                                     notificationDto.setName(ele.getName());
-                                    notificationDto.setStatus(ele.getIsOnlineStatus());
+                                    notificationDto.setType("onlineStatus");
+                                    notificationDto.setOnlineStatus(ele.getIsOnlineStatus());
+                                    notificationDto.setBytes(ele.getImage());
                                     NotificationQueue.getList().add(notificationDto);
+                                    var change = new ContactDto();
+                                    ContactList.getList().add(change);
+                                    ContactList.getList().remove(change);
                                 }
                             }else{
                                 if (ele.getIsOnlineStatus().equals(Constants.ONLINE_STATUS_AVAILABLE)){
+                                    System.out.println("off");
                                     ele.setIsOnlineStatus(Constants.ONLINE_STATUS_OFFLINE);
+                                    notificationDto.setType("onlineStatus");
                                     notificationDto.setName(ele.getName());
-                                    notificationDto.setStatus(ele.getIsOnlineStatus());
+                                    notificationDto.setBytes(ele.getImage());
+                                    notificationDto.setOnlineStatus(ele.getIsOnlineStatus());
                                     NotificationQueue.getList().add(notificationDto);
+                                    var change = new ContactDto();
+                                    ContactList.getList().add(change);
+                                    ContactList.getList().remove(change);
                                 }
                             }
                         }

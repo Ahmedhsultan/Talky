@@ -18,7 +18,7 @@ public class LoginController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         PaneManager paneManager = PaneManager.getPaneManager();
-        paneManager.setPrimaryPane("login",  pane);
+        paneManager.setPrimaryPane("Login",  pane);
         paneManager.putLoginPhonePane();
     }
 

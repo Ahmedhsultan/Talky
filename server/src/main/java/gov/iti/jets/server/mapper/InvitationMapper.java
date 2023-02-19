@@ -3,8 +3,12 @@ package gov.iti.jets.server.mapper;
 
 import gov.iti.jets.common.dto.InvitationDto;
 import gov.iti.jets.common.dto.UserCardDto;
+import gov.iti.jets.common.dto.UserDto;
 import gov.iti.jets.server.entity.Invitation;
+import gov.iti.jets.server.entity.User;
+import gov.iti.jets.server.service.UserService;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.stream.Collectors;
@@ -13,8 +17,19 @@ public class InvitationMapper implements BaseMapper<Invitation, InvitationDto>{
 
     @Override
     public InvitationDto toDTO(Invitation invitation) {
+        UserService userService = new UserService();
+        UserDto userDto;
+        try {
+            userDto = userService.getUser(invitation.getSenderId());
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
         UserCardDto userCardDto = new UserCardDto();
         userCardDto.setId(invitation.getSenderId());
+        userCardDto.setName(userDto.getName());
+        userCardDto.setImage(userDto.getImage());
+        userCardDto.setImgPath(userDto.getImgPath());
+
         InvitationDto dto = InvitationDto.builder()
                 .id(invitation.getId())
                 .userCardDto(userCardDto)

@@ -8,7 +8,6 @@ module gov.iti.jets.client {
     requires com.google.common;
     requires lombok;
     requires gov.iti.jets.common;
-    requires com.jfoenix;
 
     exports gov.iti.jets.client;
 }

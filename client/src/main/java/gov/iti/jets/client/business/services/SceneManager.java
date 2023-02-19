@@ -1,7 +1,5 @@
 package gov.iti.jets.client.business.services;
 
-import gov.iti.jets.client.presentation.controllers.ChatController;
-import gov.iti.jets.common.dto.UserSessionDto;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -30,7 +28,6 @@ public class SceneManager {
     public void clear(){
         scenes.clear();
     }
-
 
     public void initStage(Stage stage) {
         if (primaryStage != null) {
@@ -67,7 +64,7 @@ public class SceneManager {
         else if (!scenes.containsKey(name)) {
             try {
                 Parent root = FXMLLoader.load(getClass().getClassLoader().getResource(String.format("views/%s.fxml", name)));
-                Scene scene = new Scene(root, 1200, 700);
+                Scene scene = new Scene(root);
                 scenes.put(name, scene);
                 primaryStage.setResizable(false);
                 primaryStage.setScene(scene);
@@ -80,6 +77,4 @@ public class SceneManager {
             primaryStage.setScene(scenes.get(name));
         }
     }
-
-
 }

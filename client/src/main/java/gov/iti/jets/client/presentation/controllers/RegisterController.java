@@ -1,8 +1,6 @@
 package gov.iti.jets.client.presentation.controllers;
 
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXRadioButton;
 import gov.iti.jets.client.business.services.PaneManager;
 import gov.iti.jets.client.business.services.SceneManager;
 import gov.iti.jets.client.network.service.RMIManager;
@@ -20,6 +18,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -41,179 +40,63 @@ import java.util.ResourceBundle;
 
 public class RegisterController implements Initializable {
 
-    FileChooser fileChooser = new FileChooser();
-    File file;
-    private Pane pane;
-    private Stage stage;
-    private Scene scene;
     @FXML
-    public AnchorPane rootPane;
-
-
-    @FXML
-    private JFXButton SignUp;
-
-    @FXML
-    private TextField bio;
-
-    @FXML
-    private TextField confirmPassword;
-
-    @FXML
-    private ComboBox<String> country;
-
-    @FXML
-    private DatePicker dateOfBirth;
-
-    @FXML
-    private TextField email;
-
-    @FXML
-    private TextField firstName;
-
-    @FXML
-    private TextField lastName;
-
-    @FXML
-    private TextField password;
-
+    private TextField name;
     @FXML
     private TextField phone;
-
     @FXML
-    private JFXRadioButton radioFemal;
-
+    private TextField password;
     @FXML
-    private JFXRadioButton radioMale;
+    private TextField confirmPassword;
     @FXML
-    Circle circle;
+    private DatePicker birthday;
     @FXML
-    private Label invalidBio;
-
+    private ImageView image;
     @FXML
-    private Label invalidConPassword;
-    @FXML
-    private  Label invalidImage;
-
-    @FXML
-    private Label invalidFName;
-
-    @FXML
-    private Label invalidLName;
-
-    @FXML
-    private Label invalidPassword;
-
-    @FXML
-    private Label invalidPhone;
-    @FXML
-    private Label invalidEmail;
-    @FXML
-    private Label invalidCountry;
-    @FXML
-    private Label invalidDate;
-    @FXML
-    private Label invalidGender;
-    @FXML
-    private ToggleGroup toggleGroup;
-
-    @FXML
-    private Hyperlink loginLink;
-
+    private Button register;
+    FileChooser fileChooser = new FileChooser();
+    File file;
     Validation validate;
-    String gender;
     UserRegistrationDto userRegistrationDto;
-    Registry reg;
     public static UserSessionDto userSessionDto;
     @Override
     public void initialize(URL arg0, ResourceBundle arg1) {
-//        circle.setFill(new ImagePattern(new Image("user.png",200,200,false,true)));
-        addCountryChoiceBox();
-        circle.setFill(new ImagePattern(new Image("/image/user.png",200,200,false,true)));
+
     }
     @FXML
     public void addProfileImage(MouseEvent event) {
         fileChooser.getExtensionFilters().add(  new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif"));
         file = fileChooser.showOpenDialog(null);
         if (file != null) {
-            circle.setFill(new ImagePattern(new Image(file.toURI().toString(),200,200,false,true)));
-            System.out.println(file.getPath());
+            image.setImage(new Image(file.toURI().toString(),200,200,false,true));
         }
     }
     @FXML
     void signup(ActionEvent event) throws IOException {
-        if(validation()){
-            UserDto user = new UserDto();
-            user.setName(firstName.getText() + " " + lastName.getText());
-            user.setId(phone.getText());
-            user.setEmail(email.getText());
-            String s = file.getPath();
-            user.setImgPath(phone.getText()+ s.substring(s.indexOf("."))); //image extension
-            if(radioMale.isSelected()) { user.setGender("Male");}
-            else { user.setGender("Female");}
-            user.setBio(bio.getText());
-            user.setCountry(country.getSelectionModel().getSelectedItem());
-            user.setImage(Constants.imageToByteArray(file.getPath()));
-//            try {
-//                java.sql.Date date =  new Date(dateOfBirth.getValue().);
-                java.sql.Date date =  new Date(dateOfBirth.getValue().getYear(),dateOfBirth.getValue().getMonthValue(),dateOfBirth.getValue().getDayOfMonth());
+//        if(validation()){
+        UserDto user = new UserDto();
+        user.setName(name.getText());
+        user.setId(phone.getText());
+        String s = file.getPath();
+        user.setImgPath(phone.getText()+ s.substring(s.indexOf(".")));
+        user.setImage(Constants.imageToByteArray(file.getPath()));
+        java.sql.Date date =  new Date(birthday.getValue().getYear(),birthday.getValue().getMonthValue(),birthday.getValue().getDayOfMonth());
+        user.setDateOfBirth(date);
+        System.out.println("success validate");
 
-
-//                java.sql.Date sqlDate = new java.sql.Date(date.getTime());
-                user.setDateOfBirth(date);
-//            } catch (ParseException e) {
-//                throw new RuntimeException(e);
-//            }
-
-            System.out.println("success validate");
-
-            userRegistrationDto = new UserRegistrationDto(user,password.getText());
-            try {
-                userSessionDto = new RegisterService().addUser(userRegistrationDto);
-                SceneManager.getSceneManager().switchToChatScene();
-
-            }catch (Exception e){
-                e.getMessage();
-            }
-
+        userRegistrationDto = new UserRegistrationDto(user,password.getText());
+        try {
+            userSessionDto = new RegisterService().addUser(userRegistrationDto);
             SceneManager.getSceneManager().switchToChatScene();
+        }catch (Exception e){
+            e.getMessage();
         }
-    }
-    private boolean validation(){
-        boolean val = true;
-        if(validate. validateName(firstName.getText(),firstName,invalidFName) &
-            validate.validateName(lastName.getText(),lastName,invalidLName)&
-            validate.validateEmail(email.getText(),email,invalidEmail)&
-            validate.validatePhoneNumber(phone, invalidPhone)&
-            validate.validatePassword(password,invalidPassword)&
-            validate.validateConPassword(confirmPassword,invalidConPassword,password.getText())&
-            validate.validateBio(bio,invalidBio)&
-            validate.validateCountry(country,invalidCountry)&
-            validate.validateDate(dateOfBirth,invalidDate)&
-            validate.validateGender(toggleGroup,invalidGender)& validate.validateImage(file,invalidImage))
-        {
-            val = true;
-        }else{
-            val = false;
-        }
-        return val;
-    }
-    private void addCountryChoiceBox(){
-        ObservableList<String> cities = FXCollections.observableArrayList();
-        String[] locales1 = Locale.getISOCountries();
-        for (String countrylist : locales1) {
-            Locale obj = new Locale("", countrylist);
-            String[] city = { obj.getDisplayCountry() };
-            for (int x = 0; x < city.length; x++) {
-                cities.add(obj.getDisplayCountry());
-            }
-        }
-        country.setItems(cities);
-    }
 
-    public void goToLogin(ActionEvent actionEvent) {
-        SceneManager.getSceneManager().switchToLoginScene();
-        PaneManager.getPaneManager().putLoginPhonePane();
+        SceneManager.getSceneManager().switchToChatScene();
     }
-
+    @FXML
+    public void close() {
+        Stage stage = (Stage) register.getScene().getWindow();
+        stage.close();
+    }
 }

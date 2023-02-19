@@ -29,7 +29,7 @@ public class ReconnectWindow {
         label.setText(Msg);
 
         Button yesButton = new Button("Reconnect");
-        yesButton.setStyle("-fx-background-color: rgba(253,68,68,0.62);");
+        yesButton.setStyle("-fx-background-color: rgb(60,154,236);");
         yesButton.setMinWidth(150);
 
         yesButton.setOnAction(e -> {
@@ -54,7 +54,7 @@ public class ReconnectWindow {
         layout.setAlignment(Pos.CENTER);
         layout.setPadding(new Insets(20));
 
-        layout.setStyle("-fx-border-color: #9900ff; -fx-border-width: 0.5;");
+        layout.setStyle("-fx-border-color: #3c9aec; -fx-border-width: 0.5;");
 
         Scene scene = new Scene(layout);
         window.setScene(scene);

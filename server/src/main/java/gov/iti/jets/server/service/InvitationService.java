@@ -22,11 +22,13 @@ public class InvitationService {
     private InvitationDao invitationDao;
     private UserDao userDao;
     private Invitation invitation;
+    private FriendsService friendsService;
 
     public InvitationService() {
         invitationDao = new InvitationDao();
         userDao = new UserDao();
         invitation = new Invitation();
+        friendsService = new FriendsService();
     }
 
 
@@ -43,6 +45,14 @@ public class InvitationService {
             for (Invitation ele : invitations){
                 if(ele.getSenderId().equals(senderID))
                     throw new RemoteException("This number has invited before!!");
+            }
+        }
+        List<ContactDto> friendsList =  friendsService.getListOfFriends(senderID);
+        if (friendsList != null){
+            for (ContactDto ele : friendsList){
+                if(ele.getId().equals(receiverID)){
+                    throw new RemoteException("You are already friends!!");
+                }
             }
         }
         invitations = invitationDao.getInvitationByReceiverId(senderID);
