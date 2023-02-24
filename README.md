@@ -1,5 +1,9 @@
 # Talky
 
+> JavaFx Chatting Application with RMI Client Server model - ITI 9-months scholarship java track - JETS
+
+> Layered architecture & Multi Module Project & Mysql db
+
 ## Used technologies
 ##### Java SE
 ##### Maven
